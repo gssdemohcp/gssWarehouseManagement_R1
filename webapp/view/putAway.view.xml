@@ -74,6 +74,38 @@
 						</columns>
 					</Table>
 				</content>
+				<footer id="footer"
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
+					<Bar id="footerbar">
+						<!--<contentMiddle>-->
+						<contentLeft>
+							<!--<Toolbar id="footerbar" visible="false">-->
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
+								visible="false"/>
+						</contentLeft>
+						<contentRight>
+							<!--<Button id="LUnload" class="sapThemeHighlight-asOutlineColor" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Load/Unload"-->
+							<!--	visible="false" enabled="false"/>-->
+							<!--<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="More" visible="false" enabled="false"/>-->
+							<!--<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items" visible="false" enabled="false"/>-->
+							<!--<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>-->
+							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
+							<Button id="accept" press="putAwayConfirm" icon="sap-icon://accept"/>
+							<!--<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" visible="false" enabled="false"/>-->
+							<!--<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf" visible="false" enabled="false"/>-->
+							<!--<Button id="undoDel" icon="sap-icon://undo" press="unLoad" ariaLabelledBy="actionButtonLabel" tooltip="Undo" visible="false" enabled="false"/>-->
+							<!--<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Ship" visible="false" enabled="false"/>-->
+							<!--<Button id="post" icon="sap-icon://paper-plane" press="onHandlePost" tooltip="GR Post" visible="false" enabled="false"/>-->
+							<!--<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="Save" visible="false"/>-->
+							<!--<Button id="print" icon="sap-icon://print" press="onHandlePrint" tooltip="Print" visible="false"/>-->
+							<!--<Button id="byMat" icon="sap-icon://product" press="onHandleMat" tooltip="By Material" visible="false"/>-->
+							<!--<Button id="byHU" icon="sap-icon://suitcase" press="onHandleHU" tooltip="By HU" visible="false"/>-->
+						</contentRight>
+						<!--</contentMiddle>-->
+						<!--</Toolbar>-->
+					</Bar>
+				</footer>
 			</Page>
 		</pages>
 	</App>

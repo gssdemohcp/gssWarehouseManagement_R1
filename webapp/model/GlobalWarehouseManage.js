@@ -45,12 +45,12 @@ sap.ui.define(["sap/ui/base/Object",
 
 				oGlobalModel.setProperty("/isOdataLoading", false);
 				promise.resolve();
-				
+
 			}.bind(this));
 
 			return promise;
 		},
-		
+		// ********** Srini code to load putaway data begins *****************
 		putAwayLoad: function(oView, oApplication, afilters) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
@@ -75,11 +75,32 @@ sap.ui.define(["sap/ui/base/Object",
 
 				oGlobalModel.setProperty("/isOdataLoading", false);
 				promise.resolve();
-				
 			}.bind(this));
-
 			return promise;
-		}
+		},
+		// ********** Srini code to load putaway data ends *****************
 
+		// ************* Srini code to get selected items from table begins ************
+		selectedItems: function(oView) {
+			return oView.byId("toTable").getSelectedItems();
+		},
+		// ************* Srini code to get selected items from table ends ************
+		
+		// ************* Srini code to get confirm items begins ************
+		confirmItems: function(oView, oApplication) {
+			var getItems = this.selectedItems(oView);
+			// var oErrorModel = new JSONModel();
+			getItems.forEach(function(mItem) {
+				var oEntitySetModel = oView.getModel("entitySetProperties"),
+					bEntityName = oEntitySetModel.getProperty("/Putaway"),
+					updateItem = mItem.getBindingContext("itemList").getObject();
+				var updatePath = bEntityName + "(Lenum='',Queue='" + updateItem.Queue + "',Vbeln='',Lgnum='" + updateItem.Lgnum +
+					"',Tanum='" + updateItem.Tanum + "',Tapos='" + updateItem.Tapos +
+					"')";
+				var oOdataService = oApplication.oODATAService,
+					oWhenCallUpdateIsDone = oOdataService.oCallUpdateDeferred(updatePath, updateItem, mItem, oView);
+			}.bind(this));
+		}
+		// ************* Srini code to get confirm items ends ************
 	});
 });

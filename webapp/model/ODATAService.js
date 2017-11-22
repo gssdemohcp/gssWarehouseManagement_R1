@@ -1,7 +1,8 @@
 sap.ui.define(["sap/ui/base/Object",
-	"sap/ui/Device"
+	"sap/ui/Device",
+	"sap/ui/model/json/JSONModel"
 
-], function(Object, Device) {
+], function(Object, Device, JSONModel) {
 	"use strict";
 
 	return Object.extend("gss.newWarehouseManage_R1.model.GlobalWarehouseManage", {
@@ -30,12 +31,59 @@ sap.ui.define(["sap/ui/base/Object",
 				success: function(oData) {
 					promise.resolve(oData);
 				}.bind(this),
-				error: function(oData){
+				error: function(oData) {
 					promise.reject(oData);
 				}.bind(this)
 			});
 			return promise;
 		},
+
+		// *************** Srini method for odata update begins *****************
+		oCallUpdateDeferred: function(sEntityset, oItems, mItem, oView) {
+			var oDataModel = oView.getModel();
+			var oNewModel = oView.byId("toTable").getModel("itemList").getData().aItems;
+			var oStatText = {
+				stat: "",
+				text: "",
+				mItems: ""
+			};
+			this.aTotStat = [];
+			this.errorOccured = "";
+			// this.aFilter = [];
+			this.finalItem = oItems.Tanum;
+			this.finalPos = oItems.Tapos;
+			oDataModel.update(sEntityset, oItems, {
+				success: function(oData) {
+					// MessageToast.show("Transfer Order confirmed successfully");
+					oStatText.stat = "S";
+					oStatText.mItems = oItems;
+					this.aTotStat.push(oStatText);
+					//Check the filter message
+					this.currentItem = oItems.Tanum;
+					this.currentPos = oItems.Tapos;
+					if (this.finalPos === this.currentPos) {
+						// this.bindMessagePop();
+					}
+					var index;
+					for (var i = 0; i < oNewModel.length; i++) {
+						if (oNewModel[i].Tanum === this.currentItem && oNewModel[i].Tapos === this.currentPos) {
+							index = i;
+							break;
+						}
+					}
+					oNewModel.splice(index, 1);
+					var oJSONModel = new JSONModel();
+					oJSONModel.setData({
+						aItems: oNewModel
+					});
+					oView.setModel(oJSONModel, "itemList");
+				}.bind(this),
+				error: function(oData) {
+				}.bind(this)
+			});
+		},
+		// *************** Srini method for odata update ends *****************
+
 		//This odata read function write return value into global variable to handle later in UI
 		oCallRead: function(sFunction, oOwnerComponent, oGlobalModel) {
 			//var oModel = oOwnerComponent.getModel();

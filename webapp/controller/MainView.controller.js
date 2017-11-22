@@ -94,22 +94,6 @@ sap.ui.define([
 			// ************** Srini code to display Putaway by TO begins **********************
 			else if (oSelectedData.ProTyp === "2" && oSelectedData.MenTrans === "LM03") {
 				this._oDialog.close();
-				// this._fragmentFalse();
-				// this.getView().byId("inputValue").setEnabled(true);
-				// this.getView().byId("scanButton").setEnabled(true);
-				// this.getView().byId("putAwayVL").setVisible(true);
-				// this.getView().byId("newBin").setVisible(true);
-				// this.getView().byId("inputValue").setPlaceholder("Enter Transfer Order");
-				// this.getView().byId("inputValue").setMaxLength(10);
-				// // this.getView().byId("breadCrumbs").setCurrentLocationText(oSelectedData.Text);
-				// this.getView().byId("rfScreen").setText(oSelectedData.Text);
-				// this.getView().byId("footerbar").setVisible(true);
-				// this.getView().byId("accept").setVisible(true);
-				// this.getView().byId("difference").setVisible(true);
-				// this.getView().byId("message-popup").setVisible(true);
-				// this.getView().byId("toolbarheader").setVisible(true);
-				// this.getView().byId("inputValue").setVisible(true);
-				// this.getView().byId("scanButton").setVisible(true);
 				var oGlobalModel = this.getView().getModel("globalProperties");
 				oGlobalModel.setProperty("/currentScreen", "LM03");
 				this._oDialog.close();
