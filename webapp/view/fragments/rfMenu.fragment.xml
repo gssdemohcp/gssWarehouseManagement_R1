@@ -1,0 +1,9 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog class="sapUiResponsiveMargin sapUiPopupWithPadding">
+		<List visible="true" items="{ path: 'rfMenuModel>/rfMenu' }"  growing="true" growingScrollToLoad="true">
+			<items>
+				<StandardListItem title="{rfMenuModel>Text}" type="Active" press="onHandleMenu"/>
+			</items>
+		</List>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,59 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
+	<f:SimpleForm id="grShip" editable="false" layout="ResponsiveGridLayout" title="Shipment Inforamtion" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+		labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+		singleContainerFullSize="false">
+		<f:content>
+			<HBox>
+				<VBox>
+					<Label class="sapUiTinyMarginTop" text="Shipment"/>
+					<Label class="sapUiTinyMarginTop" text="External Identification No"/>
+					<Label class="sapUiTinyMarginTop" text="Container ID"/>
+					<Label class="sapUiTinyMarginTop" text="Shipment Type"/>
+					<Label class="sapUiTinyMarginTop" text="Shipment Route"/>
+				</VBox>
+				<VBox>
+					<Text id="shipment" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/Tknum}"/>
+					<Text id="eiNo" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" 
+					text="{parts:[{path:'delList>/Exti1'}],formatter: '.formatter.shipInfo'}"/>
+					<Text id="contID" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" 
+					text="{parts:[{path:'delList>/Signi'}],formatter: '.formatter.shipInfo'}"/>
+					<Text id="shipTyp" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/Shtyp}"/>
+					<Text id="shipRoute" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" 
+					text="{parts:[{path:'delList>/Route'}],formatter: '.formatter.shipInfo'}"/>
+				</VBox>
+			</HBox>
+		</f:content>
+	</f:SimpleForm>
+	<f:SimpleForm id="grShipData" editable="false" layout="ResponsiveGridLayout" title="Actual Data" labelSpanXL="3" labelSpanL="3"
+		labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+		columnsL="1" columnsM="1" singleContainerFullSize="false"></f:SimpleForm>
+	<HBox>
+		<VBox>
+			<Label class="sapUiSmallMargin" text="Current Load Start Date"/>
+			<Label class="sapUiSmallMargin" text="Actual Load Start Time"/>
+		</VBox>
+		<VBox>
+			<DatePicker id="DP1" change="valueChange"
+				value="{path:'delList>/Dalbg', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
+			<TimePicker id="TP3" displayFormat="HH:mm:ss a" change="valueChange" placeholder=""/>
+		</VBox>
+		<VBox>
+			<Label class="sapUiSmallMargin" text="Actual Load End Date"/>
+			<Label class="sapUiSmallMargin" text="Actual Load End Time"/>
+		</VBox>
+		<VBox>
+			<DatePicker id="DP2" change="valueChange"
+				value="{path:'delList>/Dalen', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
+			<TimePicker id="TP4" displayFormat="HH:mm:ss a" change="valueChange" placeholder=""/>
+		</VBox>
+	</HBox>
+	<!--	</f:content>-->
+	<!--</f:SimpleForm>-->
+	<!--<Label class="sapUiTinyMarginTop" text="Current Load Start Date Time"/>-->
+	<!--<DateTimePicker id="DTP1"-->
+	<!--	value="{path:'itemList>/Dalbg', type:'sap.ui.model.type.DateTime', formatOptions: { style: 'medium', strictParsing: true}}"/>-->
+	<!--<Label class="sapUiTinyMarginTop" text="Actual Load End Date Time"/>-->
+	<!--<DateTimePicker id="DTP2"-->
+	<!--	value="{path:'itemList>/Dalen', type:'sap.ui.model.type.DateTime', formatOptions: { style: 'medium', strictParsing: true}}"/>-->
+</core:FragmentDefinition>

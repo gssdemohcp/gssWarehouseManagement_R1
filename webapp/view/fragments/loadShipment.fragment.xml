@@ -1,0 +1,62 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
+	<f:SimpleForm id="shipForm" editable="false" layout="ResponsiveGridLayout" title="Shipment Info" labelSpanXL="3" labelSpanL="3"
+		labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+		columnsL="1" columnsM="1" singleContainerFullSize="false">
+		<f:content>
+			<!--<Label text="Delivery"/>-->
+			<!--<Text text="{itemList>/vbeln}"/>-->
+			<!--<Label text="Staging Area"/>-->
+			<!--<Text text="{itemList>/Lgbzo}"/>-->
+			<!--<Label text="Door"/>-->
+			<!--<Text text="{itemList>/Lgtor}"/>-->
+			<HBox>
+				<VBox>
+					<Label class="sapUiTinyMarginTop" text="Delivery"/>
+					<Label class="sapUiTinyMarginTop" text="Staging Area"/>
+					<Label class="sapUiTinyMarginTop" text="Door"/>
+				</VBox>
+				<VBox>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/vbeln}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/Lgbzo}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/Lgtor}"/>
+				</VBox>
+			</HBox>
+		</f:content>
+	</f:SimpleForm>
+	<f:SimpleForm id="shiphuForm" editable="false" layout="ResponsiveGridLayout" title="Handling Units" labelSpanXL="3" labelSpanL="3"
+		labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+		columnsL="1" columnsM="1" singleContainerFullSize="false">
+		<f:content>
+			<Toolbar>
+				<Input id="scanHUDel" type="Text" valueHelpRequest="onHandlePoHelp" submit="onHandleChange" placeholder="Enter/Scan Handling Unit"
+					width="100%" textAlign="Begin" maxLength="20"/>
+				<Button id="shhu" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanSHU" ariaLabelledBy="actionButtonLabel"/>
+			</Toolbar>
+			<!--<Label text="Loaded HU"/>-->
+			<!--<Text text="{itemList>/loadedHU}"/>-->
+			<!--<Label text="Total HU"/>-->
+			<!--<Text text="{itemList>/totalHU}"/>-->
+			<!--<Label text="Wt"/>-->
+			<!--<Text text="{itemList>/LoadedHuWt}"/>-->
+			<!--<Label text="TW"/>-->
+			<!--<Text text="{itemList>/TotHuWt}"/>-->
+			<HBox>
+				<VBox>
+					<Label id="loadedLabel" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="Loaded HU"/>
+					<Label id="unloadLabel" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="Unloaded HU" visible="false"/>
+					<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="Total HU"/>
+					<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="Loaded WT"/>
+					<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="Total WT"/>
+				</VBox>
+				<VBox>
+					<Text id="loadedText" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/loadedHU}"/>
+					<Text id="unloadText" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/UnloadedHu}" visible="false"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/totalHU}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/LoadedHuWt} {itemList>/Wt_unit}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/TotHuWt} {itemList>/Wt_unit}"/>
+				</VBox>
+			</HBox>
+		</f:content>
+	</f:SimpleForm>
+</core:FragmentDefinition>

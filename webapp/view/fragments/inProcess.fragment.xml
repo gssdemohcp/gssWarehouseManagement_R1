@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<!--<SelectDialog id="inProcess" noDataText="No Products Found" title="Inbound Process" items="{matList>/inBound}" contentHeight="100rem">-->
+	<!--	<StandardListItem title="{matList>process}" type="Active" press="onHandlePress"/>-->
+	<!--</SelectDialog>-->
+	<Dialog id="inProcess" title="Inbound Process" class="sapUiResponsiveMargin sapUiPopupWithPadding">
+		<List id="rfMenu2" visible="true" itemPress="onHandleInbound" items="{ path: 'matList>/inBound' }">
+			<items>
+				<StandardListItem title="{matList>process}" type="Active"/>
+			</items>
+		</List>
+		<endButton>
+			<Button text = "Cancel" press="onHandleInBoundCancel"/>
+		</endButton>		
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
+	<Table id="unpackTable" class="sapUiTinyMarginTop dataStyle" growing="true" growingScrollToLoad="true" width="auto"
+		items="{HUMatModel>/delItems}" mode="MultiSelect" selectionChange="unpackItemSelect">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Material List"/>
+				<ToolbarSpacer/>
+				<Button id="addItem" tooltip="Add Item" icon="sap-icon://add" press="onAddItem" visible="false"/>
+				<Button id="saveButton" text="Save" type="Transparent" press="onSave" visible="false"/>
+				<Button id="cancelButton" text="Cancel" type="Transparent" press="onCancel" visible="false"/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column hAlign="Left">
+				<header>
+					<Label text="Material" design="Bold"/>
+				</header>
+			</Column>
+			<Column hAlign="Left">
+				<header>
+					<Label text="Quantity/Unit" design="Bold"/>
+				</header>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{HUMatModel>Matnr}"/>
+					<!--<Input value="{HUMatModel>Matnr}" visible="{path: 'saveNew', formatter: '.enableControl'}"/>-->
+					<ObjectNumber
+						number="{ parts: [ {path: 'HUMatModel>Lfimg'}], type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits : 3, maxFractionDigits: 3 } }"
+						unit="{HUMatModel>Vrkme}" state="{ parts: [ {path: 'HUMatModel>Lfimg'} ], formatter : '.formatter.changeColor' }"/>
+					<!--<Input value="{fname}" visible="{path: 'saveNew', formatter: '.enableControl'}"/>-->
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

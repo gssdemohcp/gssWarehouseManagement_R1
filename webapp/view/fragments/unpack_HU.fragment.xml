@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
+	<Table id="unpackHUTable" class="sapUiTinyMarginTop dataStyle" growing="true" growingScrollToLoad="true" width="auto"
+		items="{HUModel>/delItems}" mode="MultiSelect" selectionChange="unpackItemSelect">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Lower Level HU List"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column hAlign="Left">
+				<header>
+					<Label text="Handling Unit" design="Bold"/>
+				</header>
+			</Column>
+			<Column hAlign="Left">
+				<header>
+					<Label text="Description" design="Bold"/>
+				</header>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{HUModel>Unvel}"/>
+					<Text text="{HUModel>Maktx}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

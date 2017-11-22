@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog id="newBin" title="New Bin" class="sapUiResponsiveMargin sapUiPopupWithPadding" icon="sap-icon://shelf">
+		<content>
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="Dest. Bin {Bin>/Nlpla}" labelSpanXL="4" labelSpanL="4" labelSpanM="4"
+				labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="2" columnsM="2"
+				singleContainerFullSize="false">
+				<f:content>
+					<Label text="New Bin"/>
+					<Toolbar>
+						<Input id="newBinValue" liveChange="onNewBinChange" value="{Bin>/newBin}" valueState="None" width="90%"/>
+						<Button id="newBinScan" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanNB" ariaLabelledBy="actionButtonLabel"
+							visible="true" width="10%"/>
+						<Button text="Check" id="check" press="onHandleCheck"/>
+					</Toolbar>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<beginButton>
+			<Button text="Ok" press="onNewBinConfirm" id="newBinConfirm" enabled="true"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="onNewBinCancel" id="newBincancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

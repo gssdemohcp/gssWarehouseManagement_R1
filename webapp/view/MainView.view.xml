@@ -1,0 +1,135 @@
+<mvc:View controllerName="gss.newWarehouseManage_R1.controller.MainView" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" displayBlock="true" xmlns="sap.m">
+	<App>
+		<pages>
+			<Page class="sapMPageHeader" enableScrolling="false">
+				<!--<customHeader>-->
+				<customHeader>
+					<Toolbar>
+						<!--<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>-->
+						<ToolbarSpacer/>
+						<Title id="rfScreen" text="{i18n>title}" level="H2" textAlign="Center"/>
+						<ToolbarSpacer/>
+						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
+					</Toolbar>
+				</customHeader>
+				<Toolbar>
+					<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
+				</Toolbar>
+				<!--</customHeader>-->
+				<!--<subHeader>-->
+				<Toolbar id="toolbarheader" visible="false">
+					<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="onHandleChange"
+						liveChange="onHandleBinding" width="100%" textAlign="Begin" visible="false"/>
+					<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"
+						visible="false"/>
+				</Toolbar>
+				<!--</subHeader>-->
+				<content>
+					<!--<l:VerticalLayout visible="false" id="putAwayVL">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.putAway" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="loadInqByDel">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.loadInquiry_delivery" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="loadInqByShip">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.loadInquiry_shipment" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="loadInqByHU">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.loadInquiry_HU" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="loadByShip" width="100%">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.loadShipment" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="loadByDel" width="100%">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.loadDelivery" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="GRByDel" width="100%">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.GRDelivery" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="GRByShip" width="100%">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.GRShipment" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="GRByShipItems" width="100%">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.GRShipItems" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="GRByDelItems" width="100%">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.GRDelItems" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="grDelShip">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.grDelShip" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="Unpack">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.Unpack" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="UnpackMaterial">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.unpack_Material" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+					<!--<l:VerticalLayout visible="false" id="UnpackHU">-->
+					<!--	<l:content>-->
+					<!--		<core:Fragment fragmentName="com.sap.wmwmApp.view.fragments.unpack_HU" type="XML"/>-->
+					<!--	</l:content>-->
+					<!--</l:VerticalLayout>-->
+				</content>
+				<footer id="footer"
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
+					<Bar id="footerbar" visible="false">
+						<!--<contentMiddle>-->
+						<contentLeft>
+							<!--<Toolbar id="footerbar" visible="false">-->
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
+								visible="false"/>
+						</contentLeft>
+						<contentRight>
+							<Button id="LUnload" class="sapThemeHighlight-asOutlineColor" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Load/Unload"
+								visible="false" enabled="false"/>
+							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="More" visible="false" enabled="false"/>
+							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items" visible="false" enabled="false"/>
+							<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>
+							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>
+							<Button id="accept" press="onHandleAccept" icon="sap-icon://accept" visible="false" enabled="false"/>
+							<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" visible="false" enabled="false"/>
+							<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf" visible="false" enabled="false"/>
+							<Button id="undoDel" icon="sap-icon://undo" press="unLoad" ariaLabelledBy="actionButtonLabel" tooltip="Undo" visible="false" enabled="false"/>
+							<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Ship" visible="false" enabled="false"/>
+							<Button id="post" icon="sap-icon://paper-plane" press="onHandlePost" tooltip="GR Post" visible="false" enabled="false"/>
+							<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="Save" visible="false"/>
+							<Button id="print" icon="sap-icon://print" press="onHandlePrint" tooltip="Print" visible="false"/>
+							<Button id="byMat" icon="sap-icon://product" press="onHandleMat" tooltip="By Material" visible="false"/>
+							<Button id="byHU" icon="sap-icon://suitcase" press="onHandleHU" tooltip="By HU" visible="false"/>
+						</contentRight>
+						<!--</contentMiddle>-->
+						<!--</Toolbar>-->
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

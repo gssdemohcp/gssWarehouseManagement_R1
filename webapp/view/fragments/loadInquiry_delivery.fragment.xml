@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<l:VerticalLayout>
+		<ObjectStatus id="delvStatus" class="sapUiTinyMarginBegin Text" text="{itemList>/delStat}"/>
+		<ObjectStatus id="delvText" class="sapUiTinyMarginBegin Text" text="Loaded {itemList>/loadedHU} / {itemList>/totalHU} Handling Units"/>
+	</l:VerticalLayout>
+	<Table class="sapUiTinyMarginBegin" id="huTable" inset="false" items="{itemList>/aItems}" visible="true" growing="true" growingScrollToLoad="true">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Handling units" level="H2"/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column width="auto"></Column>
+			<Column width="auto"></Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{parts:[{path:'itemList>Exidv'},{path:'itemList>Exida'}],formatter: '.formatter.status'}"/>
+					<Text text="{itemList>HuStatDesc}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

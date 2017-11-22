@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="confirm" title="Alert" class="sapUiResponsiveMargin sapUiPopupWithPadding" icon="sap-icon://alert">
+		<content>
+			<Text text="Do you want to exit the transaction?"/>
+		</content>
+		<beginButton>
+			<Button text = "Yes" press="onNavigateConfirm"/>
+		</beginButton>
+		<endButton>
+			<Button text = "No" press="onNavigateCancel"/>
+		</endButton>		
+	</Dialog>
+</core:FragmentDefinition>
