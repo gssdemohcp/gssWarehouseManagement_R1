@@ -51,6 +51,9 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		
+		TestSabari: function(){
+			
+		},
 		putAwayLoad: function(oView, oApplication, afilters) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
