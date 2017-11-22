@@ -23,7 +23,7 @@ sap.ui.define(["sap/ui/base/Object",
 		
 		// ****************** Srini code for git cloning begins *****************
 		somefn: function() {
-			
+			var test;
 		},
 		// ****************** Srini code for git cloning begins *****************
 
