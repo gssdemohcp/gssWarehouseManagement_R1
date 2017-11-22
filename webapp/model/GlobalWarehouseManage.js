@@ -20,12 +20,6 @@ sap.ui.define(["sap/ui/base/Object",
 			this._mRunningSwipes = {};
 			this._bOneWaitingSuccess = false;
 		},
-		
-		// ****************** Srini code for git cloning begins *****************
-		somefn: function() {
-			var test;
-		},
-		// ****************** Srini code for git cloning begins *****************
 
 		menuConfigurationLoad: function(oView, oApplication, afilters) {
 			//Call oDATA Read with entity set name
