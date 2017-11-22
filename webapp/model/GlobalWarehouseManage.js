@@ -82,7 +82,12 @@ sap.ui.define(["sap/ui/base/Object",
 			}.bind(this));
 
 			return promise;
+		},
+		testselvan: function(){
+			var test = "";
+			test = "selvan";
 		}
+		
 
 	});
 });
