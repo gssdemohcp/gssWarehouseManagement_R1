@@ -17,7 +17,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this._router.getRoute("putaway").attachPatternMatched(this._routePatternMatched, this);
 			this.inputDetails();
-
+			var test;
 		},
 
 		_routePatternMatched: function(oEvent) {
