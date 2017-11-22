@@ -24,7 +24,6 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		
 		getFilters: function(field, value) {
-			var test;
 			var aFilter = new Filter(field, FilterOperator.EQ, value);
 			return aFilter;
 		},
