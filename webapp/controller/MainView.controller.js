@@ -86,6 +86,8 @@ sap.ui.define([
 		},
 		onHandleMenu: function(oEvent) {
 			var oSelectedData = oEvent.getSource().getBindingContext("rfMenuModel").getObject();
+			var oGlobalModel = this.getView().getModel("globalProperties");
+			var loadView = "";
 			if (oSelectedData.ProTyp === "1") {
 				this._oDialog.close();
 				var createBC = "X";
@@ -94,11 +96,17 @@ sap.ui.define([
 			// ************** Srini code to display Putaway by TO begins **********************
 			else if (oSelectedData.ProTyp === "2" && oSelectedData.MenTrans === "LM03") {
 				this._oDialog.close();
-				var oGlobalModel = this.getView().getModel("globalProperties");
+				
 				oGlobalModel.setProperty("/currentScreen", "LM03");
 				this._oDialog.close();
-				var loadPutaway = this.getRouter();
-				loadPutaway.navTo("putaway");
+				loadView = this.getRouter();
+				loadView.navTo("putaway");
+			}else if (oSelectedData.ProTyp === "2" && oSelectedData.MenTrans === "LM05") {
+				this._oDialog.close();
+				oGlobalModel.setProperty("/currentScreen", "LM05");
+				this._oDialog.close();
+				loadView = this.getRouter();
+				loadView.navTo("picking");
 			}
 			// ************** Srini code to display Putaway by TO begins **********************
 		}
