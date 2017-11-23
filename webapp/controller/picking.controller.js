@@ -64,11 +64,11 @@ formatter: formatter,
 			this._oApplication = this.getApplication();
 			var oWhenFilterCompleted = this._oApplication._ofilters.buildFilters(inputVal, this);
 			// oWhenFilterCompleted.done(function() {
-				this._oApplication._oGlobalWarehouseManage.putAwayLoad(this, this._oApplication, oWhenFilterCompleted);
+				this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, oWhenFilterCompleted);
 			// }.bind(this));
 		},
 		
-		putAwayConfirm: function() {
+		pickingConfirm: function() {
 			this._oApplication = this.getApplication();
 			var selectedItems = this._oApplication._oGlobalWarehouseManage.confirmItems(this,this._oApplication);
 		}

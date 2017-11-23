@@ -71,7 +71,7 @@ sap.ui.define(["sap/ui/base/Object",
 				};
 				oRfModel.setData(oRfData);
 				//Create New Model for Menu Configuration Item
-				oView.setModel(oRfModel, "itemList");
+				oView.setModel(oRfModel, "materialList");
 
 				oGlobalModel.setProperty("/isOdataLoading", false);
 				promise.resolve();

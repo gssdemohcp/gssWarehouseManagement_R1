@@ -10,33 +10,33 @@
 						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" 
 						ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
-					<Table id="toTable" items="{itemList>/aItems}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" mode="MultiSelect" showSeparators="All"
+					<Table id="toTable" items="{materialList>/aItems}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" mode="MultiSelect" showSeparators="All"
 						selectionChange="onHandleSelection" class="sapUiTinyMargin" width="auto" growing="true" growingScrollToLoad="true">
 						<items>
 							<ColumnListItem counter="0" id="item1">
 								<cells>
-									<Text maxLines="0" text="{itemList>Matnr}"/>
-									<Text maxLines="0" text="{itemList>Maktx}"/>
-									<Text maxLines="0" text="{itemList>Vltyp} {itemList>Vlber} {itemList>Vlpla}"/>
+									<Text maxLines="0" text="{materialList>Matnr}"/>
+									<Text maxLines="0" text="{materialList>Maktx}"/>
+									<Text maxLines="0" text="{materialList>Vltyp} {materialList>Vlber} {materialList>Vlpla}"/>
 									<ObjectNumber
-										number="{ parts: [{path: 'itemList>Nltyp'}, {path: 'itemList>Nlber'}, {path: 'itemList>Nlpla'}], type: 'sap.ui.model.type.CompositeTypeModule' }"/>
+										number="{ parts: [{path: 'materialList>Nltyp'}, {path: 'materialList>Nlber'}, {path: 'materialList>Nlpla'}], type: 'sap.ui.model.type.CompositeTypeModule' }"/>
 									<!--formatter : '.formatter.newbinColorChange'-->
 									<!--						state="{-->
 									<!--parts: [-->
-									<!--	{path: 'itemList>Nlpla'}-->
+									<!--	{path: 'materialList>Nlpla'}-->
 									<!--]-->
-									<!--<Text maxLines="0" text="{itemList>Nltyp} {itemList>Nlber} {itemList>Nlpla}"/>-->
-									<Text text="{ parts: [{path: 'itemList>DestSu'}], formatter : '.formatter.removeColumn'}"/>
-									<!--{ parts: [ {path: 'itemList>DestSu'} ], formatter : '.formatter.su' }"-->
+									<!--<Text maxLines="0" text="{materialList>Nltyp} {materialList>Nlber} {materialList>Nlpla}"/>-->
+									<Text text="{ parts: [{path: 'materialList>DestSu'}], formatter : '.formatter.removeColumn'}"/>
+									<!--{ parts: [ {path: 'materialList>DestSu'} ], formatter : '.formatter.su' }"-->
 									<!--class="myStyle sapMText sapMTextMaxWidth sapUiSelectable"-->
-									<!--<ObjectNumber number="{itemList>DestQuantity}" unit="{itemList>AltUnit}"/>-->
+									<!--<ObjectNumber number="{materialList>DestQuantity}" unit="{materialList>AltUnit}"/>-->
 									<ObjectNumber
-										number="{ parts: [ {path: 'itemList>DestQuantity'}], type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits : 3, maxFractionDigits: 3 } }"
-										unit="{itemList>AltUnit}" state="{ parts: [ {path: 'itemList>DestDifa'} ], formatter : '.formatter.changeColor' }"/>
-									<!--, {path: 'itemList>DestDifa'} -->
-									<!--state="{ parts: [ {path: 'itemList>DestQuantity'}, {path: 'itemList>AltUnit'} ],-->
+										number="{ parts: [ {path: 'materialList>DestQuantity'}], type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits : 3, maxFractionDigits: 3 } }"
+										unit="{materialList>AltUnit}" state="{ parts: [ {path: 'materialList>DestDifa'} ], formatter : '.formatter.changeColor' }"/>
+									<!--, {path: 'materialList>DestDifa'} -->
+									<!--state="{ parts: [ {path: 'materialList>DestQuantity'}, {path: 'materialList>AltUnit'} ],-->
 									<!--formatter: 'sap.m.sample.Table.Formatter.weightState' }"/>-->
-									<!--<Text id="quantity" text="{ parts: [ {path: 'itemList>DestQuantity'}, {path: 'itemList>AltUnit'} ], formatter : '.formatter.changeColor' }"/>-->
+									<!--<Text id="quantity" text="{ parts: [ {path: 'materialList>DestQuantity'}, {path: 'materialList>AltUnit'} ], formatter : '.formatter.changeColor' }"/>-->
 								</cells>
 							</ColumnListItem>
 						</items>
