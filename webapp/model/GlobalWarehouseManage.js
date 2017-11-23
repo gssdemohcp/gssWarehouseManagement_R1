@@ -51,7 +51,7 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// ********** Srini code to load putaway data begins *****************
-		putAwayLoad: function(oView, oApplication, afilters) {
+		LoadMaterial: function(oView, oApplication, afilters) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
