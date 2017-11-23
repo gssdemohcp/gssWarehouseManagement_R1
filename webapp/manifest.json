@@ -109,6 +109,11 @@
 					"transition": "slide",
 					"viewName": "putAway",
 					"viewLevel": 2
+				},
+				"picking": {
+					"transition": "slide",
+					"viewName": "picking",
+					"viewLevel": 2
 				}
 			},
 			"routes": [{
@@ -119,6 +124,10 @@
 				"name": "putaway",
 				"pattern": "putaway",
 				"target": "putaway"
+			}, {
+				"name": "picking",
+				"pattern": "picking",
+				"target": "picking"
 			}]
 		}
 	}
