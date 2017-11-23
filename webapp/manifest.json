@@ -113,7 +113,7 @@
 				"picking": {
 					"transition": "slide",
 					"viewName": "picking",
-					"viewLevel": 2
+					"viewLevel": 3
 				}
 			},
 			"routes": [{

@@ -6,7 +6,7 @@ sap.ui.define([
 ], function(Controller, BaseController, formatter) {
 	"use strict";
 
-	return Controller.extend("gss.newWarehouseManage_R1.controller.picking", {
+	return BaseController.extend("gss.newWarehouseManage_R1.controller.picking", {
 formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
