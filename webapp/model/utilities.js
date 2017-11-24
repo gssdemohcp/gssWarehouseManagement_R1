@@ -27,22 +27,6 @@ sap.ui.define([
 		attachControlToView: function(oView, oControl) {
 			jQuery.sap.syncStyleClass(sContentDensityClass, oView, oControl);
 			oView.addDependent(oControl);
-		},
-		//oData Call Function
-		oCallReadFunction: function(sFunction,oOwnerComponent,oGlobalModel) {
-			//var oModel = oOwnerComponent.getModel();
-			var oRfData;
-			oOwnerComponent.read(sFunction, {
-				success: function(oRetrievedResult) {
-					//return odata result 
-					oRfData = oRetrievedResult.results;
-				    oGlobalModel.setProperty("/oDataResult", this._oResultData);
-				}.bind(this),
-				error: function(oError) {
-					return null;
-				}.bind(this)
-			});
-			return oRfData;
 		}
 	};
 });
