@@ -64,15 +64,8 @@ sap.ui.define([
 
 		buildFilter: function(inputVal) {
 			//Create filter string for get picking material - selvan
-			var aFilters = [];
-			var filterTanum = this._oApplication._ofilters.getFilters("Tanum", inputVal);
-			var filterPqueue = this._oApplication._ofilters.getFilters("Queue", this.oGlobalModel.getProperty("/currentQueue"));
-			var filterLgnum = this._oApplication._ofilters.getFilters("Lgnum",this.oGlobalModel.getProperty("/currentLgnum"));
-			aFilters.push(filterTanum);
-			aFilters.push(filterPqueue);
-			aFilters.push(filterLgnum);
-			
-			this.getPickingMaterial(aFilters);
+			var aFilterValues = [this._oApplication._ofilters.getFilters("Tanum", inputVal),this._oApplication._ofilters.getFilters("Queue", this.oGlobalModel.getProperty("/currentQueue")),this._oApplication._ofilters.getFilters("Lgnum",this.oGlobalModel.getProperty("/currentLgnum"))];
+			this.getPickingMaterial(aFilterValues);
 		},
 
 		getPickingMaterial: function(aFilters){
