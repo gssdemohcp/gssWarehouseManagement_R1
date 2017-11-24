@@ -151,10 +151,24 @@ sap.ui.define([
 			// Start Menu item and view navvigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			this._oMenuTransactionModel = new JSONModel({
+				LM02: "putaway",
 				LM03: "putaway",
 				LM09: "putaway",
-				LM05: "picking"
+				
+				LM05: "picking",
+				LM06: "picking",
+				
+				LM33: "load",
+				LM34: "load",
+				LM31: "load",
+				LM30: "load",
+				
+				LM37: "inquiryShipment",
+				LM36: "inquiryDelivery",
+				LM35: "LoadInq_HU"
+				
 			});
+			
 			this._oMenuTransactionModel.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModel, "MenuTransactionProperties");
 			//*******************************************************************************************
