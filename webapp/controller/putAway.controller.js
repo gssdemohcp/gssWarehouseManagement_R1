@@ -16,6 +16,9 @@ sap.ui.define([
 		onInit: function() {
 			this._router = this.getRouter();
 			this._router.getRoute("putaway").attachPatternMatched(this._routePatternMatched, this);
+						this.oGlobalModel = this.getGlobalModel();
+			this._oApplication = this.getApplication();
+
 			this.inputDetails();
 		},
 
@@ -45,7 +48,6 @@ sap.ui.define([
 		},
 
 		iGetInput: function(oEvent) {
-			var oGlobalModel = this.getView().getModel("globalProperties");
 			this._currentScreen = oGlobalModel.getProperty("/currentScreen");
 			var inputVal = this.getView().byId("inputValue").getValue();
 			if (!inputVal && (this._currentScreen === "LM03" || this._currentScreen === "LM05")) {
@@ -61,11 +63,16 @@ sap.ui.define([
 		},
 		
 		buildFilter: function(inputVal) {
-			this._oApplication = this.getApplication();
-			var oWhenFilterCompleted = this._oApplication._ofilters.buildFilters(inputVal, this);
-			// oWhenFilterCompleted.done(function() {
-				this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, oWhenFilterCompleted);
-			// }.bind(this));
+			//Create filter string for get picking material - selvan
+			var aFilterValues = [this._oApplication._ofilters.getFilters("Tanum", inputVal),this._oApplication._ofilters.getFilters("Queue", this.oGlobalModel.getProperty("/currentQueue")),this._oApplication._ofilters.getFilters("Lgnum",this.oGlobalModel.getProperty("/currentLgnum"))];
+			this.getPickingMaterial(aFilterValues);
+		},
+
+		getPickingMaterial: function(aFilters){
+			//Read picking material from backend
+			this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, aFilters);
+			//code end -selvan
+			
 		},
 		
 		putAwayConfirm: function() {

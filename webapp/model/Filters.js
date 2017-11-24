@@ -26,41 +26,6 @@ sap.ui.define(["sap/ui/base/Object",
 		getFilters: function(field, value) {
 			var aFilter = new Filter(field, FilterOperator.EQ, value);
 			return aFilter;
-		},
-		
-	
-		
-		buildFilters: function(inputVal, oView) {
-			var pQueue,
-				pLgnum;
-				// promise = jQuery.Deferred();
-			var aFilters = [];
-			var aRfMenu = sap.ui.getCore().getModel("mainJsonModel").getData().rfMenu;
-			var oGlobalModel = oView.getModel("globalProperties");
-			this._currentScreen = oGlobalModel.getProperty("/currentScreen");
-			// Putaway or picking by TO both as same screen and filters
-			if (this._currentScreen === "LM03" || this._currentScreen === "LM05") {
-				this._input = inputVal;
-				aRfMenu.forEach(function(oRfMenu) {
-					if (oRfMenu.Queue && oRfMenu.Lgnum) {
-						pQueue = oRfMenu.Queue;
-						pLgnum = oRfMenu.Lgnum;
-						this.Nltyp = oRfMenu.Nltyp;
-					}
-				}.bind(this));
-				var filterTanum = this.getFilters("Tanum", inputVal);
-				var filterPqueue = this.getFilters("Queue", pQueue);
-				var filterLgnum = this.getFilters("Lgnum", pLgnum);
-				aFilters.push(filterTanum);
-				aFilters.push(filterPqueue);
-				aFilters.push(filterLgnum);
-				// this.getEntityset("/WMProcessSet", aFilters);
-				// if (this._currentScreen === "LM05") {
-				// 	this.getView().byId("newBin").setVisible(false);
-				// }
-				// promise.resolve(aFilters);
-				return aFilters;
-			}
 		}
-	});
+		});
 });
