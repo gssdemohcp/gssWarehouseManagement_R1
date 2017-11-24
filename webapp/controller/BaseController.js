@@ -61,6 +61,9 @@ sap.ui.define([
 		getFragmentControllerModel: function(){
 			return this.getOwnerComponent().getModel("fragmentControllerProperties");	
 		},
+		getMenuTransactionModel: function(){
+			return this.getOwnerComponent().getModel("MenuTransactionProperties");
+		},
 		/**
 		 * Convenience method
 		 * @returns {object} the application controller

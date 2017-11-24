@@ -86,29 +86,36 @@ sap.ui.define([
 		},
 		onHandleMenu: function(oEvent) {
 			var oSelectedData = oEvent.getSource().getBindingContext("rfMenuModel").getObject();
-			var oGlobalModel = this.getView().getModel("globalProperties");
-			var loadView = "";
+
 			if (oSelectedData.ProTyp === "1") {
 				this._oDialog.close();
 				var createBC = "X";
 				this._menuBinding(oSelectedData, createBC); //Call function menu binding
+			}else if (oSelectedData.ProTyp === "2"){
+				this.getRouter().navTo(this.getMenuTransactionModel().getProperty("/"+oSelectedData.MenTrans));
+				this.getGlobalModel().setProperty("/currentScreen", oSelectedData.MenTrans);
+			 	this._oDialog.close();
 			}
-			// ************** Srini code to display Putaway by TO begins **********************
-			else if (oSelectedData.ProTyp === "2" && oSelectedData.MenTrans === "LM03") {
-				this._oDialog.close();
+			//COMMENT BY SELVAN FOR ABOVE NEW CODE FOR THIS
+			// // ************** Srini code to display Putaway by TO begins **********************
+						//var oGlobalModel = this.getView().getModel("globalProperties");
+		//	var loadView = this.getRouter();
+			
+			// else if (oSelectedData.ProTyp === "2" && oSelectedData.MenTrans === "LM03") {
+			// 	this._oDialog.close();
 				
-				oGlobalModel.setProperty("/currentScreen", "LM03");
-				this._oDialog.close();
-				loadView = this.getRouter();
-				loadView.navTo("putaway");
-			}else if (oSelectedData.ProTyp === "2" && oSelectedData.MenTrans === "LM05") {
-				this._oDialog.close();
-				oGlobalModel.setProperty("/currentScreen", "LM05");
-				this._oDialog.close();
-				loadView = this.getRouter();
-				loadView.navTo("picking");
-			}
-			// ************** Srini code to display Putaway by TO begins **********************
+			// 	oGlobalModel.setProperty("/currentScreen", "LM03");
+			// 	this._oDialog.close();
+			// 	//loadView = this.getRouter();
+			// 	loadView.navTo("putaway");
+			// }else if (oSelectedData.ProTyp === "2" && oSelectedData.MenTrans === "LM05") {
+			// 	this._oDialog.close();
+			// 	oGlobalModel.setProperty("/currentScreen", "LM05");
+			// 	this._oDialog.close();
+			// 	//loadView = this.getRouter();
+			// 	loadView.navTo("picking");
+			// }
+			// // ************** Srini code to display Putaway by TO begins **********************
 		}
 	});
 });

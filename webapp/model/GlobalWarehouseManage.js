@@ -29,6 +29,10 @@ sap.ui.define(["sap/ui/base/Object",
 				oEntitySetModel = oView.getModel("entitySetProperties"),
 				bEntityName = oEntitySetModel.getProperty("/MenuConfiguration"),
 				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, afilters);
+				
+			var pQueue,
+				pLgnum,
+				Nltyp;
 
 			var oGlobalModel = oView.getModel("globalProperties");
 			oGlobalModel.setProperty("/isOdataLoading", true);
@@ -40,10 +44,28 @@ sap.ui.define(["sap/ui/base/Object",
 					rfMenu: oRfData
 				};
 				oRfModel.setData(oRfData);
+
+				//code start - selvan
+				//capture queue number for filter option
+				var aRfMenu = oRfModel.getData().rfMenu;
+				aRfMenu.forEach(function(oRfMenu) {
+					if (oRfMenu.Queue && oRfMenu.Lgnum) {
+						pQueue = oRfMenu.Queue;
+						pLgnum = oRfMenu.Lgnum;
+						Nltyp = oRfMenu.Nltyp;
+					}
+				}.bind(this));
+				oGlobalModel.setProperty("/currentQueue", pQueue);
+				oGlobalModel.setProperty("/currentLgnum", pLgnum);
+				oGlobalModel.setProperty("/currentNltyp", Nltyp);
+				//code end -selvan
+				
+				oGlobalModel.setProperty("/isOdataLoading", false);
+				
 				//Create New Model for Menu Configuration Item
 				sap.ui.getCore().setModel(oRfModel, "mainJsonModel");
-
-				oGlobalModel.setProperty("/isOdataLoading", false);
+				
+				
 				promise.resolve();
 
 			}.bind(this));

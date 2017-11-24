@@ -28,6 +28,9 @@ sap.ui.define(["sap/ui/base/Object",
 			return aFilter;
 		},
 		
+		buildFiltersNew: function(inputVal, oView) {
+		},
+		
 		buildFilters: function(inputVal, oView) {
 			var pQueue,
 				pLgnum;

@@ -11,11 +11,30 @@
       "urlParameters": [],
       "hashParameter": "",
       "backendSystem": [],
+      "urlParametersNotNeeded": false,
+      "_metadata": {
+        "runnerId": "webapprunner",
+        "id": 1516906,
+        "displayName": "Run index.html",
+        "lastRunTimeStamp": 1511517424561
+      }
+    },
+    {
+      "filePath": "/webapp/index.html",
+      "previewMode": 1,
+      "dataMode": 1,
+      "workspace": "withoutWorkspace",
+      "ui5ActiveVersion": null,
+      "ui5VerSource": null,
+      "isDefaultVersion": 0,
+      "urlParameters": [],
+      "hashParameter": "",
+      "backendSystem": [],
       "_metadata": {
         "runnerId": "webapprunner",
         "id": 462573,
         "displayName": "Run index.html",
-        "lastRunTimeStamp": 1511431631642
+        "lastRunTimeStamp": 1511454904663
       }
     }
   ]

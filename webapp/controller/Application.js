@@ -114,7 +114,9 @@ sap.ui.define([
 				isSwipeRunning: false,
 				masterImmediateBusy: true,
 				detailImmediateBusy: true,
-				menuModel: ""
+				currentQueue: "",
+				currentLgnum: "",
+				currentNltyp: ""
 			});
 			this._oGlobalModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oGlobalModel, "globalProperties");
@@ -143,6 +145,22 @@ sap.ui.define([
 			//*******************************************************************************************
 			// End of Code Sabari to Add the Fragment Controller Model 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			
+			
+			//*******************************************************************************************
+			// Start Menu item and view navvigation properties 
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			this._oMenuTransactionModel = new JSONModel({
+				LM03: "putaway",
+				LM09: "putaway",
+				LM05: "picking"
+			});
+			this._oMenuTransactionModel.setDefaultBindingMode(BindingMode.OneWay);
+			this._oComponent.setModel(this._oMenuTransactionModel, "MenuTransactionProperties");
+			//*******************************************************************************************
+			// End of Code handle menu item and view navigation properties 
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			
 			// delegate error handling
 			errorHandling.register(this, this._oComponent);
 
