@@ -7,7 +7,7 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.picking", {
-formatter: formatter,
+		formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -16,6 +16,8 @@ formatter: formatter,
 		onInit: function() {
 			this._router = this.getRouter();
 			this._router.getRoute("picking").attachPatternMatched(this._routePatternMatched, this);
+			this.oGlobalModel = this.getGlobalModel();
+			this._oApplication = this.getApplication();
 			this.inputDetails();
 		},
 
@@ -45,8 +47,8 @@ formatter: formatter,
 		},
 
 		iGetInput: function(oEvent) {
-			var oGlobalModel = this.getView().getModel("globalProperties");
-			this._currentScreen = oGlobalModel.getProperty("/currentScreen");
+			
+			this._currentScreen = this.oGlobalModel.getProperty("/currentScreen");
 			var inputVal = this.getView().byId("inputValue").getValue();
 			if (!inputVal && this._currentScreen === "LM05") {
 				return;
@@ -59,18 +61,29 @@ formatter: formatter,
 				}
 			}
 		},
-		
+
 		buildFilter: function(inputVal) {
-			this._oApplication = this.getApplication();
-			var oWhenFilterCompleted = this._oApplication._ofilters.buildFilters(inputVal, this);
-			// oWhenFilterCompleted.done(function() {
-				this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, oWhenFilterCompleted);
-			// }.bind(this));
+			//Create filter string for get picking material - selvan
+			var aFilters = [];
+			var filterTanum = this._oApplication._ofilters.getFilters("Tanum", inputVal);
+			var filterPqueue = this._oApplication._ofilters.getFilters("Queue", this.oGlobalModel.getProperty("/currentQueue"));
+			var filterLgnum = this._oApplication._ofilters.getFilters("Lgnum",this.oGlobalModel.getProperty("/currentLgnum"));
+			aFilters.push(filterTanum);
+			aFilters.push(filterPqueue);
+			aFilters.push(filterLgnum);
+			
+			this.getPickingMaterial(aFilters);
 		},
-		
+
+		getPickingMaterial: function(aFilters){
+			//Read picking material from backend
+			this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, aFilters);
+			//code end -selvan
+			
+		},
 		pickingConfirm: function() {
 			this._oApplication = this.getApplication();
-			var selectedItems = this._oApplication._oGlobalWarehouseManage.confirmItems(this,this._oApplication);
+			var selectedItems = this._oApplication._oGlobalWarehouseManage.confirmItems(this, this._oApplication);
 		}
 
 		/**
