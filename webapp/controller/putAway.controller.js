@@ -16,9 +16,8 @@ sap.ui.define([
 		onInit: function() {
 			this._router = this.getRouter();
 			this._router.getRoute("putaway").attachPatternMatched(this._routePatternMatched, this);
-						this.oGlobalModel = this.getGlobalModel();
+			this.oGlobalModel = this.getGlobalModel();
 			this._oApplication = this.getApplication();
-
 			this.inputDetails();
 		},
 
@@ -65,10 +64,10 @@ sap.ui.define([
 		buildFilter: function(inputVal) {
 			//Create filter string for get picking material - selvan
 			var aFilterValues = [this._oApplication._ofilters.getFilters("Tanum", inputVal),this._oApplication._ofilters.getFilters("Queue", this.oGlobalModel.getProperty("/currentQueue")),this._oApplication._ofilters.getFilters("Lgnum",this.oGlobalModel.getProperty("/currentLgnum"))];
-			this.getPickingMaterial(aFilterValues);
+			this.getPutawayMaterial(aFilterValues);
 		},
 
-		getPickingMaterial: function(aFilters){
+		getPutawayMaterial: function(aFilters){
 			//Read picking material from backend
 			this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, aFilters);
 			//code end -selvan

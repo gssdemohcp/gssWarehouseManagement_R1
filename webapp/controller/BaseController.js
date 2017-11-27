@@ -61,16 +61,17 @@ sap.ui.define([
 		getFragmentControllerModel: function(){
 			return this.getOwnerComponent().getModel("fragmentControllerProperties");	
 		},
-		getMenuTransactionModel: function(){
-			return this.getOwnerComponent().getModel("MenuTransactionProperties");
+		getMenuTransactionModel: function(oSelectedData) {
+			var screenName = this.getOwnerComponent().getModel("MenuTransactionProperties"),
+				loadedScreen = screenName.getProperty("/" + oSelectedData.MenTrans).slice(0, screenName.getProperty("/" + oSelectedData.MenTrans).indexOf("@"));
+			return loadedScreen; 
 		},
 		/**
 		 * Convenience method
 		 * @returns {object} the application controller
 		 */
 		getApplication: function() {
-
-		return this.getGlobalModel().getProperty("/application");
+			return this.getGlobalModel().getProperty("/application");
 		},
 		
 		getComponent: function() {

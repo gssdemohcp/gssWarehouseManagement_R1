@@ -86,13 +86,13 @@ sap.ui.define([
 		},
 		onHandleMenu: function(oEvent) {
 			var oSelectedData = oEvent.getSource().getBindingContext("rfMenuModel").getObject();
-
 			if (oSelectedData.ProTyp === "1") {
 				this._oDialog.close();
 				var createBC = "X";
 				this._menuBinding(oSelectedData, createBC); //Call function menu binding
 			}else if (oSelectedData.ProTyp === "2"){
-				this.getRouter().navTo(this.getMenuTransactionModel().getProperty("/"+oSelectedData.MenTrans));
+				var screen = this.getMenuTransactionModel(oSelectedData);
+				this.getRouter().navTo(screen);	
 				this.getGlobalModel().setProperty("/currentScreen", oSelectedData.MenTrans);
 			 	this._oDialog.close();
 			}

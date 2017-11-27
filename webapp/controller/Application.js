@@ -106,6 +106,7 @@ sap.ui.define([
 			this._oGlobalModel = new JSONModel({
 				application: this,
 				currentScreen: "",
+				loadingScreen: "",
 				isOdataLoading: false,
 				isMultiSelect: false,
 				isMetaDataLoading: true,
@@ -151,9 +152,9 @@ sap.ui.define([
 			// Start Menu item and view navvigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			this._oMenuTransactionModel = new JSONModel({
-				LM02: "putaway",
-				LM03: "putaway",
-				LM09: "putaway",
+				LM02: "putaway@Lenum",
+				LM03: "putaway@Tanum",
+				LM09: "putaway@Vbeln",
 				
 				LM05: "picking",
 				LM06: "picking",
