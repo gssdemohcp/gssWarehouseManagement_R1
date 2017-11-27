@@ -106,7 +106,6 @@ sap.ui.define([
 			this._oGlobalModel = new JSONModel({
 				application: this,
 				currentScreen: "",
-				loadingScreen: "",
 				isOdataLoading: false,
 				isMultiSelect: false,
 				isMetaDataLoading: true,

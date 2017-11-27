@@ -61,23 +61,23 @@ sap.ui.define([
 				}
 			}
 		},
-		
-		buildFilter: function(inputVal) {
+		buildFilter: function(inputVal, filterValue) {
 			//Create filter string for get picking material - selvan
-			var aFilterValues = [this._oApplication._ofilters.getFilters("Tanum", inputVal),this._oApplication._ofilters.getFilters("Queue", this.oGlobalModel.getProperty("/currentQueue")),this._oApplication._ofilters.getFilters("Lgnum",this.oGlobalModel.getProperty("/currentLgnum"))];
+			var aFilterValues = [this._oApplication._ofilters.getFilters(filterValue, inputVal), this._oApplication._ofilters.getFilters("Queue",
+				this.oGlobalModel.getProperty("/currentQueue")), this._oApplication._ofilters.getFilters("Lgnum", this.oGlobalModel.getProperty(
+				"/currentLgnum"))];
 			this.getPutawayMaterial(aFilterValues);
 		},
 
-		getPutawayMaterial: function(aFilters){
+		getPutawayMaterial: function(aFilters) {
 			//Read picking material from backend
 			this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, aFilters);
 			//code end -selvan
-			
 		},
-		
+
 		putAwayConfirm: function() {
 			this._oApplication = this.getApplication();
-			var selectedItems = this._oApplication._oGlobalWarehouseManage.confirmItems(this,this._oApplication);
+			var selectedItems = this._oApplication._oGlobalWarehouseManage.confirmItems(this, this._oApplication);
 		}
 
 		/**

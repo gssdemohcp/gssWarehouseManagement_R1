@@ -61,10 +61,16 @@ sap.ui.define([
 		getFragmentControllerModel: function(){
 			return this.getOwnerComponent().getModel("fragmentControllerProperties");	
 		},
-		getMenuTransactionModel: function(oSelectedData) {
-			var screenName = this.getOwnerComponent().getModel("MenuTransactionProperties"),
-				loadedScreen = screenName.getProperty("/" + oSelectedData.MenTrans).slice(0, screenName.getProperty("/" + oSelectedData.MenTrans).indexOf("@"));
+		
+		getScreenName: function(oSelectedData) {
+			var menuModel = this.getMenuTransactionModel();
+			var loadedScreen = menuModel.getProperty("/" + oSelectedData.MenTrans).slice(0, menuModel.getProperty("/" + oSelectedData.MenTrans).indexOf("@"));
 			return loadedScreen; 
+		},
+		
+		getMenuTransactionModel: function() {
+			return this.getOwnerComponent().getModel("MenuTransactionProperties");
+				
 		},
 		/**
 		 * Convenience method
@@ -76,6 +82,12 @@ sap.ui.define([
 		
 		getComponent: function() {
 			return this.getOwnerComponent();
+		},
+		
+		getFilterField: function(currentScreen) {
+			var menuModel = this.getMenuTransactionModel(),
+				filterVal = menuModel.getProperty("/" + currentScreen).split("@").pop();
+			return filterVal;
 		},
 			/**
 			 * Event handler when the share by E-Mail button has been clicked

@@ -11,6 +11,7 @@ sap.ui.define([
 			this.component = this.getComponent();
 			this.model = this.component.getModel();
 			this.model.metadataLoaded().then(this._menuLoadFunction.bind(this));
+			this.oGlobalModel = this.getGlobalModel();
 		},
 
 		_menuLoadFunction: function() {
@@ -91,7 +92,7 @@ sap.ui.define([
 				var createBC = "X";
 				this._menuBinding(oSelectedData, createBC); //Call function menu binding
 			}else if (oSelectedData.ProTyp === "2"){
-				var screen = this.getMenuTransactionModel(oSelectedData);
+				var screen = this.getScreenName(oSelectedData);
 				this.getRouter().navTo(screen);	
 				this.getGlobalModel().setProperty("/currentScreen", oSelectedData.MenTrans);
 			 	this._oDialog.close();
