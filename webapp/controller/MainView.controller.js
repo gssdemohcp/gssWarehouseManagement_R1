@@ -62,7 +62,7 @@ sap.ui.define([
 		// Description: Handle cancel button in Menu dialog
 		// ***********************************				
 		_prevMenu: function() {
-			var aLink = sap.ui.getCore().byId("breadCrumbs").getLinks(); //Get the number of links
+			var aLink = this.getView().byId("breadCrumbs").getLinks(); //Get the number of links
 			var plinkIndex = aLink.length - 2; //length -2 gives the index of the previous breadcrumb index
 			if (plinkIndex === -1) {
 				this.Exit(); //Call the exit function
@@ -71,11 +71,11 @@ sap.ui.define([
 			var pMmenu = aLink[plinkIndex].getTarget(); //Get the target of the previous link using index
 			var pText = aLink[plinkIndex].getText(); //Get the text of the previous link using index
 			if (pText === "Main menu") { //If the text is Main menu, insert the link
-				sap.ui.getCore().byId("breadCrumbs").insertLink(aLink[plinkIndex], plinkIndex);
+				this.getView().byId("breadCrumbs").insertLink(aLink[plinkIndex], plinkIndex);
 			}
 			//Remove the link from the breadcrumb, once the user click on the cancel button in the menu 
 			var removeLinkId = aLink.length - 1; //Get the last breadcrumb link
-			sap.ui.getCore().byId("breadCrumbs").removeLink(removeLinkId); //Remove the link
+			this.getView().byId("breadCrumbs").removeLink(removeLinkId); //Remove the link
 			var mData = {
 				MenTrans: pMmenu,
 				ProTyp: "1",

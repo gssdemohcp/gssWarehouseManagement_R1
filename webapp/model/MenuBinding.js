@@ -31,7 +31,7 @@ sap.ui.define(["sap/ui/base/Object",
 						oView.byId("syuser").setText(this.sUser);
 						oView._oDialog.setTitle("Main Menu");
 						//Create Breadcrumb link
-						oApplication._ocreateBreadCrumbs.BreadCrumbs(mItem, oView);
+						oApplication._ocreateBreadCrumbs.BreadCrumbs(mItem, oView,oApplication);
 					}
 				}
 				//Bind Main Menu
@@ -48,7 +48,7 @@ sap.ui.define(["sap/ui/base/Object",
 			if (oSelectedItem && createBC === "X") {
 				oView._oDialog.setTitle(" ");
 				oView._oDialog.setTitle(oSelectedItem.Text);
-				oApplication._ocreateBreadCrumbs.BreadCrumbs(oSelectedItem, oView); //Call function create breadcrumbs
+				oApplication._ocreateBreadCrumbs.BreadCrumbs(oSelectedItem, oView,oApplication); //Call function create breadcrumbs
 			} else if (oSelectedItem && createBC === "") {
 				oView._oDialog.setTitle(" ");
 				oView._oDialog.setTitle(oSelectedItem.Text);
