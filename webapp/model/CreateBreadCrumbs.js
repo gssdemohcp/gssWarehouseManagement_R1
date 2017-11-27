@@ -37,7 +37,7 @@ sap.ui.define(["sap/ui/base/Object",
 			}
 		},
 		_openBreadcrumbLink: function(oSelect, oView,oApplication) {
-			
+			oApplication.navBack();
 			this._pTarget = oSelect.getSource().getTarget(); //Get the selected link target
 			this._pText = oSelect.getSource().getText(); //Get the selected link text
 			this._pId = oSelect.getSource().getId(); //Get the selected link Id
