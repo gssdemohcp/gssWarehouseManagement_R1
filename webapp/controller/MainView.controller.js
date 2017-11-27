@@ -70,11 +70,11 @@ sap.ui.define([
 			var pMmenu = aLink[plinkIndex].getTarget(); //Get the target of the previous link using index
 			var pText = aLink[plinkIndex].getText(); //Get the text of the previous link using index
 			if (pText === "Main menu") { //If the text is Main menu, insert the link
-				this.getView().byId("breadCrumbs").insertLink(aLink[plinkIndex], plinkIndex);
+				sap.ui.getCore().byId("breadCrumbs").insertLink(aLink[plinkIndex], plinkIndex);
 			}
 			//Remove the link from the breadcrumb, once the user click on the cancel button in the menu 
 			var removeLinkId = aLink.length - 1; //Get the last breadcrumb link
-			this.getView().byId("breadCrumbs").removeLink(removeLinkId); //Remove the link
+			sap.ui.getCore().byId("breadCrumbs").removeLink(removeLinkId); //Remove the link
 			var mData = {
 				MenTrans: pMmenu,
 				ProTyp: "1",

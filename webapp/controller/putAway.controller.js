@@ -19,6 +19,7 @@ sap.ui.define([
 			this.oGlobalModel = this.getGlobalModel();
 			this._oApplication = this.getApplication();
 			this.inputDetails();
+			this._oApplication._ocreateBreadCrumbs.getMainBreadCrumb(this.getView());
 		},
 
 		_routePatternMatched: function(oEvent) {

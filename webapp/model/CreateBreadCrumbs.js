@@ -14,6 +14,7 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		BreadCrumbs: function(oSelectedItem, oView) {
 			if (oSelectedItem.Qmenu) {
+				this.MainView = oView;
 				oView.byId("breadCrumbs").addLink(
 					new sap.m.Link({
 						text: "Main Menu",
@@ -81,6 +82,14 @@ sap.ui.define(["sap/ui/base/Object",
 			// oView.setModel(oViewModel, "itemList");
 			// oView.getModel("itemList").setData();
 			oView._menuBinding(mData, createBC, oView); //Call the filter method passing selected target and text data with create breadcrumb indicator
+		},
+		getMainBreadCrumb: function(oView){
+			var aLink = this.MainView.byId("breadCrumbs").getLinks();
+			// this._clearModel();
+			// oView.byId("inputValue").setValue("");
+			aLink.forEach(function(mLink) {
+				oView.byId("breadCrumbs1").addLink(mLink);
+			}.bind(this));
 		}
 	});
 });
