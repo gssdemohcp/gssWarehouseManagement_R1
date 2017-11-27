@@ -158,14 +158,14 @@ sap.ui.define([
 				LM05: "picking",
 				LM06: "picking",
 				
-				LM33: "load",
-				LM34: "load",
-				LM31: "load",
-				LM30: "load",
+				LM33: "load@Tknum",
+				LM34: "load@Vbeln",
+				LM31: "load@Vbeln",
+				LM30: "load@Tknum",
 				
-				LM37: "inquiryShipment",
-				LM36: "inquiryDelivery",
-				LM35: "LoadInq_HU"
+				LM37: "LoadInq_Shipment@Tknum",
+				LM36: "LoadInq_Delivery@Vbeln",
+				LM35: "LoadInq_HU@Exidv"
 				
 			});
 			

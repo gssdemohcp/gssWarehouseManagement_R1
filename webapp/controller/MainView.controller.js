@@ -61,7 +61,7 @@ sap.ui.define([
 		// Description: Handle cancel button in Menu dialog
 		// ***********************************				
 		_prevMenu: function() {
-			var aLink = this.getView().byId("breadCrumbs").getLinks(); //Get the number of links
+			var aLink = sap.ui.getCore().byId("breadCrumbs").getLinks(); //Get the number of links
 			var plinkIndex = aLink.length - 2; //length -2 gives the index of the previous breadcrumb index
 			if (plinkIndex === -1) {
 				this.Exit(); //Call the exit function
