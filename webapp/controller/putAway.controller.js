@@ -15,30 +15,7 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			this._router = this.getRouter();
-			this._router.getRoute("putaway").attachPatternMatched(this._routePatternMatched, this);
-			this.oGlobalModel = this.getGlobalModel();
-			this._oApplication = this.getApplication();
 			this.inputDetails();
-			this._oApplication._ocreateBreadCrumbs.getMainBreadCrumb(this.getView());
-		},
-
-		_routePatternMatched: function(oEvent) {
-			var sId = oEvent.getParameter("arguments").ViewID,
-				oView = this.getView(),
-				sPath = "/WMProcessSet('" + sId + "')";
-			var oModel = sap.ui.getCore().getModel();
-			this.getView().setModel(oModel);
-			oView.bindElement({
-				path: sPath,
-				events: {
-					dataRequested: function() {
-						oView.setBusy(true);
-					},
-					dataReceived: function() {
-						oView.setBusy(false);
-					}
-				}
-			});
 		},
 
 		inputDetails: function() {
@@ -48,32 +25,25 @@ sap.ui.define([
 		},
 
 		iGetInput: function(oEvent) {
-			this.currentScreen = this.oGlobalModel.getProperty("/currentScreen");
-			var inputVal = this.getView().byId("inputValue").getValue();
-				// var oModel = this.getView().byId("toTable").getModel("itemList");
-				if (this.currentScreen) {
-					this.aFilter = [];
-					this.buildFilter(oEvent.getSource()._lastValue, this.getFilterField(this.currentScreen));
-					this.inputValue = oEvent.getSource()._lastValue;
-				}
-		},
-		buildFilter: function(inputVal, filterValue) {
-			//Create filter string for get picking material - selvan
-			var aFilterValues = [this._oApplication._ofilters.getFilters(filterValue, inputVal), this._oApplication._ofilters.getFilters("Queue",
-				this.oGlobalModel.getProperty("/currentQueue")), this._oApplication._ofilters.getFilters("Lgnum", this.oGlobalModel.getProperty(
-				"/currentLgnum"))];
-			this.getPutawayMaterial(aFilterValues);
+			var _inputValue = this.getView().byId("inputValue").getValue();
+			if(_inputValue) {
+				this.getPickingMaterial(_inputValue);
+			}
 		},
 
 		getPutawayMaterial: function(aFilters) {
+			//Get Current View Name to get filter field name
+			var sCurrentScrnName = this.getCurrentScrn(),
+			    sFieldName = this.getFilterField(sCurrentScrnName);
+			//Bind input parameter
+			sInputValue = this.gssFilterFunction().getFilters(sFieldName, sInputValue);
 			//Read picking material from backend
-			this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, aFilters);
+			this.gssCallFunction().LoadMaterial(this, sInputValue);
 			//code end -selvan
 		},
 
 		putAwayConfirm: function() {
-			this._oApplication = this.getApplication();
-			var selectedItems = this._oApplication._oGlobalWarehouseManage.confirmItems(this, this._oApplication);
+			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
 
 		/**
