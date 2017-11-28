@@ -111,7 +111,7 @@ sap.ui.define(["sap/ui/base/Object",
 		// ************* Srini code to get selected items from table ends ************
 		
 		// ************* Srini code to get confirm items begins ************
-		confirmItems: function(oView, oApplication) {
+		confirmItems: function(oView) {
 			var getItems = this.selectedItems(oView),
 				oOdataService = oView.gssOdataService();
 			// var oErrorModel = new JSONModel();

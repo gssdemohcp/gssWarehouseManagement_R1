@@ -44,8 +44,7 @@ sap.ui.define([
 			
 		},
 		pickingConfirm: function() {
-			this._oApplication = this.getApplication();
-			var selectedItems = this.gssCallFunction().confirmItems(this, this._oApplication);
+			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
 
 		/**
