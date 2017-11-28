@@ -48,18 +48,14 @@ sap.ui.define([
 		},
 
 		iGetInput: function(oEvent) {
-			this._currentScreen = oGlobalModel.getProperty("/currentScreen");
+			this.currentScreen = oGlobalModel.getProperty("/currentScreen");
 			var inputVal = this.getView().byId("inputValue").getValue();
-			if (!inputVal && (this._currentScreen === "LM03" || this._currentScreen === "LM05")) {
-				return;
-			} else {
 				// var oModel = this.getView().byId("toTable").getModel("itemList");
-				if (this._currentScreen) {
+				if (this.currentScreen) {
 					this.aFilter = [];
-					this.buildFilter(oEvent.getSource()._lastValue);
+					this.buildFilter(oEvent.getSource()._lastValue, this.getFilterField(this.currentScreen));
 					this.inputValue = oEvent.getSource()._lastValue;
 				}
-			}
 		},
 		buildFilter: function(inputVal, filterValue) {
 			//Create filter string for get picking material - selvan
