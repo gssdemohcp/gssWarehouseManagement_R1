@@ -27,11 +27,11 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if(_inputValue) {
-				this.getPickingMaterial(_inputValue);
+				this.getPutawayMaterial(_inputValue);
 			}
 		},
 
-		getPutawayMaterial: function(aFilters) {
+		getPutawayMaterial: function(sInputValue) {
 			//Get Current View Name to get filter field name
 			var sCurrentScrnName = this.getCurrentScrn(),
 			    sFieldName = this.getFilterField(sCurrentScrnName);
