@@ -125,7 +125,7 @@ sap.ui.define([
 		    // set the Entity Set Properties model
 			this._oEntitySetModel = new JSONModel({
 				MenuConfiguration: "/configurationsSet",
-				Putaway: "/WMProcessSet"
+				MaterialList: "/WMProcessSet"
 			});
 			
 			this._oEntitySetModel.setDefaultBindingMode(BindingMode.TwoWay);

@@ -15,29 +15,8 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			this._router = this.getRouter();
-			this._router.getRoute("picking").attachPatternMatched(this._routePatternMatched, this);
-			this.oGlobalModel = this.getGlobalModel();
 			this._oApplication = this.getApplication();
 			this.inputDetails();
-		},
-
-		_routePatternMatched: function(oEvent) {
-			var sId = oEvent.getParameter("arguments").ViewID,
-				oView = this.getView(),
-				sPath = "/WMProcessSet('" + sId + "')";
-			var oModel = sap.ui.getCore().getModel();
-			this.getView().setModel(oModel);
-			oView.bindElement({
-				path: sPath,
-				events: {
-					dataRequested: function() {
-						oView.setBusy(true);
-					},
-					dataReceived: function() {
-						oView.setBusy(false);
-					}
-				}
-			});
 		},
 
 		inputDetails: function() {
@@ -48,14 +27,17 @@ sap.ui.define([
 		},
 
 		iGetInput: function(oEvent){
-			
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if(_inputValue) {
-				this.getPickingMaterial(this._oApplication._ofilters.getFilters("Tanum", _inputValue));
+				this.getPickingMaterial(_inputValue);
 			}
 		},
 
 		getPickingMaterial: function(sInputValue){
+			//Get Current View Name to get filter field name
+			var sFieldName = this.getFilterField(this.getGlobalModel().getProperty("/currentScreen"));
+			//Bind input parameter
+			sInputValue = this._oApplication._ofilters.getFilters(sFieldName, sInputValue);
 			//Read picking material from backend
 			this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, sInputValue);
 			//code end -selvan
