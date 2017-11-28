@@ -48,7 +48,7 @@ sap.ui.define([
 		},
 
 		iGetInput: function(oEvent) {
-			this.currentScreen = oGlobalModel.getProperty("/currentScreen");
+			this.currentScreen = this.oGlobalModel.getProperty("/currentScreen");
 			var inputVal = this.getView().byId("inputValue").getValue();
 				// var oModel = this.getView().byId("toTable").getModel("itemList");
 				if (this.currentScreen) {

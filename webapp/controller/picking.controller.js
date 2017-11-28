@@ -41,36 +41,23 @@ sap.ui.define([
 		},
 
 		inputDetails: function() {
+			
 			this.getView().byId("inputValue").setPlaceholder("Enter Transfer order");
 			this.getView().byId("inputValue").setMaxLength(10);
 			// this.getView().byId("inputValue").setValueState(sap.ui.core.ValueState.Error);
 		},
 
-		iGetInput: function(oEvent) {
+		iGetInput: function(oEvent){
 			
-			this._currentScreen = this.oGlobalModel.getProperty("/currentScreen");
-			var inputVal = this.getView().byId("inputValue").getValue();
-			if (!inputVal && this._currentScreen === "LM05") {
-				return;
-			} else {
-				// var oModel = this.getView().byId("toTable").getModel("itemList");
-				if (this._currentScreen) {
-					this.aFilter = [];
-					this.buildFilter(oEvent.getSource()._lastValue);
-					this.inputValue = oEvent.getSource()._lastValue;
-				}
+			var _inputValue = this.getView().byId("inputValue").getValue();
+			if(_inputValue) {
+				this.getPickingMaterial(this._oApplication._ofilters.getFilters("Tanum", _inputValue));
 			}
 		},
 
-		buildFilter: function(inputVal) {
-			//Create filter string for get picking material - selvan
-			var aFilterValues = [this._oApplication._ofilters.getFilters("Tanum", inputVal),this._oApplication._ofilters.getFilters("Queue", this.oGlobalModel.getProperty("/currentQueue")),this._oApplication._ofilters.getFilters("Lgnum",this.oGlobalModel.getProperty("/currentLgnum"))];
-			this.getPickingMaterial(aFilterValues);
-		},
-
-		getPickingMaterial: function(aFilters){
+		getPickingMaterial: function(sInputValue){
 			//Read picking material from backend
-			this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, aFilters);
+			this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, sInputValue);
 			//code end -selvan
 			
 		},

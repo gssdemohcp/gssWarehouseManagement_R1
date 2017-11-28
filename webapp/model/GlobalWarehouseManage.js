@@ -73,14 +73,18 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// ********** Srini code to load putaway data begins *****************
-		LoadMaterial: function(oView, oApplication, afilters) {
+		LoadMaterial: function(oView, oApplication, sInputValue) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
 				oOdataService = oApplication.oODATAService,
 				oEntitySetModel = oView.getModel("entitySetProperties"),
-				bEntityName = oEntitySetModel.getProperty("/Putaway"),
-				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, afilters);
+				bEntityName = oEntitySetModel.getProperty("/MaterialList"),
+				//Update Filter
+				aFilterValues = [sInputValue,oApplication._ofilters.getFilters("Queue", oView.getGlobalModel().getProperty("/currentQueue")),
+							oApplication._ofilters.getFilters("Lgnum",oView.getGlobalModel().getProperty("/currentLgnum"))],
+				//******
+				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
 
 			var oGlobalModel = oView.getModel("globalProperties");
 			oGlobalModel.setProperty("/isOdataLoading", true);

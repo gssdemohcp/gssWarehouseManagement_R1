@@ -155,13 +155,13 @@ sap.ui.define([
 				LM03: "putaway@Tanum",
 				LM09: "putaway@Vbeln",
 				
-				LM05: "picking",
-				LM06: "picking",
+				LM05: "picking@Tanum",
+				LM06: "picking@Lenum",
 				
-				LM33: "load@Tknum",
-				LM34: "load@Vbeln",
-				LM31: "load@Vbeln",
-				LM30: "load@Tknum",
+				LM33: "load@Tknum@",
+				LM34: "load@Vbeln@",
+				LM31: "load@Vbeln@",
+				LM30: "load@Tknum@",
 				
 				LM37: "LoadInq_Shipment@Tknum",
 				LM36: "LoadInq_Delivery@Vbeln",
