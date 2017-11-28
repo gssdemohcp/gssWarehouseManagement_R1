@@ -15,7 +15,6 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			this._router = this.getRouter();
-			this._oApplication = this.getApplication();
 			this.inputDetails();
 		},
 
@@ -35,17 +34,18 @@ sap.ui.define([
 
 		getPickingMaterial: function(sInputValue){
 			//Get Current View Name to get filter field name
-			var sFieldName = this.getFilterField(this.getGlobalModel().getProperty("/currentScreen"));
+			var sCurrentScrnName = this.getCurrentScrn(),
+			    sFieldName = this.getFilterField(sCurrentScrnName);
 			//Bind input parameter
-			sInputValue = this._oApplication._ofilters.getFilters(sFieldName, sInputValue);
+			sInputValue = this.gssFilterFunction().getFilters(sFieldName, sInputValue);
 			//Read picking material from backend
-			this._oApplication._oGlobalWarehouseManage.LoadMaterial(this, this._oApplication, sInputValue);
+			this.gssCallFunction().LoadMaterial(this, sInputValue);
 			//code end -selvan
 			
 		},
 		pickingConfirm: function() {
 			this._oApplication = this.getApplication();
-			var selectedItems = this._oApplication._oGlobalWarehouseManage.confirmItems(this, this._oApplication);
+			var selectedItems = this.gssCallFunction().confirmItems(this, this._oApplication);
 		}
 
 		/**

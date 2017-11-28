@@ -21,13 +21,12 @@ sap.ui.define(["sap/ui/base/Object",
 			this._bOneWaitingSuccess = false;
 		},
 
-		menuConfigurationLoad: function(oView, oApplication, afilters) {
+		menuConfigurationLoad: function(oView, afilters) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
-				oOdataService = oApplication.oODATAService,
-				oEntitySetModel = oView.getModel("entitySetProperties"),
-				bEntityName = oEntitySetModel.getProperty("/MenuConfiguration"),
+				oOdataService = oView.gssOdataService(),
+				bEntityName = this.entityName(oView,"/MenuConfiguration"),
 				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, afilters);
 				
 			var pQueue,
@@ -73,16 +72,15 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// ********** Srini code to load putaway data begins *****************
-		LoadMaterial: function(oView, oApplication, sInputValue) {
+		LoadMaterial: function(oView, sInputValue) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
-				oOdataService = oApplication.oODATAService,
-				oEntitySetModel = oView.getModel("entitySetProperties"),
-				bEntityName = oEntitySetModel.getProperty("/MaterialList"),
+				oOdataService = oView.gssOdataService(),
+				bEntityName = this.entityName(oView,"/MaterialList"),
 				//Update Filter
-				aFilterValues = [sInputValue,oApplication._ofilters.getFilters("Queue", oView.getGlobalModel().getProperty("/currentQueue")),
-							oApplication._ofilters.getFilters("Lgnum",oView.getGlobalModel().getProperty("/currentLgnum"))],
+				aFilterValues = [sInputValue,oView.gssFilterFunction().getFilters("Queue", oView.getGlobalModel().getProperty("/currentQueue")),
+							oView.gssFilterFunction().getFilters("Lgnum",oView.getGlobalModel().getProperty("/currentLgnum"))],
 				//******
 				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
 
@@ -114,18 +112,24 @@ sap.ui.define(["sap/ui/base/Object",
 		
 		// ************* Srini code to get confirm items begins ************
 		confirmItems: function(oView, oApplication) {
-			var getItems = this.selectedItems(oView);
+			var getItems = this.selectedItems(oView),
+				oOdataService = oView.gssOdataService();
 			// var oErrorModel = new JSONModel();
 			getItems.forEach(function(mItem) {
-				var oEntitySetModel = oView.getModel("entitySetProperties"),
-					bEntityName = oEntitySetModel.getProperty("/Putaway"),
+				var bEntityName = this.entityName(oView,"/MaterialList"),
 					updateItem = mItem.getBindingContext("itemList").getObject();
 				var updatePath = bEntityName + "(Lenum='',Queue='" + updateItem.Queue + "',Vbeln='',Lgnum='" + updateItem.Lgnum +
 					"',Tanum='" + updateItem.Tanum + "',Tapos='" + updateItem.Tapos +
-					"')";
-				var oOdataService = oApplication.oODATAService,
+					"')",
 					oWhenCallUpdateIsDone = oOdataService.oCallUpdateDeferred(updatePath, updateItem, mItem, oView);
 			}.bind(this));
+		},
+		entityName: function(oView,sEntityProperty)
+		{
+				var oEntitySetModel = oView.getModel("entitySetProperties"),
+					bEntityName = oEntitySetModel.getProperty(sEntityProperty);
+				return bEntityName;
+			
 		}
 		// ************* Srini code to get confirm items ends ************
 	});

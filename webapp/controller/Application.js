@@ -105,6 +105,11 @@ sap.ui.define([
 			// set the globalProperties model
 			this._oGlobalModel = new JSONModel({
 				application: this,
+				filter: this._ofilters,
+				gwm:this._oGlobalWarehouseManage,
+				odata:this.oODATAService,
+				breadcrumbs:this._ocreateBreadCrumbs,
+				menu:this._omenuBinding,
 				currentScreen: "",
 				isOdataLoading: false,
 				isMultiSelect: false,

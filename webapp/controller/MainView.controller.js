@@ -18,7 +18,7 @@ sap.ui.define([
 			//Fetch Menu Configuration Data
 			this.afilters = [];
 			this._oApplication = this.getApplication();
-			var oWhenCallReadIsDone = this._oApplication._oGlobalWarehouseManage.menuConfigurationLoad(this, this._oApplication, this.afilters);
+			var oWhenCallReadIsDone = this._oApplication._oGlobalWarehouseManage.menuConfigurationLoad(this, this.afilters);
 			//Load Menu Fragment in view
 			oWhenCallReadIsDone.done(function() {
 				this._menuBinding("", "");

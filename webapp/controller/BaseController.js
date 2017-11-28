@@ -72,12 +72,25 @@ sap.ui.define([
 			return this.getOwnerComponent().getModel("MenuTransactionProperties");
 				
 		},
+		getCurrentScrn: function(){
+			return this.getGlobalModel().getProperty("/currentScreen");
+		},
 		/**
 		 * Convenience method
 		 * @returns {object} the application controller
 		 */
+
 		getApplication: function() {
 			return this.getGlobalModel().getProperty("/application");
+		},
+		gssFilterFunction: function(){
+			return this.getGlobalModel().getProperty("/filter");
+		},
+		gssCallFunction: function(){
+			return this.getGlobalModel().getProperty("/gwm");
+		},
+		gssOdataService  : function(){
+			return this.getGlobalModel().getProperty("/odata");
 		},
 		
 		getComponent: function() {
