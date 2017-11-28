@@ -114,6 +114,11 @@
 					"transition": "slide",
 					"viewName": "picking",
 					"viewLevel": 3
+				},
+				"LoadInq_HU": {
+					"transition": "slide",
+					"viewName": "LoadInq_HU",
+					"viewLevel": 4
 				}
 			},
 			"routes": [{
@@ -128,6 +133,10 @@
 				"name": "picking",
 				"pattern": "picking",
 				"target": "picking"
+			}, {
+				"name": "LoadInq_HU",
+				"pattern": "LoadInq_HU",
+				"target": "LoadInq_HU"
 			}]
 		}
 	}
