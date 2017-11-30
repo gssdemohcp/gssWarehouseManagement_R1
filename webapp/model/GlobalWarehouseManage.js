@@ -26,46 +26,6 @@ sap.ui.define(["sap/ui/base/Object",
 			
 			this._bMessageOpen = false;
 		},
-		showServiceError: function(sDetails) {
-				if (this._bMessageOpen) {
-					return;
-				}
-				this._bMessageOpen = true;
-				MessageBox.error(
-					sDetails,
-					{
-						id : "serviceErrorMessageBox",
-						icon: sap.m.MessageBox.Icon.ERROR,
-						details: sDetails,
-						styleClass: utilities.getContentDensityClass(),
-						actions: [MessageBox.Action.CLOSE],
-						onClose: function () {
-							this._bMessageOpen = false;
-						}.bind(this)
-					}
-				);
-			},
-				showServiceShow: function(sDetails) {
-				if (this._bMessageOpen) {
-					return;
-				}
-				this._bMessageOpen = true;
-				MessageBox.show(
-					sDetails,
-					{
-						id : "serviceErrorMessageBox",
-						title: "Information",
-						icon: sap.m.MessageBox.Icon.WARNING,
-						details: sDetails,
-						styleClass: utilities.getContentDensityClass(),
-						actions: [MessageBox.Action.CLOSE],
-						onClose: function () {
-							this._bMessageOpen = false;
-						}.bind(this)
-					}
-				);
-			},
-
 		menuConfigurationLoad: function(oView, afilters) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
@@ -109,6 +69,13 @@ sap.ui.define(["sap/ui/base/Object",
 				//Create New Model for Menu Configuration Item
 				sap.ui.getCore().setModel(oRfModel, "mainJsonModel");
 
+				//Before call errorhandling delegates 
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oRfData.rfMenu[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.rfMenu[0].Msgtyp);
+				// delegate error handling
+				errorHandling.register(oView.getApplication(), oView.getComponent());
+
 				promise.resolve();
 
 			}.bind(this));
@@ -128,8 +95,8 @@ sap.ui.define(["sap/ui/base/Object",
 				//******
 				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
 
-			var oGlobalModel = oView.getModel("globalProperties"),
-				bMsgType = false;
+			var oGlobalModel = oView.getModel("globalProperties");
+		
 			oGlobalModel.setProperty("/isOdataLoading", true);
 			//Handle response from oData Call	
 			oWhenCallReadIsDone.done(function(oResult, oFailed) {
@@ -141,19 +108,19 @@ sap.ui.define(["sap/ui/base/Object",
 				oRfModel.setData(oRfData);
 				//Create New Model for Menu Configuration Item
 				oView.setModel(oRfModel, "materialList");
-				if (oRfData.aItems[0].Msgtyp === "E" || oRfData.aItems[0].Msgtyp === "W") {
-					bMsgType = true;
-					this.showServiceShow(oRfData.aItems[0].Msgtext);
-				} else if (oRfData.aItems[0].Msgtyp === "S") {
-					bMsgType = false;
-				}
 				
+			
+				
+				//Before call errorhandling delegates 
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
 				// delegate error handling
-			    errorHandling.register(oView.getApplication(), oView.getComponent());
+				errorHandling.register(oView.getApplication(), oView.getComponent());
 
-				oGlobalModel.setProperty("/isMessageError", bMsgType);
-				oGlobalModel.setProperty("/msgText", oRfData.aItems[0].Msgtext);
+				
 				oGlobalModel.setProperty("/isOdataLoading", false);
+
 				promise.resolve();
 				
 				

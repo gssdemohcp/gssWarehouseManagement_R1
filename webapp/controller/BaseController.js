@@ -64,8 +64,15 @@ sap.ui.define([
 		
 		getScreenName: function(oSelectedData) {
 			var menuModel = this.getMenuTransactionModel();
-			var loadedScreen = menuModel.getProperty("/" + oSelectedData.MenTrans).slice(0, menuModel.getProperty("/" + oSelectedData.MenTrans).indexOf("@"));
+			//var loadedScreen = menuModel.getProperty("/" + oSelectedData.MenTrans).slice(0, menuModel.getProperty("/" + oSelectedData.MenTrans).indexOf("@"));
+			var loadedScreen = menuModel.getProperty("/" + oSelectedData.MenTrans + "/view");
 			return loadedScreen; 
+		},
+		getFilterField: function(currentScreen) {
+			var menuModel = this.getMenuTransactionModel(),
+				//filterVal = menuModel.getProperty("/" + currentScreen).split("@").pop();
+				filterVal = menuModel.getProperty("/" + currentScreen + "/field1");
+			return filterVal;
 		},
 		
 		getMenuTransactionModel: function() {
@@ -92,19 +99,12 @@ sap.ui.define([
 		gssOdataService  : function(){
 			return this.getGlobalModel().getProperty("/odata");
 		},
-		errorHandler: function(){
-			return this.getGlobalModel().getProperty("/errorHandler");
-		},
-		
+
 		getComponent: function() {
 			return this.getOwnerComponent();
 		},
 		
-		getFilterField: function(currentScreen) {
-			var menuModel = this.getMenuTransactionModel(),
-				filterVal = menuModel.getProperty("/" + currentScreen).split("@").pop();
-			return filterVal;
-		},
+		
 			/**
 			 * Event handler when the share by E-Mail button has been clicked
 			 * @public

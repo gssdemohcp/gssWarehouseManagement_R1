@@ -12,7 +12,8 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/controller/ErrorHandler",
 	"./errorHandling"
-], function(Object, Device, BindingMode, History,GlobalWarehouseManage, ODATAService, MENUBinding, Filters, CreateBreadCrumbs, BaseController,ErrorHandler, errorHandling) {
+], function(Object, Device, BindingMode, History, GlobalWarehouseManage, ODATAService, MENUBinding, Filters, CreateBreadCrumbs,
+	BaseController, ErrorHandler, errorHandling) {
 	"use strict";
 
 	return Object.extend("gss.newWarehouseManage_R1.controller.Application", {
@@ -82,7 +83,6 @@ sap.ui.define([
 			// Globalsoft warehouse management
 			this._oGlobalWarehouseManage = new GlobalWarehouseManage(this);
 			this.oODATAService = new ODATAService(this);
-			this.oErrorHandler = new ErrorHandler(this._oComponent);
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//By Sabari to Create object for Menu and Sub Menu Binding 
 			//*******************************************************************************
@@ -97,28 +97,26 @@ sap.ui.define([
 			//*******************************************************************************
 			//End of Code Sabari to Create Bread Crumbs 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			
+
 			// *************** Srini Code to create object for filters begins ***************
 			this._ofilters = new Filters(this);
 			// *************** Srini Code to create object for filters ends *****************
-			
-			
+
 			// set the device model
 			//this._oComponent.setModel(new JSONModel(Device), "device");
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			
+
 			// set the globalProperties model
 			this._oGlobalModel = new JSONModel({
 				application: this,
 				filter: this._ofilters,
-				gwm:this._oGlobalWarehouseManage,
-				odata:this.oODATAService,
-				breadcrumbs:this._ocreateBreadCrumbs,
-				menu:this._omenuBinding,
-				errorHandler:this.oErrorHandler,
+				gwm: this._oGlobalWarehouseManage,
+				odata: this.oODATAService,
+				breadcrumbs: this._ocreateBreadCrumbs,
+				menu: this._omenuBinding,
 				currentScreen: "",
-				msgText: "",
-				isMessageError: false,
+				message: "",
+				messageType: "",
 				isOdataLoading: false,
 				isMultiSelect: false,
 				isMetaDataLoading: true,
@@ -129,18 +127,20 @@ sap.ui.define([
 				detailImmediateBusy: true,
 				currentQueue: "",
 				currentLgnum: "",
-				currentNltyp: ""
+				currentNltyp: "",
+				lastModelSetName:"",
+				lastSubModelSetName:""
 			});
 			this._oGlobalModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oGlobalModel, "globalProperties");
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//**************************************************************************************
-		    // set the Entity Set Properties model
+			// set the Entity Set Properties model
 			this._oEntitySetModel = new JSONModel({
 				MenuConfiguration: "/configurationsSet",
 				MaterialList: "/WMProcessSet"
 			});
-			
+
 			this._oEntitySetModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oEntitySetModel, "entitySetProperties");
 			//*******************************************************************************************
@@ -150,55 +150,70 @@ sap.ui.define([
 			// set the Fragment Properties Model
 			this._oFragmentControllerModel = new JSONModel({
 				putAway: "gss.newWarehouseManage_R1.controller.putAway",
-				mainMenu : "gss.newWarehouseManage_R1.view.fragments.rfMenu"
+				mainMenu: "gss.newWarehouseManage_R1.view.fragments.rfMenu"
 			});
-			
+
 			this._oFragmentControllerModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oFragmentControllerModel, "fragmentControllerProperties");
 			//*******************************************************************************************
 			// End of Code Sabari to Add the Fragment Controller Model 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			
-			
+
 			//*******************************************************************************************
 			// Start Menu item and view navvigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			this._oMenuTransactionModelNew = new JSONModel({
+				LM02: {view: "putaway",	field1: "Lenum",field2: "Queue",field3: "Lgnum"},
+				LM03: {view: "putaway",field1: "Tanum",field2: "Queue",field3: "Lgnum"},
+				LM09: {view: "putaway",field1: "Vbeln",field2: "Queue",field3: "Lgnum"},
+				LM05: {view: "picking",field1: "Tanum",field2: "Queue",	field3: "Lgnum"},
+				LM06: {view: "picking",field1: "Lenum",field2: "Queue",	field3: "Lgnum"},
+				LM33: {view:"load", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
+				LM34: {view:"load", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
+				LM31: {view:"load", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
+				LM30: {view:"load", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
+				
+				LM37: {view:"loadShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
+				LM36: {view:"loadDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
+				LM35: {view:"loadHu", field1:"Exidv", field2: "Queue", field3: "Lgnum"}
+			});
+			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
+			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
+			
+			
 			this._oMenuTransactionModel = new JSONModel({
 				LM02: "putaway@Lenum",
 				LM03: "putaway@Tanum",
 				LM09: "putaway@Vbeln",
-				
+
 				LM05: "picking@Tanum",
 				LM06: "picking@Lenum",
-				
+
 				LM33: "load@Tknum@",
 				LM34: "load@Vbeln@",
 				LM31: "load@Vbeln@",
 				LM30: "load@Tknum@",
-				
+
 				LM37: "LoadInq_Shipment@Tknum",
 				LM36: "LoadInq_Delivery@Vbeln",
 				LM35: "LoadInq_HU@Exidv"
-				
+
 			});
-			
+
 			this._oMenuTransactionModel.setDefaultBindingMode(BindingMode.OneWay);
-			this._oComponent.setModel(this._oMenuTransactionModel, "MenuTransactionProperties");
+			this._oComponent.setModel(this._oMenuTransactionModel, "MenuTransactionProperties_old");
 			//*******************************************************************************************
 			// End of Code handle menu item and view navigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			
+
 			// delegate error handling
-			errorHandling.register(this, this._oComponent);
+			errorHandling.register(this, this._oComponent,"");
 
 		},
-		
 
 		/* =========================================================== */
 		/* Route handlers (attached during initialization)             */
 		/* =========================================================== */
-
-
 
 		/* =========================================================== */
 		/* Master handling                                             */
@@ -229,9 +244,7 @@ sap.ui.define([
 			var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
 			oCrossAppNavigator.backToPreviousApp();
 		},
-	
 
-		
 		/* =========================================================== */
 		/* Empty view handling                                         */
 		/* =========================================================== */
@@ -269,17 +282,14 @@ sap.ui.define([
 		},
 
 		_getEmptyText: function(sReason) {
-			if (sReason === "noObjects") {
-				return this._oGlobalModel.getProperty("/listNoDataText");
+				if (sReason === "noObjects") {
+					return this._oGlobalModel.getProperty("/listNoDataText");
+				}
+				return this._oResourceBundle.getText(sReason === "bypassed" ? "notFoundText" : "noObjectFoundText");
 			}
-			return this._oResourceBundle.getText(sReason === "bypassed" ? "notFoundText" : "noObjectFoundText");
-		}
-		/* =========================================================== */
-		/* OData metadata handling                                     */
-		/* =========================================================== */
-
-
-
+			/* =========================================================== */
+			/* OData metadata handling                                     */
+			/* =========================================================== */
 
 	});
 });

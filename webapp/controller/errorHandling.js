@@ -42,6 +42,24 @@ sap.ui.define([
 			);
 		}
 	}
+	
+	function fnShowServiceMessage(sDetails, oDisplayState) {
+		if (!oDisplayState.bMessageOpen) {
+			oDisplayState.bMessageOpen = true;
+			MessageBox.error(
+				sDetails, {
+					title: "Information",
+					details: sDetails,
+					actions: [MessageBox.Action.CLOSE],
+					onClose: function() {
+						oDisplayState.bMessageOpen = false;
+					},
+					styleClass: utilities.getContentDensityClass()
+				}
+			);
+		}
+	}
+	
 
 	return {
 		register: function(oApplication, oComponent) {
@@ -80,6 +98,14 @@ sap.ui.define([
 					fnShowServiceError(oParams, oErrorTexts, oDisplayState);
 
 			});
+			
+			
+				var sMessage = oGlobalModel.getProperty("/message"),
+				    sMessageType = oGlobalModel.getProperty("/messageType");
+				if (sMessageType === "E" || sMessageType === "W") {
+					fnShowServiceMessage(sMessage,oDisplayState);
+				} 
+
 			
 		
 		}
