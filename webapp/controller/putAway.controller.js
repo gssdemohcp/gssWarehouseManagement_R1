@@ -32,11 +32,6 @@ sap.ui.define([
 		},
 
 		getPutawayMaterial: function(sInputValue) {
-			//Get Current View Name to get filter field name
-			var sCurrentScrnName = this.getCurrentScrn(),
-			    sFieldName = this.getFilterField(sCurrentScrnName);
-			//Bind input parameter
-			sInputValue = this.gssFilterFunction().getFilters(sFieldName, sInputValue);
 			//Read picking material from backend
 			this.gssCallFunction().LoadMaterial(this, sInputValue);
 			//code end -selvan

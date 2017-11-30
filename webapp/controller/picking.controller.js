@@ -3,7 +3,8 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter"
-], function(Controller, BaseController, formatter) {
+
+], function(Controller, BaseController,formatter) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.picking", {
@@ -33,15 +34,10 @@ sap.ui.define([
 		},
 
 		getPickingMaterial: function(sInputValue){
-			//Get Current View Name to get filter field name
-			var sCurrentScrnName = this.getCurrentScrn(),
-			    sFieldName = this.getFilterField(sCurrentScrnName);
-			//Bind input parameter
-			sInputValue = this.gssFilterFunction().getFilters(sFieldName, sInputValue);
 			//Read picking material from backend
-			this.gssCallFunction().LoadMaterial(this, sInputValue);
+			var oWhenCallReadIsDone = this.gssCallFunction().LoadMaterial(this, sInputValue);
+
 			//code end -selvan
-			
 		},
 		pickingConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);

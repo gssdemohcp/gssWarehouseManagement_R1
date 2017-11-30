@@ -23,9 +23,23 @@ sap.ui.define(["sap/ui/base/Object",
 			this._bOneWaitingSuccess = false;
 		},
 		
-		getFilters: function(field, value) {
+		buildFilter: function(field, value) {
 			var aFilter = new Filter(field, FilterOperator.EQ, value);
 			return aFilter;
+		},
+		setFilter: function(oView, sInputValue){
+			//Get Current View Name to get filter field name
+			var sCurrentScrnName = oView.getCurrentScrn(),
+			    sFieldName = oView.getFilterField(sCurrentScrnName),
+			//Bind user entered input value
+			sInptValue = this.buildFilter(sFieldName, sInputValue),
+			//Bind Queue id
+			sQueue = this.buildFilter("Queue", oView.getGlobalModel().getProperty("/currentQueue")),
+			//Bind Lgnum id
+			sLgnum = this.buildFilter("Lgnum",oView.getGlobalModel().getProperty("/currentLgnum")),
+			//Build filter array
+			aFilterValues = [sInptValue,sQueue,sLgnum];
+			return aFilterValues;
 		}
 		});
 });

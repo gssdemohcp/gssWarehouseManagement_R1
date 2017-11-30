@@ -1,7 +1,7 @@
 sap.ui.define([
 	"sap/ui/base/Object",
 	"sap/ui/Device",
-	"sap/ui/model/json/JSONModel",
+	//"sap/ui/model/json/JSONModel",
 	"sap/ui/model/BindingMode",
 	"sap/ui/core/routing/History",
 	"gss/newWarehouseManage_R1/model/GlobalWarehouseManage",
@@ -10,8 +10,9 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/model/Filters",
 	"gss/newWarehouseManage_R1/model/CreateBreadCrumbs",
 	"gss/newWarehouseManage_R1/controller/BaseController",
+	"gss/newWarehouseManage_R1/controller/ErrorHandler",
 	"./errorHandling"
-], function(Object, Device, JSONModel, BindingMode, History, GlobalWarehouseManage, ODATAService, MENUBinding, Filters, CreateBreadCrumbs, BaseController, errorHandling) {
+], function(Object, Device, BindingMode, History,GlobalWarehouseManage, ODATAService, MENUBinding, Filters, CreateBreadCrumbs, BaseController,ErrorHandler, errorHandling) {
 	"use strict";
 
 	return Object.extend("gss.newWarehouseManage_R1.controller.Application", {
@@ -75,11 +76,13 @@ sap.ui.define([
 		 * @public
 		 */
 		init: function() {
-			this._oResourceBundle = this._oComponent.getModel("i18n").getResourceBundle();
+			var JSONModel = sap.ui.require("sap/ui/model/json/JSONModel");
 
+			this._oResourceBundle = this._oComponent.getModel("i18n").getResourceBundle();
 			// Globalsoft warehouse management
 			this._oGlobalWarehouseManage = new GlobalWarehouseManage(this);
 			this.oODATAService = new ODATAService(this);
+			this.oErrorHandler = new ErrorHandler(this._oComponent);
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//By Sabari to Create object for Menu and Sub Menu Binding 
 			//*******************************************************************************
@@ -99,9 +102,11 @@ sap.ui.define([
 			this._ofilters = new Filters(this);
 			// *************** Srini Code to create object for filters ends *****************
 			
+			
 			// set the device model
 			//this._oComponent.setModel(new JSONModel(Device), "device");
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			
 			// set the globalProperties model
 			this._oGlobalModel = new JSONModel({
 				application: this,
@@ -110,7 +115,10 @@ sap.ui.define([
 				odata:this.oODATAService,
 				breadcrumbs:this._ocreateBreadCrumbs,
 				menu:this._omenuBinding,
+				errorHandler:this.oErrorHandler,
 				currentScreen: "",
+				msgText: "",
+				isMessageError: false,
 				isOdataLoading: false,
 				isMultiSelect: false,
 				isMetaDataLoading: true,

@@ -92,6 +92,9 @@ sap.ui.define([
 		gssOdataService  : function(){
 			return this.getGlobalModel().getProperty("/odata");
 		},
+		errorHandler: function(){
+			return this.getGlobalModel().getProperty("/errorHandler");
+		},
 		
 		getComponent: function() {
 			return this.getOwnerComponent();

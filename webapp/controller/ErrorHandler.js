@@ -1,10 +1,10 @@
 sap.ui.define([
 		"sap/ui/base/Object",
 		"sap/m/MessageBox"
-	], function (UI5Object, MessageBox) {
+	], function (Object, MessageBox) {
 		"use strict";
 
-		return UI5Object.extend("gss.newWarehouseManage_R1.controller.ErrorHandler", {
+		return Object.extend("gss.newWarehouseManage_R1.controller.ErrorHandler", {
 
 			/**
 			 * Handles application errors by automatically attaching to the model events and displaying errors when needed.
@@ -18,7 +18,7 @@ sap.ui.define([
 				this._oComponent = oComponent;
 				// this._oModel = oComponent.getModel();
 				this._bMessageOpen = false;
-				this._sErrorText = this._oResourceBundle.getText("errorText");
+				this._sErrorText = "test";//this._oResourceBundle.getText("errorText");
 
 				// this._oModel.attachMetadataFailed(function (oEvent) {
 				// 	var oParams = oEvent.getParameters();
@@ -42,7 +42,26 @@ sap.ui.define([
 			 * @param {string} sDetails a technical error to be displayed on request
 			 * @private
 			 */
-			_showServiceError : function (sDetails) {
+			test: function(sDetails){
+				if (this._bMessageOpen) {
+					return;
+				}
+				this._bMessageOpen = true;
+				MessageBox.error(
+					this._sErrorText,
+					{
+						id : "serviceErrorMessageBox",
+						details: sDetails,
+						styleClass: this._oComponent.getContentDensityClass(),
+						actions: [MessageBox.Action.CLOSE],
+						onClose: function () {
+							this._bMessageOpen = false;
+						}.bind(this)
+					}
+				);	
+			},
+			
+			showServiceError: function(sDetails) {
 				if (this._bMessageOpen) {
 					return;
 				}
