@@ -5,16 +5,15 @@
 			<Page title="PutAway">
 				<content>
 					<Toolbar>
-					<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs1"/>
-				</Toolbar>
+						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs1"/>
+					</Toolbar>
 					<Toolbar id="toolbarheader">
 						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
-						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" 
-						ariaLabelledBy="actionButtonLabel"/>
+						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
-					<Table id="toTable" items="{materialList>/aItems}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" mode="MultiSelect" showSeparators="All"
-						selectionChange="onHandleSelection" class="sapUiTinyMargin" width="auto" growing="true" growingScrollToLoad="true">
+					<Table id="toTable" items="{materialList>/aItems}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" mode="MultiSelect"
+						showSeparators="All" selectionChange="onHandleSelection" class="sapUiTinyMargin" width="auto" growing="true" growingScrollToLoad="true">
 						<items>
 							<ColumnListItem counter="0" id="item1">
 								<cells>
@@ -23,23 +22,10 @@
 									<Text maxLines="0" text="{materialList>Vltyp} {materialList>Vlber} {materialList>Vlpla}"/>
 									<ObjectNumber
 										number="{ parts: [{path: 'materialList>Nltyp'}, {path: 'materialList>Nlber'}, {path: 'materialList>Nlpla'}], type: 'sap.ui.model.type.CompositeTypeModule' }"/>
-									<!--formatter : '.formatter.newbinColorChange'-->
-									<!--						state="{-->
-									<!--parts: [-->
-									<!--	{path: 'materialList>Nlpla'}-->
-									<!--]-->
-									<!--<Text maxLines="0" text="{materialList>Nltyp} {materialList>Nlber} {materialList>Nlpla}"/>-->
 									<Text text="{ parts: [{path: 'materialList>DestSu'}], formatter : '.formatter.removeColumn'}"/>
-									<!--{ parts: [ {path: 'materialList>DestSu'} ], formatter : '.formatter.su' }"-->
-									<!--class="myStyle sapMText sapMTextMaxWidth sapUiSelectable"-->
-									<!--<ObjectNumber number="{materialList>DestQuantity}" unit="{materialList>AltUnit}"/>-->
 									<ObjectNumber
 										number="{ parts: [ {path: 'materialList>DestQuantity'}], type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits : 3, maxFractionDigits: 3 } }"
 										unit="{materialList>AltUnit}" state="{ parts: [ {path: 'materialList>DestDifa'} ], formatter : '.formatter.changeColor' }"/>
-									<!--, {path: 'materialList>DestDifa'} -->
-									<!--state="{ parts: [ {path: 'materialList>DestQuantity'}, {path: 'materialList>AltUnit'} ],-->
-									<!--formatter: 'sap.m.sample.Table.Formatter.weightState' }"/>-->
-									<!--<Text id="quantity" text="{ parts: [ {path: 'materialList>DestQuantity'}, {path: 'materialList>AltUnit'} ], formatter : '.formatter.changeColor' }"/>-->
 								</cells>
 							</ColumnListItem>
 						</items>
@@ -96,7 +82,7 @@
 							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
 							<Button id="accept" press="putAwayConfirm" icon="sap-icon://accept"/>
 							<!--<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" visible="false" enabled="false"/>-->
-							<!--<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf" visible="false" enabled="false"/>-->
+							<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf"/>
 							<!--<Button id="undoDel" icon="sap-icon://undo" press="unLoad" ariaLabelledBy="actionButtonLabel" tooltip="Undo" visible="false" enabled="false"/>-->
 							<!--<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Ship" visible="false" enabled="false"/>-->
 							<!--<Button id="post" icon="sap-icon://paper-plane" press="onHandlePost" tooltip="GR Post" visible="false" enabled="false"/>-->

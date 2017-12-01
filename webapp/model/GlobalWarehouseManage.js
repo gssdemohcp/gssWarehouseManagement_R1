@@ -5,8 +5,7 @@ sap.ui.define(["sap/ui/base/Object",
 	"gss/newWarehouseManage_R1/model/utilities",
 	"gss/newWarehouseManage_R1/controller/errorHandling"
 
-
-], function(Object, Device, JSONModel,MessageBox,utilities,errorHandling) {
+], function(Object, Device, JSONModel, MessageBox, utilities, errorHandling) {
 	"use strict";
 
 	return Object.extend("gss.newWarehouseManage_R1.model.GlobalWarehouseManage", {
@@ -23,7 +22,7 @@ sap.ui.define(["sap/ui/base/Object",
 			this._iOpenCallsCount = 0;
 			this._mRunningSwipes = {};
 			this._bOneWaitingSuccess = false;
-			
+
 			this._bMessageOpen = false;
 		},
 		menuConfigurationLoad: function(oView, afilters) {
@@ -40,7 +39,7 @@ sap.ui.define(["sap/ui/base/Object",
 
 			var oGlobalModel = oView.getModel("globalProperties");
 			oGlobalModel.setProperty("/isOdataLoading", true);
-			//Handle response from oData Call	
+			//Handle response from oData Call
 			oWhenCallReadIsDone.done(function(oResult, oFailed) {
 				var oRfData;
 				oRfData = oResult.results;
@@ -96,9 +95,9 @@ sap.ui.define(["sap/ui/base/Object",
 				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
 
 			var oGlobalModel = oView.getModel("globalProperties");
-		
+
 			oGlobalModel.setProperty("/isOdataLoading", true);
-			//Handle response from oData Call	
+			//Handle response from oData Call
 			oWhenCallReadIsDone.done(function(oResult, oFailed) {
 				var oRfData;
 				oRfData = oResult.results;
@@ -108,9 +107,7 @@ sap.ui.define(["sap/ui/base/Object",
 				oRfModel.setData(oRfData);
 				//Create New Model for Menu Configuration Item
 				oView.setModel(oRfModel, "materialList");
-				
-			
-				
+
 				//Before call errorhandling delegates 
 				//Set Response Message and message Type to trigger message box
 				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
@@ -118,12 +115,10 @@ sap.ui.define(["sap/ui/base/Object",
 				// delegate error handling
 				errorHandling.register(oView.getApplication(), oView.getComponent());
 
-				
 				oGlobalModel.setProperty("/isOdataLoading", false);
 
 				promise.resolve();
-				
-				
+
 			}.bind(this));
 			return promise;
 		},
@@ -147,15 +142,21 @@ sap.ui.define(["sap/ui/base/Object",
 					"',Tanum='" + updateItem.Tanum + "',Tapos='" + updateItem.Tapos +
 					"')",
 					oWhenCallUpdateIsDone = oOdataService.oCallUpdateDeferred(updatePath, updateItem, mItem, oView);
-					
+
 			}.bind(this));
 		},
 		entityName: function(oView, sEntityProperty) {
-				var oEntitySetModel = oView.getModel("entitySetProperties"),
-					bEntityName = oEntitySetModel.getProperty(sEntityProperty);
-				return bEntityName;
-
-			}
-			// ************* Srini code to get confirm items ends ************
+			var oEntitySetModel = oView.getModel("entitySetProperties"),
+				bEntityName = oEntitySetModel.getProperty(sEntityProperty);
+			return bEntityName;
+		}
+		// ************* Srini code to get confirm items ends ************
 	});
 });
+// ************* Srini code to get confirm items ends ************
+
+// // ********** Srini code to get seleced line item from table control begins **************
+// getObjects: function(oView, controlId, model) {
+// 	return oView.byId("controlId").getSelectedItem().getBindingContext("model").getObject();                         
+// }
+// // ********** Srini code to get seleced line item from table control ends **************

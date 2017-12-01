@@ -150,7 +150,9 @@ sap.ui.define([
 			// set the Fragment Properties Model
 			this._oFragmentControllerModel = new JSONModel({
 				putAway: "gss.newWarehouseManage_R1.controller.putAway",
-				mainMenu: "gss.newWarehouseManage_R1.view.fragments.rfMenu"
+				mainMenu : "gss.newWarehouseManage_R1.view.fragments.rfMenu",
+				newBin: "gss.newWarehouseManage_R1.view.fragments.newBin"
+
 			});
 
 			this._oFragmentControllerModel.setDefaultBindingMode(BindingMode.TwoWay);
