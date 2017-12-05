@@ -20,6 +20,29 @@ sap.ui.define(["sap/ui/base/Object",
 			this._mRunningSwipes = {};
 			this._bOneWaitingSuccess = false;
 		},
+
+		//reference example url https://blogs.sap.com/2014/05/06/promises-in-native-javascript/
+		oCallFunctionPromise: function(sEntityName, oComponent, oUriParameters) {
+			return new Promise(function(fnResolve, fnReject) {
+				var oModel = oComponent.getModel();
+				var fnOnError = function(oError) {
+					this._callEnded(false, oComponent);
+					fnReject(oError);
+				}.bind(this);
+				var fnOnSuccess = function(oData, response) {
+					this._callEnded(true, oComponent);
+					fnResolve(oData, response);
+				}.bind(this);
+				oModel.callFunction(sEntityName, {
+					method: "GET",
+					urlParameters: oUriParameters
+				});
+				oModel.submitChanges({
+					success: fnOnSuccess,
+					error: fnOnError
+				});
+			}.bind(this));
+		},
 		//The Deferred object, introduced in jQuery 1.5, 
 		//is a chainable utility object created by calling the jQuery.Deferred() method.
 		oCallReadDeferred: function(sEntityName, oComponent, aFilters) {
@@ -78,8 +101,7 @@ sap.ui.define(["sap/ui/base/Object",
 					});
 					oView.setModel(oJSONModel, "itemList");
 				}.bind(this),
-				error: function(oData) {
-				}.bind(this)
+				error: function(oData) {}.bind(this)
 			});
 		},
 		// *************** Srini method for odata update ends *****************

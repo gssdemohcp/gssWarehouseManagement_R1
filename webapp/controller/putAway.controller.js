@@ -19,7 +19,9 @@ sap.ui.define([
 		onInit: function() {
 			this._router = this.getRouter();
 			this.inputDetails();
+			
 		},
+
 
 		inputDetails: function() {
 			this.getView().byId("inputValue").setPlaceholder("Enter Transfer order");

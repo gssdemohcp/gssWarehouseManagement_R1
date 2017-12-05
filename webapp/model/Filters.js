@@ -31,7 +31,7 @@ sap.ui.define(["sap/ui/base/Object",
 			//Get Current View Name to get filter field name
 			var sCurrentScrnName = oView.getCurrentScrn(),
 			    sFieldName = oView.getFilterField(sCurrentScrnName),
-			//Bind user entered input value
+			//Bind u"Nltyp"ser entered input value
 			sInptValue = this.buildFilter(sFieldName, sInputValue),
 			//Bind Queue id
 			sQueue = this.buildFilter("Queue", oView.getGlobalModel().getProperty("/currentQueue")),
@@ -40,6 +40,16 @@ sap.ui.define(["sap/ui/base/Object",
 			//Build filter array
 			aFilterValues = [sInptValue,sQueue,sLgnum];
 			return aFilterValues;
+		},
+		setUriParamter: function(oView, sInputValue){
+			//Get Current View Name to get filter field name
+			var sCurrentScrnName = oView.getCurrentScrn(),
+			    sFieldName = oView.getFilterField(sCurrentScrnName),
+			    //jUriParameter = [{sFieldName: sInputValue,"Nltyp":oView.getGlobalModel().getProperty("/currentNltyp"),"Lgnum":oView.getGlobalModel().getProperty("/currentLgnum")}];
+				jUriParameter = [{"Lgnum": "BI0","Nltyp":"AX2","Nlpla":"01-01-02"}];
+				return jUriParameter;
+			
 		}
+		
 		});
 });

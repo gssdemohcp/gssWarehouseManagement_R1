@@ -24,6 +24,17 @@ sap.ui.define(["sap/ui/base/Object",
 			this._bOneWaitingSuccess = false;
 			this._bMessageOpen = false;
 		},
+		createData: function(oView, sInputValue) {
+			var	oOdataService = oView.gssOdataService(),
+				//bEntityName = this.entityName(oView, "/Check_new_bin"),
+				//Setup filter string
+				aFilterValues = oView.gssFilterFunction().setUriParamter(oView, sInputValue);
+			//******
+			oOdataService.oCallFunctionPromise("/Check_new_bin", oView, aFilterValues)
+			 .then(function(response) {
+
+			 });
+		},
 		menuConfigurationLoad: function(oView, afilters) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
@@ -104,12 +115,17 @@ sap.ui.define(["sap/ui/base/Object",
 					aItems: oRfData
 				};
 				oRfModel.setData(oRfData);
+
 				// //Create New Model for Menu Configuration Item
 				// oView.setModel(oRfModel, "materialList");
 				// Set the current screen model in global model for further retrieval process
 				oGlobalModel.setProperty("/currentModel", oRfModel);
 				oView.setModel(oGlobalModel.getProperty("/currentModel"), "materialList");
 				oGlobalModel.setProperty("/controlId", "toTable");
+
+				//Create New Model for Menu Configuration Item
+				oView.setModel(oRfModel, "materialList");
+
 				//Before call errorhandling delegates 
 				//Set Response Message and message Type to trigger message box
 				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
