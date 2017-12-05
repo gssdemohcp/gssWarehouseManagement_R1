@@ -115,6 +115,8 @@ sap.ui.define([
 				breadcrumbs: this._ocreateBreadCrumbs,
 				menu: this._omenuBinding,
 				currentScreen: "",
+				currentModel: "",
+				controlId: "",
 				message: "",
 				messageType: "",
 				isOdataLoading: false,
@@ -151,7 +153,8 @@ sap.ui.define([
 			this._oFragmentControllerModel = new JSONModel({
 				putAway: "gss.newWarehouseManage_R1.controller.putAway",
 				mainMenu : "gss.newWarehouseManage_R1.view.fragments.rfMenu",
-				newBin: "gss.newWarehouseManage_R1.view.fragments.newBin"
+				newBin: "gss.newWarehouseManage_R1.view.fragments.newBin",
+				difference: "gss.newWarehouseManage_R1.view.fragments.difference"
 
 			});
 

@@ -2,8 +2,11 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
-	"gss/newWarehouseManage_R1/model/formatter"
-], function(Controller, BaseController, formatter) {
+	"gss/newWarehouseManage_R1/model/formatter",
+	"sap/ui/model/json/JSONModel",
+	"sap/m/MessageBox",
+	"gss/newWarehouseManage_R1/model/utilities"
+], function(Controller, BaseController, formatter, JSONModel, MessageBox, utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.putAway", {
@@ -43,12 +46,12 @@ sap.ui.define([
 
 		// ********** Method for displaying new bin & its functionalities - Srini code begin ****************
 		onHandleNewBin: function() {
-			// var obj1 = this.gssCallFunction().getObjects(this, toTable, materialList);
-			// var id = this.getView().byId(toTable);
-			var DestBinChg = this.getView().byId("toTable").getSelectedItem().getBindingContext("materialList").getObject().DestBinChg;
+			var objects = utilities.getObjects(this);
+			this.modelObjects = objects.getProperty();
+			var DestBinChg = this.modelObjects.DestBinChg;
 			if (this.getView().byId("toTable").getSelectedItems().length === 1 && DestBinChg === "1") {
-				this.Nltyp = this.getView().byId("toTable").getSelectedItem().getBindingContext("materialList").getObject().Nltyp; //To get the Bin Type//
-				this.Lgnum = this.getView().byId("toTable").getSelectedItem().getBindingContext("materialList").getObject().Lgnum; //Warehouse No//
+				this.Nltyp = this.modelObjects.Nltyp; //To get the Bin Type//
+				this.Lgnum = this.modelObjects.Lgnum; //Warehouse No//
 				if (!this._newBin) {
 					var MenuModel = this.getFragmentControllerModel();
 					var newBin = MenuModel.getProperty("/newBin");
@@ -57,7 +60,7 @@ sap.ui.define([
 				this.getView().addDependent(this._newBin);
 				this._newBin.open();
 				var oNewBinData = {
-					matDesc: this.getView().byId("toTable").getSelectedItem().getBindingContext("materialList").getObject().Maktx,
+					matDesc: this.modelObjects.Maktx,
 					newBin: ""
 				};
 				var oModel = new JSONModel();
@@ -107,7 +110,60 @@ sap.ui.define([
 			}); // callback function for error
 		},
 		// ********** Srini code for new bin check begins ****************
-
+		
+		// *********** Srini code for new bin change begins ***********
+		onNewBinConfirm: function() {
+			var newDbin = sap.ui.getCore().byId("newBinValue").getValue();
+			this.oNewBin = "";
+			if (this.oldBin === "") {
+				this.oldBin = this.modelObjects.Nlpla;
+			}
+			if (this.oldBin !== newDbin) {
+				this.oNewBin = "X";
+			}
+			this.modelObjects.Nlpla = newDbin;
+			var sValInd = "newBin";
+			var destActa = "",
+				destDifa = "",
+				destTarget = "";
+			this._updateTable(destActa, destDifa, destTarget, sValInd, newDbin);
+			this._newBin.close();
+		},
+		onNewBinCancel: function() {
+			this._newBin.close();
+		},
+		// *********** Srini code for new bin change ends ***********
+		
+		// *************** Srini cod eto update table begins **************
+		_updateTable: function(destTarget, destActa, destDifa, sProperty, sValue) {
+			// for the putaway diff process
+			var aItems = this.getView().byId("toTable").getModel("materialList").getData().aItems;
+				aItems.forEach(function(oLineData) {
+					if (oLineData.Tapos === this.modelObjects.Tapos &&
+						oLineData.Tanum === this.modelObjects.Tanum) {
+						if (sProperty === "DestTarga") {
+							var destActual = parseFloat(destActa);
+							var destActualStr = destActual.toFixed(3);
+							oLineData.DestActa = destActualStr.toString();
+							oLineData.DestQuantity = destActa;
+							oLineData.DestDifa = destDifa.toString();
+							oLineData.DestTarga = destTarget;
+						} else if (sProperty === "newBin") {
+							oLineData.Nlpla = sValue;
+						}
+					}
+				}.bind(this));
+				var aData = this.getView().byId("toTable").getModel("materialList").getData();
+				aData.aItems = aItems;
+				this.getView().byId("toTable").getModel("materialList").setData(aData);
+				if (!this._difference) {
+					var MenuModel = this.getFragmentControllerModel();
+					var difference = MenuModel.getProperty("/difference");
+					this._difference = sap.ui.xmlfragment(difference, this);
+				}
+				this._difference.close();
+		},
+		// ********************** Srini code to update table ends ********************
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 		 * (NOT before the first rendering! onInit() is used for that one!).

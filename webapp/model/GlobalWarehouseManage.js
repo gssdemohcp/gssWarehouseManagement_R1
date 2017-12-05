@@ -22,7 +22,6 @@ sap.ui.define(["sap/ui/base/Object",
 			this._iOpenCallsCount = 0;
 			this._mRunningSwipes = {};
 			this._bOneWaitingSuccess = false;
-
 			this._bMessageOpen = false;
 		},
 		menuConfigurationLoad: function(oView, afilters) {
@@ -105,9 +104,12 @@ sap.ui.define(["sap/ui/base/Object",
 					aItems: oRfData
 				};
 				oRfModel.setData(oRfData);
-				//Create New Model for Menu Configuration Item
-				oView.setModel(oRfModel, "materialList");
-
+				// //Create New Model for Menu Configuration Item
+				// oView.setModel(oRfModel, "materialList");
+				// Set the current screen model in global model for further retrieval process
+				oGlobalModel.setProperty("/currentModel", oRfModel);
+				oView.setModel(oGlobalModel.getProperty("/currentModel"), "materialList");
+				oGlobalModel.setProperty("/controlId", "toTable");
 				//Before call errorhandling delegates 
 				//Set Response Message and message Type to trigger message box
 				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
@@ -154,9 +156,3 @@ sap.ui.define(["sap/ui/base/Object",
 	});
 });
 // ************* Srini code to get confirm items ends ************
-
-// // ********** Srini code to get seleced line item from table control begins **************
-// getObjects: function(oView, controlId, model) {
-// 	return oView.byId("controlId").getSelectedItem().getBindingContext("model").getObject();                         
-// }
-// // ********** Srini code to get seleced line item from table control ends **************

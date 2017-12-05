@@ -27,6 +27,14 @@ sap.ui.define([
 		attachControlToView: function(oView, oControl) {
 			jQuery.sap.syncStyleClass(sContentDensityClass, oView, oControl);
 			oView.addDependent(oControl);
+		},
+		
+		// ********** Srini code to get seleced line item from table control begins **************
+		getObjects: function(oView) {
+			var controlId = oView.getGlobalModel().getProperty("/controlId");
+			var model = oView.byId(controlId).getSelectedItem().getBindingContext("materialList");
+			return model;
 		}
+			// ********** Srini code to get seleced line item from table control ends **************
 	};
 });
