@@ -41,12 +41,9 @@ sap.ui.define(["sap/ui/base/Object",
 			aFilterValues = [sInptValue,sQueue,sLgnum];
 			return aFilterValues;
 		},
-		setUriParamter: function(oView, sInputValue){
-			//Get Current View Name to get filter field name
-			var sCurrentScrnName = oView.getCurrentScrn(),
-			    sFieldName = oView.getFilterField(sCurrentScrnName),
-			    //jUriParameter = [{sFieldName: sInputValue,"Nltyp":oView.getGlobalModel().getProperty("/currentNltyp"),"Lgnum":oView.getGlobalModel().getProperty("/currentLgnum")}];
-				jUriParameter = [{"Lgnum": "BI0","Nltyp":"AX2","Nlpla":"01-01-02"}];
+		setNewBinUriParamter: function(oView, sInputValue){
+			var jUriParameter = [{"Lgnum":oView.getGlobalModel().getProperty("/currentLgnum"),"Nltyp":oView.getGlobalModel().getProperty("/currentNltyp"),"Nlpla": sInputValue}];
+				//jUriParameter = [{"Lgnum": "BI0","Nltyp":"AX2","Nlpla":"01-01-02"}];
 				return jUriParameter;
 			
 		}

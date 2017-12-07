@@ -129,7 +129,6 @@ sap.ui.define([
 				detailImmediateBusy: true,
 				currentQueue: "",
 				currentLgnum: "",
-				currentNltyp: "",
 				lastModelSetName:"",
 				lastSubModelSetName:""
 			});
@@ -181,7 +180,9 @@ sap.ui.define([
 				
 				LM37: {view:"loadShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
 				LM36: {view:"loadDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
-				LM35: {view:"loadHu", field1:"Exidv", field2: "Queue", field3: "Lgnum"}
+				LM35: {view:"loadHu", field1:"Exidv", field2: "Queue", field3: "Lgnum"},
+				
+				LM999:{view: "newbin",field1: "Nlpla",field2: "Nltyp",	field3: "Lgnum"},
 			});
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");

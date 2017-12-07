@@ -19,9 +19,8 @@ sap.ui.define([
 		onInit: function() {
 			this._router = this.getRouter();
 			this.inputDetails();
-			
-		},
 
+		},
 
 		inputDetails: function() {
 			this.getView().byId("inputValue").setPlaceholder("Enter Transfer order");
@@ -54,6 +53,7 @@ sap.ui.define([
 			if (this.getView().byId("toTable").getSelectedItems().length === 1 && DestBinChg === "1") {
 				this.Nltyp = this.modelObjects.Nltyp; //To get the Bin Type//
 				this.Lgnum = this.modelObjects.Lgnum; //Warehouse No//
+
 				if (!this._newBin) {
 					var MenuModel = this.getFragmentControllerModel();
 					var newBin = MenuModel.getProperty("/newBin");
@@ -78,8 +78,36 @@ sap.ui.define([
 		},
 		// ********** Method for displaying new bin & its functionalities - Srini code end ****************
 
-		// ********** Srini code for new bin check begins ****************
 		onHandleCheck: function() {
+			var binValue = sap.ui.getCore().byId("newBinValue").getValue(), //To get the New Bin Details //
+				oGlobalModel = this.getModel("globalProperties");
+			oGlobalModel.setProperty("/currentNltyp", this.Nltyp);
+			var oWhenCallReadIsDone;
+			
+			if (binValue) {
+				if(window.Promise){
+				// Promises are supported by browser
+				 oWhenCallReadIsDone = this.gssCallFunction().newBinCheckPromise(this, binValue); }
+				else {
+				 oWhenCallReadIsDone = this.gssCallFunction().newBinCheck(this, binValue);}
+
+				oWhenCallReadIsDone.done(function() {
+					if (oGlobalModel.getProperty("/messageType") === "S") {
+						sap.ui.getCore().byId("newBinConfirm").setEnabled(true); //Response Message Text //
+						var errorMessage = oGlobalModel.getProperty("/message"); //Message Test //
+						MessageBox.success( //MessageBox// 
+							errorMessage + ".");
+					}
+				}.bind(this));
+			}
+			else
+			{
+				MessageBox.success("Bin value can not be blank!");
+			}
+		},
+
+		// ********** Srini code for new bin check begins ****************
+		onHandleCheck1: function() {
 			var binValue = sap.ui.getCore().byId("newBinValue").getValue(); //To get the New Bin Details //
 			var oView = this.getView(); //TO the View Details //
 			var oModel = oView.getModel(); //To get the Model data//
@@ -92,11 +120,11 @@ sap.ui.define([
 					"Nlpla": binValue //New Bin //
 				}, // function import parameters
 				success: function(oData, response) { //Success Function //
-				// //Set Response Message and message Type to trigger message box
-				// oGlobalModel.setProperty("/message", oRfData.rfMenu[0].Msgtext);
-				// oGlobalModel.setProperty("/messageType", oRfData.rfMenu[0].Msgtyp);
-				// // delegate error handling
-				// errorHandling.register(oView.getApplication(), oView.getComponent());
+					// //Set Response Message and message Type to trigger message box
+					// oGlobalModel.setProperty("/message", oRfData.rfMenu[0].Msgtext);
+					// oGlobalModel.setProperty("/messageType", oRfData.rfMenu[0].Msgtyp);
+					// // delegate error handling
+					// errorHandling.register(oView.getApplication(), oView.getComponent());
 					if (oData.Msgtyp === "E") { // Response Message Type //
 						var errorMessage = oData.Msgtext; // Response Message Text //
 						MessageBox.error( //MessageBox //
@@ -112,7 +140,7 @@ sap.ui.define([
 			}); // callback function for error
 		},
 		// ********** Srini code for new bin check begins ****************
-		
+
 		// *********** Srini code for new bin change begins ***********
 		onNewBinConfirm: function() {
 			var newDbin = sap.ui.getCore().byId("newBinValue").getValue();
@@ -135,35 +163,35 @@ sap.ui.define([
 			this._newBin.close();
 		},
 		// *********** Srini code for new bin change ends ***********
-		
+
 		// *************** Srini cod eto update table begins **************
 		_updateTable: function(destTarget, destActa, destDifa, sProperty, sValue) {
 			// for the putaway diff process
 			var aItems = this.getView().byId("toTable").getModel("materialList").getData().aItems;
-				aItems.forEach(function(oLineData) {
-					if (oLineData.Tapos === this.modelObjects.Tapos &&
-						oLineData.Tanum === this.modelObjects.Tanum) {
-						if (sProperty === "DestTarga") {
-							var destActual = parseFloat(destActa);
-							var destActualStr = destActual.toFixed(3);
-							oLineData.DestActa = destActualStr.toString();
-							oLineData.DestQuantity = destActa;
-							oLineData.DestDifa = destDifa.toString();
-							oLineData.DestTarga = destTarget;
-						} else if (sProperty === "newBin") {
-							oLineData.Nlpla = sValue;
-						}
+			aItems.forEach(function(oLineData) {
+				if (oLineData.Tapos === this.modelObjects.Tapos &&
+					oLineData.Tanum === this.modelObjects.Tanum) {
+					if (sProperty === "DestTarga") {
+						var destActual = parseFloat(destActa);
+						var destActualStr = destActual.toFixed(3);
+						oLineData.DestActa = destActualStr.toString();
+						oLineData.DestQuantity = destActa;
+						oLineData.DestDifa = destDifa.toString();
+						oLineData.DestTarga = destTarget;
+					} else if (sProperty === "newBin") {
+						oLineData.Nlpla = sValue;
 					}
-				}.bind(this));
-				var aData = this.getView().byId("toTable").getModel("materialList").getData();
-				aData.aItems = aItems;
-				this.getView().byId("toTable").getModel("materialList").setData(aData);
-				if (!this._difference) {
-					var MenuModel = this.getFragmentControllerModel();
-					var difference = MenuModel.getProperty("/difference");
-					this._difference = sap.ui.xmlfragment(difference, this);
 				}
-				this._difference.close();
+			}.bind(this));
+			var aData = this.getView().byId("toTable").getModel("materialList").getData();
+			aData.aItems = aItems;
+			this.getView().byId("toTable").getModel("materialList").setData(aData);
+			if (!this._difference) {
+				var MenuModel = this.getFragmentControllerModel();
+				var difference = MenuModel.getProperty("/difference");
+				this._difference = sap.ui.xmlfragment(difference, this);
+			}
+			this._difference.close();
 		},
 		// ********************** Srini code to update table ends ********************
 		/**

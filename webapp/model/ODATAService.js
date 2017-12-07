@@ -20,24 +20,39 @@ sap.ui.define(["sap/ui/base/Object",
 			this._mRunningSwipes = {};
 			this._bOneWaitingSuccess = false;
 		},
+		oCallFunctionService: function(sEntityName, oView, oUriParameters) {
+			var promise = jQuery.Deferred();
+			var oModel = oView.getModel(); //To get the Model data//
+			var para = oUriParameters[0];
+			oModel.callFunction(sEntityName, { // function import name //
+				method: "GET", // http method //
+				urlParameters: para,
+				success: function(oData, response) { //Success Function //
+					promise.resolve(oData);
+				}.bind(this), // callback function for success
+				error: function(oError) {
+					promise.reject(oError);
+				}.bind(this)
+			}); // callback function for error
+			return promise;
+		},
 
 		//reference example url https://blogs.sap.com/2014/05/06/promises-in-native-javascript/
-		oCallFunctionPromise: function(sEntityName, oComponent, oUriParameters) {
+		oCallFunctionPromise: function(sEntityName, oView, oUriParameters) {
 			return new Promise(function(fnResolve, fnReject) {
-				var oModel = oComponent.getModel();
+				var oModel = oView.getModel();
+				var para = oUriParameters[0];
 				var fnOnError = function(oError) {
-					this._callEnded(false, oComponent);
+					this._callEnded(false, oView);
 					fnReject(oError);
 				}.bind(this);
 				var fnOnSuccess = function(oData, response) {
-					this._callEnded(true, oComponent);
+					this._callEnded(true, oView);
 					fnResolve(oData, response);
 				}.bind(this);
-				oModel.callFunction(sEntityName, {
-					method: "GET",
-					urlParameters: oUriParameters
-				});
-				oModel.submitChanges({
+				oModel.callFunction(sEntityName, { // function import name //
+					method: "GET", // http method //
+					urlParameters: para,
 					success: fnOnSuccess,
 					error: fnOnError
 				});

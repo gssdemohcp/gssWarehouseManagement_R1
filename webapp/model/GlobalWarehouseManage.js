@@ -24,16 +24,67 @@ sap.ui.define(["sap/ui/base/Object",
 			this._bOneWaitingSuccess = false;
 			this._bMessageOpen = false;
 		},
-		createData: function(oView, sInputValue) {
-			var	oOdataService = oView.gssOdataService(),
-				//bEntityName = this.entityName(oView, "/Check_new_bin"),
-				//Setup filter string
-				aFilterValues = oView.gssFilterFunction().setUriParamter(oView, sInputValue);
-			//******
-			oOdataService.oCallFunctionPromise("/Check_new_bin", oView, aFilterValues)
-			 .then(function(response) {
 
-			 });
+		newBinCheckPromise: function(oView, sInputValue) {
+			var oOdataService = oView.gssOdataService(),
+				bEntityName = this.entityName(oView, "/NewBinCheck"),
+				oGlobalModel = oView.getModel("globalProperties"),
+				promise = jQuery.Deferred(),
+				//Setup filter string
+				aFilterValues = oView.gssFilterFunction().setNewBinUriParamter(oView, sInputValue);
+			oOdataService.oCallFunctionPromise(bEntityName, oView, aFilterValues)
+				.then(function(oData,response) {
+					//Before call errorhandling delegates 
+					//Set Response Message and message Type to trigger message box
+					oGlobalModel.setProperty("/message", oData.Msgtext);
+					oGlobalModel.setProperty("/messageType", oData.Msgtyp);
+					// delegate error handling
+					errorHandling.register(oView.getApplication(), oView.getComponent());
+					promise.resolve();
+				})
+				.then(function(oError) {
+					//Before call errorhandling delegates 
+					//Set Response Message and message Type to trigger message box
+					oGlobalModel.setProperty("/message", oError);
+					oGlobalModel.setProperty("/messageType", "E");
+					// delegate error handling
+					errorHandling.register(oView.getApplication(), oView.getComponent());
+					promise.resolve();
+				});
+			return promise;
+		},
+
+		newBinCheck: function(oView, sInputValue) {
+			var oOdataService = oView.gssOdataService(),
+				bEntityName = this.entityName(oView, "/NewBinCheck"),
+				oGlobalModel = oView.getModel("globalProperties"),
+				promise = jQuery.Deferred(),
+				//Setup filter string
+				aFilterValues = oView.gssFilterFunction().setNewBinUriParamter(oView, sInputValue);
+
+			var oWhenCallReadIsDone = oOdataService.oCallFunctionService(bEntityName, oView, aFilterValues);
+			oWhenCallReadIsDone.done(function(oResult, oFailed) {
+				//Before call errorhandling delegates 
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oResult.Msgtext);
+				oGlobalModel.setProperty("/messageType", oResult.Msgtyp);
+				// delegate error handling
+				errorHandling.register(oView.getApplication(), oView.getComponent());
+				promise.resolve();
+
+			}.bind(this));
+
+			oWhenCallReadIsDone.fail(function(oError) {
+				//Before call errorhandling delegates 
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oError);
+				oGlobalModel.setProperty("/messageType", "E");
+				// delegate error handling
+				errorHandling.register(oView.getApplication(), oView.getComponent());
+				promise.reject();
+			}.bind(this));
+
+			return promise;
 		},
 		menuConfigurationLoad: function(oView, afilters) {
 			//Call oDATA Read with entity set name
@@ -44,8 +95,7 @@ sap.ui.define(["sap/ui/base/Object",
 				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, afilters);
 
 			var pQueue,
-				pLgnum,
-				Nltyp;
+				pLgnum;
 
 			var oGlobalModel = oView.getModel("globalProperties");
 			oGlobalModel.setProperty("/isOdataLoading", true);
@@ -65,12 +115,10 @@ sap.ui.define(["sap/ui/base/Object",
 					if (oRfMenu.Queue && oRfMenu.Lgnum) {
 						pQueue = oRfMenu.Queue;
 						pLgnum = oRfMenu.Lgnum;
-						Nltyp = oRfMenu.Nltyp;
 					}
 				}.bind(this));
 				oGlobalModel.setProperty("/currentQueue", pQueue);
 				oGlobalModel.setProperty("/currentLgnum", pLgnum);
-				oGlobalModel.setProperty("/currentNltyp", Nltyp);
 				//code end -selvan
 
 				oGlobalModel.setProperty("/isOdataLoading", false);
@@ -164,11 +212,11 @@ sap.ui.define(["sap/ui/base/Object",
 			}.bind(this));
 		},
 		entityName: function(oView, sEntityProperty) {
-			var oEntitySetModel = oView.getModel("entitySetProperties"),
-				bEntityName = oEntitySetModel.getProperty(sEntityProperty);
-			return bEntityName;
-		}
-		// ************* Srini code to get confirm items ends ************
+				var oEntitySetModel = oView.getModel("entitySetProperties"),
+					bEntityName = oEntitySetModel.getProperty(sEntityProperty);
+				return bEntityName;
+			}
+			// ************* Srini code to get confirm items ends ************
 	});
 });
 // ************* Srini code to get confirm items ends ************
