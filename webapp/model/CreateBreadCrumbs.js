@@ -89,7 +89,7 @@ sap.ui.define(["sap/ui/base/Object",
 			// this._clearModel();
 			// oView.byId("inputValue").setValue("");
 			aLink.forEach(function(mLink) {
-				oView.byId("breadCrumbs1").addLink(mLink);
+				oView.byId("breadCrumbs").addLink(mLink);
 			}.bind(this));
 		}
 	});

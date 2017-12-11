@@ -5,7 +5,7 @@
 			<Page title="PutAway">
 				<content>
 					<Toolbar>
-						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs1"/>
+						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
 					</Toolbar>
 					<Toolbar id="toolbarheader">
 						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
