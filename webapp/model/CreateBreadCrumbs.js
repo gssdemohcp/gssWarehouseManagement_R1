@@ -12,7 +12,7 @@ sap.ui.define(["sap/ui/base/Object",
 			this._mRunningSwipes = {};
 			this._bOneWaitingSuccess = false;
 		},
-		BreadCrumbs: function(oSelectedItem, oView,oApplication) {
+		BreadCrumbs: function(oSelectedItem, oView) {
 			if (oSelectedItem.Qmenu) {
 				this.MainView = oView;
 				oView.byId("breadCrumbs").addLink(
@@ -20,7 +20,7 @@ sap.ui.define(["sap/ui/base/Object",
 						text: "Main Menu",
 						target: oSelectedItem.Qmenu,
 						press: function(oSelect) {
-							this._openBreadcrumbLink(oSelect, oView,oApplication); //Press function to open the bread crumb link
+							this._openBreadcrumbLink(oSelect, oView); //Press function to open the bread crumb link
 						}.bind(this)
 					})
 				);
@@ -30,14 +30,14 @@ sap.ui.define(["sap/ui/base/Object",
 						text: oSelectedItem.Text,
 						target: oSelectedItem.MenTrans,
 						press: function(oSelect) {
-							this._openBreadcrumbLink(oSelect, oView,oApplication); //Press function to open the bread crumb link
+							this._openBreadcrumbLink(oSelect, oView); //Press function to open the bread crumb link
 						}.bind(this)
 					})
 				);
 			}
 		},
-		_openBreadcrumbLink: function(oSelect, oView,oApplication) {
-			oApplication.navBack();
+		_openBreadcrumbLink: function(oSelect, oView) {
+			oView.getApplication().navBack();
 			this._pTarget = oSelect.getSource().getTarget(); //Get the selected link target
 			this._pText = oSelect.getSource().getText(); //Get the selected link text
 			this._pId = oSelect.getSource().getId(); //Get the selected link Id

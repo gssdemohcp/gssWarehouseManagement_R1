@@ -17,8 +17,9 @@ sap.ui.define([
 		_menuLoadFunction: function() {
 			//Fetch Menu Configuration Data
 			this.afilters = [];
-			this._oApplication = this.getApplication();
-			var oWhenCallReadIsDone = this._oApplication._oGlobalWarehouseManage.menuConfigurationLoad(this, this.afilters);
+			// this._oApplication = this.getApplication();
+			// var oWhenCallReadIsDone = this._oApplication._oGlobalWarehouseManage.menuConfigurationLoad(this, this.afilters);
+			var oWhenCallReadIsDone = this.gssCallFunction().menuConfigurationLoad(this, this.afilters);                                     
 			//Load Menu Fragment in view
 			oWhenCallReadIsDone.done(function() {
 				this._menuBinding("", "");
@@ -34,12 +35,13 @@ sap.ui.define([
 			}
 			var oSubMenu = sap.ui.getCore().getModel("mainJsonModel").getData().rfMenu;
 			//To Get the menuBindings
-			this._rfMenu = this._oApplication._omenuBinding.oMenu(this, oSubMenu, oSelectedItem, createBC, this._oApplication);
+			// this._rfMenu = this._oApplication._omenuBinding.oMenu(this, oSubMenu, oSelectedItem, createBC, this._oApplication);
+			this._rfMenu = this.gssCallMenu().oMenu(this, oSubMenu, oSelectedItem, createBC);          
 			this.bindFilteredMenu(this._rfMenu);
 		},
 
 		bindFilteredMenu: function(_rfMenu) {
-			var rfModel = this._oApplication._omenuBinding.bindMenuModel(_rfMenu);
+			var rfModel = this.gssCallMenu().bindMenuModel(_rfMenu);
 			this._oDialog.setModel(rfModel, "rfMenuModel");
 			var oView = this.getView();
 			oView.addDependent(this._oDialog);

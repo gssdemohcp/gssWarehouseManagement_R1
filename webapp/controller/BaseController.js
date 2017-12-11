@@ -96,10 +96,18 @@ sap.ui.define([
 		gssCallFunction: function(){
 			return this.getGlobalModel().getProperty("/gwm");
 		},
-		gssOdataService  : function(){
+		gssOdataService: function(){
 			return this.getGlobalModel().getProperty("/odata");
 		},
+		
+		gssCallBreadcrumbs: function(){
+			return this.getGlobalModel().getProperty("/breadcrumbs");
+		},
 
+		gssCallMenu : function(){
+			return this.getGlobalModel().getProperty("/menu");
+		},
+		
 		getComponent: function() {
 			return this.getOwnerComponent();
 		},
