@@ -129,6 +129,7 @@ sap.ui.define([
 				detailImmediateBusy: true,
 				currentQueue: "",
 				currentLgnum: "",
+				currentNltyp: "",
 				lastModelSetName:"",
 				lastSubModelSetName:""
 			});
