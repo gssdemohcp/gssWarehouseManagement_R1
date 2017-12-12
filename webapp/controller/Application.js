@@ -131,6 +131,9 @@ sap.ui.define([
 				currentLgnum: "",
 				currentNltyp: "",
 				lastModelSetName:"",
+				MenuData:"",
+				MainView:"",
+				SecondView:"",
 				lastSubModelSetName:""
 			});
 			this._oGlobalModel.setDefaultBindingMode(BindingMode.TwoWay);
@@ -235,7 +238,7 @@ sap.ui.define([
 		// screen mode (happens only on phones). Otherwise the the navButtonPress-handler of the sap.m.semantic.DetailPage is called:
 		// When coming from a detail screen on a phone go to master, when coming from master or from the detail but not on a phone, go back to previous app/shell.
 		navBack: function(bPreferHistory, bFromDetailScreen) {
-			this._oGlobalModel.setProperty("/currentPOId", null);
+			// this._oGlobalModel.setProperty("/currentPOId", null);
 			if (bPreferHistory) {
 				var oHistory = History.getInstance(),
 					sPreviousHash = oHistory.getPreviousHash();
@@ -246,11 +249,11 @@ sap.ui.define([
 			}
 			if (bFromDetailScreen && sap.ui.Device.system.phone) {
 				this._oRootView.getController().backMaster();
-				this._oRouter.navTo("main", {}, true);
+				this._oRouter.navTo("Main", {}, true);
 				return;
 			}
-			var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
-			oCrossAppNavigator.backToPreviousApp();
+			// var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
+			// oCrossAppNavigator.backToPreviousApp();
 		},
 
 		/* =========================================================== */

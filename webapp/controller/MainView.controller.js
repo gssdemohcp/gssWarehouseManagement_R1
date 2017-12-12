@@ -8,10 +8,15 @@ sap.ui.define([
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.MainView", {
 
 		onInit: function() {
-			this.component = this.getComponent();
-			this.model = this.component.getModel();
-			this.model.metadataLoaded().then(this._menuLoadFunction.bind(this));
-			this.oGlobalModel = this.getGlobalModel();
+			var that = this;
+			this.getView().addEventDelegate({
+				onBeforeShow: function(evt) {
+					that.component = that.getComponent();
+					that.model = that.component.getModel();
+					that.model.metadataLoaded().then(that._menuLoadFunction.bind(that));
+					that.oGlobalModel = that.getGlobalModel();
+				}
+			});
 		},
 
 		_menuLoadFunction: function() {
@@ -19,10 +24,10 @@ sap.ui.define([
 			this.afilters = [];
 			// this._oApplication = this.getApplication();
 			// var oWhenCallReadIsDone = this._oApplication._oGlobalWarehouseManage.menuConfigurationLoad(this, this.afilters);
-			var oWhenCallReadIsDone = this.gssCallFunction().menuConfigurationLoad(this, this.afilters);                                     
+			var oWhenCallReadIsDone = this.gssCallFunction().menuConfigurationLoad(this, this.afilters);
 			//Load Menu Fragment in view
 			oWhenCallReadIsDone.done(function() {
-				this._menuBinding("", "");
+				this._menuBinding(this.getGlobalModel().getProperty("/MenuData"), "");
 			}.bind(this));
 		},
 
@@ -36,7 +41,7 @@ sap.ui.define([
 			var oSubMenu = sap.ui.getCore().getModel("mainJsonModel").getData().rfMenu;
 			//To Get the menuBindings
 			// this._rfMenu = this._oApplication._omenuBinding.oMenu(this, oSubMenu, oSelectedItem, createBC, this._oApplication);
-			this._rfMenu = this.gssCallMenu().oMenu(this, oSubMenu, oSelectedItem, createBC);          
+			this._rfMenu = this.gssCallMenu().oMenu(this, oSubMenu, oSelectedItem, createBC);
 			this.bindFilteredMenu(this._rfMenu);
 		},
 
@@ -93,20 +98,20 @@ sap.ui.define([
 				this._oDialog.close();
 				var createBC = "X";
 				this._menuBinding(oSelectedData, createBC); //Call function menu binding
-			}else if (oSelectedData.ProTyp === "2"){
+			} else if (oSelectedData.ProTyp === "2") {
 				var screen = this.getScreenName(oSelectedData);
-				this.getRouter().navTo(screen);	
+				this.getRouter().navTo(screen);
 				this.getGlobalModel().setProperty("/currentScreen", oSelectedData.MenTrans);
-			 	this._oDialog.close();
+				this._oDialog.close();
 			}
 			//COMMENT BY SELVAN FOR ABOVE NEW CODE FOR THIS
 			// // ************** Srini code to display Putaway by TO begins **********************
-						//var oGlobalModel = this.getView().getModel("globalProperties");
-		//	var loadView = this.getRouter();
-			
+			//var oGlobalModel = this.getView().getModel("globalProperties");
+			//	var loadView = this.getRouter();
+
 			// else if (oSelectedData.ProTyp === "2" && oSelectedData.MenTrans === "LM03") {
 			// 	this._oDialog.close();
-				
+
 			// 	oGlobalModel.setProperty("/currentScreen", "LM03");
 			// 	this._oDialog.close();
 			// 	//loadView = this.getRouter();

@@ -17,9 +17,14 @@ sap.ui.define([
 		 * @memberOf gss.newWarehouseManage_R1.view.putAway
 		 */
 		onInit: function() {
-			this._router = this.getRouter();
-			this.inputDetails();
-
+			var that = this;
+			this.getView().addEventDelegate({
+				onBeforeShow: function(evt) {
+					that._router = that.getRouter();
+					that.inputDetails();
+					that.gssCallBreadcrumbs().getMainBreadCrumb(that);
+				}
+			});
 		},
 
 		inputDetails: function() {
@@ -83,13 +88,14 @@ sap.ui.define([
 				oGlobalModel = this.getModel("globalProperties");
 			oGlobalModel.setProperty("/currentNltyp", this.Nltyp);
 			var oWhenCallReadIsDone;
-			
+
 			if (binValue) {
-				if(window.Promise){
-				// Promises are supported by browser
-				 oWhenCallReadIsDone = this.gssCallFunction().newBinCheckPromise(this, binValue); }
-				else {
-				 oWhenCallReadIsDone = this.gssCallFunction().newBinCheck(this, binValue);}
+				if (window.Promise) {
+					// Promises are supported by browser
+					oWhenCallReadIsDone = this.gssCallFunction().newBinCheckPromise(this, binValue);
+				} else {
+					oWhenCallReadIsDone = this.gssCallFunction().newBinCheck(this, binValue);
+				}
 
 				oWhenCallReadIsDone.done(function() {
 					if (oGlobalModel.getProperty("/messageType") === "S") {
@@ -99,9 +105,7 @@ sap.ui.define([
 							errorMessage + ".");
 					}
 				}.bind(this));
-			}
-			else
-			{
+			} else {
 				MessageBox.success("Bin value can not be blank!");
 			}
 		},
