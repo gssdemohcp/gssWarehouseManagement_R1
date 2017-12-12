@@ -8,14 +8,13 @@ sap.ui.define([
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.MainView", {
 
 		onInit: function() {
-			var that = this;
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
-					that.component = that.getComponent();
-					that.model = that.component.getModel();
-					that.model.metadataLoaded().then(that._menuLoadFunction.bind(that));
-					that.oGlobalModel = that.getGlobalModel();
-				}
+					this.component = this.getComponent();
+					this.model = this.component.getModel();
+					this.model.metadataLoaded().then(this._menuLoadFunction.bind(this));
+					this.oGlobalModel = this.getGlobalModel();
+				}.bind(this)
 			});
 		},
 
