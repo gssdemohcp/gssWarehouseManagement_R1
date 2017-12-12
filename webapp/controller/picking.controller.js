@@ -15,8 +15,14 @@ sap.ui.define([
 		 * @memberOf gss.newWarehouseManage_R1.view.picking
 		 */
 		onInit: function() {
-			this._router = this.getRouter();
-			this.inputDetails();
+			var that = this;
+			this.getView().addEventDelegate({
+				onBeforeShow: function(evt) {
+					that._router = that.getRouter();
+					that.inputDetails();
+					that.gssCallBreadcrumbs().getMainBreadCrumb(that);
+				}
+			});
 		},
 
 		inputDetails: function() {
