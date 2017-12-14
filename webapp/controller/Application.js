@@ -8,11 +8,13 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/model/ODATAService",
 	"gss/newWarehouseManage_R1/model/MenuBinding",
 	"gss/newWarehouseManage_R1/model/Filters",
+	"gss/newWarehouseManage_R1/model/Fragments",
+	"gss/newWarehouseManage_R1/model/Difference",
 	"gss/newWarehouseManage_R1/model/CreateBreadCrumbs",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/controller/ErrorHandler",
 	"./errorHandling"
-], function(Object, Device, BindingMode, History, GlobalWarehouseManage, ODATAService, MENUBinding, Filters, CreateBreadCrumbs,
+], function(Object, Device, BindingMode, History, GlobalWarehouseManage, ODATAService, MENUBinding, Filters, Fragments, Difference, CreateBreadCrumbs,
 	BaseController, ErrorHandler, errorHandling) {
 	"use strict";
 
@@ -101,6 +103,14 @@ sap.ui.define([
 			// *************** Srini Code to create object for filters begins ***************
 			this._ofilters = new Filters(this);
 			// *************** Srini Code to create object for filters ends *****************
+			
+			// *************** Srini Code to display fragments begins ***************
+			this._ofragments = new Fragments(this);
+			// *************** Srini Code to display fragments ends *****************
+			
+			// *************** Srini Code to display difference begins ***************
+			this._odifference = new Difference(this);
+			// *************** Srini Code to display difference ends *****************
 
 			// set the device model
 			//this._oComponent.setModel(new JSONModel(Device), "device");
@@ -110,6 +120,8 @@ sap.ui.define([
 			this._oGlobalModel = new JSONModel({
 				application: this,
 				filter: this._ofilters,
+				fragments: this._ofragments,
+				difference: this._odifference,
 				gwm: this._oGlobalWarehouseManage,
 				odata: this.oODATAService,
 				breadcrumbs: this._ocreateBreadCrumbs,
@@ -117,6 +129,7 @@ sap.ui.define([
 				currentScreen: "",
 				currentModel: "",
 				controlId: "",
+				currentView: "",
 				message: "",
 				messageType: "",
 				isOdataLoading: false,

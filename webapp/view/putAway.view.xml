@@ -81,7 +81,7 @@
 							<!--<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>-->
 							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
 							<Button id="accept" press="putAwayConfirm" icon="sap-icon://accept"/>
-							<!--<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" visible="false" enabled="false"/>-->
+							<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus"/>
 							<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf"/>
 							<!--<Button id="undoDel" icon="sap-icon://undo" press="unLoad" ariaLabelledBy="actionButtonLabel" tooltip="Undo" visible="false" enabled="false"/>-->
 							<!--<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Ship" visible="false" enabled="false"/>-->

@@ -35,6 +35,6 @@ sap.ui.define([
 			var model = oView.byId(controlId).getSelectedItem().getBindingContext("materialList");
 			return model;
 		}
-			// ********** Srini code to get seleced line item from table control ends **************
+		// ********** Srini code to get seleced line item from table control ends **************
 	};
 });

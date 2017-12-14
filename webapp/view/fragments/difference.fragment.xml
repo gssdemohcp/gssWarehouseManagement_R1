@@ -19,7 +19,7 @@
 			</Panel>
 		</content>
 		<beginButton>
-			<Button id="onHandleDiff" text="Ok" press="onDiffConfirm" enabled="true"/>
+			<Button id="onHandleDiff" text="Ok" press="onDiffConfirm"/>
 		</beginButton>
 		<endButton>
 			<Button text="Cancel" press="onDiffCancel"/>

@@ -167,8 +167,8 @@ sap.ui.define(["sap/ui/base/Object",
 				// //Create New Model for Menu Configuration Item
 				// oView.setModel(oRfModel, "materialList");
 				// Set the current screen model in global model for further retrieval process
-				oGlobalModel.setProperty("/currentModel", oRfModel);
-				oView.setModel(oGlobalModel.getProperty("/currentModel"), "materialList");
+				// oGlobalModel.setProperty("/currentModel", oRfModel);
+				// oView.setModel(oGlobalModel.getProperty("/currentModel"), "materialList");
 				oGlobalModel.setProperty("/controlId", "toTable");
 
 				//Create New Model for Menu Configuration Item
@@ -189,7 +189,7 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// ********** Srini code to load putaway data ends *****************
-
+		
 		// ************* Srini code to get selected items from table begins ************
 		selectedItems: function(oView) {
 			return oView.byId("toTable").getSelectedItems();
@@ -212,11 +212,11 @@ sap.ui.define(["sap/ui/base/Object",
 			}.bind(this));
 		},
 		entityName: function(oView, sEntityProperty) {
-				var oEntitySetModel = oView.getModel("entitySetProperties"),
-					bEntityName = oEntitySetModel.getProperty(sEntityProperty);
-				return bEntityName;
-			}
-			// ************* Srini code to get confirm items ends ************
+			var oEntitySetModel = oView.getModel("entitySetProperties"),
+				bEntityName = oEntitySetModel.getProperty(sEntityProperty);
+			return bEntityName;
+		}
+		// ************* Srini code to get confirm items ends ************
 	});
 });
 // ************* Srini code to get confirm items ends ************

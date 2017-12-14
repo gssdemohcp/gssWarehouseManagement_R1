@@ -103,6 +103,12 @@ sap.ui.define([
 		gssCallBreadcrumbs: function(){
 			return this.getGlobalModel().getProperty("/breadcrumbs");
 		},
+		gssFragmentsFunction: function() {
+			return this.getGlobalModel().getProperty("/fragments");	
+		},
+		gssDifferenceFunction: function() {
+			return this.getGlobalModel().getProperty("/difference");
+		},
 
 		gssCallMenu : function(){
 			return this.getGlobalModel().getProperty("/menu");
@@ -113,18 +119,18 @@ sap.ui.define([
 		},
 		
 		
-			/**
-			 * Event handler when the share by E-Mail button has been clicked
-			 * @public
-			 */
-			onShareEmailPress : function () {
-				var oViewModel = (this.getModel("objectView") || this.getModel("worklistView"));
-				sap.m.URLHelper.triggerEmail(
-					null,
-					oViewModel.getProperty("/shareSendEmailSubject"),
-					oViewModel.getProperty("/shareSendEmailMessage")
-				);
-			}
+		/**
+		 * Event handler when the share by E-Mail button has been clicked
+		 * @public
+		*/
+		onShareEmailPress : function () {
+			var oViewModel = (this.getModel("objectView") || this.getModel("worklistView"));
+			sap.m.URLHelper.triggerEmail(
+				null,
+				oViewModel.getProperty("/shareSendEmailSubject"),
+				oViewModel.getProperty("/shareSendEmailMessage")
+			);
+		}
 
 		});
 
