@@ -41,16 +41,16 @@ sap.ui.define(["sap/ui/base/Object",
 					// delegate error handling
 					errorHandling.register(oView.getApplication(), oView.getComponent());
 					promise.resolve();
-				})
-				.then(function(oError) {
-					//Before call errorhandling delegates 
-					//Set Response Message and message Type to trigger message box
-					oGlobalModel.setProperty("/message", oError);
-					oGlobalModel.setProperty("/messageType", "E");
-					// delegate error handling
-					errorHandling.register(oView.getApplication(), oView.getComponent());
-					promise.resolve();
 				});
+				// .then(function(oError) {
+				// 	//Before call errorhandling delegates 
+				// 	//Set Response Message and message Type to trigger message box
+				// 	oGlobalModel.setProperty("/message", oError);
+				// 	oGlobalModel.setProperty("/messageType", "E");
+				// 	// delegate error handling
+				// 	errorHandling.register(oView.getApplication(), oView.getComponent());
+				// 	promise.resolve();
+				// });
 			return promise;
 		},
 
@@ -191,8 +191,8 @@ sap.ui.define(["sap/ui/base/Object",
 		// ********** Srini code to load putaway data ends *****************
 		
 		// ************* Srini code to get selected items from table begins ************
-		selectedItems: function(oView) {
-			return oView.byId("toTable").getSelectedItems();
+		selectedItems: function(oView, controlId) {
+			return oView.byId(controlId).getSelectedItems();
 		},
 		// ************* Srini code to get selected items from table ends ************
 

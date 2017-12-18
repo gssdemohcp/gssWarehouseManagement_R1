@@ -117,8 +117,6 @@ sap.ui.define([
 		getComponent: function() {
 			return this.getOwnerComponent();
 		},
-		
-		
 		/**
 		 * Event handler when the share by E-Mail button has been clicked
 		 * @public

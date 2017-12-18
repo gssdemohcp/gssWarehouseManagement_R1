@@ -119,6 +119,11 @@
 					"transition": "slide",
 					"viewName": "LoadInq_HU",
 					"viewLevel": 4
+				},
+				"loadShipment":{
+					"transition": "slide",
+					"viewName": "LoadInq_Shipment",
+					"viewLevel": 4
 				}
 			},
 			"routes": [{
@@ -137,6 +142,10 @@
 				"name": "LoadInq_HU",
 				"pattern": "LoadInq_HU",
 				"target": "LoadInq_HU"
+			},{
+				"name": "loadShipment",
+				"pattern": "loadShipment",
+				"target": "loadShipment"
 			}]
 		}
 	}

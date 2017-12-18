@@ -1,9 +1,18 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
 	controllerName="gss.newWarehouseManage_R1.controller.LoadInq_Delivery" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="Title">
-				<content></content>
+			<Page title="Load Inquiry by Delivery">
+				<content>
+						<Toolbar>
+						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
+					</Toolbar>
+					<Toolbar id="toolbarheader">
+						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
+						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+					</Toolbar>
+				</content>
 			</Page>
 		</pages>
 	</App>
