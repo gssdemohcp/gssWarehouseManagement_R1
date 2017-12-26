@@ -190,7 +190,7 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		// ********** Srini code to load putaway data ends *****************
 
-		// *******************Sabari code to Load Inq by Dellivery data begins *****************
+		// *******************Sabari code to Load Inq by Delivery data begins *****************
 		LoadInqDelivery: function(oView, sInputValue) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
@@ -231,17 +231,54 @@ sap.ui.define(["sap/ui/base/Object",
 			}.bind(this));
 			return promise;
 		},
-		// *******************Sabari code to Load Inq by Dellivery data begins *****************
-		// *******************Sabari code to Load Inq by Dellivery data begins *****************
+		// *******************Sabari code to Load Inq by Delivery data begins *****************
+		// *******************Sabari code to Load Inq by Shipment data begins *****************
 		LoadInqShipment: function(oView, sInputValue) {
 			//Call oDATA Read with entity set name
+			var oRfModel = new JSONModel(),
+				promise = jQuery.Deferred(),
+				oOdataService = oView.gssOdataService(),
+				bEntityName = this.entityName(oView, "/LoadProcess"),
+				//Setup filter string
+				aFilterValues = oView.gssFilterFunction().setLoadInqFilter(oView, sInputValue),
+				//******
+				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
+
+			var oGlobalModel = oView.getModel("globalProperties");
+
+			oGlobalModel.setProperty("/isOdataLoading", true);
+			//Handle response from oData Call
+			oWhenCallReadIsDone.done(function(oResult, oFailed) {
+				var oRfData;
+				oRfData = oResult.results;
+				oRfData = {
+					aItems: oRfData
+				};
+				oRfModel.setData(oRfData);
+
+				//Create New Model for Menu Configuration Item
+				oView.setModel(oRfModel, "itemList");
+
+				//Before call errorhandling delegates 
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				// delegate error handling
+				errorHandling.register(oView.getApplication(), oView.getComponent());
+
+				oGlobalModel.setProperty("/isOdataLoading", false);
+
+				promise.resolve();
+
+			}.bind(this));
+			return promise;
 		},
-		// *******************Sabari code to Load Inq by Dellivery data begins *****************
-		// *******************Sabari code to Load Inq by Dellivery data begins *****************
+		// *******************Sabari code to Load Inq by Shipment data begins *****************
+		// *******************Sabari code to Load Inq by HU data begins *****************
 		LoadInqHU: function(oView, sInputValue) {
 			//Call oDATA Read with entity set name
 		},
-		// *******************Sabari code to Load Inq by Dellivery data begins *****************
+		// *******************Sabari code to Load Inq by HU data begins *****************
 		// ************* Srini code to get selected items from table begins ************
 		selectedItems: function(oView, controlId) {
 			return oView.byId(controlId).getSelectedItems();

@@ -2,7 +2,7 @@
 	controllerName="gss.newWarehouseManage_R1.controller.LoadInq_Delivery" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="Load Inquiry by Delivery">
+			<Page title="{i18n>LoadInqDeltitle}">
 				<content>
 					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
@@ -20,7 +20,7 @@
 						growingScrollToLoad="true">
 						<headerToolbar>
 							<Toolbar>
-								<Title text="Handling units" level="H2"/>
+								<Title text="{i18n>HandlingUnitTitle}" level="H2"/>
 							</Toolbar>
 						</headerToolbar>
 						<columns>
