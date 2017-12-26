@@ -4,7 +4,7 @@
 		<pages>
 			<Page title="Load Inquiry by Delivery">
 				<content>
-						<Toolbar>
+					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
 					</Toolbar>
 					<Toolbar id="toolbarheader">
@@ -12,6 +12,30 @@
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
 						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
+					<l:VerticalLayout>
+						<ObjectStatus id="delvStatus" class="sapUiTinyMarginBegin Text" text="{itemList>/delStat}"/>
+						<ObjectStatus id="delvText" class="sapUiTinyMarginBegin Text" text="Loaded {itemList>/loadedHU} / {itemList>/totalHU} Handling Units"/>
+					</l:VerticalLayout>
+					<Table class="sapUiTinyMarginBegin" id="huTable" inset="false" items="{itemList>/aItems}" visible="true" growing="true"
+						growingScrollToLoad="true">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="Handling units" level="H2"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column width="auto"></Column>
+							<Column width="auto"></Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{parts:[{path:'itemList>Exidv'},{path:'itemList>Exida'}],formatter: '.formatter.status'}"/>
+									<Text text="{itemList>HuStatDesc}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
 				</content>
 			</Page>
 		</pages>

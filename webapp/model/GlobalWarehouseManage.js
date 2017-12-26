@@ -33,7 +33,7 @@ sap.ui.define(["sap/ui/base/Object",
 				//Setup filter string
 				aFilterValues = oView.gssFilterFunction().setNewBinUriParamter(oView, sInputValue);
 			oOdataService.oCallFunctionPromise(bEntityName, oView, aFilterValues)
-				.then(function(oData,response) {
+				.then(function(oData, response) {
 					//Before call errorhandling delegates 
 					//Set Response Message and message Type to trigger message box
 					oGlobalModel.setProperty("/message", oData.Msgtext);
@@ -42,15 +42,15 @@ sap.ui.define(["sap/ui/base/Object",
 					errorHandling.register(oView.getApplication(), oView.getComponent());
 					promise.resolve();
 				});
-				// .then(function(oError) {
-				// 	//Before call errorhandling delegates 
-				// 	//Set Response Message and message Type to trigger message box
-				// 	oGlobalModel.setProperty("/message", oError);
-				// 	oGlobalModel.setProperty("/messageType", "E");
-				// 	// delegate error handling
-				// 	errorHandling.register(oView.getApplication(), oView.getComponent());
-				// 	promise.resolve();
-				// });
+			// .then(function(oError) {
+			// 	//Before call errorhandling delegates 
+			// 	//Set Response Message and message Type to trigger message box
+			// 	oGlobalModel.setProperty("/message", oError);
+			// 	oGlobalModel.setProperty("/messageType", "E");
+			// 	// delegate error handling
+			// 	errorHandling.register(oView.getApplication(), oView.getComponent());
+			// 	promise.resolve();
+			// });
 			return promise;
 		},
 
@@ -189,7 +189,59 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// ********** Srini code to load putaway data ends *****************
-		
+
+		// *******************Sabari code to Load Inq by Dellivery data begins *****************
+		LoadInqDelivery: function(oView, sInputValue) {
+			//Call oDATA Read with entity set name
+			var oRfModel = new JSONModel(),
+				promise = jQuery.Deferred(),
+				oOdataService = oView.gssOdataService(),
+				bEntityName = this.entityName(oView, "/LoadProcess"),
+				//Setup filter string
+				aFilterValues = oView.gssFilterFunction().setLoadInqFilter(oView, sInputValue),
+				//******
+				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
+
+			var oGlobalModel = oView.getModel("globalProperties");
+
+			oGlobalModel.setProperty("/isOdataLoading", true);
+			//Handle response from oData Call
+			oWhenCallReadIsDone.done(function(oResult, oFailed) {
+				var oRfData;
+				oRfData = oResult.results;
+				oRfData = {
+					aItems: oRfData
+				};
+				oRfModel.setData(oRfData);
+
+				//Create New Model for Menu Configuration Item
+				oView.setModel(oRfModel, "itemList");
+
+				//Before call errorhandling delegates 
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				// delegate error handling
+				errorHandling.register(oView.getApplication(), oView.getComponent());
+
+				oGlobalModel.setProperty("/isOdataLoading", false);
+
+				promise.resolve();
+
+			}.bind(this));
+			return promise;
+		},
+		// *******************Sabari code to Load Inq by Dellivery data begins *****************
+		// *******************Sabari code to Load Inq by Dellivery data begins *****************
+		LoadInqShipment: function(oView, sInputValue) {
+			//Call oDATA Read with entity set name
+		},
+		// *******************Sabari code to Load Inq by Dellivery data begins *****************
+		// *******************Sabari code to Load Inq by Dellivery data begins *****************
+		LoadInqHU: function(oView, sInputValue) {
+			//Call oDATA Read with entity set name
+		},
+		// *******************Sabari code to Load Inq by Dellivery data begins *****************
 		// ************* Srini code to get selected items from table begins ************
 		selectedItems: function(oView, controlId) {
 			return oView.byId(controlId).getSelectedItems();
@@ -212,11 +264,11 @@ sap.ui.define(["sap/ui/base/Object",
 			}.bind(this));
 		},
 		entityName: function(oView, sEntityProperty) {
-			var oEntitySetModel = oView.getModel("entitySetProperties"),
-				bEntityName = oEntitySetModel.getProperty(sEntityProperty);
-			return bEntityName;
-		}
-		// ************* Srini code to get confirm items ends ************
+				var oEntitySetModel = oView.getModel("entitySetProperties"),
+					bEntityName = oEntitySetModel.getProperty(sEntityProperty);
+				return bEntityName;
+			}
+			// ************* Srini code to get confirm items ends ************
 	});
 });
 // ************* Srini code to get confirm items ends ************

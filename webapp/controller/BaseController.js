@@ -75,6 +75,13 @@ sap.ui.define([
 			return filterVal;
 		},
 		
+		geti18nField: function(currentScreen) {
+			var menuModel = this.getMenuTransactionModel(),
+				//filterVal = menuModel.getProperty("/" + currentScreen).split("@").pop();
+				filterVal = menuModel.getProperty("/" + currentScreen + "/field4");
+			return filterVal;
+		},
+		
 		getMenuTransactionModel: function() {
 			return this.getOwnerComponent().getModel("MenuTransactionProperties");
 				

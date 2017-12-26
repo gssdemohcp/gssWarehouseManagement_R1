@@ -157,7 +157,8 @@ sap.ui.define([
 			this._oEntitySetModel = new JSONModel({
 				MenuConfiguration: "/configurationsSet",
 				MaterialList: "/WMProcessSet",
-				NewBinCheck: "/Check_new_bin"
+				NewBinCheck: "/Check_new_bin",
+				LoadProcess: "/LoadProcessSet"
 			});
 
 			this._oEntitySetModel.setDefaultBindingMode(BindingMode.TwoWay);
@@ -185,9 +186,9 @@ sap.ui.define([
 			// Start Menu item and view navvigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			this._oMenuTransactionModelNew = new JSONModel({
-				LM02: {view: "putaway",	field1: "Lenum",field2: "Queue",field3: "Lgnum"},
-				LM03: {view: "putaway",field1: "Tanum",field2: "Queue",field3: "Lgnum"},
-				LM09: {view: "putaway",field1: "Vbeln",field2: "Queue",field3: "Lgnum"},
+				LM02: {view: "putaway",	field1: "Lenum",field2: "Queue",field3: "Lgnum",field4:"EnterSU"},
+				LM03: {view: "putaway",field1: "Tanum",field2: "Queue",field3: "Lgnum",field4:"EnterTO"},
+				LM09: {view: "putaway",field1: "Vbeln",field2: "Queue",field3: "Lgnum",field4:"EnterDel"},
 				LM05: {view: "picking",field1: "Tanum",field2: "Queue",	field3: "Lgnum"},
 				LM06: {view: "picking",field1: "Lenum",field2: "Queue",	field3: "Lgnum"},
 				LM33: {view:"load", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
@@ -195,9 +196,9 @@ sap.ui.define([
 				LM31: {view:"load", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
 				LM30: {view:"load", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
 				
-				LM37: {view:"loadShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
-				LM36: {view:"loadDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
-				LM35: {view:"loadHu", field1:"Exidv", field2: "Queue", field3: "Lgnum"},
+				LM37: {view:"loadShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum",field4:"EnterShip"},
+				LM36: {view:"loadDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum",field4:"EnterDel"},
+				LM35: {view:"loadHu", field1:"Exidv", field2: "Queue", field3: "Lgnum",field4:"EnterHU"},
 				
 				LM999:{view: "newbin",field1: "Nlpla",field2: "Nltyp",	field3: "Lgnum"},
 			});

@@ -115,7 +115,7 @@
 					"viewName": "picking",
 					"viewLevel": 3
 				},
-				"LoadInq_HU": {
+				"loadHu": {
 					"transition": "slide",
 					"viewName": "LoadInq_HU",
 					"viewLevel": 4
@@ -123,6 +123,11 @@
 				"loadShipment":{
 					"transition": "slide",
 					"viewName": "LoadInq_Shipment",
+					"viewLevel": 4
+				},
+				"loadDelivery":{
+					"transition": "slide",
+					"viewName": "LoadInq_Delivery",
 					"viewLevel": 4
 				}
 			},
@@ -139,13 +144,17 @@
 				"pattern": "picking",
 				"target": "picking"
 			}, {
-				"name": "LoadInq_HU",
-				"pattern": "LoadInq_HU",
-				"target": "LoadInq_HU"
+				"name": "loadHu",
+				"pattern": "loadHu",
+				"target": "loadHu"
 			},{
 				"name": "loadShipment",
 				"pattern": "loadShipment",
 				"target": "loadShipment"
+			},{
+				"name": "loadDelivery",
+				"pattern": "loadDelivery",
+				"target": "loadDelivery"
 			}]
 		}
 	}

@@ -6,8 +6,9 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"sap/m/MessageToast",
-	"gss/newWarehouseManage_R1/model/utilities"
-], function(Controller, BaseController, formatter, JSONModel, MessageBox, MessageToast, utilities) {
+	"gss/newWarehouseManage_R1/model/utilities",
+	"sap/ui/model/resource/ResourceModel"
+], function(Controller, BaseController, formatter, JSONModel, MessageBox, MessageToast, utilities, ResourceModel) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.putAway", {
@@ -21,36 +22,40 @@ sap.ui.define([
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
 					this._router = this.getRouter();
+					this.seti18nModel();
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
 
 			this._router = this.getRouter();
+			this.seti18nModel();
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
+			this.setFragement(); 
+		},
+		seti18nModel: function() {
+			// set i18n model on view
+			var i18nModel = new ResourceModel({
+				bundleName: "gss.newWarehouseManage_R1.i18n.i18n"
+			});
+			this.getView().setModel(i18nModel, "i18n");
+		},
+		setFragement: function() {
 			//Fragement Code for New Bin
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin");
 			this.fragmentNewBinLoaded = sap.ui.xmlfragment(loadFragment, this);
 			this.getView().addDependent(this.fragmentNewBinLoaded);
 			//	
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);	
 		},
-
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
-			if (Screen === "LM03") {
-				this.getView().byId("inputValue").setPlaceholder("Enter Transfer order");
-				this.getView().byId("inputValue").setMaxLength(10);
-			} else if (Screen === "LM09") {
-				this.getView().byId("inputValue").setPlaceholder("Enter Delivery");
-				this.getView().byId("inputValue").setMaxLength(10);
-			} else if (Screen === "LM02") {
-				this.getView().byId("inputValue").setPlaceholder("Enter Storage Unit");
-				this.getView().byId("inputValue").setMaxLength(20);
-			}
-			// this.getView().byId("inputValue").setValueState(sap.ui.core.ValueState.Error);
+			var si18nName = this.geti18nField(Screen);
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(si18nName);
+			this.getView().byId("inputValue").setPlaceholder(Text);
+			this.getView().byId("inputValue").setMaxLength(10);
 		},
 
 		iGetInput: function(oEvent) {
