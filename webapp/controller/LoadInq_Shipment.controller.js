@@ -20,6 +20,12 @@ sap.ui.define([
 					this.seti18nModel();
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					this.getView().byId("inputValue").setValue("");
+					var dataModel = this.getView().getModel("itemList");
+					if (dataModel) {
+						dataModel.setData(null);
+						dataModel.updateBindings(true);
+					}
 				}.bind(this)
 			});
 
@@ -39,22 +45,22 @@ sap.ui.define([
 
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
-			var si18nName = this.geti18nField(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(si18nName);
+			var ScreenModel = this.getScreenModel(Screen);
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.field4);
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
-		
+
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				// this.getInqDelivery(_inputValue);
+				this.getInqShipment(_inputValue);
 			}
 		},
-		
+
 		getInqShipment: function(sInputValue) {
 			this.gssCallFunction().LoadInqShipment(this, sInputValue);
-		},
+		}
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

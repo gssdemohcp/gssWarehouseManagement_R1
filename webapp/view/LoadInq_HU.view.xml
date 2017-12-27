@@ -2,7 +2,7 @@
 	controllerName="gss.newWarehouseManage_R1.controller.LoadInq_HU" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="Load Inquiry by Handling Unit">
+			<Page title="{i18n>LoadInqHUtitle}">
 				<content>
 					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
@@ -18,10 +18,10 @@
 						<f:content>
 							<HBox>
 								<VBox>
-									<Label class="sapUiTinyMarginTop" text="Shipping Point"/>
-									<Label class="sapUiTinyMarginTop" text="Status"/>
-									<Label class="sapUiTinyMarginTop" text="Total Weight"/>
-									<Label class="sapUiTinyMarginTop" text="Total Volume"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>ShippingPointtitle}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>Statustitle}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>TotalWeighttitle}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>TotalVolumetitle}"/>
 								</VBox>
 								<VBox>
 									<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="1990"/>-->
@@ -45,16 +45,16 @@
 						</headerToolbar>
 						<columns>
 							<Column width="auto">
-								<Text text="Associated HU"/>
+								<Text text="{i18n>AssociatedHU}"/>
 							</Column>
 							<Column width="auto">
-								<Text text="Load Status"/>
+								<Text text="{i18n>LoadStatus}"/>
 							</Column>
 							<Column width="auto">
-								<Text text="Delivery Type"/>
+								<Text text="{i18n>DeliveryType}"/>
 							</Column>
 							<Column width="auto">
-								<Text text="Warehouse"/>
+								<Text text="{i18n>Warehouse}"/>
 							</Column>
 						</columns>
 						<items>

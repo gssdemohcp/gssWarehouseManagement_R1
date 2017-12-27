@@ -62,24 +62,11 @@ sap.ui.define([
 			return this.getOwnerComponent().getModel("fragmentControllerProperties");	
 		},
 		
-		getScreenName: function(oSelectedData) {
-			var menuModel = this.getMenuTransactionModel();
-			//var loadedScreen = menuModel.getProperty("/" + oSelectedData.MenTrans).slice(0, menuModel.getProperty("/" + oSelectedData.MenTrans).indexOf("@"));
-			var loadedScreen = menuModel.getProperty("/" + oSelectedData.MenTrans + "/view");
-			return loadedScreen; 
-		},
-		getFilterField: function(currentScreen) {
-			var menuModel = this.getMenuTransactionModel(),
+		getScreenModel: function(currentScreen) {
+				var menuModel = this.getMenuTransactionModel(),
 				//filterVal = menuModel.getProperty("/" + currentScreen).split("@").pop();
-				filterVal = menuModel.getProperty("/" + currentScreen + "/field1");
-			return filterVal;
-		},
-		
-		geti18nField: function(currentScreen) {
-			var menuModel = this.getMenuTransactionModel(),
-				//filterVal = menuModel.getProperty("/" + currentScreen).split("@").pop();
-				filterVal = menuModel.getProperty("/" + currentScreen + "/field4");
-			return filterVal;
+				ScreenModel = menuModel.getProperty("/" + currentScreen);
+			return ScreenModel;
 		},
 		
 		getMenuTransactionModel: function() {

@@ -189,16 +189,16 @@ sap.ui.define([
 				LM02: {view: "putaway",	field1: "Lenum",field2: "Queue",field3: "Lgnum",field4:"EnterSU"},
 				LM03: {view: "putaway",field1: "Tanum",field2: "Queue",field3: "Lgnum",field4:"EnterTO"},
 				LM09: {view: "putaway",field1: "Vbeln",field2: "Queue",field3: "Lgnum",field4:"EnterDel"},
-				LM05: {view: "picking",field1: "Tanum",field2: "Queue",	field3: "Lgnum"},
-				LM06: {view: "picking",field1: "Lenum",field2: "Queue",	field3: "Lgnum"},
+				LM05: {view: "picking",field1: "Tanum",field2: "Queue",	field3: "Lgnum",field4:"EnterTO"},
+				LM06: {view: "picking",field1: "Vbeln",field2: "Queue",	field3: "Lgnum",field4:"EnterDel"},
 				LM33: {view:"load", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
 				LM34: {view:"load", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
 				LM31: {view:"load", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
 				LM30: {view:"load", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
 				
-				LM37: {view:"loadShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum",field4:"EnterShip"},
-				LM36: {view:"loadDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum",field4:"EnterDel"},
-				LM35: {view:"loadHu", field1:"Exidv", field2: "Queue", field3: "Lgnum",field4:"EnterHU"},
+				LM37: {view:"loadShipment", field1:"Tknum", field2: "", field3: "Lgnum",field4:"EnterShip"},
+				LM36: {view:"loadDelivery", field1:"Vbeln", field2: "", field3: "Lgnum",field4:"EnterDel"},
+				LM35: {view:"loadHu", field1:"Exidv", field2: "", field3: "Lgnum",field4:"EnterHU"},
 				
 				LM999:{view: "newbin",field1: "Nlpla",field2: "Nltyp",	field3: "Lgnum"},
 			});

@@ -20,6 +20,12 @@ sap.ui.define([
 					this.seti18nModel();
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					this.getView().byId("inputValue").setValue("");
+					var dataModel = this.getView().getModel("itemList");
+					if (dataModel) {
+						dataModel.setData(null);
+						dataModel.updateBindings(true);
+					}
 				}.bind(this)
 			});
 
@@ -36,22 +42,22 @@ sap.ui.define([
 			});
 			this.getView().setModel(i18nModel, "i18n");
 		},
-		
+
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
-			var si18nName = this.geti18nField(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(si18nName);
+			var ScreenModel = this.getScreenModel(Screen);
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.field4);
 			this.getView().byId("inputValue").setPlaceholder(Text);
-			this.getView().byId("inputValue").setMaxLength(20);
+			this.getView().byId("inputValue").setMaxLength(10);
 		},
-		
+
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				this.getInqHU(_inputValue);
 			}
 		},
-		
+
 		getInqHU: function(sInputValue) {
 			this.gssCallFunction().LoadInqHU(this, sInputValue);
 		},

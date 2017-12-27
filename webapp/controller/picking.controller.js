@@ -25,8 +25,10 @@ sap.ui.define([
 		},
 
 		inputDetails: function() {
-			
-			this.getView().byId("inputValue").setPlaceholder("Enter Transfer order");
+			var Screen = this.getCurrentScrn();
+			var ScreenModel = this.getScreenModel(Screen);
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.field4);
+			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 			// this.getView().byId("inputValue").setValueState(sap.ui.core.ValueState.Error);
 		},

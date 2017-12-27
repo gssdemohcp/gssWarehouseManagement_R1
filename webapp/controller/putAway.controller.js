@@ -52,8 +52,8 @@ sap.ui.define([
 		},
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
-			var si18nName = this.geti18nField(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(si18nName);
+			var ScreenModel = this.getScreenModel(Screen);
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.field4);
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},

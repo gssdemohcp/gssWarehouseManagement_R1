@@ -98,8 +98,8 @@ sap.ui.define([
 				var createBC = "X";
 				this._menuBinding(oSelectedData, createBC); //Call function menu binding
 			} else if (oSelectedData.ProTyp === "2") {
-				var screen = this.getScreenName(oSelectedData);
-				this.getRouter().navTo(screen);
+				var ScreenModel = this.getScreenModel(oSelectedData.MenTrans);
+				this.getRouter().navTo(ScreenModel.view);
 				this.getGlobalModel().setProperty("/currentScreen", oSelectedData.MenTrans);
 				this._oDialog.close();
 			}
