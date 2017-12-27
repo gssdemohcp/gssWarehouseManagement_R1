@@ -32,7 +32,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
-			this.setFragement(); 
+			this.setFragment(); 
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -41,7 +41,7 @@ sap.ui.define([
 			});
 			this.getView().setModel(i18nModel, "i18n");
 		},
-		setFragement: function() {
+		setFragment: function() {
 			//Fragement Code for New Bin
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin");
 			this.fragmentNewBinLoaded = sap.ui.xmlfragment(loadFragment, this);

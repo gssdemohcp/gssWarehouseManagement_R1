@@ -1,1 +1,221 @@
 /* Enter your custom styles here */
+#__xmlview0--byMat-inner {
+	background-color: #abe2ab !important;
+}
+
+#__xmlview0--byHU-inner {
+	background-color: #ff8888 !important;
+}
+
+.Text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+}
+
+.style {
+    font-size: 1.125rem;
+}
+
+#quantity {
+    color: red;
+}
+
+#List-header {
+    text-align: center !IMPORTANT;
+    font-weight: bold !IMPORTANT;
+}
+
+.sapMBarChild.sapMTitle.sapMTitleMaxWidth.sapMTitleNoWrap.sapMTitleStyleAuto.sapUiSelectable {
+    font-size: x-large !IMPORTANT;
+    font-weight: bold !IMPORTANT;
+    font-family: Arial, Helvetica, sans-serif !IMPORTANT;
+}
+
+.dataStyle {
+    font-weight: bold !IMPORTANT;
+}
+
+#__xmlview0--accept-inner{
+	background-color:#abe2ab !IMPORTANT;
+}
+
+#__xmlview0--difference-inner{
+	background-color:#ff8888 !IMPORTANT;
+}
+
+#__xmlview0--newBin-inner{
+	background-color:#e3e550 !IMPORTANT;
+}	
+
+#__xmlview0--undoDel-inner{
+	background-color:#ff8888 !IMPORTANT;
+}
+
+#__xmlview0--save-inner{
+background-color:#abe2ab !IMPORTANT;
+}
+
+#__title5-inner{
+font-size: 1.125rem !IMPORTANT;
+display: block !IMPORTANT;
+   width: 100% !IMPORTANT;
+   margin-top: 0px !IMPORTANT;
+   margin-right: 0px !IMPORTANT;
+   margin-bottom: 0px !IMPORTANT;
+   margin-left: 0px !IMPORTANT;
+   text-overflow: ellipsis !IMPORTANT;
+   font-weight: normal !IMPORTANT;
+   height: 3rem !IMPORTANT;
+   line-height: 3rem !IMPORTANT;
+}
+
+#__title4-inner{
+	font-size: 1.125rem !IMPORTANT;
+	display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title3-inner{
+	font-size: 1.125rem !IMPORTANT;
+	display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title6-inner{
+	font-size: 1.125rem !IMPORTANT;
+	display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title7-inner{
+	font-size: 1.125rem !IMPORTANT;
+	display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title8-inner{
+	font-size: 1.125rem !IMPORTANT;
+	display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title9-inner {
+	font-size: 1.125rem !IMPORTANT;
+	display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title10-inner {
+	font-size: 1.125rem !IMPORTANT;
+	display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title11-inner {
+	font-size: 1.125rem !IMPORTANT;
+	display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+.sapContrast .sapContrastPlus .sapMBar .sapMBar-CTX .sapMContent-CTX .sapMFooter-CTX .sapMIBar .sapMIBar-CTX .sapMPageFooter {
+	background-color: #666666 !important;
+}
+
+#__xmlview0--LUnload-inner {
+	background-color: coral !important;
+}
+
+#__xmlview0--more-inner {
+	background-color: mediumorchid !important;
+}
+
+#__xmlview0--items-inner {
+	background-color: blue !important;
+}
+
+#__xmlview0--ship-inner {
+	background-color:#fcc677 !IMPORTANT;
+}
+
+#__xmlview0--print-inner {
+	background-color: bisque !important;
+}
+
+#__xmlview0--GTO-inner {
+	background-color: limegreen !important;
+}
+
+#__xmlview0--TOEx-inner {
+	background-color: limegreen !important;
+}
+
+#__xmlview0--post-inner {
+	background-color: limegreen !important;
+}
+/*.sapMPageHeader {*/
+/*	color: #f8b742 !important;*/
+/*}*/

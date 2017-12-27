@@ -9,12 +9,13 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/model/MenuBinding",
 	"gss/newWarehouseManage_R1/model/Filters",
 	"gss/newWarehouseManage_R1/model/Fragments",
+	"gss/newWarehouseManage_R1/model/KeyFields",
 	"gss/newWarehouseManage_R1/model/Difference",
 	"gss/newWarehouseManage_R1/model/CreateBreadCrumbs",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/controller/ErrorHandler",
 	"./errorHandling"
-], function(Object, Device, BindingMode, History, GlobalWarehouseManage, ODATAService, MENUBinding, Filters, Fragments, Difference, CreateBreadCrumbs,
+], function(Object, Device, BindingMode, History, GlobalWarehouseManage, ODATAService, MENUBinding, Filters, Fragments, KeyFields, Difference, CreateBreadCrumbs,
 	BaseController, ErrorHandler, errorHandling) {
 	"use strict";
 
@@ -108,6 +109,10 @@ sap.ui.define([
 			this._ofragments = new Fragments(this);
 			// *************** Srini Code to display fragments ends *****************
 			
+			// *************** Srini Code to build key fields begins ***************
+			this._okeyfields = new KeyFields(this);
+			// *************** Srini Code to build key fields ends *****************
+			
 			// *************** Srini Code to display difference begins ***************
 			this._odifference = new Difference(this);
 			// *************** Srini Code to display difference ends *****************
@@ -121,6 +126,7 @@ sap.ui.define([
 				application: this,
 				filter: this._ofilters,
 				fragments: this._ofragments,
+				keyfields: this._okeyfields,
 				difference: this._odifference,
 				gwm: this._oGlobalWarehouseManage,
 				odata: this.oODATAService,
@@ -172,7 +178,8 @@ sap.ui.define([
 				putAway: "gss.newWarehouseManage_R1.controller.putAway",
 				mainMenu : "gss.newWarehouseManage_R1.view.fragments.rfMenu",
 				newBin: "gss.newWarehouseManage_R1.view.fragments.newBin",
-				difference: "gss.newWarehouseManage_R1.view.fragments.difference"
+				difference: "gss.newWarehouseManage_R1.view.fragments.difference",
+				confirmation: "gss.newWarehouseManage_R1.view.fragments.confirmation"
 
 			});
 
@@ -191,16 +198,15 @@ sap.ui.define([
 				LM09: {view: "putaway",field1: "Vbeln",field2: "Queue",field3: "Lgnum",field4:"EnterDel"},
 				LM05: {view: "picking",field1: "Tanum",field2: "Queue",	field3: "Lgnum",field4:"EnterTO"},
 				LM06: {view: "picking",field1: "Vbeln",field2: "Queue",	field3: "Lgnum",field4:"EnterDel"},
-				LM33: {view:"load", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
-				LM34: {view:"load", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
-				LM31: {view:"load", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
-				LM30: {view:"load", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
+				LM33: {view:"unloadShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum"},
+				LM34: {view:"unloadDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum"},
+				LM30: {view:"loadShipment", field1:"Tknum", field2: "Exidv", field3: "Lgnum", field4: "EnterShip", field5: "ProcInd"},
+				LM31: {view:"loadDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum", field4:"EnterDel", field5: "ProcInd"},
+				LM37: {view:"loadInqShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum",field4:"EnterShip"},
+				LM36: {view:"loadInqDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum",field4:"EnterDel"},
+				LM35: {view:"loadInqHu", field1:"Exidv", field2: "Queue", field3: "Lgnum",field4:"EnterHU"},
 				
-				LM37: {view:"loadShipment", field1:"Tknum", field2: "", field3: "Lgnum",field4:"EnterShip"},
-				LM36: {view:"loadDelivery", field1:"Vbeln", field2: "", field3: "Lgnum",field4:"EnterDel"},
-				LM35: {view:"loadHu", field1:"Exidv", field2: "", field3: "Lgnum",field4:"EnterHU"},
-				
-				LM999:{view: "newbin",field1: "Nlpla",field2: "Nltyp",	field3: "Lgnum"},
+				LM999:{view: "newbin",field1: "Nlpla",field2: "Nltyp",	field3: "Lgnum"}
 			});
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");

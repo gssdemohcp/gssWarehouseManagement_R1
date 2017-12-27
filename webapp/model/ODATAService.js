@@ -75,6 +75,21 @@ sap.ui.define(["sap/ui/base/Object",
 			});
 			return promise;
 		},
+		
+		// oCallReadDeferredKeyFields: function(sEntityName, oComponent, sPath) {
+		// 	var promise = jQuery.Deferred(),
+		// 		oDataModel = oComponent.getModel();
+
+		// 	oDataModel.read(sEntityName(sPath), {
+		// 		success: function(oData) {
+		// 			promise.resolve(oData);
+		// 		}.bind(this),
+		// 		error: function(oData) {
+		// 			promise.reject(oData);
+		// 		}.bind(this)
+		// 	});
+		// 	return promise;
+		// },
 
 		// *************** Srini method for odata update begins *****************
 		oCallUpdateDeferred: function(sEntityset, oItems, mItem, oView) {

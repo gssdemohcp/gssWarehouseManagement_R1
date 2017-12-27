@@ -190,6 +190,78 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		// ********** Srini code to load putaway data ends *****************
 
+		// ************ Srini code to get data for Load by Shipment begins ***********
+		LoadShipmentDetails: function(oView, sInputValue, huVal, procInd) {
+			//Call oDATA Read with entity set name
+			var oRfModel = new JSONModel(),
+				promise = jQuery.Deferred(),
+				oOdataService = oView.gssOdataService(),
+				bEntityName = this.entityName(oView, "/LoadProcess"),
+				//Setup filter string
+				aFilterValues = oView.gssFilterFunction().setLoadShipmentFilter(oView, sInputValue, huVal, procInd),
+				//******
+				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
+
+			var oGlobalModel = oView.getModel("globalProperties");
+
+			oGlobalModel.setProperty("/isOdataLoading", true);
+			//Handle response from oData Call
+			oWhenCallReadIsDone.done(function(oResult, oFailed) {
+				var oRfData;
+				oRfData = oResult.results;
+				oRfData = {
+					shipDesc: '',
+					shipStat: '',
+					tprfo: '',
+					vbeln: '',
+					delStat: '',
+					Exida: '',
+					Exidv: '',
+					huStatDesc: '',
+					loadedHU: '',
+					totalHU: '',
+					Tknum: '',
+					Lgbzo: '',
+					Lgtor: '',
+					LoadedHuWt: '',
+					TotHuWt: '',
+					Msgtyp: '',
+					Msgtext: '',
+					HuStatus: '',
+					ProcInd: '',
+					WtUnit: '',
+					aItems: oRfData
+				};
+				oRfData.vbeln = oResult.results[0].Vbeln;
+				oRfData.loadedHU = oResult.results[0].LoadedHu;
+				oRfData.totalHU = oResult.results[0].TotalHu;
+				oRfData.Lgbzo = oResult.results[0].Lgbzo;
+				oRfData.Lgtor = oResult.results[0].Lgtor;
+				oRfData.Exidv = oResult.results[0].Exidv;
+				oRfData.LoadedHuWt = oResult.results[0].LoadedHuWt;
+				oRfData.TotHuWt = oResult.results[0].TotHuWt;
+				oRfData.WtUnit = oResult.results[0].WtUnit;
+				oRfModel.setData(oRfData);
+
+				//Create New Model for Menu Configuration Item
+				oView.setModel(oRfModel, "itemList");
+
+				//Before call errorhandling delegates 
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				// delegate error handling
+				errorHandling.register(oView.getApplication(), oView.getComponent());
+
+				oGlobalModel.setProperty("/isOdataLoading", false);
+
+				promise.resolve();
+
+			}.bind(this));
+			return promise;
+		},
+		// ************ Srini code to get data for Load by Shipment ends ***********
+
 		// *******************Sabari code to Load Inq by Delivery data begins *****************
 		LoadInqDelivery: function(oView, sInputValue) {
 			//Call oDATA Read with entity set name
@@ -350,7 +422,7 @@ sap.ui.define(["sap/ui/base/Object",
 				var oEntitySetModel = oView.getModel("entitySetProperties"),
 					bEntityName = oEntitySetModel.getProperty(sEntityProperty);
 				return bEntityName;
-			}
+		}
 			// ************* Srini code to get confirm items ends ************
 	});
 });

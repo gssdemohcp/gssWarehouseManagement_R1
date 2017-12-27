@@ -4,7 +4,7 @@ sap.ui.define(["sap/ui/base/Object",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator"
 
-], function(Object, Device, JSONModel,Filter, FilterOperator) {
+], function(Object, Device, JSONModel, Filter, FilterOperator) {
 	"use strict";
 
 	return Object.extend("gss.newWarehouseManage_R1.model.GlobalWarehouseManage", {
@@ -22,14 +22,15 @@ sap.ui.define(["sap/ui/base/Object",
 			this._mRunningSwipes = {};
 			this._bOneWaitingSuccess = false;
 		},
-		
+
 		buildFilter: function(field, value) {
 			var aFilter = new Filter(field, FilterOperator.EQ, value);
 			return aFilter;
 		},
-		setFilter: function(oView, sInputValue){
+		setFilter: function(oView, sInputValue) {
 			//Get Current View Name to get filter field name
 			var sCurrentScrnName = oView.getCurrentScrn(),
+
 			    ScreenModel = oView.getScreenModel(sCurrentScrnName),
 			//Bind user entered input value
 			sInptValue = this.buildFilter(ScreenModel.field1, sInputValue),
@@ -39,11 +40,13 @@ sap.ui.define(["sap/ui/base/Object",
 			sLgnum = this.buildFilter(ScreenModel.field3,oView.getGlobalModel().getProperty("/currentLgnum")),
 			//Build filter array
 			aFilterValues = [sInptValue,sQueue,sLgnum];
+
 			return aFilterValues;
 		},
-		setLoadInqFilter: function(oView, sInputValue){
+		setLoadInqFilter: function(oView, sInputValue) {
 			//Get Current View Name to get filter field name
 			var sCurrentScrnName = oView.getCurrentScrn(),
+
 			    ScreenModel = oView.getScreenModel(sCurrentScrnName),
 			//Bind user entered input value
 			sInptValue = this.buildFilter(ScreenModel.field1, sInputValue),
@@ -51,8 +54,10 @@ sap.ui.define(["sap/ui/base/Object",
 			sLgnum = this.buildFilter(ScreenModel.field3,oView.getGlobalModel().getProperty("/currentLgnum")),
 			//Build filter array 
 			aFilterValues = [sInptValue,sLgnum];
+
 			return aFilterValues;
 		},
+
 		setNewBinUriParamter: function(oView, sInputValue){
 			//Get Current View Name to get filter field name
 			
@@ -64,8 +69,26 @@ sap.ui.define(["sap/ui/base/Object",
 				// jUriParameter = [{"Lgnum":oView.getGlobalModel().getProperty("/currentLgnum"),"Nltyp":oView.getGlobalModel().getProperty("/currentNltyp"),"Nlpla": sInputValue}];
 				//jUriParameter = [{"Lgnum": "BI0","Nltyp":"AX2","Nlpla":"01-01-02"}];
 				return jUriParameter;
-			
+		},	
+
+
+		setLoadShipmentFilter: function(oView, sInputValue, huVal, procInd) {
+			//Get Current View Name to get filter field name
+			var sCurrentScrnName = oView.getCurrentScrn(),
+				ScreenModel = oView.getScreenModel(sCurrentScrnName);
+			if (sInputValue && huVal) { // To check if both fields has values
+				var filtership = this.buildFilter(ScreenModel.field1, sInputValue), // Assigning name to input value
+					filterhu = this.buildFilter(ScreenModel.field2, huVal), // Assigning name to input value
+					sLgnum = this.buildFilter(ScreenModel.field3, oView.getGlobalModel().getProperty("/currentLgnum")),
+					aFilterValues = [filtership, filterhu, sLgnum];
+				return aFilterValues; // Function call along with entityset and filter value
+			} else if (sInputValue && procInd) { // To get input value & indicator value
+				var filtership1 = this.buildFilter(ScreenModel.field1, sInputValue), // Assigning name to input value
+					filterInd = this.buildFilter(ScreenModel.field5, procInd), // Assigning name to indicator
+					sLgnum1 = this.buildFilter(ScreenModel.field3, oView.getGlobalModel().getProperty("/currentLgnum")),
+					aFilterValues1 = [filtership1, filterInd, sLgnum1];
+				return aFilterValues1;
+			}
 		}
-		
-		});
+	});
 });
