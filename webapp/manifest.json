@@ -134,6 +134,11 @@
 					"transition": "slide",
 					"viewName": "LoadShipment",
 					"viewLevel": 5
+				},
+				"loadDelivery":{
+					"transition": "slide",
+					"viewName": "LoadDelivery",
+					"viewLevel": 6
 				}
 			},
 			"routes": [{
@@ -164,7 +169,12 @@
 				"name": "loadShipment",
 				"pattern": "loadShipment",
 				"target": "loadShipment"
-			}]
+			},{
+				"name": "loadDelivery",
+				"pattern": "loadDelivery",
+				"target": "loadDelivery"
+			}
+			]
 		}
 	}
 }

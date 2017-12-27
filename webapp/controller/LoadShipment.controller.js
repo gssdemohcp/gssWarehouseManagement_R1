@@ -94,12 +94,12 @@ sap.ui.define([
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList");
-			var loadFunctionCall = this.gssKeyFieldsFunction().revertLoad(this, inputVal, modelData);
+			this.gssKeyFieldsFunction().revertLoad(this, inputVal, modelData);
 		},
 
 		onCancel: function() {
-				this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
-			}
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+		}
 			/**
 			 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 			 * (NOT before the first rendering! onInit() is used for that one!).
