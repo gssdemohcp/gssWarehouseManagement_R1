@@ -28,7 +28,15 @@
     {
       "templateId": "ui5template.basicSAPUI5ApplicationComponent",
       "templateVersion": "1.4.0",
+<<<<<<< Upstream, based on 9750b8eefa4f41255dafecde633ab723aa9d80c3
       "dateTimeStamp": "Tue, 02 Jan 2018 13:47:49 GMT"
+=======
+<<<<<<< Upstream, based on 4d864a3ca72c832647dbd9b9084ea1fe2f08afc1
+      "dateTimeStamp": "Wed, 27 Dec 2017 17:01:35 GMT"
+=======
+      "dateTimeStamp": "Wed, 27 Dec 2017 13:53:24 GMT"
+>>>>>>> 7a318e5 .user.project.json
+>>>>>>> d1e7fdf .user.project.json
     }
   ],
   "codeCheckingTriggers": {
