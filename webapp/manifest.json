@@ -139,6 +139,16 @@
 					"transition": "slide",
 					"viewName": "LoadDelivery",
 					"viewLevel": 6
+				},
+				"unloadShipment":{
+					"transition": "slide",
+					"viewName": "UnloadShipment",
+					"viewLevel": 7
+				},
+				"unloadDelivery":{
+					"transition": "slide",
+					"viewName": "UnloadDelivery",
+					"viewLevel": 8
 				}
 			},
 			"routes": [{
@@ -173,6 +183,14 @@
 				"name": "loadDelivery",
 				"pattern": "loadDelivery",
 				"target": "loadDelivery"
+			},{
+				"name": "unloadShipment",
+				"pattern": "unloadShipment",
+				"target": "unloadShipment"
+			},{
+				"name": "unloadDelivery",
+				"pattern": "unloadDelivery",
+				"target": "unloadDelivery"
 			}
 			]
 		}

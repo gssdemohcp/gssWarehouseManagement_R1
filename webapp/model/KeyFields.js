@@ -24,7 +24,7 @@ sap.ui.define(["sap/ui/base/Object",
 			this._bOneWaitingSuccess = false;
 		},
 
-		loadMaterials: function(oView, inputval, modelData) {
+		loadShipmentMaterials: function(oView, inputval, modelData) {
 			var oOdataService = oView.gssOdataService(),
 				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
@@ -60,8 +60,119 @@ sap.ui.define(["sap/ui/base/Object",
 			}
 			this.loadModel(oView, sPath, oOdataService);
 		},
+		
+		loadDeliveryMaterials: function(oView, inputval, modelData) {
+			var oOdataService = oView.gssOdataService(),
+				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
+			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			if (modelData.aItems) {
+					if (modelData.aItems.constructor === Array) {
+						if (modelData.aItems[0].Vbeln) {
+							var inputVal = modelData.aItems[0].Vbeln;
+							var huVal = modelData.aItems[0].Exidv;
+						} else {
+							inputVal = inputval;
+							huVal = this.getView().byId("scanHUinDel").getValue();
+						}
+						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
+							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')";
+					} else {
+						if (modelData.aItems.Vbeln) {
+							inputVal = modelData.aItems.Vbeln;
+							huVal = modelData.aItems.Exidv;
+						} else {
+							inputVal = inputval;
+							huVal = this.getView().byId("scanHUinDel").getValue();
+						}
+						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
+							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')";
+					}
+				} else {
+					if (modelData.Vbeln) {
+						inputVal = modelData.Vbeln;
+						huVal = modelData.Exidv;
+					} else {
+						inputVal = inputval;
+						huVal = this.getView().byId("scanHUinDel").getValue();
+					}
+					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
+						"',Exida='" + modelData.Exida + "'Tknum='',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')";
+				}
+			this.loadModel(oView, delPath, oOdataService);
+		},
+		
+		unloadShipment: function(oView, inputval, modelData) {
+			var oOdataService = oView.gssOdataService(),
+				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
+			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+				if (modelData.aItems) {
+					if (modelData.aItems.constructor === Array) {
+						if (modelData.aItems[0].Tknum) {
+							var inputVal = modelData.aItems[0].Tknum;
+						} else {
+							inputVal = inputval;
+						}
+						var sPath = bEntityName + "(Vbeln='',Exidv='" + modelData.aItems[0].Exidv + "',Exida='" + modelData.aItems[0].Exida +
+							"',Tknum='" + inputVal +
+							"',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
+					} else {
+						if (modelData.aItems.Tknum) {
+							inputVal = modelData.aItems.Tknum;
+						} else {
+							inputVal = inputval;
+						}
+						sPath = bEntityName + "(Vbeln='',Exidv='" + modelData.aItems.Exidv + "',Exida='" + modelData.aItems.Exida +
+							"',Tknum='" +
+							inputVal +
+							"',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
+					}
+				} else {
+					if (modelData.Tknum) {
+						inputVal = modelData.Tknum;
+					} else {
+						inputVal = inputval;
+					}
+					sPath = bEntityName + "(Vbeln='',Exidv='" + modelData.Exidv + "',Exida='" + modelData.Exida + "',Tknum='" + inputVal +
+						"',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
+				}
+				this.loadModel(oView, sPath, oOdataService);
+		},
+		
+		unloadDelivery: function(oView, inputval, modelData) {
+			var oOdataService = oView.gssOdataService(),
+				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
+			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			if (modelData.aItems) {
+					if (modelData.aItems.constructor === Array) {
+						if (modelData.aItems[0].Vbeln) {
+							var inputVal = modelData.aItems[0].Vbeln;
+						} else {
+							inputVal = inputval;
+						}
+						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + modelData.aItems[0].Exidv +
+							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
+					} else {
+						if (modelData.aItems.Vbeln) {
+							inputVal = modelData.aItems.Vbeln;
+						} else {
+							inputVal = inputval;
+						}
+						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + modelData.aItems.Exidv +
+							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
+					}
+				} else {
+					if (modelData.Vbeln) {
+						inputVal = modelData.Vbeln;
+					} else {
+						inputVal = inputval;
+					}
+					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + modelData.aItems.Exidv +
+						"',Exida='" + modelData.Exida + "',Tknum='',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
+				}
+			this.loadModel(oView, delPath, oOdataService);
+		},
 
-		revertLoad: function(oView, inputval, modelData) {
+		revertShipmentLoad: function(oView, inputval, modelData) {
 			var oOdataService = oView.gssOdataService(),
 				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
@@ -89,6 +200,126 @@ sap.ui.define(["sap/ui/base/Object",
 				}
 				this.loadModel(oView, sPath, oOdataService);
 			}
+		},
+		
+		revertLoadDelivery: function(oView, inputval, modelData) {
+			var oOdataService = oView.gssOdataService(),
+				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
+			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			if (modelData.aItems) {
+					if (modelData.aItems.constructor === Array) {
+						if (modelData.aItems[0].Vbeln) {
+							var inputVal = modelData.aItems[0].Vbeln;
+							var huVal = modelData.aItems[0].Exidv;
+						} else {
+							inputVal = inputval;
+							huVal = this.getView().byId("scanHUinDel").getValue();
+						}
+						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
+							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')";
+					} else {
+						if (modelData.aItems.Vbeln) {
+							inputVal = modelData.aItems.Vbeln;
+							huVal = modelData.aItems.Exidv;
+						} else {
+							inputVal = inputval;
+							huVal = this.getView().byId("scanHUinDel").getValue();
+						}
+						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
+							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')";
+					}
+				} else {
+					if (modelData.Vbeln) {
+						inputVal = modelData.Vbeln;
+						huVal = modelData.Exidv;
+					} else {
+						inputVal = inputval;
+						huVal = this.getView().byId("scanHUinDel").getValue();
+					}
+					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
+						"',Exida='" + modelData.Exida + "'Tknum='',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')";
+				}
+			this.loadModel(oView, delPath, oOdataService);
+		},
+		
+		revertUnloadShipment: function(oView, inputval, modelData) {
+			var oOdataService = oView.gssOdataService(),
+				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
+			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			if (modelData.aItems) {
+					if (modelData.aItems.constructor === Array) {
+						if (modelData.aItems[0].Tknum) {
+							var inputVal = modelData.aItems[0].Tknum;
+							var huVal = modelData.aItems[0].Exidv;
+						} else {
+							inputVal = inputval;
+							huVal = this.getView().byId("scanHUDel").getValue();
+						}
+						var sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems[0].Exida + "',Tknum='" + inputVal +
+							"',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
+					} else {
+						if (modelData.aItems.Tknum) {
+							inputVal = modelData.aItems.Tknum;
+							huVal = modelData.aItems.Exidv;
+						} else {
+							inputVal = inputval;
+							huVal = this.getView().byId("scanHUDel").getValue();
+						}
+						sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems.Exida + "',Tknum='" + inputVal +
+							"',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
+					}
+				} else {
+					if (modelData.Tknum) {
+						inputVal = modelData.Tknum;
+						huVal = modelData.Exidv;
+					} else {
+						inputVal = inputval;
+						huVal = this.getView().byId("scanHUDel").getValue();
+					}
+					sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.Exida + "',Tknum='" + inputVal +
+						"',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
+				}	
+			this.loadModel(oView, sPath, oOdataService);
+		},
+		
+		revertUnloadDelivery: function(oView, inputval, modelData) {
+			var oOdataService = oView.gssOdataService(),
+				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
+			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			if (modelData.aItems) {
+					if (modelData.aItems.constructor === Array) {
+						if (modelData.aItems[0].Vbeln) {
+							var inputVal = modelData.aItems[0].Vbeln;
+							var huVal = modelData.aItems[0].Exidv;
+						} else {
+							inputVal = inputval;
+							huVal = this.getView().byId("scanHUinDel").getValue();
+						}
+						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
+							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
+					} else {
+						if (modelData.aItems.Vbeln) {
+							inputVal = modelData.aItems.Vbeln;
+							huVal = modelData.aItems.Exidv;
+						} else {
+							inputVal = inputval;
+							huVal = this.getView().byId("scanHUinDel").getValue();
+						}
+						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
+							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
+					}
+				} else {
+					if (modelData.Vbeln) {
+						inputVal = modelData.Vbeln;
+						huVal = modelData.Exidv;
+					} else {
+						inputVal = inputval;
+						huVal = this.getView().byId("scanHUinDel").getValue();
+					}
+					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
+						"',Exida='" + modelData.Exida + "'Tknum='',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
+				}
+			this.loadModel(oView, delPath, oOdataService);
 		},
 		
 		loadModel: function(oView, sPath, oOdataService) {

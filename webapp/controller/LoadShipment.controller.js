@@ -82,7 +82,7 @@ sap.ui.define([
 		load: function() {
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList");
-			var loadFunctionCall = this.gssKeyFieldsFunction().loadMaterials(this, inputVal, modelData);
+			this.gssKeyFieldsFunction().loadShipmentMaterials(this, inputVal, modelData);
 		},
 
 		loadRevert: function() {
@@ -94,7 +94,7 @@ sap.ui.define([
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList");
-			this.gssKeyFieldsFunction().revertLoad(this, inputVal, modelData);
+			this.gssKeyFieldsFunction().revertShipmentLoad(this, inputVal, modelData);
 		},
 
 		onCancel: function() {

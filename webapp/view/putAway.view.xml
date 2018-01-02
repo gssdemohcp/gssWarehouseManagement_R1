@@ -63,9 +63,9 @@
 						</columns>
 					</Table>
 				</content>
-				<footer id="footer"
-					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
-					<Bar id="footerbar">
+				<footer id="footer" 
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter footerheight">
+					<Bar id="footerbar" >
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
