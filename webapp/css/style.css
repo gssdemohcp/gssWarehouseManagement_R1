@@ -35,6 +35,14 @@
     font-weight: bold !IMPORTANT;
 }
 
+.accept {
+	background-color:#abe2ab !IMPORTANT;
+}
+
+.undoDel {
+	background-color:#ff8888 !IMPORTANT;
+}
+
 #__xmlview0--accept-inner{
 	background-color:#abe2ab !IMPORTANT;
 }

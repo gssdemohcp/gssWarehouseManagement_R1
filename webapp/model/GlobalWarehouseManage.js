@@ -261,6 +261,7 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// ************ Srini code to get data for Load by Shipment ends ***********
+
 		
 		// ************ Srini code to get data for unload by Shipment begins ***********
 		unloadShipmentDetails: function(oView, sInputValue, huVal, procInd, loadInd) {
@@ -478,6 +479,7 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		// ************ Srini code to get data for Unload by Delivery ends ***********
 
+	
 		// *******************Sabari code to Load Inq by Delivery data begins *****************
 		LoadInqDelivery: function(oView, sInputValue) {
 			//Call oDATA Read with entity set name
@@ -498,13 +500,13 @@ sap.ui.define(["sap/ui/base/Object",
 				var oRfData;
 				oRfData = oResult.results;
 				oRfData = {
-					delStat   : oRfData[0].DelStat, // Building the required variables
-					loadedHU  : oRfData[0].LoadedHu,
-					totalHU   : oRfData[0].TotalHu,
-					Exida     : oRfData[0].Exida,
-					Exidv     : oRfData[0].Exidv,
+					delStat: oRfData[0].DelStat, // Building the required variables
+					loadedHU: oRfData[0].LoadedHu,
+					totalHU: oRfData[0].TotalHu,
+					Exida: oRfData[0].Exida,
+					Exidv: oRfData[0].Exidv,
 					huStatDesc: oRfData[0].HuStatDesc,
-					aItems    : oRfData
+					aItems: oRfData
 				};
 				oRfModel.setData(oRfData);
 
@@ -548,10 +550,10 @@ sap.ui.define(["sap/ui/base/Object",
 				oRfData = {
 					shipDesc: oRfData[0].ShipDesc, // Building the required variables
 					shipStat: oRfData[0].ShipStat,
-					tprfo   : oRfData[0].Tprfo,
-					vbeln   : oRfData[0].Vbeln,
-					delStat : oRfData[0].DelStat,
-					aItems  : oRfData
+					tprfo: oRfData[0].Tprfo,
+					vbeln: oRfData[0].Vbeln,
+					delStat: oRfData[0].DelStat,
+					aItems: oRfData
 				};
 				oRfModel.setData(oRfData);
 
@@ -638,7 +640,7 @@ sap.ui.define(["sap/ui/base/Object",
 				var oEntitySetModel = oView.getModel("entitySetProperties"),
 					bEntityName = oEntitySetModel.getProperty(sEntityProperty);
 				return bEntityName;
-		}
+			}
 			// ************* Srini code to get confirm items ends ************
 	});
 });

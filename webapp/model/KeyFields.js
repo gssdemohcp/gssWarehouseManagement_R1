@@ -62,6 +62,7 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		
 		loadDeliveryMaterials: function(oView, inputval, modelData) {
+
 			var oOdataService = oView.gssOdataService(),
 				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
@@ -172,6 +173,7 @@ sap.ui.define(["sap/ui/base/Object",
 			this.loadModel(oView, delPath, oOdataService);
 		},
 
+
 		revertShipmentLoad: function(oView, inputval, modelData) {
 			var oOdataService = oView.gssOdataService(),
 				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
@@ -183,7 +185,9 @@ sap.ui.define(["sap/ui/base/Object",
 						var huVal = modelData.aItems[0].Exidv; // To assign value to the variable
 					} else {
 						inputVal = inputval; // To get value from the input field
+
 						huVal = oView.byId("scanHUDel").getValue(); // To get value from the input field
+
 					}
 					var sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems[0].Exida + "',Tknum='" + inputVal +
 						"',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')"; // Building URL for unload process
@@ -193,7 +197,9 @@ sap.ui.define(["sap/ui/base/Object",
 						huVal = modelData.aItems.Exidv; // To assign value to the variable
 					} else {
 						inputVal = inputval; // To get value from the input field
+
 						huVal = oView.byId("scanHUDel").getValue(); // To get value from the input field
+
 					}
 					sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems.Exida + "',Tknum='" + inputVal +
 						"',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')"; // Building URL for unload process
@@ -202,6 +208,7 @@ sap.ui.define(["sap/ui/base/Object",
 			}
 		},
 		
+
 		revertLoadDelivery: function(oView, inputval, modelData) {
 			var oOdataService = oView.gssOdataService(),
 				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
@@ -321,6 +328,7 @@ sap.ui.define(["sap/ui/base/Object",
 				}
 			this.loadModel(oView, delPath, oOdataService);
 		},
+
 		
 		loadModel: function(oView, sPath, oOdataService) {
 			var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(sPath, oView, ""); // To pass the built URL to get entityset data
