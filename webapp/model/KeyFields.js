@@ -72,7 +72,7 @@ sap.ui.define(["sap/ui/base/Object",
 							var huVal = modelData.aItems[0].Exidv;
 						} else {
 							inputVal = inputval;
-							huVal = this.getView().byId("scanHUinDel").getValue();
+							huVal = oView.byId("scanHUinDel").getValue();
 						}
 						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
 							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')";
@@ -82,7 +82,7 @@ sap.ui.define(["sap/ui/base/Object",
 							huVal = modelData.aItems.Exidv;
 						} else {
 							inputVal = inputval;
-							huVal = this.getView().byId("scanHUinDel").getValue();
+							huVal = oView.byId("scanHUinDel").getValue();
 						}
 						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
 							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')";
@@ -93,7 +93,7 @@ sap.ui.define(["sap/ui/base/Object",
 						huVal = modelData.Exidv;
 					} else {
 						inputVal = inputval;
-						huVal = this.getView().byId("scanHUinDel").getValue();
+						huVal = oView.byId("scanHUinDel").getValue();
 					}
 					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
 						"',Exida='" + modelData.Exida + "'Tknum='',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')";
@@ -183,7 +183,7 @@ sap.ui.define(["sap/ui/base/Object",
 						var huVal = modelData.aItems[0].Exidv; // To assign value to the variable
 					} else {
 						inputVal = inputval; // To get value from the input field
-						huVal = this.getView().byId("scanHUDel").getValue(); // To get value from the input field
+						huVal = oView.byId("scanHUDel").getValue(); // To get value from the input field
 					}
 					var sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems[0].Exida + "',Tknum='" + inputVal +
 						"',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')"; // Building URL for unload process
@@ -193,7 +193,7 @@ sap.ui.define(["sap/ui/base/Object",
 						huVal = modelData.aItems.Exidv; // To assign value to the variable
 					} else {
 						inputVal = inputval; // To get value from the input field
-						huVal = this.getView().byId("scanHUDel").getValue(); // To get value from the input field
+						huVal = oView.byId("scanHUDel").getValue(); // To get value from the input field
 					}
 					sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems.Exida + "',Tknum='" + inputVal +
 						"',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')"; // Building URL for unload process
@@ -213,7 +213,7 @@ sap.ui.define(["sap/ui/base/Object",
 							var huVal = modelData.aItems[0].Exidv;
 						} else {
 							inputVal = inputval;
-							huVal = this.getView().byId("scanHUinDel").getValue();
+							huVal = oView.byId("scanHUinDel").getValue();
 						}
 						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
 							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')";
@@ -223,7 +223,7 @@ sap.ui.define(["sap/ui/base/Object",
 							huVal = modelData.aItems.Exidv;
 						} else {
 							inputVal = inputval;
-							huVal = this.getView().byId("scanHUinDel").getValue();
+							huVal = oView.byId("scanHUinDel").getValue();
 						}
 						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
 							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')";
@@ -234,7 +234,7 @@ sap.ui.define(["sap/ui/base/Object",
 						huVal = modelData.Exidv;
 					} else {
 						inputVal = inputval;
-						huVal = this.getView().byId("scanHUinDel").getValue();
+						huVal = oView.byId("scanHUinDel").getValue();
 					}
 					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
 						"',Exida='" + modelData.Exida + "'Tknum='',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')";
@@ -253,7 +253,7 @@ sap.ui.define(["sap/ui/base/Object",
 							var huVal = modelData.aItems[0].Exidv;
 						} else {
 							inputVal = inputval;
-							huVal = this.getView().byId("scanHUDel").getValue();
+							huVal = oView.byId("scanHUDel").getValue();
 						}
 						var sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems[0].Exida + "',Tknum='" + inputVal +
 							"',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
@@ -263,7 +263,7 @@ sap.ui.define(["sap/ui/base/Object",
 							huVal = modelData.aItems.Exidv;
 						} else {
 							inputVal = inputval;
-							huVal = this.getView().byId("scanHUDel").getValue();
+							huVal = oView.byId("scanHUDel").getValue();
 						}
 						sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems.Exida + "',Tknum='" + inputVal +
 							"',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
@@ -274,7 +274,7 @@ sap.ui.define(["sap/ui/base/Object",
 						huVal = modelData.Exidv;
 					} else {
 						inputVal = inputval;
-						huVal = this.getView().byId("scanHUDel").getValue();
+						huVal = oView.byId("scanHUDel").getValue();
 					}
 					sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.Exida + "',Tknum='" + inputVal +
 						"',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
@@ -293,7 +293,7 @@ sap.ui.define(["sap/ui/base/Object",
 							var huVal = modelData.aItems[0].Exidv;
 						} else {
 							inputVal = inputval;
-							huVal = this.getView().byId("scanHUinDel").getValue();
+							huVal = oView.byId("scanHUinDel").getValue();
 						}
 						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
 							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
@@ -303,7 +303,7 @@ sap.ui.define(["sap/ui/base/Object",
 							huVal = modelData.aItems.Exidv;
 						} else {
 							inputVal = inputval;
-							huVal = this.getView().byId("scanHUinDel").getValue();
+							huVal = oView.byId("scanHUinDel").getValue();
 						}
 						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
 							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
@@ -314,7 +314,7 @@ sap.ui.define(["sap/ui/base/Object",
 						huVal = modelData.Exidv;
 					} else {
 						inputVal = inputval;
-						huVal = this.getView().byId("scanHUinDel").getValue();
+						huVal = oView.byId("scanHUinDel").getValue();
 					}
 					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
 						"',Exida='" + modelData.Exida + "'Tknum='',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
