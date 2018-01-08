@@ -47,7 +47,7 @@
 							</Toolbar>
 							<HBox>
 								<VBox>
-									<Label id="loadedLab" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>loadedHUTitle}"/>
+									<Label id="loadedLab" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>unloadedHUTitle}"/>
 									<!--<Label id="unloadLab" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="Unloaded HU" visible="false"/>-->
 									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>totalHUTitle}"/>
 									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>loadedWTTitle}"/>
