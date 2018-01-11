@@ -20,7 +20,7 @@
 					<Button id="scanButton" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 				</Toolbar>
 				<content>
-					<f:SimpleForm id="delvForm" editable="false" layout="Resp   onsiveGridLayout" title="{i18n>Delform1Title}" labelSpanXL="3" labelSpanL="3"
+					<f:SimpleForm id="delvForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>Delform1Title}" labelSpanXL="3" labelSpanL="3"
 						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
 						columnsL="1" columnsM="1" singleContainerFullSize="false">
 						<f:content>
