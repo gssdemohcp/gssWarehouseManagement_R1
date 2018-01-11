@@ -4,7 +4,7 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter"
 
-], function(Controller, BaseController,formatter) {
+], function(Controller, BaseController, formatter) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.picking", {
@@ -18,10 +18,15 @@ sap.ui.define([
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
 					this._router = this.getRouter();
+					this.seti18nModel(this);
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
+			this._router = this.getRouter();
+			this.seti18nModel(this);
+			this.inputDetails();
+			this.getGlobalModel().setProperty("/currentView", this);
 		},
 
 		inputDetails: function() {
@@ -33,14 +38,14 @@ sap.ui.define([
 			// this.getView().byId("inputValue").setValueState(sap.ui.core.ValueState.Error);
 		},
 
-		iGetInput: function(oEvent){
+		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
-			if(_inputValue) {
+			if (_inputValue) {
 				this.getPickingMaterial(_inputValue);
 			}
 		},
 
-		getPickingMaterial: function(sInputValue){
+		getPickingMaterial: function(sInputValue) {
 			//Read picking material from backend
 			var oWhenCallReadIsDone = this.gssCallFunction().LoadMaterial(this, sInputValue);
 

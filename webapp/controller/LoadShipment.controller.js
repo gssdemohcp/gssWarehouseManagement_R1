@@ -17,25 +17,17 @@ sap.ui.define([
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
 					this._router = this.getRouter();
-					this.seti18nModel();
+					this.seti18nModel(this);
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
 
 			this._router = this.getRouter();
-			this.seti18nModel();
+			this.seti18nModel(this);
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
 			this.setFragment();
-		},
-
-		seti18nModel: function() {
-			// set i18n model on view
-			var i18nModel = new ResourceModel({
-				bundleName: "gss.newWarehouseManage_R1.i18n.i18n"
-			});
-			this.getView().setModel(i18nModel, "i18n");
 		},
 
 		inputDetails: function() {
@@ -52,7 +44,7 @@ sap.ui.define([
 				this.getLoadDetails(_inputValue);
 			}
 		},
-		
+
 		setFragment: function() {
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
@@ -102,8 +94,8 @@ sap.ui.define([
 		},
 
 		onCancel: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
-		}
+				this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+			}
 			/**
 			 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 			 * (NOT before the first rendering! onInit() is used for that one!).

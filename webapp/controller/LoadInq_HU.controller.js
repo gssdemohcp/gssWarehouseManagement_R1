@@ -17,7 +17,7 @@ sap.ui.define([
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
 					this._router = this.getRouter();
-					this.seti18nModel();
+					this.seti18nModel(this);
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 					this.getView().byId("inputValue").setValue("");
@@ -30,17 +30,9 @@ sap.ui.define([
 			});
 
 			this._router = this.getRouter();
-			this.seti18nModel();
+			this.seti18nModel(this);
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
-		},
-
-		seti18nModel: function() {
-			// set i18n model on view
-			var i18nModel = new ResourceModel({
-				bundleName: "gss.newWarehouseManage_R1.i18n.i18n"
-			});
-			this.getView().setModel(i18nModel, "i18n");
 		},
 
 		inputDetails: function() {
@@ -59,7 +51,7 @@ sap.ui.define([
 		},
 
 		getInqHU: function(sInputValue) {
-			this.gssCallFunction().LoadInqHU(this, sInputValue);
+			this.gssCallFunction().LoadInqData(this, sInputValue);
 		},
 
 		/**

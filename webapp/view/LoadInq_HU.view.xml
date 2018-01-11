@@ -28,10 +28,10 @@
 									<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="Completed"/>-->
 									<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="43,333 KG"/>-->
 									<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="0,000"/>-->
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/Vstel}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/DelStat}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/TotHuWt} {itemList>/WtUnit}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/HuVolume}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Vstel}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/DelStat}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/TotHuWt} {itemList>/aItems/0/WtUnit}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/HuVolume}"/>
 								</VBox>
 							</HBox>
 						</f:content>

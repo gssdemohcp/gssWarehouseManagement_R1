@@ -13,7 +13,7 @@
 						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<l:VerticalLayout>
-						<ObjectStatus id="shipmentText" class="sapUiTinyMarginBegin Text" text="{itemList>/shipDesc} - {itemList>/shipStat}"/>
+						<ObjectStatus id="shipmentText" class="sapUiTinyMarginBegin Text" text="{itemList>/aItems/0/ShipDesc} - {itemList>/aItems/0/ShipStat}"/>
 						<!--<ObjectStatus text="Loading end"/>-->
 					</l:VerticalLayout>
 					<Table class="sapUiTinyMarginBegin" id="shipmentTable" inset="false" items="{itemList>/aItems}" visible="true" growing="true"

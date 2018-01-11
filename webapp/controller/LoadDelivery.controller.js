@@ -17,27 +17,19 @@ sap.ui.define([
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
 					this._router = this.getRouter();
-					this.seti18nModel();
+					this.seti18nModel(this);
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
 
 			this._router = this.getRouter();
-			this.seti18nModel();
+			this.seti18nModel(this);
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
 			this.setFragment();
 		},
 
-		seti18nModel: function() {
-			// set i18n model on view
-			var i18nModel = new ResourceModel({
-				bundleName: "gss.newWarehouseManage_R1.i18n.i18n"
-			});
-			this.getView().setModel(i18nModel, "i18n");
-		},
-		
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
@@ -53,7 +45,11 @@ sap.ui.define([
 				this.getLoadDetails(_inputValue, huNo);
 			}
 		},
+<<<<<<< Upstream, based on 7fc0fe56b2a40181a9a4c132c7fdd68cd5fc3d4c
 		
+=======
+
+>>>>>>> def475b I18n and Load Inq Code - Sabari
 		setFragment: function() {
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
@@ -82,7 +78,7 @@ sap.ui.define([
 				this.getView().byId("inputValue").setMaxLength(10);
 			}
 		},
-		
+
 		load: function() {
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList"),

@@ -43,6 +43,7 @@ sap.ui.define(["sap/ui/base/Object",
 
 			return aFilterValues;
 		},
+		
 		setLoadInqFilter: function(oView, sInputValue) {
 			//Get Current View Name to get filter field name
 			var sCurrentScrnName = oView.getCurrentScrn(),

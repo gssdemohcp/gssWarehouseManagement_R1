@@ -13,8 +13,8 @@
 						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<l:VerticalLayout>
-						<ObjectStatus id="delvStatus" class="sapUiTinyMarginBegin Text" text="{itemList>/delStat}"/>
-						<ObjectStatus id="delvText" class="sapUiTinyMarginBegin Text" text="Loaded {itemList>/loadedHU} / {itemList>/totalHU} Handling Units"/>
+						<ObjectStatus id="delvStatus" class="sapUiTinyMarginBegin Text" text="{itemList>/aItems/0/DelStat}"/>
+						<ObjectStatus id="delvText" class="sapUiTinyMarginBegin Text" text="Loaded {itemList>/aItems/0/LoadedHu} / {itemList>/aItems/0/TotalHu} Handling Units"/>
 					</l:VerticalLayout>
 					<Table class="sapUiTinyMarginBegin" id="huTable" inset="false" items="{itemList>/aItems}" visible="true" growing="true"
 						growingScrollToLoad="true">

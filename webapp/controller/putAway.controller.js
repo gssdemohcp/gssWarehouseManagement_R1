@@ -19,28 +19,24 @@ sap.ui.define([
 		 * @memberOf gss.newWarehouseManage_R1.view.putAway
 		 */
 		onInit: function() {
+			//TO get the BreadCrumb Detail 
+			// Sabari 24/12/2017 
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
 					this._router = this.getRouter();
-					this.seti18nModel();
+					this.seti18nModel(this);
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
 
 			this._router = this.getRouter();
-			this.seti18nModel();
+			this.seti18nModel(this);
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
-			this.setFragment(); 
+			this.setFragment();
 		},
-		seti18nModel: function() {
-			// set i18n model on view
-			var i18nModel = new ResourceModel({
-				bundleName: "gss.newWarehouseManage_R1.i18n.i18n"
-			});
-			this.getView().setModel(i18nModel, "i18n");
-		},
+
 		setFragment: function() {
 			//Fragement Code for New Bin
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin");
@@ -48,7 +44,7 @@ sap.ui.define([
 			this.getView().addDependent(this.fragmentNewBinLoaded);
 			//	
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);	
+			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
 		},
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();

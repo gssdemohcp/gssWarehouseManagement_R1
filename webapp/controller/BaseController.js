@@ -1,6 +1,7 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function(Controller) {
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/model/resource/ResourceModel"
+], function(Controller, ResourceModel) {
 	"use strict";
 
 	return Controller.extend("gss.newWarehouseManage_R1.controller.BaseController", {
@@ -115,6 +116,14 @@ sap.ui.define([
 
 		getComponent: function() {
 			return this.getOwnerComponent();
+		},
+		
+		seti18nModel: function(oView) {
+			// set i18n model on view
+			var i18nModel = new ResourceModel({
+				bundleName: "gss.newWarehouseManage_R1.i18n.i18n"
+			});
+			oView.setModel(i18nModel, "i18n");
 		},
 		/**
 		 * Event handler when the share by E-Mail button has been clicked

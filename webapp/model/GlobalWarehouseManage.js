@@ -330,8 +330,145 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		// ************ Srini code to get data for Unload ends ***********
 
+<<<<<<< Upstream, based on a2c93111099da4fd4cb7d73c2c1b0d2e94e9b191
 		// *******************Sabari code to Load Inq by Delivery data begins *****************
 		LoadInqDelivery: function(oView, sInputValue) {
+=======
+			var oGlobalModel = oView.getModel("globalProperties");
+
+			oGlobalModel.setProperty("/isOdataLoading", true);
+			//Handle response from oData Call
+			oWhenCallReadIsDone.done(function(oResult, oFailed) {
+				var oRfData;
+				oRfData = oResult.results;
+				oRfData = {
+					shipDesc: '',
+					shipStat: '',
+					tprfo: '',
+					vbeln: '',
+					delStat: '',
+					Exida: '',
+					Exidv: '',
+					huStatDesc: '',
+					loadedHU: '',
+					totalHU: '',
+					Tknum: '',
+					Lgbzo: '',
+					Lgtor: '',
+					LoadedHuWt: '',
+					TotHuWt: '',
+					Msgtyp: '',
+					Msgtext: '',
+					HuStatus: '',
+					ProcInd: '',
+					WtUnit: '',
+					aItems: oRfData
+				};
+				oRfData.vbeln = oResult.results[0].Vbeln;
+				oRfData.loadedHU = oResult.results[0].LoadedHu;
+				oRfData.totalHU = oResult.results[0].TotalHu;
+				oRfData.Lgbzo = oResult.results[0].Lgbzo;
+				oRfData.Lgtor = oResult.results[0].Lgtor;
+				oRfData.Exidv = oResult.results[0].Exidv;
+				oRfData.LoadedHuWt = oResult.results[0].LoadedHuWt;
+				oRfData.TotHuWt = oResult.results[0].TotHuWt;
+				oRfData.WtUnit = oResult.results[0].WtUnit;
+				oRfModel.setData(oRfData);
+
+				//Create New Model for Menu Configuration Item
+				oView.setModel(oRfModel, "itemList");
+
+				//Before call errorhandling delegates 
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				// delegate error handling
+				errorHandling.register(oView.getApplication(), oView.getComponent());
+
+				oGlobalModel.setProperty("/isOdataLoading", false);
+
+				promise.resolve();
+
+			}.bind(this));
+			return promise;
+		},
+		// ************ Srini code to get data for Load by Delivery ends ***********
+		
+		// ************ Srini code to get data for Unload by Delivery begins ***********
+		UnloadDeliveryDetails: function(oView, sInputValue, huVal, procInd, loadInd) {
+			//Call oDATA Read with entity set name
+			var oRfModel = new JSONModel(),
+				promise = jQuery.Deferred(),
+				oOdataService = oView.gssOdataService(),
+				bEntityName = this.entityName(oView, "/LoadProcess"),
+				//Setup filter string
+				aFilterValues = oView.gssFilterFunction().setUnloadDeliveryFilter(oView, sInputValue, huVal, procInd, loadInd),
+				//******
+				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
+
+			var oGlobalModel = oView.getModel("globalProperties");
+
+			oGlobalModel.setProperty("/isOdataLoading", true);
+			//Handle response from oData Call
+			oWhenCallReadIsDone.done(function(oResult, oFailed) {
+				var oRfData;
+				oRfData = oResult.results;
+				oRfData = {
+					shipDesc: '',
+					shipStat: '',
+					tprfo: '',
+					vbeln: '',
+					delStat: '',
+					Exida: '',
+					Exidv: '',
+					huStatDesc: '',
+					loadedHU: '',
+					totalHU: '',
+					Tknum: '',
+					Lgbzo: '',
+					Lgtor: '',
+					LoadedHuWt: '',
+					TotHuWt: '',
+					Msgtyp: '',
+					Msgtext: '',
+					HuStatus: '',
+					ProcInd: '',
+					WtUnit: '',
+					aItems: oRfData
+				};
+				oRfData.vbeln = oResult.results[0].Vbeln;
+				oRfData.loadedHU = oResult.results[0].LoadedHu;
+				oRfData.totalHU = oResult.results[0].TotalHu;
+				oRfData.Lgbzo = oResult.results[0].Lgbzo;
+				oRfData.Lgtor = oResult.results[0].Lgtor;
+				oRfData.Exidv = oResult.results[0].Exidv;
+				oRfData.LoadedHuWt = oResult.results[0].LoadedHuWt;
+				oRfData.TotHuWt = oResult.results[0].TotHuWt;
+				oRfData.WtUnit = oResult.results[0].WtUnit;
+				oRfModel.setData(oRfData);
+
+				//Create New Model for Menu Configuration Item
+				oView.setModel(oRfModel, "itemList");
+
+				//Before call errorhandling delegates 
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				// delegate error handling
+				errorHandling.register(oView.getApplication(), oView.getComponent());
+
+				oGlobalModel.setProperty("/isOdataLoading", false);
+
+				promise.resolve();
+
+			}.bind(this));
+			return promise;
+		},
+		// ************ Srini code to get data for Unload by Delivery ends ***********
+
+		// *******************Sabari code to Load Inq by Delivery/HU/Shipment data begins *****************
+		LoadInqData: function(oView, sInputValue) {
+>>>>>>> 323be7e I18n and Load Inq Code - Sabari
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
@@ -348,15 +485,8 @@ sap.ui.define(["sap/ui/base/Object",
 			//Handle response from oData Call
 			oWhenCallReadIsDone.done(function(oResult, oFailed) {
 				var oRfData;
-				oRfData = oResult.results;
 				oRfData = {
-					delStat: oRfData[0].DelStat, // Building the required variables
-					loadedHU: oRfData[0].LoadedHu,
-					totalHU: oRfData[0].TotalHu,
-					Exida: oRfData[0].Exida,
-					Exidv: oRfData[0].Exidv,
-					huStatDesc: oRfData[0].HuStatDesc,
-					aItems: oRfData
+					aItems: oResult.results
 				};
 				oRfModel.setData(oRfData);
 
@@ -377,6 +507,7 @@ sap.ui.define(["sap/ui/base/Object",
 			}.bind(this));
 			return promise;
 		},
+<<<<<<< Upstream, based on 7fc0fe56b2a40181a9a4c132c7fdd68cd5fc3d4c
 		// *******************Sabari code to Load Inq by Delivery data begins *****************
 		// *******************Sabari code to Load Inq by Shipment data begins *****************
 		LoadInqShipment: function(oView, sInputValue) {
@@ -466,6 +597,8 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// *******************Sabari code to Load Inq by HU data begins *****************
+=======
+>>>>>>> def475b I18n and Load Inq Code - Sabari
 		// ************* Srini code to get selected items from table begins ************
 		selectedItems: function(oView, controlId) {
 			return oView.byId(controlId).getSelectedItems();
