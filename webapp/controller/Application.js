@@ -15,7 +15,8 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/controller/ErrorHandler",
 	"./errorHandling"
-], function(Object, Device, BindingMode, History, GlobalWarehouseManage, ODATAService, MENUBinding, Filters, Fragments, KeyFields, Difference, CreateBreadCrumbs,
+], function(Object, Device, BindingMode, History, GlobalWarehouseManage, ODATAService, MENUBinding, Filters, Fragments, KeyFields,
+	Difference, CreateBreadCrumbs,
 	BaseController, ErrorHandler, errorHandling) {
 	"use strict";
 
@@ -104,15 +105,15 @@ sap.ui.define([
 			// *************** Srini Code to create object for filters begins ***************
 			this._ofilters = new Filters(this);
 			// *************** Srini Code to create object for filters ends *****************
-			
+
 			// *************** Srini Code to display fragments begins ***************
 			this._ofragments = new Fragments(this);
 			// *************** Srini Code to display fragments ends *****************
-			
+
 			// *************** Srini Code to build key fields begins ***************
 			this._okeyfields = new KeyFields(this);
 			// *************** Srini Code to build key fields ends *****************
-			
+
 			// *************** Srini Code to display difference begins ***************
 			this._odifference = new Difference(this);
 			// *************** Srini Code to display difference ends *****************
@@ -149,11 +150,11 @@ sap.ui.define([
 				currentQueue: "",
 				currentLgnum: "",
 				currentNltyp: "",
-				lastModelSetName:"",
-				MenuData:"",
-				MainView:"",
-				SecondView:"",
-				lastSubModelSetName:""
+				lastModelSetName: "",
+				MenuData: "",
+				MainView: "",
+				SecondView: "",
+				lastSubModelSetName: ""
 			});
 			this._oGlobalModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oGlobalModel, "globalProperties");
@@ -176,7 +177,7 @@ sap.ui.define([
 			// set the Fragment Properties Model
 			this._oFragmentControllerModel = new JSONModel({
 				putAway: "gss.newWarehouseManage_R1.controller.putAway",
-				mainMenu : "gss.newWarehouseManage_R1.view.fragments.rfMenu",
+				mainMenu: "gss.newWarehouseManage_R1.view.fragments.rfMenu",
 				newBin: "gss.newWarehouseManage_R1.view.fragments.newBin",
 				difference: "gss.newWarehouseManage_R1.view.fragments.difference",
 				confirmation: "gss.newWarehouseManage_R1.view.fragments.confirmation"
@@ -193,33 +194,121 @@ sap.ui.define([
 			// Start Menu item and view navvigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			this._oMenuTransactionModelNew = new JSONModel({
-				LM02: {view: "putaway",	field1: "Lenum",field2: "Queue",field3: "Lgnum",field4:"EnterSU"},
-				LM03: {view: "putaway",field1: "Tanum",field2: "Queue",field3: "Lgnum",field4:"EnterTO"},
-				LM09: {view: "putaway",field1: "Vbeln",field2: "Queue",field3: "Lgnum",field4:"EnterDel"},
-				LM05: {view: "picking",field1: "Tanum",field2: "Queue",	field3: "Lgnum",field4:"EnterTO"},
-				LM06: {view: "picking",field1: "Vbeln",field2: "Queue",	field3: "Lgnum",field4:"EnterDel"},
+				LM02: {
+					view: "putaway",
+					field1: "Lenum",
+					field2: "Queue",
+					field3: "Lgnum",
+					field4: "EnterSU",
+					entitySet: "/WMProcessSet"
+				},
+				LM03: {
+					view: "putaway",
+					field1: "Tanum",
+					field2: "Queue",
+					field3: "Lgnum",
+					field4: "EnterTO",
+					entitySet: "/WMProcessSet"
+				},
+				LM09: {
+					view: "putaway",
+					field1: "Vbeln",
+					field2: "Queue",
+					field3: "Lgnum",
+					field4: "EnterDel",
+					entitySet: "/WMProcessSet"
+				},
+				LM05: {
+					view: "picking",
+					field1: "Tanum",
+					field2: "Queue",
+					field3: "Lgnum",
+					field4: "EnterTO",
+					entitySet: "/WMProcessSet"
+				},
+				LM06: {
+					view: "picking",
+					field1: "Vbeln",
+					field2: "Queue",
+					field3: "Lgnum",
+					field4: "EnterDel",
+					entitySet: "/WMProcessSet"
+				},
 
-				LM33: {view:"unloadShipment", field1:"Tknum", field2: "Exidv", field3: "Lgnum", field4: "EnterShip", field5: "ProcInd", field6: "LoadInd"},
-				LM34: {view:"unloadDelivery", field1:"Vbeln", field2: "Exidv", field3: "Lgnum", field4: "EnterDel", field5: "ProcInd", field6: "LoadInd"},
+				LM33: {
+					view: "unloadShipment",
+					field1: "Tknum",
+					field2: "Exidv",
+					field3: "Lgnum",
+					field4: "EnterShip",
+					field5: "ProcInd",
+					field6: "LoadInd",
+					entitySet: "/LoadProcessSet"
+				},
+				LM34: {
+					view: "unloadDelivery",
+					field1: "Vbeln",
+					field2: "Exidv",
+					field3: "Lgnum",
+					field4: "EnterDel",
+					field5: "ProcInd",
+					field6: "LoadInd",
+					entitySet: "/LoadProcessSet"
+				},
 
-				LM30: {view:"loadShipment", field1:"Tknum", field2: "Exidv", field3: "Lgnum", field4: "EnterShip", field5: "ProcInd"},
-				LM31: {view:"loadDelivery", field1:"Vbeln", field2: "Exidv", field3: "Lgnum", field4:"EnterDel", field5: "ProcInd"},
-				LM37: {view:"loadInqShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum",field4:"EnterShip"},
-				LM36: {view:"loadInqDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum",field4:"EnterDel"},
-				LM35: {view:"loadInqHu", field1:"Exidv", field2: "Queue", field3: "Lgnum",field4:"EnterHU"},
-				
-				LM73: {view:"grShipment", field1:"Tknum", field2: "Lgnum", entitySet: "/GRProcessSet"},
-				LM72: {view:"grStagingArea", field1:"Lgbzo", field2: "Lgnum", entitySet: "/GRProcessSet"},
-				
-				LM63: {view:"giShipment", field1:"Tknum", field2: "Lgnum", entitySet: "/GIProcessSet"},
-				LM62: {view:"giStagingArea", field1:"Lgbzo", field2: "Lgnum", entitySet: "/GIProcessSet" },
-				
-				LM999:{view: "newbin",field1: "Nlpla",field2: "Nltyp",	field3: "Lgnum"}
+				LM30: {
+					view: "loadShipment",
+					field1: "Tknum",
+					field2: "Exidv",
+					field3: "Lgnum",
+					field4: "EnterShip",
+					field5: "ProcInd",
+					entitySet: "/LoadProcessSet"
+				},
+				LM31: {
+					view: "loadDelivery",
+					field1: "Vbeln",
+					field2: "Exidv",
+					field3: "Lgnum",
+					field4: "EnterDel",
+					field5: "ProcInd",
+					entitySet: "/LoadProcessSet"
+				},
+				LM37: {
+					view: "loadInqShipment",
+					field1: "Tknum",
+					field2: "Queue",
+					field3: "Lgnum",
+					field4: "EnterShip",
+					entitySet: "/LoadProcessSet"
+				},
+				LM36: {
+					view: "loadInqDelivery",
+					field1: "Vbeln",
+					field2: "Queue",
+					field3: "Lgnum",
+					field4: "EnterDel",
+					entitySet: "/LoadProcessSet"
+				},
+				LM35: {
+					view: "loadInqHu",
+					field1: "Exidv",
+					field2: "Queue",
+					field3: "Lgnum",
+					field4: "EnterHU",
+					entitySet: "/LoadProcessSet"
+				},
+
+				LM999: {
+					view: "newbin",
+					field1: "Nlpla",
+					field2: "Nltyp",
+					field3: "Lgnum"
+				}
 			});
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
-			
-			
+
 			this._oMenuTransactionModel = new JSONModel({
 				LM02: "putaway@Lenum",
 				LM03: "putaway@Tanum",
@@ -246,7 +335,7 @@ sap.ui.define([
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 			// delegate error handling
-			errorHandling.register(this, this._oComponent,"");
+			errorHandling.register(this, this._oComponent, "");
 
 		},
 
