@@ -194,16 +194,31 @@ sap.ui.define([
 			// Start Menu item and view navvigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			this._oMenuTransactionModelNew = new JSONModel({
+<<<<<<< Upstream, based on c7fed046cca05d320395329bac08e76a34bd1400
 				LM02: {	view: "putaway", field1: "Lenum", field2: "Queue", field3: "Lgnum",	field4: "EnterSU",	entitySet: "/WMProcessSet"
 				},
 				LM03: {view: "putaway", field1: "Tanum",field2: "Queue", field3: "Lgnum",field4: "EnterTO", entitySet: "/WMProcessSet"},
 				LM09: {view: "putaway", field1: "Vbeln",field2: "Queue", field3: "Lgnum",field4: "EnterDel", entitySet: "/WMProcessSet"},
 				LM05: {view: "picking", field1: "Tanum",field2: "Queue", field3: "Lgnum",field4: "EnterTO", entitySet: "/WMProcessSet"},
 				LM06: {view: "picking", field1: "Vbeln",field2: "Queue", field3: "Lgnum",field4: "EnterDel", entitySet: "/WMProcessSet"},
+=======
+				LM02: {view: "putaway",	filters:[ "Lenum", "Queue", "Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterSU", entitySet: "/WMProcessSet" },
+				LM03: {view: "putaway",filters:["Tanum","Queue","Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet"},
+				LM09: {view: "putaway",filters: ["Vbeln", "Queue","Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet"},
+				
+				LM05: {view: "picking",filters: ["Tanum","Queue","Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet"},
+				LM06: {view: "picking",filters: ["Vbeln","Queue","Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet"},
+>>>>>>> 9635b28 Added filters, keyfields in Application.js Common js code in giship,gistage,grship,grstage
 
+<<<<<<< Upstream, based on c7fed046cca05d320395329bac08e76a34bd1400
 				LM33: {view:"unloadShipment", field1:"Tknum", field2: "Exidv", field3: "Lgnum", field4: "EnterShip", field5: "ProcInd", field6: "LoadInd", entitySet: "/LoadProcessSet"},
 				LM34: {view:"unloadDelivery", field1:"Vbeln", field2: "Exidv", field3: "Lgnum", field4: "EnterDel", field5: "ProcInd", field6: "LoadInd", entitySet: "/LoadProcessSet"},
+=======
+				LM33: {view:"unloadShipment", filters:["Tknum","Exidv","Lgnum", "ProcInd","LoadInd"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"], placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet"},
+				LM34: {view:"unloadDelivery", filters:["Vbeln", "Exidv","Lgnum","ProcInd","LoadInd"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"], placeHolderLabel: "EnterDel", entitySet: "/LoadProcessSet"},
+>>>>>>> 9635b28 Added filters, keyfields in Application.js Common js code in giship,gistage,grship,grstage
 
+<<<<<<< Upstream, based on c7fed046cca05d320395329bac08e76a34bd1400
 				LM30: {view:"loadShipment", filters: ["Tknum", "Exidv", "ProcInd", "Lgnum"], keyFields: ["Vbeln", "Exidv", "Exida", "Tknum", "LoadInd", "HuStatus", "Lgnum"], field4: "EnterShip", entitySet: "/LoadProcessSet"},
 				LM31: {view:"loadDelivery", field1:"Vbeln", field2: "Exidv", field3: "Lgnum", field4:"EnterDel", field5: "ProcInd", entitySet: "/LoadProcessSet"},
 				LM37: {view:"loadInqShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum",field4:"EnterShip", entitySet: "/LoadProcessSet"},
@@ -211,6 +226,21 @@ sap.ui.define([
 				LM35: {view:"loadInqHu", field1:"Exidv", field2: "Queue", field3: "Lgnum",field4:"EnterHU", entitySet: "/LoadProcessSet"},
 
 				LM999: { view: "newbin", field1: "Nlpla", field2: "Nltyp",	field3: "Lgnum"	}
+=======
+				LM30: {view:"loadShipment", filters:["Tknum","Exidv","Lgnum","ProcInd"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"], placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet"},
+				LM31: {view:"loadDelivery", filters:["Vbeln","Exidv","Lgnum","ProcInd"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"], placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet"},
+				LM37: {view:"loadInqShipment", filters:["Tknum","Queue","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],placeHolderLabel:"EnterShip", entitySet: "/LoadProcessSet"},
+				LM36: {view:"loadInqDelivery", filters:["Vbeln","Queue","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet"},
+				LM35: {view:"loadInqHu", filters:["Exidv","Queue","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],placeHolderLabel:"EnterHU", entitySet: "/LoadProcessSet"},
+				
+				LM73: {view:"grShipment", filters:["Tknum","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GRProcessSet"},
+				LM72: {view:"grStagingArea", filters:["Lgbzo","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GRProcessSet"},
+				
+				LM63: {view:"giShipment", filters:["Tknum","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GIProcessSet"},
+				LM62: {view:"giStagingArea", filters:["Lgbzo","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GIProcessSet" },
+				
+				LM999:{view: "newbin",filters: ["Nlpla","Nltyp","Lgnum"]}
+>>>>>>> 9635b28 Added filters, keyfields in Application.js Common js code in giship,gistage,grship,grstage
 			});
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
