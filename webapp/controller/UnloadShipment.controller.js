@@ -61,18 +61,19 @@ sap.ui.define([
 		
 		getunloadDetails: function(sInputValue) {
 			var shipNo = sInputValue; // To get input field value
-			var huNo = this.getView().byId("scanHUDel").getValue(); // To get input field value
-			var procInd = "X"; // Indicator for Load process
+			var huNo = this.getView().byId("scanHUunDel").getValue(); // To get input field value
+			var procInd = "Y"; // Indicator to get data in Unload process
+			var LoadInd = "X"; // Indicator for Unload process
 			if (shipNo && huNo) { // To check if both fields has values
-				this.getView().byId("scanHUDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				this.gssCallFunction().unloadShipmentDetails(this, shipNo, huNo); // To pass the input values to the function&nbsp;
+				this.getView().byId("scanHUunDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
+				this.gssCallFunction().UnloadDetails(this, shipNo, huNo, procInd, LoadInd); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				this.gssCallFunction().unloadShipmentDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
+				this.gssCallFunction().UnloadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				this.getView().byId("inputValue").setPlaceholder("Enter Shipment *"); // To set placeholder for input field
 				this.getView().byId("inputValue").setMaxLength(10);
-				this.getView().byId("scanHUDel").setPlaceholder("Enter Handling Unit *"); // To set placeholder for input field&nbsp;
-				this.getView().byId("scanHUDel").setMaxLength(20);
+				this.getView().byId("scanHUunDel").setPlaceholder("Enter Handling Unit *"); // To set placeholder for input field&nbsp;
+				this.getView().byId("scanHUunDel").setMaxLength(20);
 			} else if (!shipNo && huNo) { // To check if one field is empty
 				this.getView().byId("inputValue").setPlaceholder("Enter Shipment *"); // To set placeholder for input field
 				this.getView().byId("inputValue").setMaxLength(10);
@@ -82,7 +83,7 @@ sap.ui.define([
 		unload: function() {
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList");
-			this.gssKeyFieldsFunction().unloadShipmentMaterials(this, inputVal, modelData);
+			this.gssKeyFieldsFunction().unloadShipment(this, inputVal, modelData);
 		},
 
 		unloadRevert: function() {

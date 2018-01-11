@@ -127,6 +127,11 @@ sap.ui.define([
 				oViewModel.getProperty("/shareSendEmailSubject"),
 				oViewModel.getProperty("/shareSendEmailMessage")
 			);
+		},
+
+		getModelFields: function() {
+			var sCurrentScrnName = this.getCurrentScrn();
+			return this.getScreenModel(sCurrentScrnName);
 		}
 
 	});

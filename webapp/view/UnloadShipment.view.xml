@@ -6,7 +6,7 @@
 				<customHeader>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Title id="rfScreen" text="{i18n>pageTit}" level="H2" textAlign="Center"/>
+						<Title id="rfScreen" text="{i18n>unShiptit}" level="H2" textAlign="Center"/>
 						<ToolbarSpacer/>
 						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
 					</Toolbar>
@@ -41,20 +41,20 @@
 						columnsL="1" columnsM="1" singleContainerFullSize="false">
 						<f:content>
 							<Toolbar>
-								<Input id="scanHUinDel" type="Text" valueHelpRequest="onHandlePoHelp" submit="iGetInput" placeholder="{i18n>placeholderTitle}"
-									width="100%" textAlign="Begin" maxLength="20"/>
+								<Input id="scanHUunDel" type="Text" valueHelpRequest="onHandlePoHelp" submit="iGetInput" placeholder="{i18n>placeholderTitle}" width="100%"
+									textAlign="Begin" maxLength="20"/>
 								<Button id="shu" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanHU" ariaLabelledBy="actionButtonLabel"/>
 							</Toolbar>
 							<HBox>
 								<VBox>
-									<Label id="loadedLab" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>unloadedHUTitle}"/>
+									<Label id="unloadedLab" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>unloadedHUTitle}"/>
 									<!--<Label id="unloadLab" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="Unloaded HU" visible="false"/>-->
 									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>totalHUTitle}"/>
-									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>loadedWTTitle}"/>
+									<Label id="unloadedWT" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>unloadedWT}"/>
 									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>totalWTTitle}"/>
 								</VBox>
 								<VBox>
-									<Text id="loadedTxt" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/loadedHU}"/>
+									<Text id="loadedTxt" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/UnloadedHu}"/>
 									<!--<Text id="unloadTxt" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/UnloadedHu}" visible="false"/>-->
 									<Text id="totalHU" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/totalHU}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/LoadedHuWt} {itemList>/Wt_unit}"/>
@@ -72,7 +72,7 @@
 							<!--<Toolbar id="footerbar" visible="false">-->
 							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
-								visible="false"/>
+								/>
 						</contentLeft>
 						<contentRight>
 							<!--<Button id="LUnload" class="sapThemeHighlight-asOutlineColor" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Load/Unload"-->
@@ -81,10 +81,10 @@
 							<!--<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items" visible="false" enabled="false"/>-->
 							<!--<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>-->
 							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
-							<Button id="accept" class="accept" press="load" icon="sap-icon://accept" />
+							<Button id="accept" class="accept" press="unload" icon="sap-icon://accept"/>
 							<!--<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus"/>-->
 							<!--<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf"/>-->
-							<Button id="undoDel" class="undoDel" press="loadRevert" icon="sap-icon://undo"/>
+							<Button id="undoDel" class="undoDel" press="unloadRevert" icon="sap-icon://undo"/>
 							<!--<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Ship" visible="false" enabled="false"/>-->
 							<!--<Button id="post" icon="sap-icon://paper-plane" press="onHandlePost" tooltip="GR Post" visible="false" enabled="false"/>-->
 							<!--<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="Save" visible="false"/>-->

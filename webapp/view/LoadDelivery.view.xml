@@ -72,7 +72,7 @@
 							<!--<Toolbar id="footerbar" visible="false">-->
 							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
-								visible="false"/>
+								/>
 						</contentLeft>
 						<contentRight>
 							<!--<Button id="LUnload" class="sapThemeHighlight-asOutlineColor" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Load/Unload"-->

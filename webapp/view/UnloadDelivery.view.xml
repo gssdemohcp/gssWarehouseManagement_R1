@@ -6,7 +6,7 @@
 				<customHeader>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Title id="rfScreen" text="{i18n>pageTit}" level="H2" textAlign="Center"/>
+						<Title id="rfScreen" text="{i18n>unDeltit}" level="H2" textAlign="Center"/>
 						<ToolbarSpacer/>
 						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
 					</Toolbar>
@@ -54,8 +54,8 @@
 									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>totalWTTitle}"/>
 								</VBox>
 								<VBox>
-									<Text id="loadedTxt" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/loadedHU}"/>
-									<!--<Text id="unloadTxt" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/UnloadedHu}" visible="false"/>-->
+									<!--<Text id="loadedTxt" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/loadedHU}"/>-->
+									<Text id="unloadTxt" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/UnloadedHu}"/>
 									<Text id="totalHU" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/totalHU}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/LoadedHuWt} {itemList>/Wt_unit}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/TotHuWt} {itemList>/Wt_unit}"/>
@@ -72,7 +72,7 @@
 							<!--<Toolbar id="footerbar" visible="false">-->
 							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
-								visible="false"/>
+							/>
 						</contentLeft>
 						<contentRight>
 							<!--<Button id="LUnload" class="sapThemeHighlight-asOutlineColor" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Load/Unload"-->
@@ -81,10 +81,10 @@
 							<!--<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items" visible="false" enabled="false"/>-->
 							<!--<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>-->
 							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
-							<Button id="accept" class="accept" press="load" icon="sap-icon://accept" />
+							<Button id="accept" class="accept" press="unload" icon="sap-icon://accept" />
 							<!--<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus"/>-->
 							<!--<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf"/>-->
-							<Button id="undoDel" class="undoDel" press="loadRevert" icon="sap-icon://undo"/>
+							<Button id="undoDel" class="undoDel" press="unloadRevert" icon="sap-icon://undo"/>
 							<!--<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Ship" visible="false" enabled="false"/>-->
 							<!--<Button id="post" icon="sap-icon://paper-plane" press="onHandlePost" tooltip="GR Post" visible="false" enabled="false"/>-->
 							<!--<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="Save" visible="false"/>-->

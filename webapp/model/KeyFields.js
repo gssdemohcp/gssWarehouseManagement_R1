@@ -24,7 +24,7 @@ sap.ui.define(["sap/ui/base/Object",
 			this._bOneWaitingSuccess = false;
 		},
 
-		loadShipmentMaterials: function(oView, inputval, modelData) {
+		loadShipment: function(oView, inputval, modelData) {
 			var oOdataService = oView.gssOdataService(),
 				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
@@ -61,7 +61,7 @@ sap.ui.define(["sap/ui/base/Object",
 			this.loadModel(oView, sPath, oOdataService);
 		},
 		
-		loadDeliveryMaterials: function(oView, inputval, modelData) {
+		loadDelivery: function(oView, inputval, modelData) {
 
 			var oOdataService = oView.gssOdataService(),
 				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
@@ -350,6 +350,7 @@ sap.ui.define(["sap/ui/base/Object",
 					Exidv: '',
 					huStatDesc: '',
 					loadedHU: '',
+					UnloadedHu: '',
 					totalHU: '',
 					Tknum: '',
 					Lgbzo: '',
@@ -365,6 +366,7 @@ sap.ui.define(["sap/ui/base/Object",
 				};
 				oRfData.vbeln = oResult.Vbeln;
 				oRfData.loadedHU = oResult.LoadedHu;
+				oRfData.UnloadedHu = oResult.UnloadedHu;
 				oRfData.totalHU = oResult.TotalHu;
 				oRfData.Lgbzo = oResult.Lgbzo;
 				oRfData.Lgtor = oResult.Lgtor;
@@ -379,8 +381,8 @@ sap.ui.define(["sap/ui/base/Object",
 
 				//Before call errorhandling delegates 
 				//Set Response Message and message Type to trigger message box
-				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
-				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				oGlobalModel.setProperty("/message", oRfData.aItems.Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems.Msgtyp);
 				// delegate error handling
 				errorHandling.register(oView.getApplication(), oView.getComponent());
 
