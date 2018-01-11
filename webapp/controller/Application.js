@@ -208,6 +208,12 @@ sap.ui.define([
 				LM36: {view:"loadInqDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum",field4:"EnterDel"},
 				LM35: {view:"loadInqHu", field1:"Exidv", field2: "Queue", field3: "Lgnum",field4:"EnterHU"},
 				
+				LM73: {view:"grShipment", field1:"Tknum", field2: "Lgnum", entitySet: "/GRProcessSet"},
+				LM72: {view:"grStagingArea", field1:"Lgbzo", field2: "Lgnum", entitySet: "/GRProcessSet"},
+				
+				LM63: {view:"giShipment", field1:"Tknum", field2: "Lgnum", entitySet: "/GIProcessSet"},
+				LM62: {view:"giStagingArea", field1:"Lgbzo", field2: "Lgnum", entitySet: "/GIProcessSet" },
+				
 				LM999:{view: "newbin",field1: "Nlpla",field2: "Nltyp",	field3: "Lgnum"}
 			});
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
