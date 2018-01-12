@@ -1,3 +1,4 @@
+/*eslint linebreak-style: ["error", "windows"]*/
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",

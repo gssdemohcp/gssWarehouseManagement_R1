@@ -56,6 +56,27 @@ sap.ui.define(["sap/ui/base/Object",
 			};
 			return oItemList;
 		},
+		
+		setDelItemsDiffModel: function(oItem, diffragment) {
+				var destTarget = oItem.TargQty;
+				if (oItem.TargQty === oItem.Lfimg) {
+					var oItemList = {
+						dBin: "",
+						destTarget: destTarget,
+						destActa: "0",
+						destDifa: "0"
+					};
+				} else if (oItem.TargQty !== oItem.Lfimg) {
+					var diffaVal = oItem.TargQty - oItem.Lfimg;
+					oItemList = {
+						dBin: "",
+						destTarget: destTarget,
+						destActa: oItem.Lfimg,
+						destDifa: diffaVal
+					};
+				}
+			return oItemList;	
+		},
 
 		closeFragment: function(fragment) {
 			fragment.close();
