@@ -221,7 +221,7 @@ sap.ui.define([
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
 
-			this._oMenuTransactionModel = new JSONModel({
+		/*	this._oMenuTransactionModel = new JSONModel({
 				LM02: "putaway@Lenum",
 				LM03: "putaway@Tanum",
 				LM09: "putaway@Vbeln",
@@ -241,7 +241,7 @@ sap.ui.define([
 			});
 
 			this._oMenuTransactionModel.setDefaultBindingMode(BindingMode.OneWay);
-			this._oComponent.setModel(this._oMenuTransactionModel, "MenuTransactionProperties_old");
+			this._oComponent.setModel(this._oMenuTransactionModel, "MenuTransactionProperties_old");*/
 			//*******************************************************************************************
 			// End of Code handle menu item and view navigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

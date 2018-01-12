@@ -27,7 +27,7 @@ sap.ui.define(["sap/ui/base/Object",
 			var aFilter = new Filter(field, FilterOperator.EQ, value);
 			return aFilter;
 		},
-		setFilter: function(oView, sInputValue) {
+	/*	setFilter: function(oView, sInputValue) {
 
 			//Get Current View Name to get filter field name
 			var sCurrentScrnName = oView.getCurrentScrn(),
@@ -42,7 +42,7 @@ sap.ui.define(["sap/ui/base/Object",
 				aFilterValues = [sInptValue, sQueue, sLgnum];
 
 			return aFilterValues;
-		},
+		},*/
 		
 		setLoadInqFilter: function(oView, sInputValue) {
 			//Get Current View Name to get filter field name
@@ -81,6 +81,7 @@ sap.ui.define(["sap/ui/base/Object",
 			for(var i = 0; i < ScreenModel.filters.length; i++) {
 				aFilterValues.push(this.buildFilter(ScreenModel.filters[i], inputArray[i]));
 			}
+			return aFilterValues;
 		},
 
 		setUnloadFilter: function(oView, sInputValue, huVal, procInd, loadInd) {

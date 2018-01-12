@@ -141,7 +141,7 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 
 		// ********** Srini code to load putaway data begins *****************
-		LoadMaterial: function(oView, sInputValue,Queue,Lgnum) {
+		LoadMaterial: function(oView, sInputValue) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
@@ -151,11 +151,11 @@ sap.ui.define(["sap/ui/base/Object",
 
 				inputArray = [];
 				inputArray.push(sInputValue);
-				inputArray.push(Queue);
-				inputArray.push(Lgnum);
+					inputArray.push(oView.getGlobalModel().getProperty("/currentQueue"));
+			
 				inputArray.push(oView.getGlobalModel().getProperty("/currentLgnum"));
 				//Setup filter string
-				var aFilterValues = oView.gssFilterFunction().setFilter(oView, inputArray),
+				var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, inputArray),
 				//******
 				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 
