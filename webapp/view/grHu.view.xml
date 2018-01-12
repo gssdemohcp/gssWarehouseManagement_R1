@@ -1,9 +1,55 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="gss.newWarehouseManage_R1.controller.grHu"
-	xmlns:html="http://www.w3.org/1999/xhtml">
+	xmlns:html="http://www.w3.org/1999/xhtml"  xmlns:f="sap.ui.layout.form">
 	<App>
 		<pages>
-			<Page title="Title">
-				<content></content>
+			<Page title="GR by Handling Unit">
+				<content>
+						<Toolbar>
+						<Breadcrumbs class="sapUiTinyMarginBegin" id="Breadcrumbs"/>
+					</Toolbar>
+					<Toolbar id="toolbarheader">
+						<Input class="sapUiTinyMarginBegin" id="inputvalue" value="{matList>TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
+						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+					</Toolbar>
+						<f:SimpleForm id="GRDForm" editable="false" layout="ResponsiveGridLayout" title="Delivery Header Information" labelSpanXL="3" labelSpanL="3"
+						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+						columnsL="1" columnsM="1" singleContainerFullSize="false" visible="false">
+						<f:content>
+							<HBox>
+								<VBox>
+									<Label class="sapUiTinyMarginTop" text="Load/Unload Status"/>
+									<Label class="sapUiTinyMarginTop" id="delFieldLabel" text="Delivery" visible="false"/>
+									<Label class="sapUiTinyMarginTop" text="Vendor"/>
+									<Label class="sapUiTinyMarginTop" text="Name"/>
+									<Label class="sapUiTinyMarginTop" text="Receiving Point"/>
+									<Label class="sapUiTinyMarginTop" text="Receiving Date"/>
+									<Label class="sapUiTinyMarginTop" text="Total Weight"/>
+									<Label class="sapUiTinyMarginTop" text="No of Packages"/>
+									<Label class="sapUiTinyMarginTop" text="HU Indicator"/>
+									<Label class="sapUiTinyMarginTop" text="TO Indicator"/>
+								</VBox>
+								<VBox>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="loadIndicator"
+										text="{parts:[{path:'delList>/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="grDelField" text="{delList>/Vbeln}" visible="false"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/Lifnr}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/LifnrName}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/Vstel'}],formatter: '.formatter.shipPoint'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+										text="{path: 'delList>/Lfdat',type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'}}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/Btgew} {delList>/Gewei}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${delList>/Anzpk}) }"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/HuInd'}],formatter: '.formatter.huIndicator'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="toInd"
+										text="{parts:[{path:'delList>/ToInd'}],formatter: '.formatter.huIndicator'}"/>
+								</VBox>
+							</HBox>
+						</f:content>
+					</f:SimpleForm>
+					
+					
+				</content>
 			</Page>
 		</pages>
 	</App>
