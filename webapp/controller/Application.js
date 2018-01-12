@@ -204,7 +204,7 @@ sap.ui.define([
 				LM33: {view:"unloadShipment", field1:"Tknum", field2: "Exidv", field3: "Lgnum", field4: "EnterShip", field5: "ProcInd", field6: "LoadInd", entitySet: "/LoadProcessSet"},
 				LM34: {view:"unloadDelivery", field1:"Vbeln", field2: "Exidv", field3: "Lgnum", field4: "EnterDel", field5: "ProcInd", field6: "LoadInd", entitySet: "/LoadProcessSet"},
 
-				LM30: {view:"loadShipment", fields: ["Tknum", "Exidv", "warehouseNo"], filters: {sInputValue: "Tknum", huVal: "Exidv", warehouseNo: "Lgnum"}, field4: "EnterShip", field5: "ProcInd", entitySet: "/LoadProcessSet"},
+				LM30: {view:"loadShipment", filters: ["Tknum", "Exidv", "ProcInd", "Lgnum"], keyFields: ["Vbeln", "Exidv", "Exida", "Tknum", "LoadInd", "HuStatus", "Lgnum"], field4: "EnterShip", entitySet: "/LoadProcessSet"},
 				LM31: {view:"loadDelivery", field1:"Vbeln", field2: "Exidv", field3: "Lgnum", field4:"EnterDel", field5: "ProcInd", entitySet: "/LoadProcessSet"},
 				LM37: {view:"loadInqShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum",field4:"EnterShip", entitySet: "/LoadProcessSet"},
 				LM36: {view:"loadInqDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum",field4:"EnterDel", entitySet: "/LoadProcessSet"},
