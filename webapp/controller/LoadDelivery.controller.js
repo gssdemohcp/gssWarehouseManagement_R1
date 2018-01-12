@@ -45,11 +45,7 @@ sap.ui.define([
 				this.getLoadDetails(_inputValue, huNo);
 			}
 		},
-<<<<<<< Upstream, based on 7fc0fe56b2a40181a9a4c132c7fdd68cd5fc3d4c
-		
-=======
 
->>>>>>> def475b I18n and Load Inq Code - Sabari
 		setFragment: function() {
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
