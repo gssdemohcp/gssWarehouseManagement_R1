@@ -98,8 +98,10 @@ sap.ui.define([
 		onConfirm: function() {
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
-			var modelData = this.getModelData("itemList");
-			this.gssKeyFieldsFunction().revertUnloadDelivery(this, inputVal, modelData);
+			var modelData = this.getModelData("itemList"),
+				LoadInd = "X",
+				HuStatus = "HU03";
+			this.gssKeyFieldsFunction().buildKeyFields(this, inputVal, modelData.aItems[0], LoadInd, HuStatus);
 		},
 
 		onCancel: function() {

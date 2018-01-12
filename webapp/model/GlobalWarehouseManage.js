@@ -146,11 +146,12 @@ sap.ui.define(["sap/ui/base/Object",
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
-				bEntityName = this.entityName(oView, "/MaterialList"),
+				// bEntityName = this.entityName(oView, "/MaterialList"),
+				bEntityName = oView.getModelFields(),
 				//Setup filter string
 				aFilterValues = oView.gssFilterFunction().setFilter(oView, sInputValue),
 				//******
-				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
+				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 
 			var oGlobalModel = oView.getModel("globalProperties");
 
@@ -189,26 +190,32 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// ********** Srini code to load putaway data ends *****************
-
-		// ************ Srini code to get data for Load by Shipment begins ***********
+		
+		// ************ Srini code to get data for Load begins ***********
 		LoadDetails: function(oView, sInputValue, huVal, procInd) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
-				bEntityName = this.entityName(oView, "/LoadProcess"),
+				// bEntityName = this.entityName(oView, "/LoadProcess"),
+				bEntityName = oView.getModelFields(),
+				inputArray = [];
+				inputArray.push(sInputValue);
+				inputArray.push(huVal);
+				inputArray.push(procInd);
+				inputArray.push(oView.getGlobalModel().getProperty("/currentLgnum"));
+				
 				//Setup filter string
-				aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, sInputValue, huVal, procInd),
+				var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, inputArray);
 				//******
-				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
+				var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 
 			var oGlobalModel = oView.getModel("globalProperties");
 
 			oGlobalModel.setProperty("/isOdataLoading", true);
 			//Handle response from oData Call
 			oWhenCallReadIsDone.done(function(oResult, oFailed) {
-				var oRfData;
-				oRfData = oResult.results;
+				var oRfData = oResult.results;
 				oRfData = {
 					vbeln: '',
 					Exidv: '',
@@ -251,31 +258,38 @@ sap.ui.define(["sap/ui/base/Object",
 			}.bind(this));
 			return promise;
 		},
-		// ************ Srini code to get data for Load by Shipment ends ***********
+		// ************ Srini code to get data for Load ends ***********
 
-		// ************ Srini code to get data for unload by Shipment begins ***********
+		// ************ Srini code to get data for Unload begins ***********
 		UnloadDetails: function(oView, sInputValue, huVal, procInd, loadInd) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
-				bEntityName = this.entityName(oView, "/LoadProcess"),
+				// bEntityName = this.entityName(oView, "/LoadProcess"),
+				bEntityName = oView.getModelFields(),
+				inputArray = [];
+				inputArray.push(sInputValue);
+				inputArray.push(huVal);
+				inputArray.push(procInd);
+				inputArray.push(loadInd);
+				
 				//Setup filter string
-				aFilterValues = oView.gssFilterFunction().setUnloadFilter(oView, sInputValue, huVal, procInd, loadInd),
+				var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, inputArray);
 				//******
-				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName, oView, aFilterValues);
+				var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 
 			var oGlobalModel = oView.getModel("globalProperties");
 
 			oGlobalModel.setProperty("/isOdataLoading", true);
 			//Handle response from oData Call
 			oWhenCallReadIsDone.done(function(oResult, oFailed) {
-				var oRfData;
-				oRfData = oResult.results;
+				var oRfData = oResult.results;
 				oRfData = {
 					vbeln: '',
 					Exidv: '',
 					UnloadedHu: '',
+					loadedHU: '',
 					totalHU: '',
 					Lgbzo: '',
 					Lgtor: '',
@@ -314,7 +328,7 @@ sap.ui.define(["sap/ui/base/Object",
 			}.bind(this));
 			return promise;
 		},
-		// ************ Srini code to get data for Unload by Shipment ends ***********
+		// ************ Srini code to get data for Unload ends ***********
 
 		// *******************Sabari code to Load Inq by Delivery data begins *****************
 		LoadInqDelivery: function(oView, sInputValue) {
@@ -411,6 +425,7 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// *******************Sabari code to Load Inq by Shipment data begins *****************
+		
 		// *******************Sabari code to Load Inq by HU data begins *****************
 		LoadInqHU: function(oView, sInputValue) {
 			//Call oDATA Read with entity set name

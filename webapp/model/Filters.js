@@ -28,9 +28,9 @@ sap.ui.define(["sap/ui/base/Object",
 			return aFilter;
 		},
 		setFilter: function(oView, sInputValue) {
+
 			//Get Current View Name to get filter field name
 			var sCurrentScrnName = oView.getCurrentScrn(),
-
 				ScreenModel = oView.getScreenModel(sCurrentScrnName),
 				//Bind user entered input value
 				sInptValue = this.buildFilter(ScreenModel.field1, sInputValue),
@@ -72,22 +72,13 @@ sap.ui.define(["sap/ui/base/Object",
 			return jUriParameter;
 
 		},
-
-		setLoadFilter: function(oView, sInputValue, huVal, procInd) {
-			//Get Current View Name to get filter field name
+		
+		setLoadFilter: function(oView, inputArray) {
+		//Get Current View Name to get filter field name
 			var ScreenModel = oView.getModelFields();
-			if (sInputValue && huVal) { // To check if both fields has values
-				var filtership = this.buildFilter(ScreenModel.field1, sInputValue), // Assigning name to input value
-					filterhu = this.buildFilter(ScreenModel.field2, huVal), // Assigning name to input value
-					sLgnum = this.buildFilter(ScreenModel.field3, oView.getGlobalModel().getProperty("/currentLgnum")),
-					aFilterValues = [filtership, filterhu, sLgnum];
-				return aFilterValues; // Function call along with entityset and filter value
-			} else if (sInputValue && procInd) { // To get input value & indicator value
-				var filtership1 = this.buildFilter(ScreenModel.field1, sInputValue), // Assigning name to input value
-					filterInd = this.buildFilter(ScreenModel.field5, procInd), // Assigning name to indicator
-					sLgnum1 = this.buildFilter(ScreenModel.field3, oView.getGlobalModel().getProperty("/currentLgnum")),
-					aFilterValues1 = [filtership1, filterInd, sLgnum1];
-				return aFilterValues1;
+			var aFilterValues = [];
+			for(var i = 0; i < ScreenModel.filters.length; i++) {
+				aFilterValues.push(this.buildFilter(ScreenModel.filters[i], inputArray[i]));
 			}
 		},
 
@@ -108,6 +99,6 @@ sap.ui.define(["sap/ui/base/Object",
 					aFilterValues1 = [filtership1, filterInd, sLgnum1];
 				return aFilterValues1;
 			}
-		},
+		}
 	});
 });

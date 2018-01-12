@@ -65,7 +65,7 @@ sap.ui.define([
 			var procInd = "X"; // Indicator for Load process
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				this.gssCallFunction().LoadDetails(this, shipNo, huNo); // To pass the input values to the function&nbsp;
+				this.gssCallFunction().LoadDetails(this, shipNo, huNo, ""); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
 				this.gssCallFunction().LoadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
@@ -81,8 +81,10 @@ sap.ui.define([
 
 		load: function() {
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
-			var modelData = this.getModelData("itemList");
-			this.gssKeyFieldsFunction().loadShipment(this, inputVal, modelData);
+			var modelData = this.getModelData("itemList"),
+				LoadInd = "",
+				HuStatus = "HU03";
+			this.gssKeyFieldsFunction().buildKeyFields(this, inputVal, modelData.aItems[0], LoadInd, HuStatus);
 		},
 
 		loadRevert: function() {
@@ -93,8 +95,10 @@ sap.ui.define([
 		onConfirm: function() {
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
-			var modelData = this.getModelData("itemList");
-			this.gssKeyFieldsFunction().revertLoadShipment(this, inputVal, modelData);
+			var modelData = this.getModelData("itemList"),
+				LoadInd = "",
+				HuStatus = "HU04";
+			this.gssKeyFieldsFunction().buildKeyFields(this, inputVal, modelData.aItems[0], LoadInd, HuStatus);
 		},
 
 		onCancel: function() {

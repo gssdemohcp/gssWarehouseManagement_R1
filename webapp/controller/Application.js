@@ -194,117 +194,23 @@ sap.ui.define([
 			// Start Menu item and view navvigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			this._oMenuTransactionModelNew = new JSONModel({
-				LM02: {
-					view: "putaway",
-					field1: "Lenum",
-					field2: "Queue",
-					field3: "Lgnum",
-					field4: "EnterSU",
-					entitySet: "/WMProcessSet"
+				LM02: {	view: "putaway", field1: "Lenum", field2: "Queue", field3: "Lgnum",	field4: "EnterSU",	entitySet: "/WMProcessSet"
 				},
-				LM03: {
-					view: "putaway",
-					field1: "Tanum",
-					field2: "Queue",
-					field3: "Lgnum",
-					field4: "EnterTO",
-					entitySet: "/WMProcessSet"
-				},
-				LM09: {
-					view: "putaway",
-					field1: "Vbeln",
-					field2: "Queue",
-					field3: "Lgnum",
-					field4: "EnterDel",
-					entitySet: "/WMProcessSet"
-				},
-				LM05: {
-					view: "picking",
-					field1: "Tanum",
-					field2: "Queue",
-					field3: "Lgnum",
-					field4: "EnterTO",
-					entitySet: "/WMProcessSet"
-				},
-				LM06: {
-					view: "picking",
-					field1: "Vbeln",
-					field2: "Queue",
-					field3: "Lgnum",
-					field4: "EnterDel",
-					entitySet: "/WMProcessSet"
-				},
+				LM03: {view: "putaway", field1: "Tanum",field2: "Queue", field3: "Lgnum",field4: "EnterTO", entitySet: "/WMProcessSet"},
+				LM09: {view: "putaway", field1: "Vbeln",field2: "Queue", field3: "Lgnum",field4: "EnterDel", entitySet: "/WMProcessSet"},
+				LM05: {view: "picking", field1: "Tanum",field2: "Queue", field3: "Lgnum",field4: "EnterTO", entitySet: "/WMProcessSet"},
+				LM06: {view: "picking", field1: "Vbeln",field2: "Queue", field3: "Lgnum",field4: "EnterDel", entitySet: "/WMProcessSet"},
 
-				LM33: {
-					view: "unloadShipment",
-					field1: "Tknum",
-					field2: "Exidv",
-					field3: "Lgnum",
-					field4: "EnterShip",
-					field5: "ProcInd",
-					field6: "LoadInd",
-					entitySet: "/LoadProcessSet"
-				},
-				LM34: {
-					view: "unloadDelivery",
-					field1: "Vbeln",
-					field2: "Exidv",
-					field3: "Lgnum",
-					field4: "EnterDel",
-					field5: "ProcInd",
-					field6: "LoadInd",
-					entitySet: "/LoadProcessSet"
-				},
+				LM33: {view:"unloadShipment", field1:"Tknum", field2: "Exidv", field3: "Lgnum", field4: "EnterShip", field5: "ProcInd", field6: "LoadInd", entitySet: "/LoadProcessSet"},
+				LM34: {view:"unloadDelivery", field1:"Vbeln", field2: "Exidv", field3: "Lgnum", field4: "EnterDel", field5: "ProcInd", field6: "LoadInd", entitySet: "/LoadProcessSet"},
 
-				LM30: {
-					view: "loadShipment",
-					field1: "Tknum",
-					field2: "Exidv",
-					field3: "Lgnum",
-					field4: "EnterShip",
-					field5: "ProcInd",
-					entitySet: "/LoadProcessSet"
-				},
-				LM31: {
-					view: "loadDelivery",
-					field1: "Vbeln",
-					field2: "Exidv",
-					field3: "Lgnum",
-					field4: "EnterDel",
-					field5: "ProcInd",
-					entitySet: "/LoadProcessSet"
-				},
-				LM37: {
-					view: "loadInqShipment",
-					field1: "Tknum",
-					field2: "Queue",
-					field3: "Lgnum",
-					field4: "EnterShip",
-					entitySet: "/LoadProcessSet"
-				},
-				LM36: {
-					view: "loadInqDelivery",
-					field1: "Vbeln",
-					field2: "Queue",
-					field3: "Lgnum",
-					field4: "EnterDel",
-					entitySet: "/LoadProcessSet"
-				},
-				LM35: {
-					view: "loadInqHu",
-					field1: "Exidv",
-					field2: "Queue",
-					field3: "Lgnum",
-					field4: "EnterHU",
-					entitySet: "/LoadProcessSet"
-				},
+				LM30: {view:"loadShipment", fields: ["Tknum", "Exidv", "warehouseNo"], filters: {sInputValue: "Tknum", huVal: "Exidv", warehouseNo: "Lgnum"}, field4: "EnterShip", field5: "ProcInd", entitySet: "/LoadProcessSet"},
+				LM31: {view:"loadDelivery", field1:"Vbeln", field2: "Exidv", field3: "Lgnum", field4:"EnterDel", field5: "ProcInd", entitySet: "/LoadProcessSet"},
+				LM37: {view:"loadInqShipment", field1:"Tknum", field2: "Queue", field3: "Lgnum",field4:"EnterShip", entitySet: "/LoadProcessSet"},
+				LM36: {view:"loadInqDelivery", field1:"Vbeln", field2: "Queue", field3: "Lgnum",field4:"EnterDel", entitySet: "/LoadProcessSet"},
+				LM35: {view:"loadInqHu", field1:"Exidv", field2: "Queue", field3: "Lgnum",field4:"EnterHU", entitySet: "/LoadProcessSet"},
 
-				LM999: {
-					view: "newbin",
-					field1: "Nlpla",
-					field2: "Nltyp",
-					field3: "Lgnum"
-				}
+				LM999: { view: "newbin", field1: "Nlpla", field2: "Nltyp",	field3: "Lgnum"	}
 			});
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");

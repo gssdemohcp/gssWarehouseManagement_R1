@@ -24,311 +24,32 @@ sap.ui.define(["sap/ui/base/Object",
 			this._bOneWaitingSuccess = false;
 		},
 
-		loadShipment: function(oView, inputval, modelData) {
+
+		buildKeyFields: function(oView, inputval, modelData, LoadInd, HuStatus) {
 			var oOdataService = oView.gssOdataService(),
 				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			if (modelData.aItems) { // To check how the array is built
-				if (modelData.aItems.constructor === Array) { // To check for array
-					if (modelData.aItems[0].Tknum) { // To check if the field has value
-						var inputVal = modelData.aItems[0].Tknum; // To assign value to the variable
-					} else {
-						inputVal = inputval;
-					}
-					var sPath = bEntityName + "(Vbeln='',Exidv='" + modelData.aItems[0].Exidv + "',Exida='" + modelData.aItems[0].Exida +
-						"',Tknum='" + inputVal +
-						"',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')"; // To build URL to backend for Load process
-				} else {
-					if (modelData.aItems.Tknum) { // To check how the array is built
-						inputVal = modelData.aItems.Tknum; // To assign value to the variable
-					} else {
-						inputVal = inputval;
-					}
-					sPath = bEntityName + "(Vbeln='',Exidv='" + modelData.aItems.Exidv + "',Exida='" + modelData.aItems.Exida +
-						"',Tknum='" +
-						inputVal +
-						"',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')"; // To build URL to backend for Load process
+			var modelArray = [];
+			modelArray.push(modelData.Vbeln);
+			modelArray.push(modelData.Exidv);
+			modelArray.push(modelData.Exida);
+			modelArray.push(modelData.Tknum);
+			modelArray.push(LoadInd);
+			modelArray.push(HuStatus);
+			modelArray.push(lgnum);
+			var path = "";
+			var commaVar = ",";
+			var ScreenModel = oView.getModelFields();
+			for(var i = 0; i < ScreenModel.keyFields.length; i++) {
+				if (i === ScreenModel.keyFields.length - 1) {
+					commaVar = "";
 				}
-			} else {
-				if (modelData.Tknum) { // To check how the array is built
-					inputVal = modelData.Tknum; // To assign value to the variable
-				} else {
-					inputVal = inputval;
-				}
-				sPath = bEntityName + "(Vbeln='',Exidv='" + modelData.Exidv + "',Exida='" + modelData.Exida + "',Tknum='" + inputVal +
-					"',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')"; // To build URL to backend for Load process
+				path = path + ScreenModel.keyFields[i] +  "='" + modelArray[i] + "'" + commaVar ;
+				// sPath[i] = this.buildFilter(ScreenModel.fields[i], modelData[i]);
 			}
+			var sPath = bEntityName + "(" + path + ")";
 			this.loadModel(oView, sPath, oOdataService);
 		},
-		
-		loadDelivery: function(oView, inputval, modelData) {
-
-			var oOdataService = oView.gssOdataService(),
-				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
-			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			if (modelData.aItems) {
-					if (modelData.aItems.constructor === Array) {
-						if (modelData.aItems[0].Vbeln) {
-							var inputVal = modelData.aItems[0].Vbeln;
-							var huVal = modelData.aItems[0].Exidv;
-						} else {
-							inputVal = inputval;
-							huVal = oView.byId("scanHUinDel").getValue();
-						}
-						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
-							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')";
-					} else {
-						if (modelData.aItems.Vbeln) {
-							inputVal = modelData.aItems.Vbeln;
-							huVal = modelData.aItems.Exidv;
-						} else {
-							inputVal = inputval;
-							huVal = oView.byId("scanHUinDel").getValue();
-						}
-						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
-							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')";
-					}
-				} else {
-					if (modelData.Vbeln) {
-						inputVal = modelData.Vbeln;
-						huVal = modelData.Exidv;
-					} else {
-						inputVal = inputval;
-						huVal = oView.byId("scanHUinDel").getValue();
-					}
-					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
-						"',Exida='" + modelData.Exida + "'Tknum='',LoadInd='',HuStatus='HU03',Lgnum='" + lgnum + "')";
-				}
-			this.loadModel(oView, delPath, oOdataService);
-		},
-		
-		unloadShipment: function(oView, inputval, modelData) {
-			var oOdataService = oView.gssOdataService(),
-				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
-			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-				if (modelData.aItems) {
-					if (modelData.aItems.constructor === Array) {
-						if (modelData.aItems[0].Tknum) {
-							var inputVal = modelData.aItems[0].Tknum;
-						} else {
-							inputVal = inputval;
-						}
-						var sPath = bEntityName + "(Vbeln='',Exidv='" + modelData.aItems[0].Exidv + "',Exida='" + modelData.aItems[0].Exida +
-							"',Tknum='" + inputVal +
-							"',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
-					} else {
-						if (modelData.aItems.Tknum) {
-							inputVal = modelData.aItems.Tknum;
-						} else {
-							inputVal = inputval;
-						}
-						sPath = bEntityName + "(Vbeln='',Exidv='" + modelData.aItems.Exidv + "',Exida='" + modelData.aItems.Exida +
-							"',Tknum='" +
-							inputVal +
-							"',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
-					}
-				} else {
-					if (modelData.Tknum) {
-						inputVal = modelData.Tknum;
-					} else {
-						inputVal = inputval;
-					}
-					sPath = bEntityName + "(Vbeln='',Exidv='" + modelData.Exidv + "',Exida='" + modelData.Exida + "',Tknum='" + inputVal +
-						"',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
-				}
-				this.loadModel(oView, sPath, oOdataService);
-		},
-		
-		unloadDelivery: function(oView, inputval, modelData) {
-			var oOdataService = oView.gssOdataService(),
-				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
-			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			if (modelData.aItems) {
-					if (modelData.aItems.constructor === Array) {
-						if (modelData.aItems[0].Vbeln) {
-							var inputVal = modelData.aItems[0].Vbeln;
-						} else {
-							inputVal = inputval;
-						}
-						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + modelData.aItems[0].Exidv +
-							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
-					} else {
-						if (modelData.aItems.Vbeln) {
-							inputVal = modelData.aItems.Vbeln;
-						} else {
-							inputVal = inputval;
-						}
-						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + modelData.aItems.Exidv +
-							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
-					}
-				} else {
-					if (modelData.Vbeln) {
-						inputVal = modelData.Vbeln;
-					} else {
-						inputVal = inputval;
-					}
-					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + modelData.aItems.Exidv +
-						"',Exida='" + modelData.Exida + "',Tknum='',LoadInd='X',HuStatus='HU04',Lgnum='" + lgnum + "')";
-				}
-			this.loadModel(oView, delPath, oOdataService);
-		},
-
-
-		revertShipmentLoad: function(oView, inputval, modelData) {
-			var oOdataService = oView.gssOdataService(),
-				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
-			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			if (modelData.aItems) { // To check for values in the array
-				if (modelData.aItems.constructor === Array) { // To check modelData is an array
-					if (modelData.aItems[0].Tknum) { // To check if the field has values
-						var inputVal = modelData.aItems[0].Tknum; // To assign value to the variable
-						var huVal = modelData.aItems[0].Exidv; // To assign value to the variable
-					} else {
-						inputVal = inputval; // To get value from the input field
-
-						huVal = oView.byId("scanHUDel").getValue(); // To get value from the input field
-
-					}
-					var sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems[0].Exida + "',Tknum='" + inputVal +
-						"',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')"; // Building URL for unload process
-				} else {
-					if (modelData.aItems.Tknum) { // To check if the field has values
-						inputVal = modelData.aItems.Tknum; // To assign value to the variable
-						huVal = modelData.aItems.Exidv; // To assign value to the variable
-					} else {
-						inputVal = inputval; // To get value from the input field
-
-						huVal = oView.byId("scanHUDel").getValue(); // To get value from the input field
-
-					}
-					sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems.Exida + "',Tknum='" + inputVal +
-						"',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')"; // Building URL for unload process
-				}
-				this.loadModel(oView, sPath, oOdataService);
-			}
-		},
-		
-
-		revertLoadDelivery: function(oView, inputval, modelData) {
-			var oOdataService = oView.gssOdataService(),
-				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
-			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			if (modelData.aItems) {
-					if (modelData.aItems.constructor === Array) {
-						if (modelData.aItems[0].Vbeln) {
-							var inputVal = modelData.aItems[0].Vbeln;
-							var huVal = modelData.aItems[0].Exidv;
-						} else {
-							inputVal = inputval;
-							huVal = oView.byId("scanHUinDel").getValue();
-						}
-						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
-							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')";
-					} else {
-						if (modelData.aItems.Vbeln) {
-							inputVal = modelData.aItems.Vbeln;
-							huVal = modelData.aItems.Exidv;
-						} else {
-							inputVal = inputval;
-							huVal = oView.byId("scanHUinDel").getValue();
-						}
-						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
-							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')";
-					}
-				} else {
-					if (modelData.Vbeln) {
-						inputVal = modelData.Vbeln;
-						huVal = modelData.Exidv;
-					} else {
-						inputVal = inputval;
-						huVal = oView.byId("scanHUinDel").getValue();
-					}
-					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
-						"',Exida='" + modelData.Exida + "'Tknum='',LoadInd='',HuStatus='HU04',Lgnum='" + lgnum + "')";
-				}
-			this.loadModel(oView, delPath, oOdataService);
-		},
-		
-		revertUnloadShipment: function(oView, inputval, modelData) {
-			var oOdataService = oView.gssOdataService(),
-				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
-			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			if (modelData.aItems) {
-					if (modelData.aItems.constructor === Array) {
-						if (modelData.aItems[0].Tknum) {
-							var inputVal = modelData.aItems[0].Tknum;
-							var huVal = modelData.aItems[0].Exidv;
-						} else {
-							inputVal = inputval;
-							huVal = oView.byId("scanHUDel").getValue();
-						}
-						var sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems[0].Exida + "',Tknum='" + inputVal +
-							"',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
-					} else {
-						if (modelData.aItems.Tknum) {
-							inputVal = modelData.aItems.Tknum;
-							huVal = modelData.aItems.Exidv;
-						} else {
-							inputVal = inputval;
-							huVal = oView.byId("scanHUDel").getValue();
-						}
-						sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.aItems.Exida + "',Tknum='" + inputVal +
-							"',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
-					}
-				} else {
-					if (modelData.Tknum) {
-						inputVal = modelData.Tknum;
-						huVal = modelData.Exidv;
-					} else {
-						inputVal = inputval;
-						huVal = oView.byId("scanHUDel").getValue();
-					}
-					sPath = bEntityName + "(Vbeln='',Exidv='" + huVal + "',Exida='" + modelData.Exida + "',Tknum='" + inputVal +
-						"',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
-				}	
-			this.loadModel(oView, sPath, oOdataService);
-		},
-		
-		revertUnloadDelivery: function(oView, inputval, modelData) {
-			var oOdataService = oView.gssOdataService(),
-				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
-			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			if (modelData.aItems) {
-					if (modelData.aItems.constructor === Array) {
-						if (modelData.aItems[0].Vbeln) {
-							var inputVal = modelData.aItems[0].Vbeln;
-							var huVal = modelData.aItems[0].Exidv;
-						} else {
-							inputVal = inputval;
-							huVal = oView.byId("scanHUinDel").getValue();
-						}
-						var delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
-							"',Exida='" + modelData.aItems[0].Exida + "',Tknum='',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
-					} else {
-						if (modelData.aItems.Vbeln) {
-							inputVal = modelData.aItems.Vbeln;
-							huVal = modelData.aItems.Exidv;
-						} else {
-							inputVal = inputval;
-							huVal = oView.byId("scanHUinDel").getValue();
-						}
-						delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
-							"',Exida='" + modelData.aItems.Exida + "',Tknum='',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
-					}
-				} else {
-					if (modelData.Vbeln) {
-						inputVal = modelData.Vbeln;
-						huVal = modelData.Exidv;
-					} else {
-						inputVal = inputval;
-						huVal = oView.byId("scanHUinDel").getValue();
-					}
-					delPath = bEntityName + "(Vbeln='" + inputVal + "',Exidv='" + huVal +
-						"',Exida='" + modelData.Exida + "'Tknum='',LoadInd='X',HuStatus='HU03',Lgnum='" + lgnum + "')";
-				}
-			this.loadModel(oView, delPath, oOdataService);
-		},
-
 		
 		loadModel: function(oView, sPath, oOdataService) {
 			var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(sPath, oView, ""); // To pass the built URL to get entityset data
@@ -341,28 +62,19 @@ sap.ui.define(["sap/ui/base/Object",
 				var oRfData;
 				oRfData = oResult;
 				oRfData = {
-					shipDesc: '',
-					shipStat: '',
-					tprfo: '',
 					vbeln: '',
-					delStat: '',
-					Exida: '',
 					Exidv: '',
-					huStatDesc: '',
 					loadedHU: '',
 					UnloadedHu: '',
 					totalHU: '',
-					Tknum: '',
 					Lgbzo: '',
 					Lgtor: '',
 					LoadedHuWt: '',
 					TotHuWt: '',
 					Msgtyp: '',
 					Msgtext: '',
-					HuStatus: '',
-					ProcInd: '',
 					WtUnit: '',
-					aItems: oRfData
+					aItems: [oRfData]
 				};
 				oRfData.vbeln = oResult.Vbeln;
 				oRfData.loadedHU = oResult.LoadedHu;
