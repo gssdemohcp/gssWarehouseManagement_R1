@@ -23,7 +23,7 @@ sap.ui.define([
 			this.afilters = [];
 			// this._oApplication = this.getApplication();
 			// var oWhenCallReadIsDone = this._oApplication._oGlobalWarehouseManage.menuConfigurationLoad(this, this.afilters);
-			var oWhenCallReadIsDone = this.gssCallFunction().menuConfigurationLoad(this, this.afilters);
+			var oWhenCallReadIsDone = this.gssCallFunction().populateModelBuild(this);
 			//Load Menu Fragment in view
 			oWhenCallReadIsDone.done(function() {
 				this._menuBinding(this.getGlobalModel().getProperty("/MenuData"), "");
@@ -37,7 +37,7 @@ sap.ui.define([
 				var Menu = MenuModel.getProperty("/mainMenu");
 				this._oDialog = sap.ui.xmlfragment(Menu, this);
 			}
-			var oSubMenu = sap.ui.getCore().getModel("mainJsonModel").getData().rfMenu;
+			var oSubMenu = sap.ui.getCore().getModel("mainJsonModel").getData().aItems;
 			//To Get the menuBindings
 			// this._rfMenu = this._oApplication._omenuBinding.oMenu(this, oSubMenu, oSelectedItem, createBC, this._oApplication);
 			this._rfMenu = this.gssCallMenu().oMenu(this, oSubMenu, oSelectedItem, createBC);

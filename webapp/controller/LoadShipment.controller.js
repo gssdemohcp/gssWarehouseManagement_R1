@@ -57,9 +57,25 @@ sap.ui.define([
 			var procInd = "X"; // Indicator for Load process
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				this.gssCallFunction().LoadDetails(this, shipNo, huNo, ""); // To pass the input values to the function&nbsp;
+				// ******************************* To get parameters from model ***********************************
+				var viewProperties = this.getViewProperties(),               
+					parameters = viewProperties.parameters;
+					parameters.Tknum = sInputValue,
+					parameters.Exidv = huNo,
+					parameters.ProcInd = "",
+					parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+				// ******************************* To get parameters from model ***********************************
+				this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				this.gssCallFunction().LoadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
+			// ******************************* To get parameters from model ***********************************
+				var viewProperties = this.getViewProperties(),               
+					parameters = viewProperties.parameters;
+					parameters.Tknum = sInputValue,
+					parameters.Exidv = huNo,
+					parameters.ProcInd = procInd,
+					parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+				// ******************************* To get parameters from model ***********************************
+				this.gssCallFunction().populateModelBuild(this); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				this.getView().byId("inputValue").setPlaceholder("Enter Shipment *"); // To set placeholder for input field
 				this.getView().byId("inputValue").setMaxLength(10);

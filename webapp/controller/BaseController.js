@@ -138,7 +138,7 @@ sap.ui.define([
 			);
 		},
 
-		getModelFields: function() {
+		getViewProperties: function() {
 			var sCurrentScrnName = this.getCurrentScrn();
 			return this.getScreenModel(sCurrentScrnName);
 		}

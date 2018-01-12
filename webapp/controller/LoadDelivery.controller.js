@@ -54,13 +54,25 @@ sap.ui.define([
 
 		getLoadDetails: function(sInputValue, huNo) {
 			var shipNo = sInputValue; // To get input field value
-			// var huNo = this.getView().byId("scanHUinDel").getValue(); // To get input field value
+			var huNo = this.getView().byId("scanHUinDel").getValue(); // To get input field value
 			var procInd = "X"; // Indicator for Load process
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUinDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				this.gssCallFunction().LoadDetails(this, shipNo, huNo, ""); // To pass the input values to the function&nbsp;
+				var viewProperties = this.getViewProperties(),               
+					parameters = viewProperties.parameters;
+					parameters.Tknum = sInputValue,
+					parameters.Exidv = huNo,
+					parameters.ProcInd = "",
+					parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+				this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				this.gssCallFunction().LoadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
+				var viewProperties = this.getViewProperties(),               
+					parameters = viewProperties.parameters;
+					parameters.Tknum = sInputValue,
+					parameters.Exidv = huNo,
+					parameters.ProcInd = procInd,
+					parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+				this.gssCallFunction().populateModelBuild(this); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				var hdr = this.getView().getModel("i18n").getResourceBundle().getText("EnterDel");
 				this.getView().byId("inputValue").setPlaceholder(hdr); // To set placeholder for input field

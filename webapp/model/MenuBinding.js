@@ -58,7 +58,7 @@ sap.ui.define(["sap/ui/base/Object",
 		bindMenuModel: function(_rfMenu) {
 			var rfModel = new JSONModel();
 			var rfData = {
-				rfMenu: _rfMenu
+				aItems: _rfMenu
 			};
 			this._rfMenu = [];
 			rfModel.setData(rfData);

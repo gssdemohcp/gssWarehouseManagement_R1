@@ -133,7 +133,7 @@ sap.ui.define([
 				odata: this.oODATAService,
 				breadcrumbs: this._ocreateBreadCrumbs,
 				menu: this._omenuBinding,
-				currentScreen: "",
+				currentScreen: "LM999",
 				currentModel: "",
 				controlId: "",
 				currentView: "",
@@ -194,21 +194,21 @@ sap.ui.define([
 			// Start Menu item and view navvigation properties 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			this._oMenuTransactionModelNew = new JSONModel({
-				LM02: {view: "putaway",	filters:[ "Lenum", "Queue", "Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterSU", entitySet: "/WMProcessSet" },
+				LM02: {view: "putaway",	filters:[ "Lenum", "Queue", "Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterSU", entitySet: "/WMProcessSet"},
 				LM03: {view: "putaway",filters:["Tanum","Queue","Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet"},
 				LM09: {view: "putaway",filters: ["Vbeln", "Queue","Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet"},
 				
 				LM05: {view: "picking",filters: ["Tanum","Queue","Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet"},
 				LM06: {view: "picking",filters: ["Vbeln","Queue","Lgnum"],keyFields:["Lenum","Queue","Vbeln","Lgnum","Tanum","Tapos"],placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet"},
-
+				
 				LM33: {view:"unloadShipment", filters:["Tknum","Exidv","Lgnum", "ProcInd","LoadInd"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"], placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet"},
 				LM34: {view:"unloadDelivery", filters:["Vbeln", "Exidv","Lgnum","ProcInd","LoadInd"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"], placeHolderLabel: "EnterDel", entitySet: "/LoadProcessSet"},
-
-				LM30: {view:"loadShipment", filters:["Tknum","Exidv","Lgnum","ProcInd"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"], placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet"},
-				LM31: {view:"loadDelivery", filters:["Vbeln","Exidv","Lgnum","ProcInd"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"], placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet"},
-				LM37: {view:"loadInqShipment", filters:["Tknum","Queue","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],placeHolderLabel:"EnterShip", entitySet: "/LoadProcessSet"},
-				LM36: {view:"loadInqDelivery", filters:["Vbeln","Queue","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet"},
-				LM35: {view:"loadInqHu", filters:["Exidv","Queue","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],placeHolderLabel:"EnterHU", entitySet: "/LoadProcessSet"},
+				
+				LM30: {view:"loadShipment", filters:["Tknum","Exidv","ProcInd","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],parameters: {Tknum: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet"},
+				LM31: {view:"loadDelivery", filters:["Vbeln","Exidv","ProcInd","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],parameters: {Vbeln: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet"},
+				LM37: {view:"loadInqShipment", filters:["Tknum","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],parameters:{Tknum:"",Lgnum:""},placeHolderLabel:"EnterShip", entitySet: "/LoadProcessSet"},
+				LM36: {view:"loadInqDelivery", filters:["Vbeln","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],parameters:{Vbeln:"",Lgnum:""},placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet"},
+				LM35: {view:"loadInqHu", filters:["Exidv","Lgnum"],Parameter:[{Exidv:"",Lgnum:""}],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum"],placeHolderLabel:"EnterHU", entitySet: "/LoadProcessSet"},
 				
 				LM73: {view:"grShipment", filters:["Tknum","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GRProcessSet"},
 				LM72: {view:"grStagingArea", filters:["Lgbzo","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GRProcessSet"},
@@ -216,7 +216,7 @@ sap.ui.define([
 				LM63: {view:"giShipment", filters:["Tknum","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GIProcessSet"},
 				LM62: {view:"giStagingArea", filters:["Lgbzo","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GIProcessSet" },
 				
-				LM999:{view: "newbin",filters: ["Nlpla","Nltyp","Lgnum"]}
+				LM999:{view: "menuConfiguration",filters:[],keyFields:[],entitySet:"/configurationsSet"}
 			});
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");

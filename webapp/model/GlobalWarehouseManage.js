@@ -141,21 +141,14 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 
 		// ********** Srini code to load putaway data begins *****************
-		LoadMaterial: function(oView, sInputValue) {
+		LoadMaterial: function(oView) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
-				// bEntityName = this.entityName(oView, "/MaterialList"),
-				bEntityName = oView.getModelFields(),
-
-				inputArray = [];
-				inputArray.push(sInputValue);
-					inputArray.push(oView.getGlobalModel().getProperty("/currentQueue"));
-			
-				inputArray.push(oView.getGlobalModel().getProperty("/currentLgnum"));
+				bEntityName = oView.getViewProperties();
 				//Setup filter string
-				var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, inputArray),
+				var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView),
 				//******
 				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 
@@ -196,7 +189,7 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// ********** Srini code to load putaway data ends *****************
-		
+
 		// ************ Srini code to get data for Load begins ***********
 		LoadDetails: function(oView, sInputValue, huVal, procInd) {
 			//Call oDATA Read with entity set name
@@ -204,17 +197,11 @@ sap.ui.define(["sap/ui/base/Object",
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
 				// bEntityName = this.entityName(oView, "/LoadProcess"),
-				bEntityName = oView.getModelFields(),
-				inputArray = [];
-				inputArray.push(sInputValue);
-				inputArray.push(huVal);
-				inputArray.push(procInd);
-				inputArray.push(oView.getGlobalModel().getProperty("/currentLgnum"));
-				
-				//Setup filter string
-				var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, inputArray);
-				//******
-				var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
+				bEntityName = oView.getViewProperties();
+			//Setup filter string
+			var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView);
+			//******
+			var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 
 			var oGlobalModel = oView.getModel("globalProperties");
 
@@ -266,6 +253,133 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		// ************ Srini code to get data for Load ends ***********
 
+		populateModelBuild: function(oView) {
+			var oRfModel = new JSONModel(),
+				promise = jQuery.Deferred(),
+				oOdataService = oView.gssOdataService(),
+				// bEntityName = this.entityName(oView, "/LoadProcess"),
+				bEntityName = oView.getViewProperties();
+
+			//Setup filter string
+			var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView);
+			//******
+			var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
+
+			var oGlobalModel = oView.getModel("globalProperties");
+
+			oGlobalModel.setProperty("/isOdataLoading", true);
+			//Handle response from oData Call
+			oWhenCallReadIsDone.done(function(oResult, oFailed) {
+				var oRfData = this.rfDataBuild(oResult, oView);
+
+				//Before call errorhandling delegates
+				//Set Response Message and message Type to trigger message box
+				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				// delegate error handling
+				errorHandling.register(oView.getApplication(), oView.getComponent());
+
+				oGlobalModel.setProperty("/isOdataLoading", false);
+
+				promise.resolve();
+
+			}.bind(this));
+			return promise;
+
+		},
+		
+		
+		rfDataBuild: function(oResult, oView) {
+			var aViewProperties = oView.getViewProperties(),
+				oRfModel = new JSONModel(),
+				pQueue,
+				pLgnum,
+				oGlobalModel = oView.getModel("globalProperties");
+			switch (aViewProperties.entitySet) {
+				case "/WMProcessSet":
+					var oRfData;
+					oRfData = oResult.results;
+					oRfData = {
+						aItems: oRfData
+					};
+					oRfModel.setData(oRfData);
+					oView.setModel(oRfModel, "materialList");
+
+					break;
+				case "/LoadProcessSet":
+					oRfData = oResult.results;
+					oRfData = {
+						vbeln: '',
+						Exidv: '',
+						loadedHU: '',
+						totalHU: '',
+						Lgbzo: '',
+						Lgtor: '',
+						LoadedHuWt: '',
+						TotHuWt: '',
+						Msgtyp: '',
+						Msgtext: '',
+						WtUnit: '',
+						aItems: oRfData
+					};
+					oRfData.vbeln = oResult.results[0].Vbeln;
+					oRfData.loadedHU = oResult.results[0].LoadedHu;
+					oRfData.totalHU = oResult.results[0].TotalHu;
+					oRfData.Lgbzo = oResult.results[0].Lgbzo;
+					oRfData.Lgtor = oResult.results[0].Lgtor;
+					oRfData.Exidv = oResult.results[0].Exidv;
+					oRfData.LoadedHuWt = oResult.results[0].LoadedHuWt;
+					oRfData.TotHuWt = oResult.results[0].TotHuWt;
+					oRfData.WtUnit = oResult.results[0].WtUnit;
+					oRfModel.setData(oRfData);
+
+					//Create New Model for Menu Configuration Item
+					oView.setModel(oRfModel, "itemList");
+
+					break;
+				case "/GRProcessSet":
+
+					break;
+				case "/GIProcessSet":
+
+					break;
+				case "/configurationsSet":
+
+					oRfData = oResult.results;
+					oRfData = {
+						aItems: oRfData
+					};
+					oRfModel.setData(oRfData);
+					//code start - selvan
+					//capture queue number for filter option
+					var aRfMenu = oRfModel.getData().aItems;
+					aRfMenu.forEach(function(oRfMenu) {
+						if (oRfMenu.Queue && oRfMenu.Lgnum) {
+							pQueue = oRfMenu.Queue;
+							pLgnum = oRfMenu.Lgnum;
+						}
+					}.bind(this));
+					oGlobalModel.setProperty("/currentQueue", pQueue);
+					oGlobalModel.setProperty("/currentLgnum", pLgnum);
+					//code end -selvan
+					sap.ui.getCore().setModel(oRfModel, "mainJsonModel");
+					break;
+
+				default:
+					oRfData = oResult.results;
+					oRfData = {
+						rfMenu: oRfData
+					};
+					oRfModel.setData(oRfData);
+					sap.ui.getCore().setModel(oRfModel, "mainJsonModel");
+
+					break;
+
+			}
+			return oRfData;
+
+		},
+
 		// ************ Srini code to get data for Unload begins ***********
 		UnloadDetails: function(oView, sInputValue, huVal, procInd, loadInd) {
 			//Call oDATA Read with entity set name
@@ -273,17 +387,17 @@ sap.ui.define(["sap/ui/base/Object",
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
 				// bEntityName = this.entityName(oView, "/LoadProcess"),
-				bEntityName = oView.getModelFields(),
+				bEntityName = oView.getViewProperties(),
 				inputArray = [];
-				inputArray.push(sInputValue);
-				inputArray.push(huVal);
-				inputArray.push(procInd);
-				inputArray.push(loadInd);
-				
-				//Setup filter string
-				var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, inputArray);
-				//******
-				var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
+			inputArray.push(sInputValue);
+			inputArray.push(huVal);
+			inputArray.push(procInd);
+			inputArray.push(loadInd);
+
+			//Setup filter string
+			var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, inputArray);
+			//******
+			var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 
 			var oGlobalModel = oView.getModel("globalProperties");
 

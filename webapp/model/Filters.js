@@ -42,6 +42,7 @@ sap.ui.define(["sap/ui/base/Object",
 				aFilterValues = [sInptValue, sQueue, sLgnum];
 
 			return aFilterValues;
+<<<<<<< Upstream, based on 64cb60c85070823ea18849c629905c32a1937847
 		},*/
 		
 		setLoadInqFilter: function(oView, sInputValue) {
@@ -73,34 +74,24 @@ sap.ui.define(["sap/ui/base/Object",
 			return jUriParameter;
 
 		},
-		
-		setLoadFilter: function(oView, inputArray) {
-		//Get Current View Name to get filter field name
-			var ScreenModel = oView.getModelFields();
-			var aFilterValues = [];
-			for(var i = 0; i < ScreenModel.filters.length; i++) {
-				aFilterValues.push(this.buildFilter(ScreenModel.filters[i], inputArray[i]));
+
+		setLoadFilter: function(oView) {
+			var ScreenModel = oView.getViewProperties();
+			var viewProperties = oView.getViewProperties(),
+				parameters = viewProperties.parameters,
+				index = 0,
+				aFilterValues = [];
+			var inputValues = [];
+			if (ScreenModel.filters.length > 0 && ScreenModel.filters !== null) {
+				for (index in parameters) {
+					inputValues.push(parameters[index]);
+					index++;
+				}
+				for (var i = 0; i < ScreenModel.filters.length; i++) {
+					aFilterValues.push(this.buildFilter(ScreenModel.filters[i], inputValues[i]));
+				}
 			}
 			return aFilterValues;
-		},
-
-		setUnloadFilter: function(oView, sInputValue, huVal, procInd, loadInd) {
-			//Get Current View Name to get filter field name
-			var ScreenModel = oView.getModelFields();
-			if (sInputValue && huVal) { // To check if both fields has values
-				var filtership = this.buildFilter(ScreenModel.field1, sInputValue), // Assigning name to input value
-					filterhu = this.buildFilter(ScreenModel.field2, huVal), // Assigning name to input value
-					filterLoadInd = this.buildFilter(ScreenModel.field6, loadInd),
-					sLgnum = this.buildFilter(ScreenModel.field3, oView.getGlobalModel().getProperty("/currentLgnum")),
-					aFilterValues = [filtership, filterhu, sLgnum, filterLoadInd];
-				return aFilterValues; // Function call along with entityset and filter value
-			} else if (sInputValue && procInd) { // To get input value & indicator value
-				var filtership1 = this.buildFilter(ScreenModel.field1, sInputValue), // Assigning name to input value
-					filterInd = this.buildFilter(ScreenModel.field5, procInd), // Assigning name to indicator
-					sLgnum1 = this.buildFilter(ScreenModel.field3, oView.getGlobalModel().getProperty("/currentLgnum")),
-					aFilterValues1 = [filtership1, filterInd, sLgnum1];
-				return aFilterValues1;
-			}
 		}
 	});
 });
