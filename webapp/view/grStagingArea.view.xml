@@ -4,7 +4,7 @@
 		<pages>
 			<Page title="GR by Staging Area">
 				<content>
-						<Toolbar>
+					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
 					</Toolbar>
 					<Toolbar id="toolbarheader">
@@ -12,71 +12,71 @@
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
 						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
-						<Table id="tableSA" class="sapUiTinyMargin" mode="MultiSelect" selectionChange="onSingleSelectSA" growing="true" growingScrollToLoad="true"
-			 width="auto" rememberSelections="true"  items="{itemLists>/aItems}">
-			<headerToolbar>
-				<Toolbar>
-					<Title text="Delivery Header Information"/>
-					<ToolbarSpacer/>
-				</Toolbar>
-			</headerToolbar>
-			<columns> 
-				<Column>
-					<header>
-						<Label text="Delivery No" design="Bold"/>
-					</header>
-				</Column>
-				<Column>
-					<header>
-						<Label text="Name" design="Bold"/>
-					</header>
-				</Column>
-				<Column>
-					<header>
-						<Label text="Vendor" design="Bold"/>
-					</header>
-				</Column>
-				<Column>
-					<header>
-						<Label text="Total Weight" design="Bold"/>
-					</header>
-				</Column>
-				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
-					<header>
-						<Label text="Shipping Point" design="Bold"/>
-					</header>
-				</Column>
-				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
-					<header>
-						<Label text="Load/Unload Status" design="Bold"/>
-					</header>
-				</Column>
-				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
-					<header>
-						<Label text="HU Indicator" design="Bold"/>
-					</header>
-				</Column>
-				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
-					<header>
-						<Label text="TO Indicator" design="Bold"/>
-					</header>
-				</Column>
-			</columns>
-			<items>
-				<ColumnListItem>
-					<cells>
-						<Text id="vbelnSA" text="{itemLists>Vbeln}"/>
-						<Text text="{itemLists>LifnrName}"/>
-						<Text text="{itemLists>Lifnr}"/>
-						<Text text="{itemLists>Btgew} {itemLists>Gewei}"/>
-						<Text text="{parts:[{path:'itemLists>Vstel'}],formatter: '.formatter.shipPoint'}"/>
-						<Text id="loadstat" text="{parts:[{path:'itemLists>LoadStat'}],formatter: '.formatter.grIndicator'}"/>
-						<Text text="{parts:[{path:'itemLists>HuInd'}],formatter: '.formatter.huIndicator'}"/>
-						<Text text="{parts:[{path:'itemLists>ToInd'}],formatter: '.formatter.huIndicator'}"/>
-					</cells>
-				</ColumnListItem>
-			</items>
-		</Table>
+					<Table id="tableSA" class="sapUiTinyMargin" mode="MultiSelect" selectionChange="onSingleSelectSA" growing="true" growingScrollToLoad="true"
+						width="auto" rememberSelections="true" items="{itemLists>/aItems}">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="Delivery Header Information"/>
+								<ToolbarSpacer/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column>
+								<header>
+									<Label text="Delivery No" design="Bold"/>
+								</header>
+							</Column>
+							<Column>
+								<header>
+									<Label text="Name" design="Bold"/>
+								</header>
+							</Column>
+							<Column>
+								<header>
+									<Label text="Vendor" design="Bold"/>
+								</header>
+							</Column>
+							<Column>
+								<header>
+									<Label text="Total Weight" design="Bold"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
+								<header>
+									<Label text="Shipping Point" design="Bold"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
+								<header>
+									<Label text="Load/Unload Status" design="Bold"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
+								<header>
+									<Label text="HU Indicator" design="Bold"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
+								<header>
+									<Label text="TO Indicator" design="Bold"/>
+								</header>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text id="vbelnSA" text="{itemLists>Vbeln}"/>
+									<Text text="{itemLists>LifnrName}"/>
+									<Text text="{itemLists>Lifnr}"/>
+									<Text text="{itemLists>Btgew} {itemLists>Gewei}"/>
+									<Text text="{parts:[{path:'itemLists>Vstel'}],formatter: '.formatter.shipPoint'}"/>
+									<Text id="loadstat" text="{parts:[{path:'itemLists>LoadStat'}],formatter: '.formatter.grIndicator'}"/>
+									<Text text="{parts:[{path:'itemLists>HuInd'}],formatter: '.formatter.huIndicator'}"/>
+									<Text text="{parts:[{path:'itemLists>ToInd'}],formatter: '.formatter.huIndicator'}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
 				</content>
 			</Page>
 		</pages>
