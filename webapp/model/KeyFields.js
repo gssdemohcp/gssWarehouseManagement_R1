@@ -27,7 +27,8 @@ sap.ui.define(["sap/ui/base/Object",
 
 		buildKeyFields: function(oView, inputval, modelData, LoadInd, HuStatus) {
 			var oOdataService = oView.gssOdataService(),
-				bEntityName = oView.gssCallFunction().entityName(oView, "/LoadProcess");
+				ScreenModel = oView.getViewProperties(),
+				bEntityName = ScreenModel.entitySet;                         
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			var modelArray = [];
 			modelArray.push(modelData.Vbeln);
@@ -39,7 +40,7 @@ sap.ui.define(["sap/ui/base/Object",
 			modelArray.push(lgnum);
 			var path = "";
 			var commaVar = ",";
-			var ScreenModel = oView.getModelFields();
+			var ScreenModel = oView.getViewProperties();
 			for(var i = 0; i < ScreenModel.keyFields.length; i++) {
 				if (i === ScreenModel.keyFields.length - 1) {
 					commaVar = "";
