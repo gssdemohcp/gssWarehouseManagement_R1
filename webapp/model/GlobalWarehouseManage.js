@@ -141,14 +141,23 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 
 		// ********** Srini code to load putaway data begins *****************
-		LoadMaterial: function(oView) {
+		LoadMaterial: function(oView,sInputValue) {
 			//Call oDATA Read with entity set name
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
-				bEntityName = oView.getViewProperties();
-				//Setup filter string
-				var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView),
+
+				// bEntityName = this.entityName(oView, "/MaterialList"),
+				bEntityName = oView.getModelFields(),
+
+				inputArray = [];
+			inputArray.push(sInputValue);
+			inputArray.push(oView.getGlobalModel().getProperty("/currentQueue"));
+
+			inputArray.push(oView.getGlobalModel().getProperty("/currentLgnum"));
+			//Setup filter string
+			var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, inputArray),
+
 				//******
 				oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 
@@ -197,9 +206,17 @@ sap.ui.define(["sap/ui/base/Object",
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
 				// bEntityName = this.entityName(oView, "/LoadProcess"),
-				bEntityName = oView.getViewProperties();
+
+				bEntityName = oView.getModelFields(),
+				inputArray = [];
+			inputArray.push(sInputValue);
+			inputArray.push(huVal);
+			inputArray.push(procInd);
+			inputArray.push(oView.getGlobalModel().getProperty("/currentLgnum"));
+
 			//Setup filter string
-			var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView);
+			var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView, inputArray);
+
 			//******
 			var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 
@@ -252,13 +269,18 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		// ************ Srini code to get data for Load ends ***********
-
-		populateModelBuild: function(oView) {
+		populateModelBuild: function(oView, sInputValue, huVal, procInd) {
 			var oRfModel = new JSONModel(),
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
 				// bEntityName = this.entityName(oView, "/LoadProcess"),
-				bEntityName = oView.getViewProperties();
+				bEntityName = oView.getModelFields(),
+				inputArray = [];
+			inputArray.push(sInputValue);
+			inputArray.push(huVal);
+			inputArray.push(procInd);
+			inputArray.push(oView.getGlobalModel().getProperty("/currentLgnum"));
+
 
 			//Setup filter string
 			var aFilterValues = oView.gssFilterFunction().setFilter(oView);
@@ -272,7 +294,7 @@ sap.ui.define(["sap/ui/base/Object",
 			oWhenCallReadIsDone.done(function(oResult, oFailed) {
 				var oRfData = this.rfDataBuild(oResult, oView);
 
-				//Before call errorhandling delegates
+				//Before call errorhandling delegates 
 				//Set Response Message and message Type to trigger message box
 				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
 				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
@@ -287,10 +309,8 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 
 		},
-		
-		
 		rfDataBuild: function(oResult, oView) {
-			var aViewProperties = oView.getViewProperties(),
+			var aViewProperties = oView.getModelFields(),
 				oRfModel = new JSONModel(),
 				pQueue,
 				pLgnum,
@@ -343,16 +363,16 @@ sap.ui.define(["sap/ui/base/Object",
 				case "/GIProcessSet":
 
 					break;
-				case "/configurationsSet":
+				case "/MenuConfiguration":
 
 					oRfData = oResult.results;
 					oRfData = {
-						aItems: oRfData
+						rfMenu: oRfData
 					};
 					oRfModel.setData(oRfData);
 					//code start - selvan
 					//capture queue number for filter option
-					var aRfMenu = oRfModel.getData().aItems;
+					var aRfMenu = oRfModel.getData().rfMenu;
 					aRfMenu.forEach(function(oRfMenu) {
 						if (oRfMenu.Queue && oRfMenu.Lgnum) {
 							pQueue = oRfMenu.Queue;
@@ -363,6 +383,7 @@ sap.ui.define(["sap/ui/base/Object",
 					oGlobalModel.setProperty("/currentLgnum", pLgnum);
 					//code end -selvan
 					sap.ui.getCore().setModel(oRfModel, "mainJsonModel");
+
 					break;
 
 				default:
@@ -376,7 +397,6 @@ sap.ui.define(["sap/ui/base/Object",
 					break;
 
 			}
-			return oRfData;
 
 		},
 

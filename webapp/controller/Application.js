@@ -216,7 +216,9 @@ sap.ui.define([
 				LM63: {view:"giShipment", filters:["Tknum","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GIProcessSet"},
 				LM62: {view:"giStagingArea", filters:["Lgbzo","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"], entitySet: "/GIProcessSet" },
 				
+
 				LM999:{view: "menuConfiguration",filters:[],keyFields:[],entitySet:"/configurationsSet"}
+
 			});
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
