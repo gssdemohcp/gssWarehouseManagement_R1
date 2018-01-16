@@ -148,7 +148,7 @@ sap.ui.define(["sap/ui/base/Object",
 				oOdataService = oView.gssOdataService(),
 
 				// bEntityName = this.entityName(oView, "/MaterialList"),
-				bEntityName = oView.getModelFields(),
+				bEntityName = oView.getViewProperties(),
 
 				inputArray = [];
 			inputArray.push(sInputValue);
@@ -207,7 +207,7 @@ sap.ui.define(["sap/ui/base/Object",
 				oOdataService = oView.gssOdataService(),
 				// bEntityName = this.entityName(oView, "/LoadProcess"),
 
-				bEntityName = oView.getModelFields(),
+				bEntityName = oView.getViewProperties(),
 				inputArray = [];
 			inputArray.push(sInputValue);
 			inputArray.push(huVal);
@@ -274,7 +274,7 @@ sap.ui.define(["sap/ui/base/Object",
 				promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
 				// bEntityName = this.entityName(oView, "/LoadProcess"),
-				bEntityName = oView.getModelFields(),
+				bEntityName = oView.getViewProperties(),
 				inputArray = [];
 			inputArray.push(sInputValue);
 			inputArray.push(huVal);
@@ -310,7 +310,7 @@ sap.ui.define(["sap/ui/base/Object",
 
 		},
 		rfDataBuild: function(oResult, oView) {
-			var aViewProperties = oView.getModelFields(),
+			var aViewProperties = oView.getViewProperties(),
 				oRfModel = new JSONModel(),
 				pQueue,
 				pLgnum,

@@ -62,8 +62,15 @@ sap.ui.define([
 		},
 
 		getPutawayMaterial: function(sInputValue) {
-			//Read picking material from backend
-			this.gssCallFunction().LoadMaterial(this, sInputValue);
+
+			var viewProperties = this.getViewProperties(),
+				parameters = viewProperties.parameters;
+			    parameters.Lenum = sInputValue,
+				parameters.Queue = this.getGlobalModel().getProperty("/currentQueue"),
+				parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+			// ******************************* To get parameters from model ***********************************
+			this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
+
 			//code end -selvan
 		},
 
