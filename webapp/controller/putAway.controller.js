@@ -65,7 +65,17 @@ sap.ui.define([
 
 			var viewProperties = this.getViewProperties(),
 				parameters = viewProperties.parameters;
-			    parameters.Lenum = sInputValue,
+			parameters = viewProperties.parameters;
+			var property = "";
+			for (property in parameters) {
+				console.log(property);
+				this.inpVal = property;
+				break;
+			}
+			for (var i = 0; i < Object.keys(parameters).length; i++) {
+				parameters[this.inpVal] = sInputValue;
+			}
+		
 				parameters.Queue = this.getGlobalModel().getProperty("/currentQueue"),
 				parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
 			// ******************************* To get parameters from model ***********************************
