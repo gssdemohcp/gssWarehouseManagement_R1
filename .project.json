@@ -28,11 +28,7 @@
     {
       "templateId": "ui5template.basicSAPUI5ApplicationComponent",
       "templateVersion": "1.4.0",
-<<<<<<< Upstream, based on 7fc0fe56b2a40181a9a4c132c7fdd68cd5fc3d4c
-      "dateTimeStamp": "Thu, 11 Jan 2018 13:03:55 GMT"
-=======
       "dateTimeStamp": "Thu, 11 Jan 2018 14:48:55 GMT"
->>>>>>> ecd0558 Difference.js for GR GI Delivery Items
     }
   ],
   "codeCheckingTriggers": {
