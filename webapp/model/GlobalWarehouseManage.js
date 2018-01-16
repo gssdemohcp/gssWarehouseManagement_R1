@@ -261,7 +261,7 @@ sap.ui.define(["sap/ui/base/Object",
 				bEntityName = oView.getViewProperties();
 
 			//Setup filter string
-			var aFilterValues = oView.gssFilterFunction().setLoadFilter(oView);
+			var aFilterValues = oView.gssFilterFunction().setFilter(oView);
 			//******
 			var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(bEntityName.entitySet, oView, aFilterValues);
 

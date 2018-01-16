@@ -83,6 +83,7 @@ sap.ui.define(["sap/ui/base/Object",
 			};
 			if (History.length !== 0) {
 				oView.getGlobalModel().setProperty("/MenuData",mData);
+				oView.getGlobalModel().setProperty("/currentScreen","LM999");
 				oView.getApplication().navBack(History,"");
 			} else {
 				oView._menuBinding(mData, createBC); //Call the filter method passing selected target and text data with create breadcrumb indicator

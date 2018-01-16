@@ -27,23 +27,6 @@ sap.ui.define(["sap/ui/base/Object",
 			var aFilter = new Filter(field, FilterOperator.EQ, value);
 			return aFilter;
 		},
-	/*	setFilter: function(oView, sInputValue) {
-
-			//Get Current View Name to get filter field name
-			var sCurrentScrnName = oView.getCurrentScrn(),
-				ScreenModel = oView.getScreenModel(sCurrentScrnName),
-				//Bind user entered input value
-				sInptValue = this.buildFilter(ScreenModel.field1, sInputValue),
-				//Bind Queue id
-				sQueue = this.buildFilter(ScreenModel.field2, oView.getGlobalModel().getProperty("/currentQueue")),
-				//Bind Lgnum id
-				sLgnum = this.buildFilter(ScreenModel.field3, oView.getGlobalModel().getProperty("/currentLgnum")),
-				//Build filter array
-				aFilterValues = [sInptValue, sQueue, sLgnum];
-
-			return aFilterValues;
-<<<<<<< Upstream, based on 64cb60c85070823ea18849c629905c32a1937847
-		},*/
 		
 		setLoadInqFilter: function(oView, sInputValue) {
 			//Get Current View Name to get filter field name
@@ -75,20 +58,28 @@ sap.ui.define(["sap/ui/base/Object",
 
 		},
 
-		setLoadFilter: function(oView) {
+		setFilter: function(oView) {
 			var ScreenModel = oView.getViewProperties();
 			var viewProperties = oView.getViewProperties(),
 				parameters = viewProperties.parameters,
 				index = 0,
+				property = "",
 				aFilterValues = [];
-			var inputValues = [];
+			var inputValues = [],
+				fieldValues = [];
 			if (ScreenModel.filters.length > 0 && ScreenModel.filters !== null) {
 				for (index in parameters) {
 					inputValues.push(parameters[index]);
 					index++;
 				}
-				for (var i = 0; i < ScreenModel.filters.length; i++) {
-					aFilterValues.push(this.buildFilter(ScreenModel.filters[i], inputValues[i]));
+				for (property in parameters) {
+					fieldValues.push(property);
+				}
+				// for (var i = 0; i < ScreenModel.filters.length; i++) {
+				// 	aFilterValues.push(this.buildFilter(ScreenModel.filters[i], inputValues[i]));
+				// }
+				for (var i = 0; i < fieldValues.length; i++) {
+					aFilterValues.push(this.buildFilter(fieldValues[i], inputValues[i]));
 				}
 			}
 			return aFilterValues;

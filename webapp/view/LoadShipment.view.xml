@@ -57,8 +57,8 @@
 								<VBox>
 									<Text id="loadedText" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/loadedHU}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/totalHU}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/LoadedHuWt} {itemList>/Wt_unit}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/TotHuWt} {itemList>/Wt_unit}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/LoadedHuWt} {itemList>/WtUnit}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/TotHuWt} {itemList>/WtUnit}"/>
 								</VBox>
 							</HBox>
 						</f:content>
