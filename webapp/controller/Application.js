@@ -169,6 +169,7 @@ sap.ui.define([
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		this._oMenuTransactionModelNew = new JSONModel({
 
+
                     LM02: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Lenum:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterSU", entitySet: "/WMProcessSet",modelName: "materialList"},
                     LM03: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Tanum:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet",modelName: "materialList"},
                     LM09: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Vbeln:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet",modelName: "materialList"},
@@ -199,6 +200,7 @@ sap.ui.define([
                 LM999:{view: "menuConfiguration",keyFields:{},filters:{},entitySet:"/configurationsSet",modelName:"mainJsonModel"},
                 LM111:{view: "newBin", keyFields: {}, filters: {Nlpla: "", Nltyp: "", Lgnum: ""}, entitySet: "/WMProcessSet",modelName:""}
             });
+
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
 
