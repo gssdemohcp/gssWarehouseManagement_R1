@@ -7,7 +7,7 @@ sap.ui.define([
 ], function(Controller, BaseController, formatter, ResourceModel) {
 	"use strict";
 
-	return Controller.extend("gss.newWarehouseManage_R1.controller.grStagingArea", {
+	return BaseController.extend("gss.newWarehouseManage_R1.controller.grStagingArea", {
 			formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
@@ -54,8 +54,14 @@ sap.ui.define([
 
 		getGrStageArea: function(sInputValue) {
 			//Read gi shipment material from backend
-			this.gssCallFunction().LoadMaterial(this, sInputValue);
+			this.gssCallFunction().populateModelBuild(this, sInputValue);
 			//code end -Gokul
+		},
+
+		setFragment: function() {
+			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
+			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 
 		grStageAreaConfirm: function() {

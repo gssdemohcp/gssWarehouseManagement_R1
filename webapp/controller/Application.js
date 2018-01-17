@@ -219,6 +219,12 @@ sap.ui.define([
 				LM73: {view:"grShipment", filters:["Tknum","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"],parameters:{Tknum:"",Lgnum:""}, entitySet: "/GRProcessSet"},
 				LM72: {view:"grStagingArea", filters:["Lgbzo","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"],parameters:{Lgbzo:"",Lgnum:""}, entitySet: "/GRProcessSet"},
 				
+				LM76:{view:"grHu", filters:["",""],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"],parameters:{}, entitySet: "/GRProcessSet"},
+				LM71:{view:"grdelivery", filters:["",""],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"],parameters:{}, entitySet: "/GRProcessSet"},
+				
+				LM66:{view:"giHu", filters:["",""],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"],parameters:{}, entitySet: "/GRProcessSet"},
+				LM61:{view:"gidelivery", filters:["",""],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"],parameters:{}, entitySet: "/GRProcessSet"},
+				
 				LM63: {view:"giShipment", filters:["Tknum","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"],parameters:{Tknum:"",Lgnum:""}, entitySet: "/GIProcessSet"},
 				LM62: {view:"giStagingArea", filters:["Lgbzo","Lgnum"],keyFields:["Exidv","ShipInd","Lgnum","Tknum","Lgbzo","Vbeln"],parameters:{Lgbzo:"",Lgnum:""}, entitySet: "/GIProcessSet" },
 				

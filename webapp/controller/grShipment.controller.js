@@ -46,6 +46,12 @@ sap.ui.define([
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 
+		setFragment: function() {
+			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
+			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
+		},
+
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
@@ -55,7 +61,7 @@ sap.ui.define([
 
 		getGrShipment: function(sInputValue) {
 			//Read gi shipment material from backend
-			this.gssCallFunction().LoadMaterial(this, sInputValue);
+			this.gssCallFunction().populateModelBuild(this, sInputValue);
 			//code end -Gokul
 		},
 
