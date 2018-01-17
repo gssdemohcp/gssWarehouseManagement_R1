@@ -31,15 +31,6 @@ sap.ui.define([
 			this.getGlobalModel().setProperty("/currentView", this);
 			this.setFragment();
 		},
-		setFragment: function() {
-			//Fragement Code for New Bin
-			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin");
-			this.fragmentNewBinLoaded = sap.ui.xmlfragment(loadFragment, this);
-			this.getView().addDependent(this.fragmentNewBinLoaded);
-			//	
-			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
-		},
 		seti18nModel: function() {
 			// set i18n model on view
 			var i18nModel = new ResourceModel({

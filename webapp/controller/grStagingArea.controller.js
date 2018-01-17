@@ -7,8 +7,8 @@ sap.ui.define([
 ], function(Controller, BaseController, formatter, ResourceModel) {
 	"use strict";
 
-	return BaseController.extend("gss.newWarehouseManage_R1.controller.grStagingArea", {
-		formatter: formatter,
+	return Controller.extend("gss.newWarehouseManage_R1.controller.grStagingArea", {
+			formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -29,15 +29,6 @@ sap.ui.define([
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
 			this.setFragment();
-		},
-		setFragment: function() {
-			//Fragement Code for New Bin
-			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin");
-			this.fragmentNewBinLoaded = sap.ui.xmlfragment(loadFragment, this);
-			this.getView().addDependent(this.fragmentNewBinLoaded);
-			//	
-			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
 		},
 		seti18nModel: function() {
 			// set i18n model on view

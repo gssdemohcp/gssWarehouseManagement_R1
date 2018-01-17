@@ -65,7 +65,7 @@ sap.ui.define([
 
 			var viewProperties = this.getViewProperties(),
 				parameters = viewProperties.parameters;
-			parameters = viewProperties.parameters;
+
 			var property = "";
 			for (property in parameters) {
 				console.log(property);
@@ -75,6 +75,8 @@ sap.ui.define([
 			for (var i = 0; i < Object.keys(parameters).length; i++) {
 				parameters[this.inpVal] = sInputValue;
 			}
+			//Read picking material from backend
+
 		
 				parameters.Queue = this.getGlobalModel().getProperty("/currentQueue"),
 				parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");

@@ -120,59 +120,35 @@
 					"viewName": "LoadInq_HU",
 					"viewLevel": 4
 				},
-				"loadInqShipment": {
+				"loadInqShipment":{
 					"transition": "slide",
 					"viewName": "LoadInq_Shipment",
 					"viewLevel": 4
 				},
-				"loadInqDelivery": {
+				"loadInqDelivery":{
 					"transition": "slide",
 					"viewName": "LoadInq_Delivery",
 					"viewLevel": 4
 				},
-				"loadShipment": {
+				"loadShipment":{
 					"transition": "slide",
 					"viewName": "LoadShipment",
 					"viewLevel": 5
 				},
-				"loadDelivery": {
+				"loadDelivery":{
 					"transition": "slide",
 					"viewName": "LoadDelivery",
 					"viewLevel": 6
 				},
-				"unloadShipment": {
+				"unloadShipment":{
 					"transition": "slide",
 					"viewName": "UnloadShipment",
 					"viewLevel": 7
 				},
-				"unloadDelivery": {
+				"unloadDelivery":{
 					"transition": "slide",
 					"viewName": "UnloadDelivery",
 					"viewLevel": 8
-				},
-				"grStagingArea": {
-					"viewType": "XML",
-					"transition": "slide",
-					"clearAggregation": true,
-					"viewName": "grStagingArea"
-				},
-				"grShipment": {
-					"viewType": "XML",
-					"transition": "slide",
-					"clearAggregation": true,
-					"viewName": "grShipment"
-				},
-				"giStagingArea": {
-					"viewType": "XML",
-					"transition": "slide",
-					"clearAggregation": true,
-					"viewName": "giStagingArea"
-				},
-				"giShipment": {
-					"viewType": "XML",
-					"transition": "slide",
-					"clearAggregation": true,
-					"viewName": "giShipment"
 				}
 			},
 			"routes": [{
@@ -191,55 +167,32 @@
 				"name": "loadInqHu",
 				"pattern": "loadInqHu",
 				"target": "loadInqHu"
-			}, {
+			},{
 				"name": "loadInqShipment",
 				"pattern": "loadInqShipment",
 				"target": "loadInqShipment"
-			}, {
+			},{
 				"name": "loadInqDelivery",
 				"pattern": "loadInqDelivery",
 				"target": "loadInqDelivery"
-			}, {
+			},{
 				"name": "loadShipment",
 				"pattern": "loadShipment",
 				"target": "loadShipment"
-			}, {
+			},{
 				"name": "loadDelivery",
 				"pattern": "loadDelivery",
 				"target": "loadDelivery"
-			}, {
+			},{
 				"name": "unloadShipment",
 				"pattern": "unloadShipment",
 				"target": "unloadShipment"
-			}, {
+			},{
 				"name": "unloadDelivery",
 				"pattern": "unloadDelivery",
 				"target": "unloadDelivery"
-			}, {
-				"name": "grStagingArea",
-				"pattern": "grStagingArea",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["grStagingArea"]
-			}, {
-				"name": "grShipment",
-				"pattern": "grShipment",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["grShipment"]
-			}, {
-				"name": "giStagingArea",
-				"pattern": "giStagingArea",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["giStagingArea"]
-			}, {
-				"name": "giShipment",
-				"pattern": "giShipment",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["giShipment"]
-			}]
+			}
+			]
 		}
 	}
 }
