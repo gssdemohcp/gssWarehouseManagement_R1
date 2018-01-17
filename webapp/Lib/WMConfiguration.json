@@ -1,0 +1,50 @@
+{
+	"LM02": {
+		"view": "putaway",
+		"filters": ["Lenum", "Queue", "Lgnum"],
+		"keyFields": ["Lenum", "Queue", "Vbeln", "Lgnum", "Tanum", "Tapos"],
+		"parameters": {
+			"Lenum": "",
+			"Queue": "",
+			"Lgnum": ""
+		},
+		"placeHolderLabel": "EnterSU",
+		"entitySet": "/WMProcessSet",
+		"modelName": "materialList"
+	},
+	"LM03": {
+		"view": "putaway",
+		"filters": ["Tanum", "Queue", "Lgnum"],
+		"keyFields": ["Lenum", "Queue", "Vbeln", "Lgnum", "Tanum", "Tapos"],
+		"parameters": {
+			"Tanum": "",
+			"Queue": "",
+			"Lgnum": ""
+		},
+		"placeHolderLabel": "EnterTO",
+		"entitySet": "/WMProcessSet",
+		"modelName": "materialList"
+	},
+	"LM09": {
+		"view": "putaway",
+		"filters": ["Vbeln", "Queue", "Lgnum"],
+		"keyFields": ["Lenum", "Queue", "Vbeln", "Lgnum", "Tanum", "Tapos"],
+		"parameters": {
+			"Vbeln": "",
+			"Queue": "",
+			"Lgnum": ""
+		},
+		"placeHolderLabel": "EnterDel",
+		"entitySet": "/WMProcessSet",
+		"modelName": "materialList"
+	},
+
+	"LM999": {
+		"view": "menuConfiguration",
+		"filters": [],
+		"keyFields": [],
+		"parameters": {},
+		"entitySet": "/configurationsSet",
+		"modelName": "mainJsonModel"
+	}
+}
