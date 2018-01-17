@@ -60,24 +60,20 @@ sap.ui.define(["sap/ui/base/Object",
 
 		setFilter: function(oView) {
 			var ScreenModel = oView.getViewProperties();
-			var viewProperties = oView.getViewProperties(),
-				parameters = viewProperties.parameters,
+			var filterFields = oView.getFilterFields(),
 				index = 0,
 				property = "",
 				aFilterValues = [];
 			var inputValues = [],
 				fieldValues = [];
-			if (ScreenModel.filters.length > 0 && ScreenModel.filters !== null) {
-				for (index in parameters) {
-					inputValues.push(parameters[index]);
+			if (ScreenModel.filters !== null) {
+				for (index in filterFields) {
+					inputValues.push(filterFields[index]);
 					index++;
 				}
-				for (property in parameters) {
+				for (property in filterFields) {
 					fieldValues.push(property);
 				}
-				// for (var i = 0; i < ScreenModel.filters.length; i++) {
-				// 	aFilterValues.push(this.buildFilter(ScreenModel.filters[i], inputValues[i]));
-				// }
 				for (var i = 0; i < fieldValues.length; i++) {
 					aFilterValues.push(this.buildFilter(fieldValues[i], inputValues[i]));
 				}

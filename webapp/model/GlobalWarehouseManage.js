@@ -269,17 +269,11 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		// ************ Srini code to get data for Load ends ***********
 
-		populateModelBuild: function(oView, sInputValue) {
-			var oRfModel = new JSONModel(),
-				promise = jQuery.Deferred(),
+		populateModelBuild: function(oView) {
+			var promise = jQuery.Deferred(),
 				oOdataService = oView.gssOdataService(),
 				// bEntityName = this.entityName(oView, "/LoadProcess"),
-				bEntityName = oView.getViewProperties(),
-
-				inputArray = [];
-			inputArray.push(sInputValue);
-			inputArray.push(oView.getGlobalModel().getProperty("/currentQueue"));
-			inputArray.push(oView.getGlobalModel().getProperty("/currentLgnum"));
+				bEntityName = oView.getViewProperties();
 
 			//Setup filter string
 			var aFilterValues = oView.gssFilterFunction().setFilter(oView);

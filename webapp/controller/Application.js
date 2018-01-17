@@ -210,8 +210,8 @@ sap.ui.define([
 				LM34: {view:"unloadDelivery", filters:["Vbeln", "Exidv","Lgnum","ProcInd","LoadInd"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum","ProcInd"],parameters: {Vbeln: "", Exidv: "", Lgnum: "",ProcInd:"",LoadInd:""}, placeHolderLabel: "EnterDel", entitySet: "/LoadProcessSet"},
 
 				
-				LM30: {view:"loadShipment", filters:["Tknum","Exidv","ProcInd","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum","ProcInd"],parameters: {Tknum: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet"},
-				LM31: {view:"loadDelivery", filters:["Vbeln","Exidv","ProcInd","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum","ProcInd"],parameters: {Vbeln: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet"},
+				LM30: {view:"loadShipment", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Tknum: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet"},
+				LM31: {view:"loadDelivery", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Vbeln: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet"},
 				LM37: {view:"loadInqShipment", filters:["Tknum","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum","ProcInd"],parameters:{Tknum:"",Lgnum:""},placeHolderLabel:"EnterShip", entitySet: "/LoadProcessSet"},
 				LM36: {view:"loadInqDelivery", filters:["Vbeln","Lgnum"],keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum","ProcInd"],parameters:{Vbeln:"",Lgnum:""},placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet"},
 				LM35: {view:"loadInqHu", filters:["Exidv","Lgnum"],parameters:{Exidv:"",Lgnum:""},keyFields:["Vbeln","Exidv","Exida","Tknum","LoadInd","HuStatus","Lgnum","ProcInd"],placeHolderLabel:"EnterHU", entitySet: "/LoadProcessSet"},

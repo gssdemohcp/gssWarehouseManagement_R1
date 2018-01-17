@@ -24,34 +24,40 @@ sap.ui.define(["sap/ui/base/Object",
 			this._bOneWaitingSuccess = false;
 		},
 
-
-		buildKeyFields: function(oView, inputval, modelData, LoadInd, HuStatus) {
+		buildKeyFields: function(oView) {
 			var oOdataService = oView.gssOdataService(),
 				ScreenModel = oView.getViewProperties(),
-				bEntityName = ScreenModel.entitySet;                         
-			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			var modelArray = [];
-			modelArray.push(modelData.Vbeln);
-			modelArray.push(modelData.Exidv);
-			modelArray.push(modelData.Exida);
-			modelArray.push(modelData.Tknum);
-			modelArray.push(LoadInd);
-			modelArray.push(HuStatus);
-			modelArray.push(lgnum);
-			var path = "";
-			var commaVar = ",";
-			var ScreenModel = oView.getViewProperties();
-			for(var i = 0; i < ScreenModel.keyFields.length; i++) {
-				if (i === ScreenModel.keyFields.length - 1) {
-					commaVar = "";
+				keyFields = oView.getKeyFields(),
+				index = 0,
+				bEntityName = ScreenModel.entitySet;
+			var modelArray = [],
+				fieldArray = [];
+			var path = "",
+				property = "",
+				commaVar = ",";
+
+			if (ScreenModel.keyFields !== null) {
+				for (index in keyFields) {
+					modelArray.push(keyFields[index]);
+					index++;
 				}
-				path = path + ScreenModel.keyFields[i] +  "='" + modelArray[i] + "'" + commaVar ;
-				// sPath[i] = this.buildFilter(ScreenModel.fields[i], modelData[i]);
+				
+				for (property in keyFields) {
+					fieldArray.push(property);
+				}
+
+				for (var i = 0; i < fieldArray.length; i++) {
+					if (i === fieldArray.length - 1) {
+						commaVar = "";
+					}
+					path = path + fieldArray[i] + "='" + modelArray[i] + "'" + commaVar;
+					// sPath[i] = this.buildFilter(ScreenModel.fields[i], modelData[i]);
+				}
 			}
 			var sPath = bEntityName + "(" + path + ")";
 			this.loadModel(oView, sPath, oOdataService);
 		},
-		
+
 		loadModel: function(oView, sPath, oOdataService) {
 			var oWhenCallReadIsDone = oOdataService.oCallReadDeferred(sPath, oView, ""); // To pass the built URL to get entityset data
 			var oGlobalModel = oView.getModel("globalProperties");

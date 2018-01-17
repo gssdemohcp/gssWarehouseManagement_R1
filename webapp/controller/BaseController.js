@@ -141,6 +141,16 @@ sap.ui.define([
 		getViewProperties: function() {
 			var sCurrentScrnName = this.getCurrentScrn();
 			return this.getScreenModel(sCurrentScrnName);
+		},
+		
+		getFilterFields: function() {
+			var viewProperties = this.getViewProperties();
+			return viewProperties.filters;
+		},
+		
+		getKeyFields: function() {
+			var properties = this.getViewProperties();
+			return properties.keyFields;                         
 		}
 
 	});

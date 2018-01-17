@@ -55,26 +55,23 @@ sap.ui.define([
 			var shipNo = sInputValue; // To get input field value
 			var huNo = this.getView().byId("scanHUDel").getValue(); // To get input field value
 			var procInd = "X"; // Indicator for Load process
+			var filterFields = this.getFilterFields(); 
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				// ******************************* To get parameters from model ***********************************
-				var viewProperties = this.getViewProperties(),               
-					parameters = viewProperties.parameters;
-					parameters.Tknum = sInputValue,
-					parameters.Exidv = huNo,
-					parameters.ProcInd = "",
-					parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
-				// ******************************* To get parameters from model ***********************************
+				// ******************************* To get filters from model ***********************************
+				filterFields.Tknum = sInputValue,
+				filterFields.Exidv = huNo,
+				filterFields.ProcInd = "",
+				filterFields.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+				// ******************************* To get filters from model ***********************************
 				this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-			// ******************************* To get parameters from model ***********************************
-				var viewProperties = this.getViewProperties(),               
-					parameters = viewProperties.parameters;
-					parameters.Tknum = sInputValue,
-					parameters.Exidv = huNo,
-					parameters.ProcInd = procInd,
-					parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
-				// ******************************* To get parameters from model ***********************************
+			// ******************************* To get filters from model ***********************************
+				filterFields.Tknum = sInputValue,
+				filterFields.Exidv = huNo,
+				filterFields.ProcInd = procInd,
+				filterFields.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+				// ******************************* To get filters from model ***********************************
 				this.gssCallFunction().populateModelBuild(this); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				this.getView().byId("inputValue").setPlaceholder("Enter Shipment *"); // To set placeholder for input field
@@ -90,9 +87,16 @@ sap.ui.define([
 		load: function() {
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList"),
-				LoadInd = "",
-				HuStatus = "HU03";
-			this.gssKeyFieldsFunction().buildKeyFields(this, inputVal, modelData.aItems[0], LoadInd, HuStatus);
+				keyFieldProperties = this.getKeyFields();
+				keyFieldProperties.Vbeln = modelData.aItems[0].Vbeln;
+				keyFieldProperties.Exidv = modelData.aItems[0].Exidv;
+				keyFieldProperties.Exida = modelData.aItems[0].Exida;
+				keyFieldProperties.Tknum = modelData.aItems[0].Tknum;
+				keyFieldProperties.LoadInd = "";
+				keyFieldProperties.HuStatus = "HU03";
+				keyFieldProperties.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+				keyFieldProperties.ProcInd = "";
+			this.gssKeyFieldsFunction().buildKeyFields(this);
 		},
 
 		loadRevert: function() {
@@ -104,9 +108,16 @@ sap.ui.define([
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList"),
-				LoadInd = "",
-				HuStatus = "HU04";
-			this.gssKeyFieldsFunction().buildKeyFields(this, inputVal, modelData.aItems[0], LoadInd, HuStatus);
+				keyFieldProperties = this.getKeyFields();
+				keyFieldProperties.Vbeln = modelData.aItems[0].Vbeln;
+				keyFieldProperties.Exidv = modelData.aItems[0].Exidv;
+				keyFieldProperties.Exida = modelData.aItems[0].Exida;
+				keyFieldProperties.Tknum = modelData.aItems[0].Tknum;
+				keyFieldProperties.LoadInd = "";
+				keyFieldProperties.HuStatus = "HU04";
+				keyFieldProperties.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+				keyFieldProperties.ProcInd = "";
+			this.gssKeyFieldsFunction().buildKeyFields(this);
 		},
 
 		onCancel: function() {
