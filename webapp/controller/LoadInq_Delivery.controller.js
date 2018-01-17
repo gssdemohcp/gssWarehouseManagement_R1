@@ -52,7 +52,12 @@ sap.ui.define([
 		},
 
 		getInqDelivery: function(sInputValue) {
-			this.gssCallFunction().LoadInqData(this, sInputValue);
+			// this.gssCallFunction().LoadInqData(this, sInputValue);
+			var viewProperties = this.getViewProperties(),
+				parameters = viewProperties.parameters;
+			parameters.Vbeln = sInputValue,
+				parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+			this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
 		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

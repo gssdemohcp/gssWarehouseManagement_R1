@@ -52,7 +52,12 @@ sap.ui.define([
 		},
 
 		getInqHU: function(sInputValue) {
-			this.gssCallFunction().LoadInqData(this, sInputValue);
+			// this.gssCallFunction().LoadInqData(this, sInputValue);
+			var viewProperties = this.getViewProperties(),
+				parameters = viewProperties.parameters;
+			parameters.Exidv = sInputValue,
+				parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
+			this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
 		},
 
 		/**

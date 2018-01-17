@@ -23,6 +23,7 @@ sap.ui.define([
 			this.afilters = [];
 			// this._oApplication = this.getApplication();
 			// var oWhenCallReadIsDone = this._oApplication._oGlobalWarehouseManage.menuConfigurationLoad(this, this.afilters);
+			// this.getGlobalModel().setProperty("/currentScreen", "LM999");
 			var oWhenCallReadIsDone = this.gssCallFunction().populateModelBuild(this);
 			//Load Menu Fragment in view
 			oWhenCallReadIsDone.done(function() {
