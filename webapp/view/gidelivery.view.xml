@@ -48,6 +48,28 @@
 	</f:SimpleForm>
 					
 				</content>
+					<footer id="footer"
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
+					<Bar id="footerbar" visible="false">
+						<!--<contentMiddle>-->
+						<contentLeft>
+							<!--<Toolbar id="footerbar" visible="false">-->
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
+								visible="false"/>
+						</contentLeft>
+						<contentRight>
+							<Button id="Lload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="load" enabled="false" text="load"/>
+							<Button id="more" icon="sap-icon://detail-view" press="handleMore"  enabled="false" text="More"/>
+							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems"  enabled="false" text="Items"/>
+							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO"  enabled="false" text="Generate TO"/>
+							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" enabled="false" text="TO Execution"/>
+							<Button id="post" icon="sap-icon://paper-plane" press="onPostGI" visible="false" enabled="false" text="Post"/>
+						</contentRight>
+						<!--</contentMiddle>-->
+						<!--</Toolbar>-->
+					</Bar>
+				</footer>
 			</Page>
 		</pages>
 	</App>
