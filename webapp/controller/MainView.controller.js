@@ -24,7 +24,10 @@ sap.ui.define([
 			// this._oApplication = this.getApplication();
 			// var oWhenCallReadIsDone = this._oApplication._oGlobalWarehouseManage.menuConfigurationLoad(this, this.afilters);
 			// this.getGlobalModel().setProperty("/currentScreen", "LM999");
-			var oWhenCallReadIsDone = this.gssCallFunction().populateModelBuild(this);
+			//OLD ODATA CALL COMMENTED BY SELVAN NEXT IS REPLACEMENT FOR THIS 
+			//var oWhenCallReadIsDone = this.gssCallFunction().populateModelBuild(this);
+			
+			var oWhenCallReadIsDone = this.callOdataService().loadMenuConfiguration(this);                          
 			//Load Menu Fragment in view
 			oWhenCallReadIsDone.done(function() {
 				this._menuBinding(this.getGlobalModel().getProperty("/MenuData"), "");
@@ -38,7 +41,7 @@ sap.ui.define([
 				var Menu = MenuModel.getProperty("/mainMenu");
 				this._oDialog = sap.ui.xmlfragment(Menu, this);
 			}
-			var oSubMenu = sap.ui.getCore().getModel("mainJsonModel").getData().aItems;
+			var oSubMenu = this.getModel("mainJsonModel").getData().aItems;
 			//To Get the menuBindings
 			// this._rfMenu = this._oApplication._omenuBinding.oMenu(this, oSubMenu, oSelectedItem, createBC, this._oApplication);
 			this._rfMenu = this.gssCallMenu().oMenu(this, oSubMenu, oSelectedItem, createBC);

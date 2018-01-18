@@ -5,7 +5,7 @@ sap.ui.define(["sap/ui/base/Object",
 ], function(Object, Device, JSONModel) {
 	"use strict";
 
-	return Object.extend("gss.newWarehouseManage_R1.model.GlobalWarehouseManage", {
+	return Object.extend("gss.newWarehouseManage_R1.lib.GlobalWarehouseManage", {
 		// This class provides the service of sending approve/reject requests to the backend. Moreover, it deals with concurrency handling and success dialogs.
 		// For this purpose, a singleton instance is created and attached to the application controller as public property oApprover.
 		// This is used by the instances of SubControllerForApproval and by the S2-controller (for swipe approve).
@@ -76,65 +76,22 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 		},
 		
-		// oCallReadDeferredKeyFields: function(sEntityName, oComponent, sPath) {
-		// 	var promise = jQuery.Deferred(),
-		// 		oDataModel = oComponent.getModel();
 
-		// 	oDataModel.read(sEntityName(sPath), {
-		// 		success: function(oData) {
-		// 			promise.resolve(oData);
-		// 		}.bind(this),
-		// 		error: function(oData) {
-		// 			promise.reject(oData);
-		// 		}.bind(this)
-		// 	});
-		// 	return promise;
-		// },
+		oCallUpdateDeferred: function(sEntityset, oItems, oView) {
+			var promise = jQuery.Deferred(),
+				oDataModel = oView.getModel();
 
-		// *************** Srini method for odata update begins *****************
-		oCallUpdateDeferred: function(sEntityset, oItems, mItem, oView) {
-			var oDataModel = oView.getModel();
-			var oNewModel = oView.byId("toTable").getModel("itemList").getData().aItems;
-			var oStatText = {
-				stat: "",
-				text: "",
-				mItems: ""
-			};
-			this.aTotStat = [];
-			this.errorOccured = "";
-			// this.aFilter = [];
-			this.finalItem = oItems.Tanum;
-			this.finalPos = oItems.Tapos;
 			oDataModel.update(sEntityset, oItems, {
 				success: function(oData) {
-					// MessageToast.show("Transfer Order confirmed successfully");
-					oStatText.stat = "S";
-					oStatText.mItems = oItems;
-					this.aTotStat.push(oStatText);
-					//Check the filter message
-					this.currentItem = oItems.Tanum;
-					this.currentPos = oItems.Tapos;
-					if (this.finalPos === this.currentPos) {
-						// this.bindMessagePop();
-					}
-					var index;
-					for (var i = 0; i < oNewModel.length; i++) {
-						if (oNewModel[i].Tanum === this.currentItem && oNewModel[i].Tapos === this.currentPos) {
-							index = i;
-							break;
-						}
-					}
-					oNewModel.splice(index, 1);
-					var oJSONModel = new JSONModel();
-					oJSONModel.setData({
-						aItems: oNewModel
-					});
-					oView.setModel(oJSONModel, "itemList");
+					promise.resolve(oData);
 				}.bind(this),
-				error: function(oData) {}.bind(this)
+				error: function(oData) {
+					promise.reject(oData);
+				}.bind(this)
 			});
+				return promise;
 		},
-		// *************** Srini method for odata update ends *****************
+
 
 		//This odata read function write return value into global variable to handle later in UI
 		oCallRead: function(sFunction, oOwnerComponent, oGlobalModel) {

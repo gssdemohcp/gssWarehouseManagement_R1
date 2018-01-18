@@ -137,10 +137,26 @@ sap.ui.define([
 				oViewModel.getProperty("/shareSendEmailMessage")
 			);
 		},
-
+		
+		//**********************************************************************************************
+		//THESE METHODS ARE USED IN ODATASERVICE LIBRARY
+		//**********************************************************************************************
+		callOdataService: function() {
+			return this.getGlobalModel().getProperty("/gsswm");
+		},
 		getViewProperties: function() {
 			var sCurrentScrnName = this.getCurrentScrn();
 			return this.getScreenModel(sCurrentScrnName);
+		},
+		
+		getEntitySet: function() {
+			var viewProperties = this.getViewProperties();
+			return viewProperties.entitySet;
+		},
+		
+		getModelName: function() {
+			var viewProperties = this.getViewProperties();
+			return viewProperties.modelName;
 		},
 		
 		getFilterFields: function() {
@@ -152,7 +168,9 @@ sap.ui.define([
 			var properties = this.getViewProperties();
 			return properties.keyFields;                         
 		}
-
+		//*************************************************************************************************
+		//END
+		//***************************************************************************************************
 	});
 
 });

@@ -41,12 +41,14 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getPickingMaterial(_inputValue);
+				this.callOdataService().getMaterial(this,_inputValue);
+				//this.getPickingMaterial(_inputValue);
 			}
 		},
 
 		getPickingMaterial: function(sInputValue) {
 			//Read picking material from backend
+			
 			var oWhenCallReadIsDone = this.gssCallFunction().LoadMaterial(this, sInputValue);
 
 			//code end -selvan

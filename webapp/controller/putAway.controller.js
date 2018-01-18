@@ -57,42 +57,23 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getPutawayMaterial(_inputValue);
+				//OLD CODE COMMENTED BY SELVAN this.getPutawayMaterial(_inputValue);
+				this.callOdataService().getMaterial(this, _inputValue);
 			}
 		},
 
-		getPutawayMaterial: function(sInputValue) {
-
-			var viewProperties = this.getViewProperties(),
-				parameters = viewProperties.parameters;
-
-			var property = "";
-			for (property in parameters) {
-				console.log(property);
-				this.inpVal = property;
-				break;
-			}
-			for (var i = 0; i < Object.keys(parameters).length; i++) {
-				parameters[this.inpVal] = sInputValue;
-			}
-			//Read picking material from backend
-
-		
-				parameters.Queue = this.getGlobalModel().getProperty("/currentQueue"),
-				parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
-			// ******************************* To get parameters from model ***********************************
-			this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
-
-			//code end -selvan
-		},
 
 		putAwayConfirm: function() {
-			var selectedItems = this.gssCallFunction().confirmItems(this);
+			var tableRowSelectedItems = this.callOdataService().selectedItems(this, "toTable");
+			this.callOdataService().confirmItems(this,tableRowSelectedItems);
+
 		},
 
 		onHandleDifference: function() {
 			// for the putaway diff process
-			var items = this.gssCallFunction().selectedItems(this, "toTable");
+			//OLD CODE var items = this.gssCallFunction().selectedItems(this, "toTable");
+			var items = this.callOdataService().selectedItems(this, "toTable");
+
 			if (items.length === 1) {
 				//fragment code is Moved to OnInit 
 				var objects = utilities.getObjects(this),
@@ -194,15 +175,12 @@ sap.ui.define([
 				oGlobalModel = this.getModel("globalProperties");
 			oGlobalModel.setProperty("/currentNltyp", this.Nltyp);
 			var oWhenCallReadIsDone;
+			var sParentTcode = this.getGlobalModel().getProperty("/currentScreen");
 			if (binValue) {
-				if (window.Promise) {
-					// Promises are supported by browser
-					oWhenCallReadIsDone = this.gssCallFunction().newBinCheckPromise(this.getGlobalModel().getProperty(
-						"/currentView"), binValue);
-				} else {
-					oWhenCallReadIsDone = this.gssCallFunction().newBinCheck(this.getGlobalModel().getProperty("/currentView"),
-						binValue);
-				}
+				this.getGlobalModel().setProperty("/currentScreen", "LM111");
+				//OLD CODE oWhenCallReadIsDone = this.gssCallFunction().newBinCheckPromise(this.getGlobalModel().getProperty("/currentView"), binValue);
+				//NEW ODATA CALL CODE
+				oWhenCallReadIsDone = this.callOdataService().checkNewBin(this, binValue);
 
 				oWhenCallReadIsDone.done(function() {
 					if (oGlobalModel.getProperty("/messageType") === "S") {
@@ -211,6 +189,9 @@ sap.ui.define([
 						MessageBox.success( //MessageBox// 
 							errorMessage + ".");
 					}
+
+					this.getGlobalModel().setProperty("/currentScreen", sParentTcode);
+
 				}.bind(this));
 			} else {
 				MessageBox.information("Bin value can not be blank!");
@@ -233,6 +214,10 @@ sap.ui.define([
 				destTarget = "";
 			this._updateTable(destActa, destDifa, destTarget, sValInd, newDbin);
 			this.gssFragmentsFunction().closeFragment(this.fragmentNewBinLoaded);
+		},
+		onHandleSelection: function() {
+			this.getModel("globalProperties").setProperty("/controlId", "toTable");
+			var objects = utilities.getObjects(this);
 		},
 
 		onNewBinCancel: function() {
