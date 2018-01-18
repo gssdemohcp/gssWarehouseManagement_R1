@@ -169,10 +169,13 @@ sap.ui.define([
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
+
 			this._oMenuTransactionModelNew = new JSONModel({
 
 
-			  LM02: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Lenum:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterSU", entitySet: "/WMProcessSet",modelName: "materialList"},
+
+                    LM02: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Lenum:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterSU", entitySet: "/WMProcessSet",modelName: "materialList"},
+
                     LM03: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Tanum:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet",modelName: "materialList"},
                     LM09: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Vbeln:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet",modelName: "materialList"},
        

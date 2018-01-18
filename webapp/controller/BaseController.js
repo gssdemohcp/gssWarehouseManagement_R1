@@ -1,6 +1,7 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/resource/ResourceModel"
+	
 ], function(Controller, ResourceModel) {
 	"use strict";
 
@@ -99,6 +100,7 @@ sap.ui.define([
 		getComponent: function() {
 			return this.getOwnerComponent();
 		},
+		
 		
 		seti18nModel: function(oView) {
 			// set i18n model on view
