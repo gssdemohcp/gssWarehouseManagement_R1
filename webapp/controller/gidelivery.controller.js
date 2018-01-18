@@ -28,7 +28,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
-			this.setFragment();
+		/*	this.setFragment();*/
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -40,7 +40,7 @@ sap.ui.define([
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.field4);
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},

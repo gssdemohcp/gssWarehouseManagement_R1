@@ -27,7 +27,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
-			this.setFragment();
+		/*	this.setFragment();*/
 		},
 
 		seti18nModel: function() {
