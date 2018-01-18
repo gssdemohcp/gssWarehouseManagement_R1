@@ -58,21 +58,9 @@ sap.ui.define([
 			var procInd = "X"; // Indicator for Load process
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUinDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				var viewProperties = this.getViewProperties(),               
-					parameters = viewProperties.parameters;
-					parameters.Tknum = sInputValue,
-					parameters.Exidv = huNo,
-					parameters.ProcInd = "",
-					parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
-				this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
+				this.callOdataService().LoadDetails(this, shipNo, huNo, ""); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				var viewProperties = this.getViewProperties(),               
-					parameters = viewProperties.parameters;
-					parameters.Tknum = sInputValue,
-					parameters.Exidv = huNo,
-					parameters.ProcInd = procInd,
-					parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
-				this.gssCallFunction().populateModelBuild(this); // To pass input values with indicator when a field is empty
+				this.callOdataService().LoadDetails(this, shipNo, huNo, procInd);// To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				var hdr = this.getView().getModel("i18n").getResourceBundle().getText("EnterDel");
 				this.getView().byId("inputValue").setPlaceholder(hdr); // To set placeholder for input field
@@ -92,7 +80,7 @@ sap.ui.define([
 			var modelData = this.getModelData("itemList"),
 				LoadInd = "",
 				HuStatus = "HU03";
-			this.gssKeyFieldsFunction().buildKeyFields(this, inputVal, modelData.aItems[0], LoadInd, HuStatus);
+			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
 		},
 
 		loadRevert: function() {
@@ -106,7 +94,7 @@ sap.ui.define([
 			var modelData = this.getModelData("itemList"),
 				LoadInd = "",
 				HuStatus = "HU04";
-			this.gssKeyFieldsFunction().buildKeyFields(this, inputVal, modelData.aItems[0], LoadInd, HuStatus);
+			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
 		},
 
 		onCancel: function() {

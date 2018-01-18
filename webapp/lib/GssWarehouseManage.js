@@ -118,22 +118,52 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		LoadDetails: function(oView, sInputValue, huVal, procInd) {
 			//SET INPUT VALUE
 			var oFilterFields = oView.getFilterFields();
-			oFilterFields.Tknum = sInputValue;
-			oFilterFields.HuStatus = huVal;
+			var property = "";
+			var _inpVal = 0;
+			for (property in oFilterFields) {
+				_inpVal = property;
+				break;
+			}
+			for (var i = 0; i < Object.keys(oFilterFields).length; i++) {
+				oFilterFields[_inpVal] = sInputValue;
+			}
+			oFilterFields.Exidv = huVal;
 			oFilterFields.ProcInd = procInd;
 			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-
+			this._ODataModelInterface.filterModelPopulate(oView);
+		},
+		
+		LoadUnloadKeyFields: function(oView, modelData, HuStatus, loadInd) {
+			var oKeyFields = oView.getKeyFields();
+				oKeyFields.Vbeln = modelData.aItems[0].Vbeln;
+				oKeyFields.Exidv = modelData.aItems[0].Exidv;
+				oKeyFields.Exida = modelData.aItems[0].Exida;
+				oKeyFields.Tknum = modelData.aItems[0].Tknum;
+				oKeyFields.LoadInd = loadInd;
+				oKeyFields.HuStatus = HuStatus;
+				oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+				oKeyFields.ProcInd = "";
 			this._ODataModelInterface.keyFieldModelPopulate(oView);
 		},
+		
 		UnloadDetails: function(oView, sInputValue, huVal, procInd, loadInd) {
 			//SET INPUT VALUE
 			var oFilterFields = oView.getFilterFields();
-			oFilterFields.Tknum = sInputValue;
-			oFilterFields.HuStatus = huVal;
+			var property = "";
+			var _inpVal = 0;
+			for (property in oFilterFields) {
+				_inpVal = property;
+				break;
+			}
+			for (var i = 0; i < Object.keys(oFilterFields).length; i++) {
+				oFilterFields[_inpVal] = sInputValue;
+			}
+			oFilterFields.Exidv = huVal;
+			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			oFilterFields.ProcInd = procInd;
-			oFilterFields.loadInd = loadInd;
+			oFilterFields.LoadInd = loadInd;
 
-			this._ODataModelInterface.keyFieldModelPopulate(oView);
+			this._ODataModelInterface.filterModelPopulate(oView);
 		},
 
 		confirmItems: function(oView, oSelectItems) {

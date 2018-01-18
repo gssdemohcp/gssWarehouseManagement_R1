@@ -31,9 +31,9 @@
 									<Label class="sapUiTinyMarginTop" text="{i18n>doorTitle}"/>
 								</VBox>
 								<VBox>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/vbeln}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/Lgbzo}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/Lgtor}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Vbeln}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Lgbzo}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Lgtor}"/>
 								</VBox>
 							</HBox>
 						</f:content>
@@ -55,10 +55,10 @@
 									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>totalWTTitle}"/>
 								</VBox>
 								<VBox>
-									<Text id="loadedText" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/loadedHU}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/totalHU}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/LoadedHuWt} {itemList>/WtUnit}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/TotHuWt} {itemList>/WtUnit}"/>
+									<Text id="loadedText" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/LoadedHu}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/TotalHu}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/LoadedHuWt} {itemList>/aItems/0/WtUnit}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/TotHuWt} {itemList>/aItems/0/WtUnit}"/>
 								</VBox>
 							</HBox>
 						</f:content>

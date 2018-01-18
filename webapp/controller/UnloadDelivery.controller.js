@@ -41,7 +41,7 @@ sap.ui.define([
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.field4);
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
@@ -67,9 +67,9 @@ sap.ui.define([
 			var LoadInd = "X"; // Indicator for Unload process
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUinDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				this.gssCallFunction().UnloadDetails(this, shipNo, huNo, procInd, LoadInd); // To pass the input values to the function&nbsp;
+				this.callOdataService().UnloadDetails(this, shipNo, huNo, "", LoadInd); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				this.gssCallFunction().UnloadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
+				this.callOdataService().UnloadDetails(this, shipNo, huNo, procInd, ""); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				var hdr = this.getView().getModel("i18n").getResourceBundle().getText("EnterDel");
 				this.getView().byId("inputValue").setPlaceholder(hdr); // To set placeholder for input field
@@ -86,8 +86,10 @@ sap.ui.define([
 
 		unload: function() {
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
-			var modelData = this.getModelData("itemList");
-			this.gssKeyFieldsFunction().unloadDelivery(this, inputVal, modelData);
+			var modelData = this.getModelData("itemList"),
+				LoadInd = "X",
+				HuStatus = "HU04";
+			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd);
 		},
 
 		unloadRevert: function() {
@@ -101,7 +103,7 @@ sap.ui.define([
 			var modelData = this.getModelData("itemList"),
 				LoadInd = "X",
 				HuStatus = "HU03";
-			this.gssKeyFieldsFunction().buildKeyFields(this, inputVal, modelData.aItems[0], LoadInd, HuStatus);
+			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd);
 		},
 
 		onCancel: function() {
