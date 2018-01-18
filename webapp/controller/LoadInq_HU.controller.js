@@ -39,7 +39,7 @@ sap.ui.define([
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.field4);
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
@@ -47,19 +47,9 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getInqHU(_inputValue);
+				this.callOdataService().getLoadInq(this, _inputValue);
 			}
-		},
-
-		getInqHU: function(sInputValue) {
-			// this.gssCallFunction().LoadInqData(this, sInputValue);
-			var viewProperties = this.getViewProperties(),
-				parameters = viewProperties.parameters;
-			parameters.Exidv = sInputValue,
-				parameters.Lgnum = this.getGlobalModel().getProperty("/currentLgnum");
-			this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
-		},
-
+		}
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 		 * (NOT before the first rendering! onInit() is used for that one!).

@@ -32,7 +32,7 @@ sap.ui.define([
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.field4);
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 			// this.getView().byId("inputValue").setValueState(sap.ui.core.ValueState.Error);
