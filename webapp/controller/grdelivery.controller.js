@@ -59,8 +59,24 @@ sap.ui.define([
 
 		getGrDelivery: function(sInputValue) {
 			//Read gi shipment material from backend
-			this.gssCallFunction().populateModelBuild(this, sInputValue);
-			//code end -Gokul
+			var viewProperties = this.getViewProperties(),
+				keyFields = viewProperties.keyFields;
+                var property = "";
+			for (var i=0;;i++) {
+			
+				this.inpVal=[];
+                this.inpVal[i] = property;
+              
+			
+			}
+			for (var i = 0; i < Object.keys(keyFields).length; i++) {
+				
+				keyFields[this.inpVal[5]] = sInputValue;
+			}
+			//Read picking material from backend
+			
+			this.gssCallFunction().populateModelBuild(this);
+
 		},
 
 		grDeliveryConfirm: function() {

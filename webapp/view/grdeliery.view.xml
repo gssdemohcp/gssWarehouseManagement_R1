@@ -5,10 +5,10 @@
 			<Page title="GR by Delivery">
 				<content>
 					<Toolbar>
-						<Breadcrumbs class="sapUiTinyMarginBegin" id="Breadcrumbs"/>
+						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
 					</Toolbar>
 					<Toolbar id="toolbarheader">
-						<Input class="sapUiTinyMarginBegin" id="inputvalue" value="{matList>TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
 						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>

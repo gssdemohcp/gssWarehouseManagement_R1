@@ -171,38 +171,40 @@ sap.ui.define([
 
 			this._oMenuTransactionModelNew = new JSONModel({
 
-		
-                    LM02: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Lenum:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterSU", entitySet: "/WMProcessSet",modelName: "materialList"},
-                    LM03: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Tanum:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet",modelName: "materialList"},
-                    LM09: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Vbeln:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet",modelName: "materialList"},
-       
-                    LM05: {view: "picking",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Tanum: "", Queue: "", Lgnum: ""},placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet",modelName: "materialList"},
-                    LM06: {view: "picking",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Vbeln: "", Queue: "", Lgnum: ""},placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet",modelName: "materialList"},
-       
-                    LM33: {view:"unloadShipment", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Tknum: "", Exidv: "", Lgnum: "",ProcInd:"",LoadInd:""}, placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet",modelName: "itemList"},
-                    LM34: {view:"unloadDelivery", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Vbeln: "", Exidv: "", Lgnum: "",ProcInd:"",LoadInd:""}, placeHolderLabel: "EnterDel", entitySet: "/LoadProcessSet",modelName: "itemList"},
-       
-                    LM30: {view:"loadShipment", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Tknum: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet",modelName: "itemList"},
-                    LM31: {view:"loadDelivery", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Vbeln: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet",modelName: "itemList"},
-                   
-                    LM37: {view:"loadInqShipment",keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters:{Tknum:"",Lgnum:""},placeHolderLabel:"EnterShip", entitySet: "/LoadProcessSet",modelName: "itemList"},
-                    LM36: {view:"loadInqDelivery",keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters:{Vbeln:"",Lgnum:""},placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet",modelName: "itemList"},
-                    LM35: {view:"loadInqHu",filters:{Exidv:"",Lgnum:""},keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},placeHolderLabel:"EnterHU", entitySet: "/LoadProcessSet",modelName: "itemList"},
-                    
-                    LM71:{view:"grdelivery",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{},placeHolderLabel:"Enter Delivery", entitySet: "/GRProcessSet",modelName:"delList"},  
-                    LM73: {view:"grShipment",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{Tknum:"",Lgnum:""},placeHolderLabel:"Enter Shipment", entitySet: "/GRProcessSet",modelName:"delList"},
-                    LM72: {view:"grStagingArea",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{Lgbzo:"",Lgnum:""},placeHolderLabel:"Enter Staging Area", entitySet: "/GRProcessSet",modelName:"delList"},
-                    LM76:{view:"grHu",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{},placeHolderLabel:"Enter Handling Unit", entitySet: "/GRProcessSet",modelName:"delList"},
-                       
-                LM61:{view:"gidelivery",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{},placeHolderLabel:"Enter Delivery", entitySet: "/GIProcessSet",modelName:"delList"},
-                LM62: {view:"giStagingArea",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{Lgbzo:"",Lgnum:""},placeHolderLabel:"Enter Staging Area", entitySet: "/GIProcessSet",modelName:"delList"},
-                LM63: {view:"giShipment",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{Tknum:"",Lgnum:""},placeHolderLabel:"Enter Shipment", entitySet: "/GIProcessSet",modelName:"delList"},
-                LM66:{view:"giHu",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{},placeHolderLabel:"Enter Handling Unit", entitySet: "/GIProcessSet",modelName:"delList"},
-       
-                LM999:{view: "menuConfiguration",keyFields:{},filters:{},entitySet:"/configurationsSet",modelName:"mainJsonModel"},
-                LM111:{view: "newBin", keyFields: {}, filters: {Nlpla: "", Nltyp: "", Lgnum: ""}, entitySet: "/Check_new_bin",modelName:""}
-            });
 
+			    LM02: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Lenum:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterSU", entitySet: "/WMProcessSet",modelName: "materialList"},
+				LM03: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Tanum:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet",modelName: "materialList"},
+				LM09: {view: "putaway",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Vbeln:"", Queue:"", Lgnum:""},placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet",modelName: "materialList"},
+
+				LM05: {view: "picking",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Tanum: "", Queue: "", Lgnum: ""},placeHolderLabel:"EnterTO", entitySet: "/WMProcessSet",modelName: "materialList"},
+				LM06: {view: "picking",keyFields:{Lenum:"",Queue:"",Vbeln:"",Lgnum:"",Tanum:"",Tapos:""},filters: {Vbeln: "", Queue: "", Lgnum: ""},placeHolderLabel:"EnterDel", entitySet: "/WMProcessSet",modelName: "materialList"},
+
+				LM33: {view:"unloadShipment", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Tknum: "", Exidv: "", Lgnum: "",ProcInd:"",LoadInd:""}, placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet",modelName: "itemList"},
+				LM34: {view:"unloadDelivery", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Vbeln: "", Exidv: "", Lgnum: "",ProcInd:"",LoadInd:""}, placeHolderLabel: "EnterDel", entitySet: "/LoadProcessSet",modelName: "itemList"},
+
+				LM30: {view:"loadShipment", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Tknum: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel: "EnterShip", entitySet: "/LoadProcessSet",modelName: "itemList"},
+				LM31: {view:"loadDelivery", keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters: {Vbeln: "", Exidv: "", ProcInd: "", Lgnum: ""}, placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet",modelName: "itemList"},
+				LM37: {view:"loadInqShipment",keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters:{Tknum:"",Lgnum:""},placeHolderLabel:"EnterShip", entitySet: "/LoadProcessSet",modelName: "itemList"},
+				LM36: {view:"loadInqDelivery",keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},filters:{Vbeln:"",Lgnum:""},placeHolderLabel:"EnterDel", entitySet: "/LoadProcessSet",modelName: "itemList"},
+				LM35: {view:"loadInqHu",filters:{Exidv:"",Lgnum:""},keyFields: {Vbeln: "",Exidv: "",Exida: "",Tknum: "",LoadInd: "",HuStatus: "",Lgnum: "",ProcInd: ""},placeHolderLabel:"EnterHU", entitySet: "/LoadProcessSet",modelName: "itemList"},
+				
+				LM73: {view:"grShipment",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{Tknum:"",Lgnum:""},placeHolderLabel:"Enter Shipment", entitySet: "/GRProcessSet"},
+				LM72: {view:"grStagingArea",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{Lgbzo:"",Lgnum:""},placeHolderLabel:"Enter Staging Area", entitySet: "/GRProcessSet"},
+				
+				LM76:{view:"grHu",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{},placeHolderLabel:"Enter Handling Unit", entitySet: "/GRProcessSet",modelName:"delList"},
+				LM71:{view:"grdelivery",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{},placeHolderLabel:"Enter Delivery", entitySet: "/GRProcessSet",modelName:"delList"},
+				
+				LM66:{view:"giHu",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{},placeHolderLabel:"Enter Handling Unit", entitySet: "/GIProcessSet",modelName:"delList"},
+				LM61:{view:"gidelivery",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{},placeHolderLabel:"Enter Delivery", entitySet: "/GIProcessSet",modelName:"delList"},
+				
+				LM63: {view:"giShipment",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{Tknum:"",Lgnum:""},placeHolderLabel:"Enter Shipment", entitySet: "/GIProcessSet",modelName:"delList"},
+				LM62: {view:"giStagingArea",keyFields:{Exidv:"",ShipInd:"",Lgnum:"",Tknum:"",Lgbzo:"",Vbeln:""},filters:{Lgbzo:"",Lgnum:""},placeHolderLabel:"Enter Staging Area", entitySet: "/GIProcessSet",modelName:"delList"},
+
+				LM999:{view: "menuConfiguration",keyFields:{},filters:{},entitySet:"/configurationsSet",modelName:""},
+			    LM111:{view: "newBin", keyFields: {}, filters: {Nlpla: "", Nltyp: "", Lgnum: ""}, entitySet: "/Check_new_bin",modelName:""}
+
+
+			});
 
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
