@@ -55,15 +55,15 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getGrShipment(_inputValue);
+			this.callOdataService().grFilters(this, _inputValue);
 			}
 		},
 
-		getGrShipment: function(sInputValue) {
+	/*	getGrShipment: function(sInputValue) {
 			//Read gi shipment material from backend
 			this.gssCallFunction().populateModelBuild(this, sInputValue);
 			//code end -Gokul
-		},
+		},*/
 
 		grShipmentConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);

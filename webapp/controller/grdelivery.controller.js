@@ -53,9 +53,9 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getGrDelivery(_inputValue);
+				this.callOdataService().grKeyFields(this, _inputValue);
 			}
-		},
+		}/*,
 
 		getGrDelivery: function(sInputValue) {
 			//Read gi shipment material from backend
@@ -77,7 +77,7 @@ sap.ui.define([
 			
 			this.gssCallFunction().populateModelBuild(this);
 
-		},
+		}*/,
 
 		grDeliveryConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);

@@ -98,6 +98,41 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this._ODataModelInterface.filterModelPopulate(oView);
 
 		},
+		grKeyFields: function(oView, sInputValue) {
+
+			var oKeyFields = oView.getKeyFields();
+				var property = "";
+			var _inpVal = 0;
+			for (property in oKeyFields) {
+				_inpVal = property;
+				break;
+			}
+			for (var i = 0; i < Object.keys(oKeyFields).length; i++) {
+				oKeyFields[_inpVal] = sInputValue;
+			}
+
+		
+			oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+
+			this._ODataModelInterface.keyFieldModelPopulate(oView);
+
+		},
+		grFilters: function(oView, sInputValue) {
+			var oFilterFields = oView.getFilterFields();
+			var property = "";
+			var _inpVal = 0;
+			for (property in oFilterFields) {
+				_inpVal = property;
+				break;
+			}
+			for (var i = 0; i < Object.keys(oFilterFields).length; i++) {
+				oFilterFields[_inpVal] = sInputValue;
+			}
+			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+
+			this._ODataModelInterface.filterModelPopulate(oView);
+
+		},
 		getLoadInq: function(oView, sInputValue) {
 			var oFilterFields = oView.getFilterFields();
 			var property = "";

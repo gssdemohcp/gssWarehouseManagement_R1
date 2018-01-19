@@ -13,7 +13,7 @@
 						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<Table id="tableSA" class="sapUiTinyMargin" mode="MultiSelect" selectionChange="onSingleSelectSA" growing="true" growingScrollToLoad="true"
-						width="auto" rememberSelections="true" items="{itemLists>/aItems}">
+						width="auto" rememberSelections="true" items="{itemList>/aItems}">
 						<headerToolbar>
 							<Toolbar>
 								<Title text="Delivery Header Information"/>
@@ -65,14 +65,14 @@
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Text id="vbelnSA" text="{itemLists>Vbeln}"/>
-									<Text text="{itemLists>LifnrName}"/>
-									<Text text="{itemLists>Lifnr}"/>
-									<Text text="{itemLists>Btgew} {itemLists>Gewei}"/>
-									<Text text="{parts:[{path:'itemLists>Vstel'}],formatter: '.formatter.shipPoint'}"/>
-									<Text id="loadstat" text="{parts:[{path:'itemLists>LoadStat'}],formatter: '.formatter.grIndicator'}"/>
-									<Text text="{parts:[{path:'itemLists>HuInd'}],formatter: '.formatter.huIndicator'}"/>
-									<Text text="{parts:[{path:'itemLists>ToInd'}],formatter: '.formatter.huIndicator'}"/>
+									<Text id="vbelnSA" text="{itemList>Vbeln}"/>
+									<Text text="{itemList>LifnrName}"/>
+									<Text text="{itemList>Lifnr}"/>
+									<Text text="{itemList>Btgew} {itemList>Gewei}"/>
+									<Text text="{parts:[{path:'itemList>Vstel'}],formatter: '.formatter.shipPoint'}"/>
+									<Text id="loadstat" text="{parts:[{path:'itemList>LoadStat'}],formatter: '.formatter.grIndicator'}"/>
+									<Text text="{parts:[{path:'itemList>HuInd'}],formatter: '.formatter.huIndicator'}"/>
+									<Text text="{parts:[{path:'itemList>ToInd'}],formatter: '.formatter.huIndicator'}"/>
 								</cells>
 							</ColumnListItem>
 						</items>

@@ -5,21 +5,21 @@
 			<Page title="GR by Handling Unit">
 				<content>
 					<Toolbar>
-						<Breadcrumbs class="sapUiTinyMarginBegin" id="Breadcrumbs"/>
+						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
 					</Toolbar>
 					<Toolbar id="toolbarheader">
-						<Input class="sapUiTinyMarginBegin" id="inputvalue" value="{matList>TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
 						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<f:SimpleForm id="GRDForm" editable="false" layout="ResponsiveGridLayout" title="Delivery Header Information" labelSpanXL="3" labelSpanL="3"
 						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
-						columnsL="1" columnsM="1" singleContainerFullSize="false" visible="false">
+						columnsL="1" columnsM="1" singleContainerFullSize="false">
 						<f:content>
 							<HBox>
 								<VBox>
 									<Label class="sapUiTinyMarginTop" text="Load/Unload Status"/>
-									<Label class="sapUiTinyMarginTop" id="delFieldLabel" text="Delivery" visible="false"/>
+									<Label class="sapUiTinyMarginTop" id="delFieldLabel" text="Delivery" />
 									<Label class="sapUiTinyMarginTop" text="Vendor"/>
 									<Label class="sapUiTinyMarginTop" text="Name"/>
 									<Label class="sapUiTinyMarginTop" text="Receiving Point"/>
@@ -31,18 +31,18 @@
 								</VBox>
 								<VBox>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="loadIndicator"
-										text="{parts:[{path:'delList>/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="grDelField" text="{delList>/Vbeln}" visible="false"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/Lifnr}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/LifnrName}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/Vstel'}],formatter: '.formatter.shipPoint'}"/>
+										text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="grDelField" text="{delList>/aItems/0/Vbeln}" visible="false"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Lifnr}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/LifnrName}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/aItems/0/Vstel'}],formatter: '.formatter.shipPoint'}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
-										text="{path: 'delList>/Lfdat',type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'}}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/Btgew} {delList>/Gewei}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${delList>/Anzpk}) }"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/HuInd'}],formatter: '.formatter.huIndicator'}"/>
+										text="{path: 'delList>/aItems/0/Lfdat',type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'}}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Btgew} {delList>/aItems/0/Gewei}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${delList>/aItems/0/Anzpk}) }"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/aItems/0/HuInd'}],formatter: '.formatter.huIndicator'}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="toInd"
-										text="{parts:[{path:'delList>/ToInd'}],formatter: '.formatter.huIndicator'}"/>
+										text="{parts:[{path:'delList>/aItems/0/ToInd'}],formatter: '.formatter.huIndicator'}"/>
 								</VBox>
 							</HBox>
 						</f:content>
