@@ -170,6 +170,7 @@ sap.ui.define([
 
 
 
+
 			this._oMenuTransactionModelNew = new JSONModel({
 
 

@@ -1,5 +1,5 @@
 sap.ui.define([
-		"sap/ui/core/mvc/Controller",
+	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter",
 	"sap/ui/model/resource/ResourceModel"
@@ -7,9 +7,8 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.grHu", {
-		
-		
-			formatter: formatter,
+
+		formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -57,6 +56,37 @@ sap.ui.define([
 			if (_inputValue) {
 				this.callOdataService().grKeyFields(this, _inputValue);
 			}
+		},
+		handleMore: function(event) {
+			var popover = new sap.m.Popover({ // To build popup&nbsp;
+				showHeader: false,
+				placement: sap.m.PlacementType.Top,
+				content: [
+					new sap.m.Button({ // To display Logout button inside popup
+						text: "Pack", // Text to be dispalyed for the button
+						type: sap.m.ButtonType.Transparent, // Button type
+						press: function() { // press functionality for the button
+								this.onHandlePack(); // Call to exit() method
+							}.bind(this) // bind the popup to the view
+					}),
+					new sap.m.Button({ // To display Logout button inside popup
+						text: "Unpack", // Text to be dispalyed for the button
+						type: sap.m.ButtonType.Transparent, // Button type
+						press: function() { // press functionality for the button
+								this.onHandleUnpack(); // Call to exit() method
+							}.bind(this) // bind the popup to the view
+					})
+					// new sap.m.Button({ // To display Logout button inside popup
+					// 	text: "Split", // Text to be dispalyed for the button
+					// 	type: sap.m.ButtonType.Transparent, // Button type
+					// 	press: function() { // press functionality for the button
+					// 			this.onHandleSplit(); // Call to exit() method
+					// 		}.bind(this) // bind the popup to the view
+					// })
+				]
+			}).addStyleClass('sapMOTAPopover sapTntToolHeaderPopover'); // CSS style for the popup
+
+			popover.openBy(event.getSource()); // To open popup event
 		},
 
 	/*	getGrHu: function(sInputValue) {
