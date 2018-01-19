@@ -4,22 +4,16 @@ sap.ui.define([
 	//"sap/ui/model/json/JSONModel",
 	"sap/ui/model/BindingMode",
 	"sap/ui/core/routing/History",
-	"gss/newWarehouseManage_R1/model/GlobalWarehouseManage",
-	"gss/newWarehouseManage_R1/model/ODATAService",
-	"gss/newWarehouseManage_R1/model/MenuBinding",
-	"gss/newWarehouseManage_R1/model/Filters",
-	"gss/newWarehouseManage_R1/model/Fragments",
-	"gss/newWarehouseManage_R1/model/KeyFields",
-	"gss/newWarehouseManage_R1/model/Difference",
-	"gss/newWarehouseManage_R1/model/CreateBreadCrumbs",
+	"gss/newWarehouseManage_R1/modules/MenuBinding",
+	"gss/newWarehouseManage_R1/modules/Fragments",
+	"gss/newWarehouseManage_R1/modules/Difference",
+	"gss/newWarehouseManage_R1/modules/CreateBreadCrumbs",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/controller/ErrorHandler",
 	"./errorHandling",
 	"gss/newWarehouseManage_R1/lib/GssWarehouseManage"
 	
-], function(Object, Device, BindingMode, History, GlobalWarehouseManage, ODATAService, MENUBinding, Filters, Fragments, KeyFields,
-	Difference, CreateBreadCrumbs,
-	BaseController, ErrorHandler, errorHandling,GssWarehouseManage) {
+], function(Object, Device, BindingMode, History, MENUBinding, Fragments,Difference, CreateBreadCrumbs,	BaseController, ErrorHandler, errorHandling,GssWarehouseManage) {
 	"use strict";
 
 	return Object.extend("gss.newWarehouseManage_R1.controller.Application", {
@@ -88,8 +82,6 @@ sap.ui.define([
 			this._oResourceBundle = this._oComponent.getModel("i18n").getResourceBundle();
 			// Globalsoft warehouse management
 			this._oGssWarehouseManage = new GssWarehouseManage(this);
-			this._oGlobalWarehouseManage = new GlobalWarehouseManage(this);
-			this.oODATAService = new ODATAService(this);
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//By Sabari to Create object for Menu and Sub Menu Binding 
 			//*******************************************************************************
@@ -105,17 +97,11 @@ sap.ui.define([
 			//End of Code Sabari to Create Bread Crumbs 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-			// *************** Srini Code to create object for filters begins ***************
-			this._ofilters = new Filters(this);
-			// *************** Srini Code to create object for filters ends *****************
 
 			// *************** Srini Code to display fragments begins ***************
 			this._ofragments = new Fragments(this);
 			// *************** Srini Code to display fragments ends *****************
 
-			// *************** Srini Code to build key fields begins ***************
-			this._okeyfields = new KeyFields(this);
-			// *************** Srini Code to build key fields ends *****************
 
 			// *************** Srini Code to display difference begins ***************
 			this._odifference = new Difference(this);
@@ -128,13 +114,9 @@ sap.ui.define([
 			// set the globalProperties model
 			this._oGlobalModel = new JSONModel({
 				application: this,
-				filter: this._ofilters,
 				fragments: this._ofragments,
-				keyfields: this._okeyfields,
 				difference: this._odifference,
 				gsswm: this._oGssWarehouseManage,
-				gwm: this._oGlobalWarehouseManage,
-				odata: this.oODATAService,
 				breadcrumbs: this._ocreateBreadCrumbs,
 				menu: this._omenuBinding,
 				currentScreen: "LM999",
@@ -162,19 +144,7 @@ sap.ui.define([
 			});
 			this._oGlobalModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oGlobalModel, "globalProperties");
-			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			//**************************************************************************************
-			// set the Entity Set Properties model
-			this._oEntitySetModel = new JSONModel({
-				MenuConfiguration: "/configurationsSet",
-				MaterialList: "/WMProcessSet",
-				NewBinCheck: "/Check_new_bin",
-				LoadProcess: "/LoadProcessSet"
-			});
 
-			this._oEntitySetModel.setDefaultBindingMode(BindingMode.TwoWay);
-			this._oComponent.setModel(this._oEntitySetModel, "entitySetProperties");
-			//*******************************************************************************************
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			// By Sabari to Add the Fragment Controller Model 
 			//*******************************************************************************************
@@ -232,30 +202,7 @@ sap.ui.define([
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
 
-		/*	this._oMenuTransactionModel = new JSONModel({
-				LM02: "putaway@Lenum",
-				LM03: "putaway@Tanum",
-				LM09: "putaway@Vbeln",
-
-				LM05: "picking@Tanum",
-				LM06: "picking@Lenum",
-
-				LM33: "load@Tknum@",
-				LM34: "load@Vbeln@",
-				LM31: "load@Vbeln@",
-				LM30: "load@Tknum@",
-
-				LM37: "LoadInq_Shipment@Tknum",
-				LM36: "LoadInq_Delivery@Vbeln",
-				LM35: "LoadInq_HU@Exidv"
-
-			});
-
-			this._oMenuTransactionModel.setDefaultBindingMode(BindingMode.OneWay);
-			this._oComponent.setModel(this._oMenuTransactionModel, "MenuTransactionProperties_old");*/
-			//*******************************************************************************************
-			// End of Code handle menu item and view navigation properties 
-			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	
 
 			// delegate error handling
 			errorHandling.register(this, this._oComponent, "");

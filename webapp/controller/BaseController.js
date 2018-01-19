@@ -55,10 +55,6 @@ sap.ui.define([
 			return this.getOwnerComponent().getModel("globalProperties");
 		},
 
-		getEntitySetModel: function() {
-			return this.getOwnerComponent().getModel("entitySetProperties");
-		},
-
 		getFragmentControllerModel: function() {
 			return this.getOwnerComponent().getModel("fragmentControllerProperties");
 		},
@@ -87,16 +83,6 @@ sap.ui.define([
 		getApplication: function() {
 			return this.getGlobalModel().getProperty("/application");
 		},
-		gssFilterFunction: function() {
-			return this.getGlobalModel().getProperty("/filter");
-		},
-		gssCallFunction: function() {
-			return this.getGlobalModel().getProperty("/gwm");
-		},
-		gssOdataService: function() {
-			return this.getGlobalModel().getProperty("/odata");
-		},
-
 		gssCallBreadcrumbs: function() {
 			return this.getGlobalModel().getProperty("/breadcrumbs");
 		},
@@ -106,10 +92,6 @@ sap.ui.define([
 		gssDifferenceFunction: function() {
 			return this.getGlobalModel().getProperty("/difference");
 		},
-		gssKeyFieldsFunction: function() {
-			return this.getGlobalModel().getProperty("/keyfields");
-		},
-
 		gssCallMenu: function() {
 			return this.getGlobalModel().getProperty("/menu");
 		},
