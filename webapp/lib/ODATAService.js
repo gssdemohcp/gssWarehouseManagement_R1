@@ -92,12 +92,42 @@ sap.ui.define(["sap/ui/base/Object",
 				return promise;
 		},
 
+		oCallCreateDeferred: function(sEntityset, oItems, oView) {
+			var promise = jQuery.Deferred(),
+				oDataModel = oView.getModel();
+
+			oDataModel.create(sEntityset, oItems, {
+				success: function(oData) {
+					promise.resolve(oData);
+				}.bind(this),
+				error: function(oData) {
+					promise.reject(oData);
+				}.bind(this)
+			});
+				return promise;
+		},
 
 		//This odata read function write return value into global variable to handle later in UI
 		oCallRead: function(sFunction, oOwnerComponent, oGlobalModel) {
 			//var oModel = oOwnerComponent.getModel();
 			var oRfData;
 			oOwnerComponent.read(sFunction, {
+				success: function(oRetrievedResult) {
+					//return odata result 
+					oRfData = oRetrievedResult.results;
+					oGlobalModel.setProperty("/oDataResult", oRfData);
+					// this.oCallEnd(oGlobalModel);
+				},
+				error: function(oError) {
+					return "";
+				}
+			});
+			return oRfData;
+		},
+		
+		oCallCreate: function(sFunction, oOwnerComponent, oGlobalModel) {
+			var oRfData;
+			oOwnerComponent.create(sFunction, {
 				success: function(oRetrievedResult) {
 					//return odata result 
 					oRfData = oRetrievedResult.results;
