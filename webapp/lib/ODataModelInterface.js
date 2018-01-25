@@ -52,7 +52,7 @@ sap.ui.define(["sap/ui/base/Object",
 					aItems: oRfData
 				};
 
-				this.errorHandlingDelegate(oView, oRfData);
+				this.errorHandlingDelegate(oView, oRfData, true);
 				promise.resolve(this._oRfModel);
 
 			}.bind(this));
@@ -77,7 +77,7 @@ sap.ui.define(["sap/ui/base/Object",
 				oRfData = {
 					aItems: [oRfData]
 				};
-				this.errorHandlingDelegate(oView, oRfData);
+				this.errorHandlingDelegate(oView, oRfData, true);
 
 				promise.resolve(this._oRfModel);
 
@@ -86,7 +86,7 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 
 		},
-		keyFieldModelUpdate: function(oView,oUpdateItem) {
+		keyFieldModelUpdate: function(oView, oUpdateItem) {
 			var promise = jQuery.Deferred();
 			//GET VIEW ENTITY SET NAME FROM CONFIQURATION JSON MODEL
 			var sEntitySet = oView.getEntitySet();
@@ -94,7 +94,7 @@ sap.ui.define(["sap/ui/base/Object",
 			var oKeyFields = oView.getKeyFields();
 			//Setup filter string
 			var sPath = this.setKeyField(oKeyFields);
-		    var oWhenCallUpdateIsDone = this._oODATAService.oCallUpdateDeferred(sEntitySet + sPath, oUpdateItem, oView);
+			var oWhenCallUpdateIsDone = this._oODATAService.oCallUpdateDeferred(sEntitySet + sPath, oUpdateItem, oView);
 			//Handle response from oData Call
 			oWhenCallUpdateIsDone.done(function(oResult, oFailed) {
 				promise.resolve(oResult);
@@ -103,20 +103,41 @@ sap.ui.define(["sap/ui/base/Object",
 			return promise;
 
 		},
-		errorHandlingDelegate: function(oView, oRfData) {
+
+		keyFieldModelCreate: function(oView, oUpdateItem) {
+			var promise = jQuery.Deferred();
+			//GET VIEW ENTITY SET NAME FROM CONFIQURATION JSON MODEL
+			var sEntitySet = oView.getEntitySet();
+			//GET KEY FIELDS FROM CONFIGURATION JSON MODEL
+			var oKeyFields = oView.getKeyFields();
+			//Setup filter string
+			var sPath = this.setKeyField(oKeyFields);
+			var oWhenCallCreateIsDone = this._oODATAService.oCallCreateDeferred(sEntitySet + sPath, oUpdateItem, oView);
+			//Handle response from oData Call
+			oWhenCallCreateIsDone.done(function(oResult, oFailed) {
+				var oRfData;
+				oRfData = oResult;
+				oRfData = {
+					aItems: [oRfData]
+				};
+				this.errorHandlingDelegate(oView, oRfData, true);
+				promise.resolve(oResult);
+			});
+			return promise;
+		},
+
+		errorHandlingDelegate: function(oView, oRfData, setModelFlag) {
 			var oGlobalModel = oView.getModel("globalProperties");
 
 			if (oRfData.aItems.length !== 0) {
 
 				//SET MODEL TO CURRENT VIEW
 				var sModelName = oView.getModelName();
-				if(sModelName.length !==0) {
-					
+				if (sModelName.length !== 0 && setModelFlag === true) {
 					this._oRfModel.setData(oRfData);
 					oView.setModel(this._oRfModel, oView.getModelName());
 				}
-				
-				
+
 				//Before call errorhandling delegates
 				//Set Response Message and message Type to trigger message box
 				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
@@ -132,8 +153,6 @@ sap.ui.define(["sap/ui/base/Object",
 			errorHandling.register(oView.getApplication(), oView.getComponent());
 		},
 
-
-
 		// ************* Srini code to get selected items from table begins ************
 		selectedItems: function(oView, controlId) {
 			return oView.byId(controlId).getSelectedItems();
@@ -148,24 +167,24 @@ sap.ui.define(["sap/ui/base/Object",
 			var aFilterValues = this.setFilter(oFilterFields);
 			//CALL ODATA SERVICE
 			this._oODATAService.oCallFunctionPromise(sEntitySet, oView, aFilterValues)
-			  .then(function(oResult, response){
-			  	var oRfData;
-				oRfData = oResult;
-				oRfData = {
-					aItems: [oRfData]
-				};
-			  	this.errorHandlingDelegate(oView, oRfData);
-				promise.resolve(oRfData);
-			  });
+				.then(function(oResult, response) {
+					var oRfData;
+					oRfData = oResult;
+					oRfData = {
+						aItems: [oRfData]
+					};
+					this.errorHandlingDelegate(oView, oRfData, true);
+					promise.resolve(oRfData);
+				});
 
 			return promise;
 
 		},
 
-		setUrlFilter: function(oFilterFields){
-		/*	[{"Lgnum":oView.getGlobalModel().getProperty("/currentLgnum"),
-			"Nltyp":oView.getGlobalModel().getProperty("/currentNltyp"),
-			"Nlpla": sInputValue}];*/
+		setUrlFilter: function(oFilterFields) {
+			/*	[{"Lgnum":oView.getGlobalModel().getProperty("/currentLgnum"),
+				"Nltyp":oView.getGlobalModel().getProperty("/currentNltyp"),
+				"Nlpla": sInputValue}];*/
 			var index = 0,
 				property = "",
 				aFilterValues = [];
@@ -186,7 +205,7 @@ sap.ui.define(["sap/ui/base/Object",
 			return aFilterValues;
 
 		},
-		
+
 		buildFilter: function(field, value) {
 			var aFilter = new Filter(field, FilterOperator.EQ, value);
 			return aFilter;
