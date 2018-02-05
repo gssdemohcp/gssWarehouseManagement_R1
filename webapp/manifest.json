@@ -73,7 +73,7 @@
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneTime",
+					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "ZWM_RF_PROCESS_SRV",
@@ -197,6 +197,36 @@
 					"transition": "slide",
 					"clearAggregation": true,
 					"viewName": "grHu"
+				},
+				"UnPack": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "UnPack"
+				},
+				"unpackHu": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "unpackHu"
+				},
+				"unpackMaterial": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "unpackMaterial"
+				},
+				"grShipItems": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "grShipItems"
+				},
+				"grDelItems": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "grDelItems"
 				}
 			},
 			"routes": [{
@@ -241,31 +271,31 @@
 				"target": "unloadDelivery"
 			}, {
 				"name": "grStagingArea",
-				"pattern": "grStagingArea",
+				"pattern": "LM72",
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["grStagingArea"]
 			}, {
 				"name": "grShipment",
-				"pattern": "grShipment",
+				"pattern": "LM73",
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["grShipment"]
 			}, {
 				"name": "giStagingArea",
-				"pattern": "giStagingArea",
+				"pattern": "LM62",
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["giStagingArea"]
 			}, {
 				"name": "giShipment",
-				"pattern": "giShipment",
+				"pattern": "LM63",
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["giShipment"]
 			}, {
 				"name": "gidelivery",
-				"pattern": "gidelivery",
+				"pattern": "LM61",
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["gidelivery"]
@@ -277,16 +307,46 @@
 				"target": ["giHu"]
 			}, {
 				"name": "grdelivery",
-				"pattern": "grdelivery",
+				"pattern": "LM71",
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["grdelivery"]
 			}, {
 				"name": "grHu",
-				"pattern": "grHu",
+				"pattern": "LM76",
 				"titleTarget": "",
 				"greedy": false,
 				"target": ["grHu"]
+			}, {
+				"name": "UnPack",
+				"pattern": "LM222",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["UnPack"]
+			}, {
+				"name": "unpackMaterial",
+				"pattern": "LM555",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["unpackMaterial"]
+			}, {
+				"name": "unpackHu",
+				"pattern": "LM666",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["unpackHu"]
+			}, {
+				"name": "grDelItems",
+				"pattern": "LM333",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["grDelItems"]
+			}, {
+				"name": "grShipItems",
+				"pattern": "LM444",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["grShipItems"]
 			}]
 		}
 	}

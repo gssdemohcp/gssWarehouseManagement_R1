@@ -18,16 +18,23 @@ sap.ui.define([
 				onBeforeShow: function(evt) {
 					this._router = this.getRouter();
 					this.seti18nModel();
+
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+
+					if (this.getGlobalModel().getProperty("/parentScreen")) {
+						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
+						this.getView().byId("inputValue").setEnabled(false);
+						this.iGetInput();
+					}
 				}.bind(this)
 			});
 
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
-		/*	this.setFragment();*/
+
+			this.setFragment();
 		},
 
 		seti18nModel: function() {
@@ -39,10 +46,10 @@ sap.ui.define([
 		},
 
 		inputDetails: function() {
-			var Screen = this.getCurrentScrn();
-			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
-			this.getView().byId("inputValue").setPlaceholder(Text);
+			var _screen = this.getCurrentScrn();
+			var _screenModel = this.getScreenModel(_screen);
+			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
+			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 

@@ -1,8 +1,10 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/ui/model/resource/ResourceModel"
-	
-], function(Controller, ResourceModel) {
+
+	"sap/ui/model/resource/ResourceModel",
+	"sap/ui/core/routing/History"
+], function(Controller, ResourceModel, History) {
+
 	"use strict";
 
 	return Controller.extend("gss.newWarehouseManage_R1.controller.BaseController", {
@@ -100,8 +102,7 @@ sap.ui.define([
 		getComponent: function() {
 			return this.getOwnerComponent();
 		},
-		
-		
+
 		seti18nModel: function(oView) {
 			// set i18n model on view
 			var i18nModel = new ResourceModel({
@@ -121,40 +122,77 @@ sap.ui.define([
 				oViewModel.getProperty("/shareSendEmailMessage")
 			);
 		},
-		
+
+		onNavBack: function() {
+
+			this.getGlobalModel().setProperty("/currentScreen", this.getGlobalModel().getProperty("/parentScreen"));
+			this.getGlobalModel().setProperty("/parentScreen", this.getParentScreen());
+			this.getApplication().navBack(History, "");
+		},
+		setModelData: function(data) {
+			var viewProperties = this.getViewProperties();
+			viewProperties.modelData = data;
+		},
+		getBackModelData: function() {
+			var viewProperties = this.getViewProperties(),
+				jsonModel = new sap.ui.model.json.JSONModel(viewProperties.modelData);
+			this.setModel(jsonModel, this.getModelName());
+		},
+
+		getGlobalProperty: function(property) {
+			return this.getGlobalModel().getProperty("/" + property + "");
+
+		},
+		setGlobalProperty: function(property, sValue) {
+			return this.getGlobalModel().setProperty("/" + property + "", sValue);
+
+		},
+
 		//**********************************************************************************************
 		//THESE METHODS ARE USED IN ODATASERVICE LIBRARY
 		//**********************************************************************************************
 		callOdataService: function() {
 			return this.getGlobalModel().getProperty("/gsswm");
 		},
+		createElements: function() {
+			return this.getGlobalModel().getProperty("/gsscb");
+
+		},
 		getViewProperties: function() {
 			var sCurrentScrnName = this.getCurrentScrn();
 			return this.getScreenModel(sCurrentScrnName);
 		},
-		
+
 		getEntitySet: function() {
 			var viewProperties = this.getViewProperties();
 			return viewProperties.entitySet;
 		},
-		
+
 		getModelName: function() {
 			var viewProperties = this.getViewProperties();
 			return viewProperties.modelName;
 		},
-		
+
 		getFilterFields: function() {
 			var viewProperties = this.getViewProperties();
 			return viewProperties.filters;
 		},
-		
+
 		getKeyFields: function() {
 			var properties = this.getViewProperties();
-			return properties.keyFields;                         
-		}
-		//*************************************************************************************************
-		//END
-		//***************************************************************************************************
+			return properties.keyFields;
+		},
+		getChildScreens: function() {
+			var properties = this.getViewProperties();
+			return properties.childScreens;
+		},
+		getParentScreen: function() {
+				var properties = this.getViewProperties();
+				return properties.parentScreen;
+			}
+			//*************************************************************************************************
+			//END
+			//***************************************************************************************************
 	});
 
 });

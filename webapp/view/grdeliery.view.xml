@@ -14,12 +14,11 @@
 					</Toolbar>
 					<f:SimpleForm id="GRDForm" editable="false" layout="ResponsiveGridLayout" title="Delivery Header Information" labelSpanXL="3" labelSpanL="3"
 						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
-						columnsL="1" columnsM="1" singleContainerFullSize="false" >
+						columnsL="1" columnsM="1" singleContainerFullSize="false" visible="false">
 						<f:content>
 							<HBox>
 								<VBox>
 									<Label class="sapUiTinyMarginTop" text="Load/Unload Status"/>
-									<Label class="sapUiTinyMarginTop" id="delFieldLabel" text="Delivery" />
 									<Label class="sapUiTinyMarginTop" text="Vendor"/>
 									<Label class="sapUiTinyMarginTop" text="Name"/>
 									<Label class="sapUiTinyMarginTop" text="Receiving Point"/>
@@ -31,18 +30,19 @@
 								</VBox>
 								<VBox>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="loadIndicator"
-										text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="grDelField" text="{delList>/aItems/0/Vbeln}" />
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Lifnr}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/LifnrName}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/aItems/0/Vstel'}],formatter: '.formatter.shipPoint'}"/>
+										text="{parts:[{path:'itemList>/aItems/0/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Lifnr}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/LifnrName}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
-										text="{path: 'delList>/aItems/0/Lfdat',type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'}}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Btgew} {delList>/aItems/0/Gewei}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${delList>/aItems/0/Anzpk}) }"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/aItems/0/HuInd'}],formatter: '.formatter.huIndicator'}"/>
+										text="{parts:[{path:'itemList>/aItems/0/Vstel'}],formatter: '.formatter.shipPoint'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+										text="{path: 'itemList>/aItems/0/Lfdat',type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'}}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Btgew} {itemList>/aItems/0/Gewei}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${itemList>/aItems/0/Anzpk}) }"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+										text="{parts:[{path:'itemList>/aItems/0/HuInd'}],formatter: '.formatter.huIndicator'}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="toInd"
-										text="{parts:[{path:'delList>/aItems/0/ToInd'}],formatter: '.formatter.huIndicator'}"/>
+										text="{parts:[{path:'itemList>/aItems/0/ToInd'}],formatter: '.formatter.huIndicator'}"/>
 								</VBox>
 							</HBox>
 						</f:content>
@@ -61,13 +61,14 @@
 							/>
 						</contentLeft>
 						<contentRight>
-					<Button id="LUnload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Unload" />
-							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="More"/>
-							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems"  tooltip="Items"/>
-							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO"  tooltip="Generate TO"/>
 
-							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" enabled="false" text="TO Execution"/>
-							<Button id="post" icon="sap-icon://paper-plane" press="onPostGR" visible="false" enabled="false" text="Post"/>
+							<Button id="LUnload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Unload"/>
+							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="More"/>
+							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items"/>
+							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO" tooltip="Generate TO"/>
+							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" tooltip="TO Execution"/>
+							<Button id="post" icon="sap-icon://paper-plane" press="onPostGR" visible="false" tooltip="Post"/>
+
 						</contentRight>
 						<!--</contentMiddle>-->
 						<!--</Toolbar>-->

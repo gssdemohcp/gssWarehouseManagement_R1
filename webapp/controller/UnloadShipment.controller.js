@@ -20,6 +20,10 @@ sap.ui.define([
 					this.seti18nModel();
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					if (this.getGlobalModel().getProperty("/parentView")) {
+						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
+						this.getView().byId("inputValue").setEnabled(false);
+					}
 				}.bind(this)
 			});
 
@@ -27,6 +31,10 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
+			if (this.getGlobalModel().getProperty("/parentScreen")) {
+				this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
+				this.getView().byId("inputValue").setEnabled(false);
+			}
 			this.setFragment();
 		},
 
@@ -39,26 +47,26 @@ sap.ui.define([
 		},
 
 		inputDetails: function() {
-			var Screen = this.getCurrentScrn();
-			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
-			this.getView().byId("inputValue").setPlaceholder(Text);
+			var _screen = this.getCurrentScrn();
+			var _screenModel = this.getScreenModel(_screen);
+			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
+			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
-		
+
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				this.getunloadDetails(_inputValue);
 			}
 		},
-		
+
 		setFragment: function() {
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
-		
+
 		getunloadDetails: function(sInputValue) {
 			var shipNo = sInputValue; // To get input field value
 			var huNo = this.getView().byId("scanHUunDel").getValue(); // To get input field value
@@ -81,7 +89,7 @@ sap.ui.define([
 				this.getView().byId("inputValue").setMaxLength(10);
 			}
 		},
-		
+
 		unload: function() {
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList"),

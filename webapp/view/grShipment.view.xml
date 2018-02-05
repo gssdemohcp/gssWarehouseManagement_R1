@@ -65,10 +65,10 @@
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Text id="vbeln" text="{itemsList>Vbeln}"/>
+									<Text id="vbeln" text="{itemList>Vbeln}"/>
 									<Text text="{itemList>LifnrName}"/>
 									<Text text="{itemList>Lifnr}"/>
-									<Text text="{itemList>Btgew} {itemsList>Gewei}"/>
+									<Text text="{itemList>Btgew} {itemList>Gewei}"/>
 									<Text text="{parts:[{path:'itemList>Vstel'}],formatter: '.formatter.shipPoint'}"/>
 									<Text id="loadStat" text="{parts:[{path:'itemList>LoadStat'}],formatter: '.formatter.grIndicator'}"/>
 									<Text text="{parts:[{path:'itemList>HuInd'}],formatter: '.formatter.huIndicator'}"/>
@@ -90,12 +90,14 @@
 						</contentLeft>
 						<contentRight>
 							<Button id="LUnload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Unload" />
-							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="More"/>
-							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items"/>
-							<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" visible="false" tooltip="Shipment"/>
-							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO" visible="false" tooltip="Generate TO"/>
-							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" enabled="false" text="TO Execution"/>
-							<Button id="post" icon="sap-icon://paper-plane" press="onPostGR" visible="false" enabled="false" text="Post"/>
+
+							<Button id="more" icon="sap-icon://detail-view" press="handleMore"  tooltip="More"/>
+							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems"  tooltip="Items"/>
+							<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Shipment"/>
+							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO" tooltip="Generate TO"/>
+							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx"  tooltip="TO Execution"/>
+							<Button id="post" icon="sap-icon://paper-plane" press="onPostGR"   tooltip="Post"/>
+
 						</contentRight>
 						<!--</contentMiddle>-->
 						<!--</Toolbar>-->

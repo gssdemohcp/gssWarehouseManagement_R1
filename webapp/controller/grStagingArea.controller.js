@@ -3,12 +3,13 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter",
-	"sap/ui/model/resource/ResourceModel"
-], function(Controller, BaseController, formatter, ResourceModel) {
+	"sap/ui/model/resource/ResourceModel",
+	"gss/newWarehouseManage_R1/model/utilities"
+], function(Controller, BaseController, formatter, ResourceModel, utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.grStagingArea", {
-			formatter: formatter,
+		formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -20,6 +21,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
@@ -27,8 +29,8 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
-		/*	this.setFragment();*/
+
+			/*	this.setFragment();*/
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -38,56 +40,24 @@ sap.ui.define([
 			this.getView().setModel(i18nModel, "i18n");
 		},
 		inputDetails: function() {
-			var Screen = this.getCurrentScrn();
-			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
-			this.getView().byId("inputValue").setPlaceholder(Text);
+			var _screen = this.getCurrentScrn();
+			var _screenModel = this.getScreenModel(_screen);
+			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
+			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-			this.callOdataService().grFilters(this, _inputValue);
+				this.getView().byId("footerbar").setVisible(true);
+				this.callOdataService().getLoadInq(this, _inputValue, "", "");
 			}
 		},
-			handleMore: function(event) {
-			var popover = new sap.m.Popover({ // To build popup&nbsp;
-				showHeader: false,
-				placement: sap.m.PlacementType.Top,
-				content: [
-					new sap.m.Button({ // To display Logout button inside popup
-						text: "Pack", // Text to be dispalyed for the button
-						type: sap.m.ButtonType.Transparent, // Button type
-						press: function() { // press functionality for the button
-								this.onHandlePack(); // Call to exit() method
-							}.bind(this) // bind the popup to the view
-					}),
-					new sap.m.Button({ // To display Logout button inside popup
-						text: "Unpack", // Text to be dispalyed for the button
-						type: sap.m.ButtonType.Transparent, // Button type
-						press: function() { // press functionality for the button
-								this.onHandleUnpack(); // Call to exit() method
-							}.bind(this) // bind the popup to the view
-					})
-					// new sap.m.Button({ // To display Logout button inside popup
-					// 	text: "Split", // Text to be dispalyed for the button
-					// 	type: sap.m.ButtonType.Transparent, // Button type
-					// 	press: function() { // press functionality for the button
-					// 			this.onHandleSplit(); // Call to exit() method
-					// 		}.bind(this) // bind the popup to the view
-					// })
-				]
-			}).addStyleClass('sapMOTAPopover sapTntToolHeaderPopover'); // CSS style for the popup
 
-			popover.openBy(event.getSource()); // To open popup event
+		handleMore: function(oEvent) {
+			this.createElements().handleMoreButtons(oEvent, this);
 		},
-
-	/*	getGrStageArea: function(sInputValue) {
-			//Read gi shipment material from backend
-			this.gssCallFunction().populateModelBuild(this, sInputValue);
-			//code end -Gokul
-		},*/
 
 		setFragment: function() {
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
@@ -97,6 +67,16 @@ sap.ui.define([
 
 		grStageAreaConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);
+		},
+		onHandleItems: function(event) {
+			this.getGlobalModel().setProperty("/title", "GR by Staging Area");
+			utilities.navigateChild("grShipItems", this);
+		},
+		onHandleUnload: function(oEvent) {
+			var _delVal = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
+			this.getGlobalModel().setProperty("/currentDelNo", _delVal);
+			utilities.navigateChild("unloadDelivery", this);
+
 		}
 
 		/**

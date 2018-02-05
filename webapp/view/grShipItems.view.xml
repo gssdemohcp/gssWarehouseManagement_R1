@@ -1,0 +1,95 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+	controllerName="gss.newWarehouseManage_R1.controller.grShipItems" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page id="page">
+				<content>
+					<Toolbar>
+						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
+					</Toolbar>
+					<Toolbar id="toolbarheader">
+						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
+						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+					</Toolbar>
+					<f:SimpleForm editable="false" layout="ResponsiveGridLayout" title="Delivery Info" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+						labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+						singleContainerFullSize="false">
+						<f:content>
+							<HBox>
+								<VBox>
+									<Label class="sapUiTinyMarginTop" text="Delivery No"/>
+									<Label class="sapUiTinyMarginTop" text="Items Total"/>
+								</VBox>
+								<VBox>
+									<Text id="delNo" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Vbeln}"/>
+									<Text id="itemTot" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${itemList>/aItems/0/Anzpk}) }"/>
+								</VBox>
+							</HBox>
+						</f:content>
+					</f:SimpleForm>
+					<ScrollContainer height="100%" width="100%" horizontal="true" vertical="true" focusable="true">
+						<Table id="table" class="sapUiTinyMargin" growing="true" growingScrollToLoad="true" mode="MultiSelect" selectionChange="onHandleSelection"
+							width="auto" items="{itemList>/aItems}">
+							<headerToolbar>
+								<Toolbar>
+									<Title text="Material Info"/>
+									<ToolbarSpacer/>
+								</Toolbar>
+							</headerToolbar>
+							<columns>
+								<Column>
+									<header>
+										<Label text="Material" design="Bold"/>
+									</header>
+								</Column>
+								<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
+									<header>
+										<Label text="Description" design="Bold"/>
+									</header>
+								</Column>
+								<Column>
+									<header>
+										<Label text="Quantity/Unit" design="Bold"/>
+									</header>
+								</Column>
+								<Column id="MatBatch">
+									<header>
+										<Label text="Batch" design="Bold" visible="false"/>
+									</header>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{itemList>Matnr}"/>
+										<Text text="{itemList>Arktx}"/>
+										<ObjectNumber
+											number="{ parts: [ {path: 'itemList>Lfimg'}], type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits : 3, maxFractionDigits: 3 } }"
+											unit="{itemList>Vrkme}" state="{ parts: [ {path: 'itemList>Lfimg'} ], formatter : '.formatter.changeColor' }"/>
+										<Text text="{itemList>Charg}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</ScrollContainer>
+				</content>
+				<footer id="footer"
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
+					<Bar id="footerbar">
+						<!--<contentMiddle>-->
+						<contentLeft>
+							<!--<Toolbar id="footerbar" visible="false">-->
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+						</contentLeft>
+						<contentRight>
+							<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" tooltip="Difference"/>
+							<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="save"/>
+						</contentRight>
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

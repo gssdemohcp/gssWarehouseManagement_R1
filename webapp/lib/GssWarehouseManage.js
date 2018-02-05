@@ -32,6 +32,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		selectedItems: function(oView, controlId) {
 			return oView.byId(controlId).getSelectedItems();
 		},
+		removeItems: function(oView, controlId) {
+			oView.getView().byId(controlId).removeSelections(true);
+		},
 
 		checkNewBin: function(oView, sInputValue) {
 			var promise = jQuery.Deferred();
@@ -101,7 +104,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		grKeyFields: function(oView, sInputValue) {
 
 			var oKeyFields = oView.getKeyFields();
-				var property = "";
+			var property = "";
 			var _inpVal = 0;
 			for (property in oKeyFields) {
 				_inpVal = property;
@@ -111,13 +114,37 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				oKeyFields[_inpVal] = sInputValue;
 			}
 
-		
 			oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 
 			this._ODataModelInterface.keyFieldModelPopulate(oView);
 
 		},
-		grFilters: function(oView, sInputValue) {
+		grPackKeyFields: function(oView, sInputValue, huVal) {
+
+			var oKeyFields = oView.getKeyFields();
+			var property = "";
+			var _inpVal = 0;
+			for (property in oKeyFields) {
+				_inpVal = property;
+				break;
+			}
+			for (var i = 0; i < Object.keys(oKeyFields).length; i++) {
+				oKeyFields[_inpVal] = sInputValue;
+			}
+
+			if (huVal) {
+				oKeyFields.Exidv = huVal;
+				oKeyFields.ShipInd = oView.getGlobalModel().getProperty("/shipInd");
+			}
+			if (!oView.getGlobalModel().getProperty("/parentScreen")) {
+				oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			}
+
+			this._ODataModelInterface.keyFieldModelPopulate(oView);
+
+		},
+
+		getLoadInq: function(oView, sInputValue, shipInd, Vbeln) {
 			var oFilterFields = oView.getFilterFields();
 			var property = "";
 			var _inpVal = 0;
@@ -128,28 +155,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			for (var i = 0; i < Object.keys(oFilterFields).length; i++) {
 				oFilterFields[_inpVal] = sInputValue;
 			}
-			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			if (!shipInd) {
 
+				oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			}
+			oFilterFields.ShipInd = shipInd;
+			if (Vbeln) {
+				oFilterFields.Vbeln = Vbeln;
+			}
 			this._ODataModelInterface.filterModelPopulate(oView);
-
 		},
-		getLoadInq: function(oView, sInputValue) {
-			var oFilterFields = oView.getFilterFields();
-			var property = "";
-			var _inpVal = 0;
-			for (property in oFilterFields) {
-				_inpVal = property;
-				break;
-			}
-			for (var i = 0; i < Object.keys(oFilterFields).length; i++) {
-				oFilterFields[_inpVal] = sInputValue;
-			}
 
-			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-
-			this._ODataModelInterface.filterModelPopulate(oView);	
-		},
-		
 		LoadDetails: function(oView, sInputValue, huVal, procInd) {
 			//SET INPUT VALUE
 			var oFilterFields = oView.getFilterFields();
@@ -167,20 +183,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			this._ODataModelInterface.filterModelPopulate(oView);
 		},
-		
+
 		LoadUnloadKeyFields: function(oView, modelData, HuStatus, loadInd) {
 			var oKeyFields = oView.getKeyFields();
-				oKeyFields.Vbeln = modelData.aItems[0].Vbeln;
-				oKeyFields.Exidv = modelData.aItems[0].Exidv;
-				oKeyFields.Exida = modelData.aItems[0].Exida;
-				oKeyFields.Tknum = modelData.aItems[0].Tknum;
-				oKeyFields.LoadInd = loadInd;
-				oKeyFields.HuStatus = HuStatus;
-				oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-				oKeyFields.ProcInd = "";
+			oKeyFields.Vbeln = modelData.aItems[0].Vbeln;
+			oKeyFields.Exidv = modelData.aItems[0].Exidv;
+			oKeyFields.Exida = modelData.aItems[0].Exida;
+			oKeyFields.Tknum = modelData.aItems[0].Tknum;
+			oKeyFields.LoadInd = loadInd;
+			oKeyFields.HuStatus = HuStatus;
+			oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			oKeyFields.ProcInd = "";
 			this._ODataModelInterface.keyFieldModelPopulate(oView);
 		},
-		
+
 		UnloadDetails: function(oView, sInputValue, huVal, procInd, loadInd) {
 			//SET INPUT VALUE
 			var oFilterFields = oView.getFilterFields();
@@ -203,17 +219,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		confirmItems: function(oView, oSelectItems) {
 			var oWhenOdataUpdateDone;
-			var activeModel = oView.getModelName();            
-			
+			var activeModel = oView.getModelName();
+
 			oSelectItems.forEach(function(mItem) {
-				var updateItem = mItem.getBindingContext(activeModel).getObject(),
-					keyFieldProperties = oView.getKeyFields();
-				keyFieldProperties.Lenum = "";
-				keyFieldProperties.Queue = oView.getGlobalModel().getProperty("/currentQueue");
-				keyFieldProperties.Vbeln = "";
-				keyFieldProperties.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-				keyFieldProperties.Tanum = updateItem.Tanum;
-				keyFieldProperties.Tapos = updateItem.Tapos;
+				var updateItem = mItem.getBindingContext(activeModel).getObject();
+				/*		keyFieldProperties = oView.getKeyFields();
+					keyFieldProperties.Lenum = "";
+					keyFieldProperties.Queue = oView.getGlobalModel().getProperty("/currentQueue");
+					keyFieldProperties.Vbeln = "";
+					keyFieldProperties.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+					keyFieldProperties.Tanum = updateItem.Tanum;
+					keyFieldProperties.Tapos = updateItem.Tapos;*/
 				oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
 				oWhenOdataUpdateDone.done(function(oRfModel) {
 					var oNewModel = oView.byId(oView.getGlobalModel().getProperty("/controlId")).getModel(activeModel).getData().aItems;
@@ -227,7 +243,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					// this.aFilter = [];
 					this.finalItem = updateItem.Tanum;
 					this.finalPos = updateItem.Tapos;
-										// MessageToast.show("Transfer Order confirmed successfully");
+					// MessageToast.show("Transfer Order confirmed successfully");
 					oStatText.stat = "S";
 					oStatText.mItems = updateItem;
 					this.aTotStat.push(oStatText);
@@ -254,11 +270,55 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}.bind(this));
 
 		},
+		acceptItems: function(oView, oSelectItems, controlId, shipInd) {
+			var oWhenOdataUpdateDone;
+			var activeModel = oView.getModelName();
+
+			oSelectItems.forEach(function(mItem) {
+				var updateItem = mItem.getBindingContext(activeModel).getObject();
+				updateItem.ShipInd = shipInd;
+				oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
+				oWhenOdataUpdateDone.done(function(oRfModel) {
+					var oNewModel = oView.byId(controlId).getModel(activeModel).getData().aItems;
+					var index;
+					for (var i = 0; i < oNewModel.length; i++) {
+						if (oNewModel[i].Matnr === oNewModel[i].Matnr) {
+							index = i;
+							break;
+						}
+					}
+					if (!shipInd === "P") {
+						oNewModel.splice(index, 1);
+					}
+					var oJSONModel = new JSONModel();
+					oJSONModel.setData({
+						aItems: oNewModel
+					});
+					oView.setModel(oJSONModel, activeModel);
+				});
+			}.bind(this));
+
+			this.removeItems(oView, controlId);
+
+		},
+		onSaveItems: function(oView, oSelectItems, controlId, shipInd) {
+
+			var activeModel = oView.getModelName();
+
+			oSelectItems.forEach(function(mItems) {
+				var updateItem = mItems.getBindingContext(activeModel).getObject();
+				updateItem.ShipInd = shipInd;
+				updateItem.Vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
+				updateItem.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+				this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
+			}.bind(this));
+			this.removeItems(oView, controlId);
+		},
 
 		entityName: function(oView, sEntityProperty) {
-				var oEntitySetModel = oView.getModel("entitySetProperties"),
-					bEntityName = oEntitySetModel.getProperty(sEntityProperty);
-				return bEntityName;
-			}
+			var oEntitySetModel = oView.getModel("entitySetProperties"),
+				bEntityName = oEntitySetModel.getProperty(sEntityProperty);
+			return bEntityName;
+		}
 	});
 });

@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter",
-	"sap/ui/model/resource/ResourceModel"
-], function(Controller, BaseController, formatter, ResourceModel) {
+	"sap/ui/model/resource/ResourceModel",
+	"gss/newWarehouseManage_R1/model/utilities"
+], function(Controller, BaseController, formatter, ResourceModel, utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.grdelivery", {
@@ -19,6 +20,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
@@ -26,7 +28,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
+
 			/*this.setFragment();*/
 		},
 		seti18nModel: function() {
@@ -37,10 +39,10 @@ sap.ui.define([
 			this.getView().setModel(i18nModel, "i18n");
 		},
 		inputDetails: function() {
-			var Screen = this.getCurrentScrn();
-			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
-			this.getView().byId("inputValue").setPlaceholder(Text);
+			var _screen = this.getCurrentScrn();
+			var _screenModel = this.getScreenModel(_screen);
+			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
+			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 			handleMore: function(event) {
@@ -83,32 +85,26 @@ sap.ui.define([
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
+			this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
+			this.inpVal = _inputValue;
 			if (_inputValue) {
+				this.getView().byId("GRDForm").setVisible(true);
 				this.callOdataService().grKeyFields(this, _inputValue);
 			}
-		}/*,
+		},
+		onHandleUnload: function(oEvent) {
+			utilities.navigateChild("unloadDelivery", this);
 
-		getGrDelivery: function(sInputValue) {
-			//Read gi shipment material from backend
-			var viewProperties = this.getViewProperties(),
-				keyFields = viewProperties.keyFields;
-                var property = "";
-			for (var i=0;;i++) {
-			
-				this.inpVal=[];
-                this.inpVal[i] = property;
-              
-			
-			}
-			for (var i = 0; i < Object.keys(keyFields).length; i++) {
-				
-				keyFields[this.inpVal[5]] = sInputValue;
-			}
-			//Read picking material from backend
-			
-			this.gssCallFunction().populateModelBuild(this);
-
-		}*/,
+		},
+		handleMore: function(oEvent) {
+			this.createElements().handleMoreButtons(oEvent, this);
+		},
+		onHandleItems: function(event) {
+			var _inputValue = this.getView().byId("inputValue").getValue();
+			this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
+			this.getGlobalModel().setProperty("/title", "GR by Delivery");
+			utilities.navigateChild("grDelItems", this);
+		},
 
 		grDeliveryConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);

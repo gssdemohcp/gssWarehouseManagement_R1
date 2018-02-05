@@ -39,6 +39,22 @@ sap.ui.define(["sap/ui/base/Object",
 				// sap.ui.getCore().byId("actual").setValueState(sap.ui.core.ValueState.Error);
 			}
 		},
+		diffShipCalculation: function(actualVal, targVal, fragmentLoaded) {
+			var diffVal = targVal - actualVal;
+			this.diffaVal = diffVal;
+			if (diffVal >= 0 && diffVal <= targVal) {
+				var oData = fragmentLoaded.getModel("handleDiff").getData();
+// 				sap.ui.getCore().byId("actual").setValueState(sap.ui.core.ValueState.None);
+				oData.destDifa = diffVal;
+				oData.destActa = actualVal;
+				oData.destTarget = targVal;
+				fragmentLoaded.getModel("handleDiff").setData(oData);
+				sap.ui.getCore().byId("onHandleDiff").setEnabled(true);
+			} else {
+				sap.ui.getCore().byId("onHandleDiff").setEnabled(false);
+// 				sap.ui.getCore().byId("actual").setValueState(sap.ui.core.ValueState.Error);
+			}
+		},
 
 		setDiffModel: function(oItem, diffFragment) {
 			// for the putaway diff process
@@ -76,6 +92,26 @@ sap.ui.define(["sap/ui/base/Object",
 					};
 				}
 			return oItemList;	
+		},
+		setShipItemsDiffModel: function(oItem, diffragment) {
+			var destTarget = oItem.TargQty;
+			var destChang = oItem.Lfimg;
+			var changDiff = destTarget - destChang;
+			var destActual;
+			var destDiff;
+			if (destTarget !== destChang) {
+				destActual = destChang;
+				destDiff = changDiff;
+			} else {
+				destActual = 0;
+				destDiff = 0;
+			}
+			var oItemList = {
+				destTarget: destTarget,
+				destActa: destActual,
+				destDifa: destDiff
+			};
+			return oItemList;
 		},
 
 		closeFragment: function(fragment) {

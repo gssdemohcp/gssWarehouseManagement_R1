@@ -28,13 +28,34 @@ sap.ui.define([
 			jQuery.sap.syncStyleClass(sContentDensityClass, oView, oControl);
 			oView.addDependent(oControl);
 		},
-		
+
 		// ********** Srini code to get seleced line item from table control begins **************
 		getObjects: function(oView) {
 			var controlId = oView.getGlobalModel().getProperty("/controlId");
 			var model = oView.byId(controlId).getSelectedItem().getBindingContext("materialList");
 			return model;
-		}
+		},
+
+		getItems: function(oView, oControlId, oModel) {
+
+			return oView.byId(oControlId).getSelectedItem().getBindingContext(oModel);
+		},
 		// ********** Srini code to get seleced line item from table control ends **************
+		navigateChild: function(target, oView) {
+			var childScreens = oView.getChildScreens(),
+				childScreen = childScreens[target],
+				currentScreen = oView.getGlobalModel().getProperty("/currentScreen");
+			oView.getGlobalModel().setProperty("/parentScreen", currentScreen);
+
+			oView.getGlobalModel().setProperty("/currentScreen", childScreen);
+			oView.getRouter().navTo("" + target + "");
+
+		},
+		setParentScreen: function(screen, oView) {
+			var viewProperties = oView.getViewProperties();
+			viewProperties.parentScreen = screen;
+
+		}
+
 	};
 });
