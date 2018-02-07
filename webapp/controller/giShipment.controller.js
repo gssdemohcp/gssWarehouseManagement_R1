@@ -1,6 +1,6 @@
 /*eslint linebreak-style: ["error", "windows"]*/
 sap.ui.define([
-		"sap/ui/core/mvc/Controller",
+	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter",
 	"sap/ui/model/json/JSONModel",
@@ -26,6 +26,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
@@ -33,8 +34,8 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
-		/*	this.setFragment();*/
+
+			/*	this.setFragment();*/
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -50,7 +51,7 @@ sap.ui.define([
 			this.getView().addDependent(this.fragmentNewBinLoaded);
 			//	
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);	
+			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
 		},
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
@@ -63,20 +64,21 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getGiShipment(_inputValue);
+				this.getView().byId("footerbar").setVisible(true);
+				this.callOdataService().getLoadInq(this, _inputValue, "", "");
+
 			}
 		},
+		onHandleUnload: function(oEvent) {
+			var _delVal = this.getView().byId("tableGIS").getSelectedItem().getBindingContext("delList").getObject().Vbeln;
+			this.getGlobalModel().setProperty("/currentDelNo", _delVal);
+			utilities.navigateChild("loadDelivery", this);
 
-		getGiShipment: function(sInputValue) {
-			//Read gi shipment material from backend
-			this.gssCallFunction().LoadMaterial(this, sInputValue);
-			//code end -Gokul
 		},
 
 		giShipmentConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
-
 
 		/**,
 

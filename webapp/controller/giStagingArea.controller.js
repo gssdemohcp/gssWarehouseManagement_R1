@@ -20,6 +20,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
@@ -27,7 +28,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
+		
 		/*	this.setFragment();*/
 		},
 		seti18nModel: function() {
@@ -48,7 +49,8 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getGiStageArea(_inputValue);
+				this.getView().byId("footerbar").setVisible(true);
+				this.callOdataService().getLoadInq(this, _inputValue, "", "");
 			}
 		},
 
@@ -57,10 +59,17 @@ sap.ui.define([
 			this.gssCallFunction().LoadMaterial(this, sInputValue);
 			//code end -Gokul
 		},
+			onHandleUnload: function(oEvent) {
+			var _delVal = this.getView().byId("tableGISA").getSelectedItem().getBindingContext("delList").getObject().Vbeln;
+			this.getGlobalModel().setProperty("/currentDelNo", _delVal);
+			utilities.navigateChild("loadDelivery", this);
+
+		},
 
 		giStageAreaConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
+		
 
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.

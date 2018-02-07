@@ -20,13 +20,17 @@ sap.ui.define([
 					this.seti18nModel(this);
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					if (this.getGlobalModel().getProperty("/parentScreen")) {
+						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
+						this.getView().byId("inputValue").setEnabled(false);
+						this.iGetInput();
+					}
 				}.bind(this)
 			});
 
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
 			this.setFragment();
 		},
 
@@ -37,7 +41,6 @@ sap.ui.define([
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
-		
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
@@ -61,7 +64,7 @@ sap.ui.define([
 				this.getView().byId("scanHUinDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
 				this.callOdataService().LoadDetails(this, shipNo, huNo, ""); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				this.callOdataService().LoadDetails(this, shipNo, huNo, procInd);// To pass input values with indicator when a field is empty
+				this.callOdataService().LoadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				var hdr = this.getView().getModel("i18n").getResourceBundle().getText("EnterDel");
 				this.getView().byId("inputValue").setPlaceholder(hdr); // To set placeholder for input field

@@ -2,12 +2,13 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter",
-	"sap/ui/model/resource/ResourceModel"
-], function(Controller, BaseController, formatter, ResourceModel) {
+	"sap/ui/model/resource/ResourceModel",
+	"gss/newWarehouseManage_R1/model/utilities"
+], function(Controller, BaseController, formatter, ResourceModel,utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.giHu", {
-			formatter: formatter,
+		formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -19,6 +20,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
@@ -26,7 +28,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
+
 			/*this.setFragment();*/
 		},
 		seti18nModel: function() {
@@ -51,16 +53,16 @@ sap.ui.define([
 		},
 
 		iGetInput: function(oEvent) {
-			var _inputValue = this.getView().byId("inputValue").getValue();
+			var _inputValue = this.byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getGrHu(_inputValue);
+				this.getView().byId("GIDForm").setVisible(true);
+				this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
+				this.callOdataService().grKeyFields(this, _inputValue);
 			}
 		},
+		onHandleUnload: function(oEvent) {
+			utilities.navigateChild("loadDelivery", this);
 
-		getGrHu: function(sInputValue) {
-			//Read gi shipment material from backend
-			this.gssCallFunction().populateModelBuild(this, sInputValue);
-			//code end -Gokul
 		},
 
 		grHuConfirm: function() {

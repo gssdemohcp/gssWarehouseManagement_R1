@@ -13,7 +13,7 @@
 						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<Table id="tableGISA" class="sapUiTinyMargin" mode="MultiSelect" selectionChange="onSingleSelectGISA" growing="true"
-						growingScrollToLoad="true" width="auto" items="{itemLists>/aItems}">
+						growingScrollToLoad="true" width="auto" items="{delList>/aItems}">
 						<headerToolbar>
 							<Toolbar>
 								<Title text="Delivery Header Information"/>
@@ -65,14 +65,14 @@
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Text id="vbelnSAgi" text="{itemLists>Vbeln}"/>
-									<Text text="{itemLists>LifnrName}"/>
-									<Text text="{itemLists>Lifnr}"/>
-									<Text text="{itemLists>Btgew} {itemLists>Gewei}"/>
-									<Text text="{parts:[{path:'itemLists>Vstel'}],formatter: '.formatter.shipPoint'}"/>
-									<Text id="loadstatgi" text="{parts:[{path:'itemLists>LoadStat'}],formatter: '.formatter.giIndicator'}"/>
-									<Text text="{parts:[{path:'itemLists>HuInd'}],formatter: '.formatter.huIndicator'}"/>
-									<Text text="{parts:[{path:'itemLists>ToInd'}],formatter: '.formatter.huIndicator'}"/>
+									<Text id="vbelnSAgi" text="{delList>Vbeln}"/>
+									<Text text="{delList>LifnrName}"/>
+									<Text text="{delList>Lifnr}"/>
+									<Text text="{delList>Btgew} {delList>Gewei}"/>
+									<Text text="{parts:[{path:'delList>Vstel'}],formatter: '.formatter.shipPoint'}"/>
+									<Text id="loadstatgi" text="{parts:[{path:'delList>LoadStat'}],formatter: '.formatter.giIndicator'}"/>
+									<Text text="{parts:[{path:'delList>HuInd'}],formatter: '.formatter.huIndicator'}"/>
+									<Text text="{parts:[{path:'delList>ToInd'}],formatter: '.formatter.huIndicator'}"/>
 								</cells>
 							</ColumnListItem>
 						</items>

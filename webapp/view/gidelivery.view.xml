@@ -31,17 +31,17 @@
 				</VBox>
 				<VBox>
 					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="GIloadIndicator"
-						text="{parts:[{path:'delList>/LoadStat'}],formatter: '.formatter.giIndicator'}"/>
-					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="giDelField" text="{delList>/Vbeln}" visible="false"/>
-					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/Lifnr}"/>
-					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/LifnrName}"/>
-					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/Vstel'}],formatter: '.formatter.shipPoint'}"/>
+						text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="giDelField" text="{delList>/aItems/0/Vbeln}" visible="false"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Lifnr}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/LifnrName}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/aItems/0/Vstel'}],formatter: '.formatter.shipPoint'}"/>
 					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
-						text="{path: 'delList>/Lfdat',type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'}}"/>
-					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/Btgew} {delList>/Gewei}"/>
-					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${delList>/Anzpk}) }"/>
-					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/HuInd'}],formatter: '.formatter.huIndicator'}"/>
-					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="GItoInd" text="{parts:[{path:'delList>/ToInd'}],formatter: '.formatter.huIndicator'}"/>
+						text="{path: 'delList>/aItems/0/Lfdat',type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'}}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Btgew} {delList>/Gewei}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${delList>/aItems/0/Anzpk}) }"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/aItems/0/HuInd'}],formatter: '.formatter.huIndicator'}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="GItoInd" text="{parts:[{path:'delList>/aItems/0/ToInd'}],formatter: '.formatter.huIndicator'}"/>
 				</VBox>
 			</HBox>
 		</f:content>
@@ -50,7 +50,7 @@
 				</content>
 					<footer id="footer"
 					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
-					<Bar id="footerbar" visible="false">
+					<Bar id="footerbar" >
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->

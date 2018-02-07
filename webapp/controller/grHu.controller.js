@@ -61,37 +61,7 @@ sap.ui.define([
 				this.callOdataService().grKeyFields(this, _inputValue);
 			}
 		},
-		handleMore: function(event) {
-			var popover = new sap.m.Popover({ // To build popup&nbsp;
-				showHeader: false,
-				placement: sap.m.PlacementType.Top,
-				content: [
-					new sap.m.Button({ // To display Logout button inside popup
-						text: "Pack", // Text to be dispalyed for the button
-						type: sap.m.ButtonType.Transparent, // Button type
-						press: function() { // press functionality for the button
-								this.onHandlePack(); // Call to exit() method
-							}.bind(this) // bind the popup to the view
-					}),
-					new sap.m.Button({ // To display Logout button inside popup
-						text: "Unpack", // Text to be dispalyed for the button
-						type: sap.m.ButtonType.Transparent, // Button type
-						press: function() { // press functionality for the button
-								this.onHandleUnpack(); // Call to exit() method
-							}.bind(this) // bind the popup to the view
-					})
-					// new sap.m.Button({ // To display Logout button inside popup
-					// 	text: "Split", // Text to be dispalyed for the button
-					// 	type: sap.m.ButtonType.Transparent, // Button type
-					// 	press: function() { // press functionality for the button
-					// 			this.onHandleSplit(); // Call to exit() method
-					// 		}.bind(this) // bind the popup to the view
-					// })
-				]
-			}).addStyleClass('sapMOTAPopover sapTntToolHeaderPopover'); // CSS style for the popup
-
-			popover.openBy(event.getSource()); // To open popup event
-		},
+	
 
 		handleMore: function(oEvent) {
 			var _delVal = this.byId("grDelField").getText();

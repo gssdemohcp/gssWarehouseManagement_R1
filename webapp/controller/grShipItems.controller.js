@@ -85,11 +85,12 @@ sap.ui.define([
 			this.gssDifferenceFunction().diffShipCalculation(actualVal, this.modelObjects.TargQty, this.fragmentLoaded);
 		},
 		onDiffConfirm: function() {
-			var destActa = this.fragmentLoaded.getModel("handleDiff").getData().destActa,
-				destDifa = this.fragmentLoaded.getModel("handleDiff").getData().destDifa,
-				destTarget = this.fragmentLoaded.getModel("handleDiff").getData().destTarget;
+			var destTarget = this.fragmentLoaded.getModel("handleDiff").getData().destTarget;
+			var destActa = sap.ui.getCore().byId("actual").getValue();
+			var differenceVal = destTarget - destActa;
+			var destDifa = differenceVal;
 			this.destDifa = "X";
-			var sValInd = "DestTarga";
+			var sValInd = "Lfimg";
 			this._updateTable(destActa, destDifa, destTarget, sValInd);
 		},
 
@@ -97,20 +98,14 @@ sap.ui.define([
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 		},
 		_updateTable: function(destActa, destDifa, destTarget, sProperty, sValue) {
-			// for the putaway diff process
+			// for the GR diff process
 			var aItems = this.getView().byId("table").getModel("itemList").getData().aItems;
 			aItems.forEach(function(oLineData) {
-				if (oLineData.Tapos === this.modelObjects.Tapos &&
-					oLineData.Tanum === this.modelObjects.Tanum) {
-					if (sProperty === "DestTarga") {
-						var destActual = parseFloat(destActa);
-						var destActualStr = destActual.toFixed(3);
-						oLineData.DestActa = destActualStr.toString();
-						oLineData.DestQuantity = destActa;
-						oLineData.DestDifa = destDifa.toString();
-						oLineData.DestTarga = destTarget;
-					} else if (sProperty === "newBin") {
-						oLineData.Nlpla = sValue;
+				var selectItemVal = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject().Posnr;
+				this.selectVal = selectItemVal;
+				if (oLineData.Posnr === selectItemVal) {
+					if (sProperty === "Lfimg") {
+						oLineData.Lfimg = destActa;
 					}
 				}
 			}.bind(this));

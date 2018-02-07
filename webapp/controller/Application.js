@@ -542,12 +542,19 @@ sap.ui.define([
 					view: "gidelivery",
 					gidelivery: "LM61",
 					keyFields: {
+						Vbeln: "",
 						Exidv: "",
 						ShipInd: "",
 						Lgnum: "",
 						Tknum: "",
-						Lgbzo: "",
-						Vbeln: ""
+						Lgbzo: ""
+
+					},
+					modelData: "",
+					childScreens: {
+						loadDelivery: "LM31",
+						UnPack: "LM222",
+						grDelItems: "LM333"
 					},
 					filters: {},
 					placeHolderLabel: "Enter Delivery",
@@ -558,16 +565,22 @@ sap.ui.define([
 					view: "giStagingArea",
 					giStagingArea: "LM62",
 					keyFields: {
+						Vbeln: "",
 						Exidv: "",
 						ShipInd: "",
 						Lgnum: "",
 						Tknum: "",
-						Lgbzo: "",
-						Vbeln: ""
+						Lgbzo: ""
 					},
 					filters: {
 						Lgbzo: "",
 						Lgnum: ""
+					},
+					modelData: "",
+					childScreens: {
+						loadDelivery: "LM31",
+						UnPack: "LM222",
+						grDelItems: "LM333"
 					},
 					placeHolderLabel: "Enter Staging Area",
 					entitySet: "/GIProcessSet",
@@ -577,16 +590,22 @@ sap.ui.define([
 					view: "giShipment",
 					giShipment: "LM63",
 					keyFields: {
+						Vbeln: "",
 						Exidv: "",
 						ShipInd: "",
 						Lgnum: "",
 						Tknum: "",
-						Lgbzo: "",
-						Vbeln: ""
+						Lgbzo: ""
 					},
 					filters: {
 						Tknum: "",
 						Lgnum: ""
+					},
+					modelData: "",
+					childScreens: {
+						loadDelivery: "LM31",
+						UnPack: "LM222",
+						grDelItems: "LM333"
 					},
 					placeHolderLabel: "Enter Shipment",
 					entitySet: "/GIProcessSet",
@@ -604,6 +623,12 @@ sap.ui.define([
 						Vbeln: ""
 					},
 					filters: {},
+					modelData: "",
+					childScreens: {
+						loadDelivery: "LM31",
+						UnPack: "LM222",
+						grDelItems: "LM333"
+					},
 					placeHolderLabel: "Enter Handling Unit",
 					entitySet: "/GIProcessSet",
 					modelName: "delList"
@@ -692,7 +717,14 @@ sap.ui.define([
 				LM555: {
 					view: "unpackMaterial",
 					material: "LM555",
-					keyFields: {},
+					keyFields: {
+						Exidv: "",
+						ShipInd: "",
+						Lgnum: "",
+						Tknum: "",
+						Lgbzo: "",
+						Vbeln: ""
+					},
 					parentScreen: "",
 					filters: {
 						Exidv: "",
@@ -705,7 +737,14 @@ sap.ui.define([
 				LM666: {
 					view: "unpackHu",
 					material: "LM666",
-					keyFields: {},
+					keyFields: {
+						Exidv: "",
+						ShipInd: "",
+						Lgnum: "",
+						Tknum: "",
+						Lgbzo: "",
+						Vbeln: ""
+					},
 					parentScreen: "",
 					filters: {
 						Exidv: "",

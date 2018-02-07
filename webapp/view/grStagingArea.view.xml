@@ -94,8 +94,7 @@
 					<Button id="LUnload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Unload"  />
 							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="More"/>
 							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items"/>
-							<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip"  tooltip="Shipment"/>
-							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO"  tooltip="Generate TO"/>
+							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO" enabled="false" tooltip="Generate TO"/>
 							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false"  tooltip="TO Execution"/>
 							<Button id="post" icon="sap-icon://paper-plane" press="onPostGR" visible="false"  tooltip="Post"/>
 

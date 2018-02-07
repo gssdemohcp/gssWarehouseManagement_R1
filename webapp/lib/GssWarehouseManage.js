@@ -1,13 +1,13 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
-	"sap/ui/Device",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"gss/newWarehouseManage_R1/model/utilities",
 	"gss/newWarehouseManage_R1/controller/errorHandling",
-	"gss/newWarehouseManage_R1/lib/ODataModelInterface"
+	"gss/newWarehouseManage_R1/lib/ODataModelInterface",
+	"sap/m/MessageToast"
 
-], function(Controller, Device, BaseController, JSONModel, MessageBox, utilities, errorHandling, ODataModelInterface) {
+], function(Controller, BaseController, JSONModel, MessageBox, utilities, errorHandling, ODataModelInterface, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.lib.GssWarehouseManage", {
@@ -277,6 +277,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oSelectItems.forEach(function(mItem) {
 				var updateItem = mItem.getBindingContext(activeModel).getObject();
 				updateItem.ShipInd = shipInd;
+				updateItem.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 				oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
 				oWhenOdataUpdateDone.done(function(oRfModel) {
 					var oNewModel = oView.byId(controlId).getModel(activeModel).getData().aItems;
@@ -295,6 +296,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						aItems: oNewModel
 					});
 					oView.setModel(oJSONModel, activeModel);
+					MessageToast.show(oView.getGlobalModel().getProperty("/message"));
+
 				});
 			}.bind(this));
 
@@ -304,13 +307,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		onSaveItems: function(oView, oSelectItems, controlId, shipInd) {
 
 			var activeModel = oView.getModelName();
-
 			oSelectItems.forEach(function(mItems) {
 				var updateItem = mItems.getBindingContext(activeModel).getObject();
 				updateItem.ShipInd = shipInd;
 				updateItem.Vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
 				updateItem.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 				this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
+				MessageToast.show(oView.getGlobalModel().getProperty("/message"));
 			}.bind(this));
 			this.removeItems(oView, controlId);
 		},

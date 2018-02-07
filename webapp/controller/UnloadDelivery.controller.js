@@ -18,8 +18,8 @@ sap.ui.define([
 				onBeforeShow: function(evt) {
 					this._router = this.getRouter();
 					this.seti18nModel();
-
-					this.inputDetails();
+                    this.inputDetails();
+                    this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 
 					if (this.getGlobalModel().getProperty("/parentScreen")) {

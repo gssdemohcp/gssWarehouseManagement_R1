@@ -1,14 +1,15 @@
 sap.ui.define([
-"sap/ui/core/mvc/Controller",
+	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter",
-	"sap/ui/model/resource/ResourceModel"
-], function(Controller, BaseController, formatter, ResourceModel) {
+	"sap/ui/model/resource/ResourceModel",
+	"gss/newWarehouseManage_R1/model/utilities"
+], function(Controller, BaseController, formatter, ResourceModel,utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.gidelivery", {
-		
-			formatter: formatter,
+
+		formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -20,6 +21,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
@@ -27,8 +29,8 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
-		/*	this.setFragment();*/
+
+			/*	this.setFragment();*/
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -53,21 +55,23 @@ sap.ui.define([
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
+			this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
+			this.inpVal = _inputValue;
 			if (_inputValue) {
-				this.getGiDelivery(_inputValue);
+				this.getView().byId("GIDForm").setVisible(true);
+				this.callOdataService().grKeyFields(this, _inputValue);
 			}
 		},
+		onHandleUnload: function(oEvent) {
+			utilities.navigateChild("loadDelivery", this);
 
-		getGiDelivery: function(sInputValue) {
-			//Read gi shipment material from backend
-			this.gssCallFunction().populateModelBuild(this, sInputValue);
-			//code end -Gokul
 		},
+
+	
 
 		giDeliveryConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
-
 
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
