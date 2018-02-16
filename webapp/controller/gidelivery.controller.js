@@ -4,7 +4,7 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/model/formatter",
 	"sap/ui/model/resource/ResourceModel",
 	"gss/newWarehouseManage_R1/model/utilities"
-], function(Controller, BaseController, formatter, ResourceModel,utilities) {
+], function(Controller, BaseController, formatter, ResourceModel, utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.gidelivery", {
@@ -56,19 +56,29 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
-			this.inpVal = _inputValue;
+
 			if (_inputValue) {
 				this.getView().byId("GIDForm").setVisible(true);
 				this.callOdataService().grKeyFields(this, _inputValue);
 			}
 		},
+		onHandleScanInput: function(oEvent) {
+			this.callOdataService().barcodeReader(this, "inputValue");
+			this.iGetInput();
+		},
 		onHandleUnload: function(oEvent) {
 			utilities.navigateChild("loadDelivery", this);
 
 		},
-
-	
-
+		handleMore: function(oEvent) {
+			this.createElements().handleMoreButtons(oEvent, this);
+		},
+		onHandleItems: function(event) {
+			utilities.navigateChild("grDelItems", this);
+		},
+		onHandleShip: function(event) {
+			utilities.navigateChild("giShip", this);
+		},
 		giDeliveryConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}

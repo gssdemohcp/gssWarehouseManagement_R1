@@ -23,7 +23,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 
-			/*this.setFragment();*/
+			this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -32,16 +32,39 @@ sap.ui.define([
 			});
 			this.getView().setModel(i18nModel, "i18n");
 		},
+		setFragment: function() {
+			var callFragment = this.gssFragmentsFunction().loadFragment(this, "addMaterial");
+			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
+		},
+
 		oDataCall: function() {
 			var _huVal = this.getGlobalModel().getProperty("/currentHuVal");
-			   this._shipInd = this.getGlobalModel().getProperty("/shipInd");
+			this._shipInd = this.getGlobalModel().getProperty("/shipInd");
 			this.callOdataService().getLoadInq(this, _huVal, this._shipInd);
 
 		},
-		onHandleAccept:function(){
+		onHandleAccept: function() {
 			var tableRowSelectedItems = this.callOdataService().selectedItems(this, "unpackTable");
-			this.callOdataService().acceptItems(this,tableRowSelectedItems,"unpackTable",this._shipInd);
+			this.callOdataService().acceptItems(this, tableRowSelectedItems, "unpackTable", this._shipInd);
 
+		},
+		onAddItem: function() {
+			this.fragmentLoaded.open();
+
+		},
+		onMatSave: function() {
+			var material = sap.ui.getCore().byId("material").getValue(),
+				quantity = sap.ui.getCore().byId("quantity").getValue(),
+				unit = sap.ui.getCore().byId("unit").getValue();
+			this.callOdataService().materialSave(this, material, quantity, unit);
+			this.fragmentLoaded.close();
+
+		},
+		onMatCancel: function() {
+			sap.ui.getCore().byId("material").setValue("");
+			sap.ui.getCore().byId("quantity").setValue("");
+			sap.ui.getCore().byId("unit").setValue("");
+			this.fragmentLoaded.close();
 		}
 
 		/**

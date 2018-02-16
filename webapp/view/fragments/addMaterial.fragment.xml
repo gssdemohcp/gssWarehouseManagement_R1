@@ -4,9 +4,15 @@
 		<content>
 			<HBox>
 				<VBox>
-					<Input id="material" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="Enter Material" />
-					<Input id="quantity" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="Enter Quantity"/>
-					<Input id="unit" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="Enter Unit"/>
+					<Input id="material" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="Enter Material" width="80%"/>
+					<Button id="addMatScan" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="packMatScan" ariaLabelledBy="actionButtonLabel"
+					width="5%" visible="true"/>
+					<Input id="quantity" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="Enter Quantity" width="80%"/>
+					<Button id="addQuaScan" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="packQuaScan" ariaLabelledBy="actionButtonLabel"
+					width="5%" visible="true"/>
+					<Input id="unit" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="Enter Unit" width="80%"/>
+					<Button id="addUnitScan" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="packUnitScan" ariaLabelledBy="actionButtonLabel"
+					width="5%" visible="true"/>
 				</VBox>
 			</HBox>
 		</content>

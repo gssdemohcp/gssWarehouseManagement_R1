@@ -19,7 +19,7 @@
 							<HBox>
 								<VBox>
 									<Label class="sapUiTinyMarginTop" text="Load/Unload Status"/>
-									<Label class="sapUiTinyMarginTop" id="GIdelFieldLabel" text="Delivery" visible="false"/>
+									<Label class="sapUiTinyMarginTop" id="GIdelFieldLabel" text="Delivery" />
 									<Label class="sapUiTinyMarginTop" text="Vendor"/>
 									<Label class="sapUiTinyMarginTop" text="Name"/>
 									<Label class="sapUiTinyMarginTop" text="Shipping Point"/>
@@ -32,7 +32,7 @@
 								<VBox>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="GIloadIndicator"
 										text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="giDelField" text="{delList>/aItems/0/Vbeln}" visible="false"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="giDelField" text="{delList>/aItems/0/Vbeln}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Lifnr}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/LifnrName}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'delList>/aItems/0/Vstel'}],formatter: '.formatter.shipPoint'}"/>
@@ -62,6 +62,7 @@
 							<Button id="Lload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="load" />
 							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="more" />
 							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="items"  />
+							<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip"  tooltip="Shipment"/>
 							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO"  tooltip="Generate TO"/>
 							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" enabled="false" text="TO Execution"/>
 							<Button id="post" icon="sap-icon://paper-plane" press="onPostGI" visible="false" enabled="false" text="Post"/>

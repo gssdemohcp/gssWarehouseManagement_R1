@@ -1,0 +1,93 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+	controllerName="gss.newWarehouseManage_R1.controller.giShip" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="Title">
+				<customHeader>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Title id="rfScreen" text="Shipment" level="H2" textAlign="Center"/>
+						<ToolbarSpacer/>
+						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
+					</Toolbar>
+				</customHeader>
+				<Toolbar>
+					<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
+				</Toolbar>
+				<Toolbar id="toolbarheader">
+					<Input class="sapUiTinyMarginBegin" id="inputValue" valueHelpRequest="onHandlePoHelp" submit="iGetInput" liveChange="onHandleBinding"
+						width="100%" textAlign="Begin"/>
+					<Button id="scanButton" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+				</Toolbar>
+				<content>
+					<f:SimpleForm id="grShip" editable="false" layout="ResponsiveGridLayout" title="Shipment Information" labelSpanXL="3" labelSpanL="3"
+						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+						columnsL="1" columnsM="1" singleContainerFullSize="false">
+						<f:content>
+							<HBox>
+								<VBox>
+									<Label class="sapUiTinyMarginTop" text="Shipment"/>
+									<Label class="sapUiTinyMarginTop" text="External Identification No"/>
+									<Label class="sapUiTinyMarginTop" text="Container ID"/>
+									<Label class="sapUiTinyMarginTop" text="Shipment Type"/>
+									<Label class="sapUiTinyMarginTop" text="Shipment Route"/>
+								</VBox>
+								<VBox>
+									<Text id="shipment" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{shipList>/aItems/0/Tknum}"/>
+									<Text id="eiNo" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+										text="{parts:[{path:'shipList>/aItems/0/Exti1'}],formatter: '.formatter.shipInfo'}"/>
+									<Text id="contID" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+										text="{parts:[{path:'shipList>/aItems/0/Signi'}],formatter: '.formatter.shipInfo'}"/>
+									<Text id="shipTyp" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{shipList>/aItems/0/Shtyp}"/>
+									<Text id="shipRoute" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+										text="{parts:[{path:'shipList>/aItems/0/Route'}],formatter: '.formatter.shipInfo'}"/>
+								</VBox>
+							</HBox>
+						</f:content>
+					</f:SimpleForm>
+					<f:SimpleForm id="grShipData" editable="false" layout="ResponsiveGridLayout" title="Actual Data" labelSpanXL="3" labelSpanL="3"
+						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+						columnsL="1" columnsM="1" singleContainerFullSize="false"></f:SimpleForm>
+					<HBox></HBox>
+					<VBox>
+						<HBox>
+							<Label class="sapUiSmallMargin" text="Current Load Start Date"/>
+							<DatePicker id="DP1" value="{path:'shipList>/aItems/0/Dalbg', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
+							<VBox></VBox>
+						</HBox>
+						<HBox>
+							<Label class="sapUiSmallMargin" text="Actual Load Start Time"/>
+							<TimePicker id="TP3" displayFormat="HH:mm:ss" placeholder=""/>
+							<VBox></VBox>
+						</HBox>
+						<HBox>
+							<Label class="sapUiSmallMargin" text="Actual Load End Date"/>
+							<DatePicker id="DP2" value="{path:'shipList>/aItems/0/Dalen', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
+							<VBox></VBox>
+						</HBox>
+						<HBox>
+							<Label class="sapUiSmallMargin" text="Actual Load End Time"/>
+							<TimePicker id="TP4" displayFormat="HH:mm:ss" placeholder=""/>
+							<VBox></VBox>
+						</HBox>
+					</VBox>
+				</content>
+				<footer id="footer"
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
+					<Bar id="footerbar">
+						<contentLeft>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+						</contentLeft>
+						<contentRight>
+							<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="Save"/>
+							<Button id="print" icon="sap-icon://print" press="onHandlePrint" tooltip="Print"/>
+						</contentRight>
+						<!--</contentMiddle>-->
+						<!--</Toolbar>-->
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

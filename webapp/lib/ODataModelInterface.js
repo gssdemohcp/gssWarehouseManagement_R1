@@ -113,8 +113,10 @@ sap.ui.define(["sap/ui/base/Object",
 			var msg;
 			if (currentScreen === "LM555" || currentScreen === "LM666") {
 				msg = "Material(s) unpacked successfully!";
-			} else {
+			} else if (currentScreen === "LM333" || currentScreen === "LM444" || currentScreen === "LM334" || currentScreen === "LM445") {
 				msg = "Item details saved successfully!";
+			}else if (currentScreen === "LM777") {
+				msg = "Shipment details saved successfully!";
 			}
 			var oRfData = [];
 			oRfData.Msgtyp = "S";
@@ -130,10 +132,10 @@ sap.ui.define(["sap/ui/base/Object",
 			//GET VIEW ENTITY SET NAME FROM CONFIQURATION JSON MODEL
 			var sEntitySet = oView.getEntitySet();
 			//GET KEY FIELDS FROM CONFIGURATION JSON MODEL
-			var oKeyFields = oView.getKeyFields();
+			/*var oKeyFields = oView.getKeyFields();*/
 			//Setup filter string
-			var sPath = this.setKeyField(oKeyFields);
-			var oWhenCallCreateIsDone = this._oODATAService.oCallCreateDeferred(sEntitySet + sPath, oUpdateItem, oView);
+			/*var sPath = this.setKeyField(oKeyFields);*/
+			var oWhenCallCreateIsDone = this._oODATAService.oCallCreateDeferred(sEntitySet , oUpdateItem, oView);
 			//Handle response from oData Call
 			oWhenCallCreateIsDone.done(function(oResult, oFailed) {
 				var oRfData;
@@ -143,7 +145,7 @@ sap.ui.define(["sap/ui/base/Object",
 				};
 				this.errorHandlingDelegate(oView, oRfData, true);
 				promise.resolve(oResult);
-			});
+			}.bind(this ));
 			return promise;
 		},
 

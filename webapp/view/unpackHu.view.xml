@@ -10,7 +10,7 @@
 							<Toolbar>
 								<Title text="Lower Level HU List"/>
 								<ToolbarSpacer/>
-								<Button id="addItem" tooltip="Add Item" icon="sap-icon://add" press="onAddItem" visible="false"/>
+								<Button id="addItem" tooltip="Add Item" icon="sap-icon://add" press="onAddItem"/>
 							</Toolbar>
 						</headerToolbar>
 						<columns>

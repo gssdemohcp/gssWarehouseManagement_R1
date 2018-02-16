@@ -35,7 +35,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 
-			/*	this.setFragment();*/
+			this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -45,13 +45,9 @@ sap.ui.define([
 			this.getView().setModel(i18nModel, "i18n");
 		},
 		setFragment: function() {
-			//Fragement Code for New Bin
-			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin");
-			this.fragmentNewBinLoaded = sap.ui.xmlfragment(loadFragment, this);
-			this.getView().addDependent(this.fragmentNewBinLoaded);
-			//	
-			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
+			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
+			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
@@ -61,64 +57,97 @@ sap.ui.define([
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 
+		onSingleSelectGI: function(oEvent) {
+			var len = this.getView().byId("tableGIS").getSelectedItems().length;
+			this.getView().byId("ship").setVisible(true);
+			if (len === 1) {
+				var vbeln = this.getView().byId("tableGIS").getSelectedItem().getBindingContext("delList").getObject().Vbeln;
+				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
+				var obj = this.getView().byId("tableGIS").getSelectedItem().getBindingContext("delList").getObject();
+				this.indiTO = obj.ToInd;
+				this.indiTOConf = obj.ToConfirmInd;
+				this.indiPost = obj.ToPostInd;
+				this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost);
+			} else if (len > 1) {
+				MessageToast.show("Please select one delivery");
+				this.gssFragmentsFunction().fragmentFalse();
+			} else if (len === 0) {
+				MessageToast.show("Please select a delivery");
+				this.gssFragmentsFunction().fragmentFalse();
+			}
+		},
+
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				this.getView().byId("footerbar").setVisible(true);
 				this.callOdataService().getLoadInq(this, _inputValue, "", "");
-
+				
 			}
 		},
+		onHandleScanInput: function(oEvent) {
+			this.callOdataService().barcodeReader(this, "inputValue");
+			this.iGetInput();
+		},
 		onHandleUnload: function(oEvent) {
-			var _delVal = this.getView().byId("tableGIS").getSelectedItem().getBindingContext("delList").getObject().Vbeln;
-			this.getGlobalModel().setProperty("/currentDelNo", _delVal);
 			utilities.navigateChild("loadDelivery", this);
 
+		},
+		onHandleItems: function(event) {
+			utilities.navigateChild("grShipItems", this);
+		},
+		handleMore: function(oEvent) {
+			this.createElements().handleMoreButtons(oEvent, this);
+		},
+		onHandleShip: function(event) {
+			utilities.navigateChild("giShip", this);
+		},
+		onConfirm: function() {
+			if (this.indiTO === "") {
+				this.onHandleGTO();
+			}else{
+				this.onHandlePost();
+			}
+		},
+
+		onConfirmCancel: function() {
+			this.onCancel();
+		},
+
+		onGenerateTO: function() {
+			if (!this.fragmentLoaded) {
+				this.fragmentLoaded = this.setFragment();
+			}
+			this.getView().addDependent(this.fragmentLoaded);
+			this.fragmentLoaded.open();
+			sap.ui.getCore().byId("popup").setText("Are you sure you want to generate Transfer Order?");
+		},
+
+		onHandleGTO: function() {
+			this.fragmentLoaded.close();
+			this.callOdataService().handleCreate(this, "tableGIS","delList","T");
+		
+		},
+
+		onPostGR: function() {
+			if (!this.fragmentLoaded) {
+				this.fragmentLoaded = this.setFragment();
+			}
+			this.getView().addDependent(this.fragmentLoaded);
+			this.fragmentLoaded.open();
+			sap.ui.getCore().byId("popup").setText("Are you sure you want to post Goods Issue?");
+
+		},
+
+		onHandlePost: function() {
+			this.fragmentLoaded.close();
+			this.callOdataService().handleCreate(this, "tableGIS","delList","C");
+		
 		},
 
 		giShipmentConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
-
-		/**,
-
-		putAwayConfirm: function() {
-			var selectedItems = this.gssCallFunction().confirmItems(this);
-		}
-
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf gss.newWarehouseManage_R1.view.giShipment
-		 */
-		//	onInit: function() {
-		//
-		//	},
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf gss.newWarehouseManage_R1.view.giShipment
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf gss.newWarehouseManage_R1.view.giShipment
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf gss.newWarehouseManage_R1.view.giShipment
-		 */
-		//	onExit: function() {
-		//
-		//	}
 
 	});
 

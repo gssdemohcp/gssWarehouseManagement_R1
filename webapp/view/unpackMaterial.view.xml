@@ -10,7 +10,7 @@
 							<Toolbar>
 								<Title text="Material List"/>
 								<ToolbarSpacer/>
-								<Button id="addItem" tooltip="Add Item" icon="sap-icon://add" press="onAddItem" visible="false"/>
+								<Button id="addItem" tooltip="Add Item" icon="sap-icon://add" press="onAddItem"/>
 								<Button id="saveButton" text="Save" type="Transparent" press="onSave" visible="false"/>
 								<Button id="cancelButton" text="Cancel" type="Transparent" press="onCancel" visible="false"/>
 							</Toolbar>

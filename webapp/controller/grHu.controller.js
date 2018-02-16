@@ -58,21 +58,21 @@ sap.ui.define([
 			if (_inputValue) {
 				this.getView().byId("GRDForm").setVisible(true);
 				this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
+				this.getGlobalModel().setProperty("/title", "GR by Handling Unit");
 				this.callOdataService().grKeyFields(this, _inputValue);
+				var _delVal = this.byId("grDelField").getText();
+				this.getGlobalModel().setProperty("/currentDelNo", _delVal);
 			}
 		},
-	
+		onHandleScanInput: function(oEvent) {
+			this.callOdataService().barcodeReader(this, "inputValue");
+			this.iGetInput();
+		},
 
 		handleMore: function(oEvent) {
-			var _delVal = this.byId("grDelField").getText();
-			this.getGlobalModel().setProperty("/currentDelNo", _delVal);
-
 			this.createElements().handleMoreButtons(oEvent, this);
 		},
 
-		grHuConfirm: function() {
-			var selectedItems = this.gssCallFunction().confirmItems(this);
-		},
 		onHandleItems: function(event) {
 			this.getGlobalModel().setProperty("/title", "GR by Handling Unit");
 			utilities.navigateChild("grDelItems", this);
@@ -80,6 +80,9 @@ sap.ui.define([
 		onHandleUnload: function(oEvent) {
 			utilities.navigateChild("unloadDelivery", this);
 
+		},
+		grHuConfirm: function() {
+			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
 
 		/**

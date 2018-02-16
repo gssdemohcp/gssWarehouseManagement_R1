@@ -21,8 +21,7 @@ sap.ui.define([
 
 			this._router = this.getRouter();
 			this.seti18nModel();
-
-			/*this.setFragment();*/
+			this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -31,6 +30,11 @@ sap.ui.define([
 			});
 			this.getView().setModel(i18nModel, "i18n");
 		},
+		setFragment: function() {
+			var callFragment = this.gssFragmentsFunction().loadFragment(this, "addHU");
+			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
+		},
+
 		oDataCall: function() {
 			var _huVal = this.getGlobalModel().getProperty("/currentHuVal"),
 				_shipInd = this.getGlobalModel().getProperty("/shipInd"),
@@ -46,6 +50,10 @@ sap.ui.define([
 				ind = "I";
 			}
 			this.callOdataService().acceptItems(this, tableRowSelectedItems, "unpackTable", ind);
+
+		},
+		onAddItem: function() {
+			this.fragmentLoaded.open();
 
 		}
 

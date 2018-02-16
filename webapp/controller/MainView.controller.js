@@ -61,7 +61,7 @@ sap.ui.define([
 			}));
 			this._oDialog.open();
 			//*********************************Code by Sabari To Hide the Value on Main Menu Popup Open******************************//
-			this.getView().byId("rfScreen").setText("WareHouse Management"); //To Set the Title of the Page//
+		/*	this.getView().byId("rfScreen").setText("WareHouse Management"); //To Set the Title of the Page//*/
 			this.getView().byId("toolbarheader").setVisible(false); //To hide the Header Bar//
 			this.getView().byId("inputValue").setVisible(false); //To Hide the Input Field //
 			this.getView().byId("footerbar").setVisible(false); //To Hide the Footer Bar //

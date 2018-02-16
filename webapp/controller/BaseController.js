@@ -147,7 +147,6 @@ sap.ui.define([
 			return this.getGlobalModel().setProperty("/" + property + "", sValue);
 
 		},
-
 		//**********************************************************************************************
 		//THESE METHODS ARE USED IN ODATASERVICE LIBRARY
 		//**********************************************************************************************

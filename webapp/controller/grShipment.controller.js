@@ -52,36 +52,43 @@ sap.ui.define([
 			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
+		onSingleSelect: function(oEvent) {
+			var len = this.getView().byId("table").getSelectedItems().length;
+			if (len === 1) {
+				var vbeln = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
+				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
+			} else if (len > 1) {
+				MessageToast.show("Please select one delivery");
+				this.getView().byId("ship").setVisible(false);
+			}
+		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
-
 			if (_inputValue) {
 				this.getView().byId("footerbar").setVisible(true);
 				this.callOdataService().getLoadInq(this, _inputValue, "", "");
+				this.getGlobalModel().setProperty("/title", "GR by Shipment");
 
 			}
 		},
+		onHandleScanInput: function(oEvent) {
+			this.callOdataService().barcodeReader(this, "inputValue");
+			this.iGetInput();
+		},
 		handleMore: function(oEvent) {
-			var _delVal = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
-			this.getGlobalModel().setProperty("/currentDelNo", _delVal);
 			this.createElements().handleMoreButtons(oEvent, this);
 		},
 
-		grShipmentConfirm: function() {
-			var selectedItems = this.gssCallFunction().confirmItems(this);
-		},
 		onHandleItems: function(event) {
-			var _delVal = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
-			this.getGlobalModel().setProperty("/currentDelNo", _delVal);
-			this.getGlobalModel().setProperty("/title", "GR by Shipment");
 			utilities.navigateChild("grShipItems", this);
 		},
 		onHandleUnload: function(oEvent) {
-			var _delVal = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
-			this.getGlobalModel().setProperty("/currentDelNo", _delVal);
 			utilities.navigateChild("unloadDelivery", this);
 
+		},
+		grShipmentConfirm: function() {
+			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
 
 		/**

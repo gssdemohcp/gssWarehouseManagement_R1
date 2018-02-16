@@ -145,7 +145,8 @@ sap.ui.define([
 				SecondView: "",
 				lastSubModelSetName: "",
 				pack: "",
-				shipInd: ""
+				shipInd: "",
+				indiTO:""
 			});
 			this._oGlobalModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oGlobalModel, "globalProperties");
@@ -159,7 +160,9 @@ sap.ui.define([
 				mainMenu: "gss.newWarehouseManage_R1.view.fragments.rfMenu",
 				newBin: "gss.newWarehouseManage_R1.view.fragments.newBin",
 				difference: "gss.newWarehouseManage_R1.view.fragments.difference",
-				confirmation: "gss.newWarehouseManage_R1.view.fragments.confirmation"
+				confirmation: "gss.newWarehouseManage_R1.view.fragments.confirmation",
+				addHu: "gss.newWarehouseManage_R1.view.fragments.addHU",
+				addMaterial: "gss.newWarehouseManage_R1.view.fragments.addMaterial"
 
 			});
 
@@ -478,7 +481,7 @@ sap.ui.define([
 						unloadDelivery: "LM34",
 						putaway: "LM09",
 						UnPack: "LM222",
-						grShipItems: "LM333"
+						grShipItems: "LM444"
 					},
 					filters: {
 						Tknum: "",
@@ -504,7 +507,7 @@ sap.ui.define([
 						unloadDelivery: "LM34",
 						putaway: "LM09",
 						UnPack: "LM222",
-						grShipItems: "LM333"
+						grShipItems: "LM444"
 					},
 					filters: {
 						Lgbzo: "",
@@ -553,8 +556,9 @@ sap.ui.define([
 					modelData: "",
 					childScreens: {
 						loadDelivery: "LM31",
-						UnPack: "LM222",
-						grDelItems: "LM333"
+						UnPack: "LM223",
+						grDelItems: "LM334",
+						giShip:"LM777"
 					},
 					filters: {},
 					placeHolderLabel: "Enter Delivery",
@@ -579,8 +583,9 @@ sap.ui.define([
 					modelData: "",
 					childScreens: {
 						loadDelivery: "LM31",
-						UnPack: "LM222",
-						grDelItems: "LM333"
+						UnPack: "LM223",
+						grShipItems: "LM445",
+						giShip:"LM777"
 					},
 					placeHolderLabel: "Enter Staging Area",
 					entitySet: "/GIProcessSet",
@@ -604,8 +609,9 @@ sap.ui.define([
 					modelData: "",
 					childScreens: {
 						loadDelivery: "LM31",
-						UnPack: "LM222",
-						grDelItems: "LM333"
+						UnPack: "LM223",
+						grShipItems: "LM445",
+						giShip:"LM777"
 					},
 					placeHolderLabel: "Enter Shipment",
 					entitySet: "/GIProcessSet",
@@ -626,8 +632,9 @@ sap.ui.define([
 					modelData: "",
 					childScreens: {
 						loadDelivery: "LM31",
-						UnPack: "LM222",
-						grDelItems: "LM333"
+						UnPack: "LM223",
+						grDelItems: "LM334",
+						giShip:"LM777"
 					},
 					placeHolderLabel: "Enter Handling Unit",
 					entitySet: "/GIProcessSet",
@@ -675,6 +682,27 @@ sap.ui.define([
 					entitySet: "/GRProcessSet",
 					modelName: "packItems"
 				},
+				LM223: {
+					view: "UnPack",
+					UnPack: "LM222",
+					keyFields: {
+						Vbeln: "",
+						Exidv: "",
+						ShipInd: "",
+						Lgnum: "",
+						Tknum: "",
+						Lgbzo: ""
+					},
+					filters: {},
+					parentScreen: "",
+					childScreens: {
+						unpackMaterial: "LM556",
+						unpackHu: "LM667"
+					},
+					placeHolderLabel: "Enter Handling Unit",
+					entitySet: "/GIProcessSet",
+					modelName: "packItems"
+				},
 				LM333: {
 					view: "grDelItems",
 					keyFields: {
@@ -714,6 +742,45 @@ sap.ui.define([
 					entitySet: "/GRProcessSet",
 					modelName: "itemList"
 				},
+				LM334: {
+					view: "grDelItems",
+					keyFields: {
+						Vbeln: "",
+						Lgnum: "",
+						ShipInd: "",
+						Tknum: "",
+						Lgbzo: "",
+						Exidv: ""
+
+					},
+					filters: {
+						Vbeln: "",
+						Lgnum: ""
+					},
+					parentScreen: "",
+					placeHolderLabel: "",
+					entitySet: "/GIProcessSet",
+					modelName: "itemList"
+				},
+				LM445: {
+					view: "grShipItems",
+					keyFields: {
+						Vbeln: "",
+						Lgnum: "",
+						ShipInd: "",
+						Tknum: "",
+						Lgbzo: "",
+						Exidv: ""
+					},
+					filters: {
+						Vbeln: "",
+						Lgnum: ""
+					},
+					parentScreen: "",
+					placeHolderLabel: "",
+					entitySet: "/GIProcessSet",
+					modelName: "itemList"
+				},
 				LM555: {
 					view: "unpackMaterial",
 					material: "LM555",
@@ -729,7 +796,11 @@ sap.ui.define([
 					filters: {
 						Exidv: "",
 						ShipInd: "",
-						Vbeln: ""
+						Vbeln: "",
+						Lgnum: "",
+						Matnr: "",
+						Lfimg: "",
+						Vrkme: ""
 					},
 					entitySet: "/GRProcessSet",
 					modelName: "HUMatModel"
@@ -753,8 +824,71 @@ sap.ui.define([
 					},
 					entitySet: "/GRProcessSet",
 					modelName: "HUModel"
+				},
+				LM556: {
+					view: "unpackMaterial",
+					material: "LM555",
+					keyFields: {
+						Exidv: "",
+						ShipInd: "",
+						Lgnum: "",
+						Tknum: "",
+						Lgbzo: "",
+						Vbeln: ""
+					},
+					parentScreen: "",
+					filters: {
+						Exidv: "",
+						ShipInd: "",
+						Vbeln: "",
+						Lgnum: "",
+						Matnr: "",
+						Lfimg: "",
+						Vrkme: ""
+					},
+					entitySet: "/GIProcessSet",
+					modelName: "HUMatModel"
+				},
+				LM667: {
+					view: "unpackHu",
+					material: "LM666",
+					keyFields: {
+						Exidv: "",
+						ShipInd: "",
+						Lgnum: "",
+						Tknum: "",
+						Lgbzo: "",
+						Vbeln: ""
+					},
+					parentScreen: "",
+					filters: {
+						Exidv: "",
+						ShipInd: "",
+						Vbeln: ""
+					},
+					entitySet: "/GIProcessSet",
+					modelName: "HUModel"
+				},
+				LM777: {
+					view: "giShip",
+					giShip: "LM777",
+					keyFields: {
+						Vbeln: " ",
+						Lgnum: "",
+						Exidv: "",
+						Tknum: "",
+						Lgbzo: "",
+						ShipInd:""
+					},
+					parentScreen: "",
+					filters: {
+						Exidv: "",
+						ShipInd: "",
+						Vbeln: ""
+					},
+					entitySet: "/GIProcessSet",
+					modelName: "shipList"
 				}
-
 			});
 
 			this._oMenuTransactionModelNew.setDefaultBindingMode(BindingMode.OneWay);

@@ -39,7 +39,10 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_hcb", "sap_belize"]
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"rootView": {
@@ -81,9 +84,11 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -227,127 +232,196 @@
 					"transition": "slide",
 					"clearAggregation": true,
 					"viewName": "grDelItems"
+				},
+				"giShip": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "giShip"
 				}
 			},
-			"routes": [{
-				"name": "Main",
-				"pattern": "",
-				"target": "Main"
-			}, {
-				"name": "putaway",
-				"pattern": "putaway",
-				"target": "putaway"
-			}, {
-				"name": "picking",
-				"pattern": "picking",
-				"target": "picking"
-			}, {
-				"name": "loadInqHu",
-				"pattern": "loadInqHu",
-				"target": "loadInqHu"
-			}, {
-				"name": "loadInqShipment",
-				"pattern": "loadInqShipment",
-				"target": "loadInqShipment"
-			}, {
-				"name": "loadInqDelivery",
-				"pattern": "loadInqDelivery",
-				"target": "loadInqDelivery"
-			}, {
-				"name": "loadShipment",
-				"pattern": "loadShipment",
-				"target": "loadShipment"
-			}, {
-				"name": "loadDelivery",
-				"pattern": "loadDelivery",
-				"target": "loadDelivery"
-			}, {
-				"name": "unloadShipment",
-				"pattern": "unloadShipment",
-				"target": "unloadShipment"
-			}, {
-				"name": "unloadDelivery",
-				"pattern": "unloadDelivery",
-				"target": "unloadDelivery"
-			}, {
-				"name": "grStagingArea",
-				"pattern": "LM72",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["grStagingArea"]
-			}, {
-				"name": "grShipment",
-				"pattern": "LM73",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["grShipment"]
-			}, {
-				"name": "giStagingArea",
-				"pattern": "LM62",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["giStagingArea"]
-			}, {
-				"name": "giShipment",
-				"pattern": "LM63",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["giShipment"]
-			}, {
-				"name": "gidelivery",
-				"pattern": "LM61",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["gidelivery"]
-			}, {
-				"name": "giHu",
-				"pattern": "giHu",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["giHu"]
-			}, {
-				"name": "grdelivery",
-				"pattern": "LM71",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["grdelivery"]
-			}, {
-				"name": "grHu",
-				"pattern": "LM76",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["grHu"]
-			}, {
-				"name": "UnPack",
-				"pattern": "LM222",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["UnPack"]
-			}, {
-				"name": "unpackMaterial",
-				"pattern": "LM555",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["unpackMaterial"]
-			}, {
-				"name": "unpackHu",
-				"pattern": "LM666",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["unpackHu"]
-			}, {
-				"name": "grDelItems",
-				"pattern": "LM333",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["grDelItems"]
-			}, {
-				"name": "grShipItems",
-				"pattern": "LM444",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["grShipItems"]
-			}]
+			"routes": [
+				{
+					"name": "Main",
+					"pattern": "",
+					"target": "Main"
+				},
+				{
+					"name": "putaway",
+					"pattern": "putaway",
+					"target": "putaway"
+				},
+				{
+					"name": "picking",
+					"pattern": "picking",
+					"target": "picking"
+				},
+				{
+					"name": "loadInqHu",
+					"pattern": "loadInqHu",
+					"target": "loadInqHu"
+				},
+				{
+					"name": "loadInqShipment",
+					"pattern": "loadInqShipment",
+					"target": "loadInqShipment"
+				},
+				{
+					"name": "loadInqDelivery",
+					"pattern": "loadInqDelivery",
+					"target": "loadInqDelivery"
+				},
+				{
+					"name": "loadShipment",
+					"pattern": "loadShipment",
+					"target": "loadShipment"
+				},
+				{
+					"name": "loadDelivery",
+					"pattern": "loadDelivery",
+					"target": "loadDelivery"
+				},
+				{
+					"name": "unloadShipment",
+					"pattern": "unloadShipment",
+					"target": "unloadShipment"
+				},
+				{
+					"name": "unloadDelivery",
+					"pattern": "unloadDelivery",
+					"target": "unloadDelivery"
+				},
+				{
+					"name": "grStagingArea",
+					"pattern": "LM72",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"grStagingArea"
+					]
+				},
+				{
+					"name": "grShipment",
+					"pattern": "LM73",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"grShipment"
+					]
+				},
+				{
+					"name": "giStagingArea",
+					"pattern": "LM62",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"giStagingArea"
+					]
+				},
+				{
+					"name": "giShipment",
+					"pattern": "LM63",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"giShipment"
+					]
+				},
+				{
+					"name": "gidelivery",
+					"pattern": "LM61",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"gidelivery"
+					]
+				},
+				{
+					"name": "giHu",
+					"pattern": "giHu",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"giHu"
+					]
+				},
+				{
+					"name": "grdelivery",
+					"pattern": "LM71",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"grdelivery"
+					]
+				},
+				{
+					"name": "grHu",
+					"pattern": "LM76",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"grHu"
+					]
+				},
+				{
+					"name": "UnPack",
+					"pattern": "LM222",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"UnPack"
+					]
+				},
+				{
+					"name": "unpackMaterial",
+					"pattern": "LM555",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"unpackMaterial"
+					]
+				},
+				{
+					"name": "unpackHu",
+					"pattern": "LM666",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"unpackHu"
+					]
+				},
+				{
+					"name": "grDelItems",
+					"pattern": "LM333",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"grDelItems"
+					]
+				},
+				{
+					"name": "grShipItems",
+					"pattern": "LM444",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"grShipItems"
+					]
+				},
+				{
+					"name": "giShip",
+					"pattern": "giShip",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"giShip"
+					]
+				}
+			]
 		}
+	},
+	"sap.platform.hcp": {
+		"uri": "webapp",
+		"_version": "1.1.0"
 	}
 }

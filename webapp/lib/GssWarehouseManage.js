@@ -35,6 +35,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		removeItems: function(oView, controlId) {
 			oView.getView().byId(controlId).removeSelections(true);
 		},
+		barcodeReader: function(oView, fieldId) {
+			cordova.plugins.barcodeScanner.scan(function(barcodeData) {
+				if (barcodeData.text !== null) {
+					if (sap.ui.Device.os.name === "Android") {
+						navigator.vibrate(500);
+					}
+					if (sap.ui.Device.os.name === "iOS") {
+
+					}
+					var inputvalue = barcodeData.text;
+					oView.byId(fieldId).setValue(inputvalue);
+				}
+			});
+
+		},
 
 		checkNewBin: function(oView, sInputValue) {
 			var promise = jQuery.Deferred();
@@ -101,7 +116,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this._ODataModelInterface.filterModelPopulate(oView);
 
 		},
-		grKeyFields: function(oView, sInputValue) {
+		grKeyFields: function(oView, sInputValue, shipInd) {
 
 			var oKeyFields = oView.getKeyFields();
 			var property = "";
@@ -112,6 +127,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 			for (var i = 0; i < Object.keys(oKeyFields).length; i++) {
 				oKeyFields[_inpVal] = sInputValue;
+			}
+			if (shipInd) {
+				oKeyFields.ShipInd = shipInd;
 			}
 
 			oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
@@ -158,12 +176,28 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			if (!shipInd) {
 
 				oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			} else {
+				oFilterFields.ShipInd = shipInd;
 			}
-			oFilterFields.ShipInd = shipInd;
 			if (Vbeln) {
 				oFilterFields.Vbeln = Vbeln;
 			}
 			this._ODataModelInterface.filterModelPopulate(oView);
+		},
+
+		materialSave: function(oView, mat, quant, unit) {
+			var oFilterFields = oView.getFilterFields();
+			oFilterFields.Vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
+			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			oFilterFields.Matnr = mat;
+			oFilterFields.Lfimg = quant;
+			oFilterFields.Vrkme = unit;
+			oFilterFields.ShipInd = "";
+			oFilterFields.Exidv = "";
+
+			this._ODataModelInterface.filterModelPopulate(oView);
+			MessageToast.show(oView.getGlobalModel().getProperty("/message"));
+
 		},
 
 		LoadDetails: function(oView, sInputValue, huVal, procInd) {
@@ -223,13 +257,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			oSelectItems.forEach(function(mItem) {
 				var updateItem = mItem.getBindingContext(activeModel).getObject();
-				/*		keyFieldProperties = oView.getKeyFields();
-					keyFieldProperties.Lenum = "";
-					keyFieldProperties.Queue = oView.getGlobalModel().getProperty("/currentQueue");
-					keyFieldProperties.Vbeln = "";
-					keyFieldProperties.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-					keyFieldProperties.Tanum = updateItem.Tanum;
-					keyFieldProperties.Tapos = updateItem.Tapos;*/
 				oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
 				oWhenOdataUpdateDone.done(function(oRfModel) {
 					var oNewModel = oView.byId(oView.getGlobalModel().getProperty("/controlId")).getModel(activeModel).getData().aItems;
@@ -316,6 +343,71 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				MessageToast.show(oView.getGlobalModel().getProperty("/message"));
 			}.bind(this));
 			this.removeItems(oView, controlId);
+		},
+		giShipUpdate: function(oView, startDate, endDate, startTime, endTime, tkNum) {
+			var oWhenOdataUpdateDone;
+			var oEntry = [];
+			var oKeyFields = oView.getKeyFields();
+			oKeyFields.Vbeln = "";
+			oKeyFields.Lgnum = "";
+			oKeyFields.ShipInd = "";
+			oEntry.StartDate = startDate;
+			oEntry.StartTime = startTime;
+			oEntry.EndDate = endDate;
+			oEntry.EndTime = endTime;
+			oEntry.Tknum = tkNum;
+			oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, oEntry);
+			oWhenOdataUpdateDone.done(function(oRfModel) {
+				MessageToast.show(oView.getGlobalModel().getProperty("/message"));
+			});
+
+		},
+		handleCreate: function(oView, controlId, model, shipInd) {
+			var vbeln = oView.byId(controlId).getSelectedItem().getBindingContext(model).getObject().Vbeln;
+			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			var objects = {
+				"Vbeln": vbeln,
+				"Lgnum": lgnum,
+				"ShipInd": shipInd
+			};
+			var oWhenCallCreateIsDone = this._ODataModelInterface.keyFieldModelCreate(oView, objects);
+			oWhenCallCreateIsDone.done(function(oResult) {
+				if (shipInd === "T") {
+					var shipTabModel = oView.byId(controlId).getModel(model).getData().aItems;
+					shipTabModel.forEach(function(shItems) {
+						if (vbeln === shItems.Vbeln) {
+							shItems.ToInd = "X";
+						}
+					}.bind(this));
+					oView.byId(controlId).getModel(model).setData(shipTabModel);
+					oView.byId("GTO").setVisible(false);
+					oView.byId("TOEx").setVisible(true);
+				} else {
+					oView.gssFragmentsFunction().fragmentFalse(oView);
+					oView.byId(controlId).setVisible(false);
+				}
+			}.bind(this));
+
+		},
+		handlePost: function(oView, controlId, model) {
+			var oGlobalModel = oView.getGlobalModel();
+			var shipPostVbeln = oView.byId(controlId).getSelectedItem().getBindingContext(model).getObject().Vbeln;
+			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			var shInd = "C";
+			var postObj = {
+				"Vbeln": shipPostVbeln,
+				"Lgnum": lgnum,
+				"ShipInd": shInd
+			};
+			var oWhenCallCreateIsDone = this._ODataModelInterface.keyFieldModelCreate(this, postObj);
+			oWhenCallCreateIsDone.done(function(oResult) {
+				this.gssFragmentsFunction().fragmentFalse(this);
+				this.getView().byId(controlId).setVisible(false);
+
+				if (oGlobalModel.getProperty("/messageType") === "E") { // To check if message type is "E"
+
+				}
+			}.bind(this));
 		},
 
 		entityName: function(oView, sEntityProperty) {

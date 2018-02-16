@@ -46,13 +46,28 @@ sap.ui.define([
 			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
+		onSingleSelectSA: function(oEvent) {
+			var len = this.getView().byId("tableSA").getSelectedItems().length;
+			if (len === 1) {
+				var vbeln = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
+				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
+			} else if (len > 1) {
+				MessageToast.show("Please select one delivery");
+				this.getView().byId("ship").setVisible(false);
+			}
+		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				this.getView().byId("footerbar").setVisible(true);
 				this.callOdataService().getLoadInq(this, _inputValue, "", "");
+				this.getGlobalModel().setProperty("/title", "GR by Staging Area");
 			}
+		},
+		onHandleScanInput: function(oEvent) {
+			this.callOdataService().barcodeReader(this, "inputValue");
+			this.iGetInput();
 		},
 
 		handleMore: function(oEvent) {
@@ -69,12 +84,11 @@ sap.ui.define([
 			var selectedItems = this.gssCallFunction().confirmItems(this);
 		},
 		onHandleItems: function(event) {
-			this.getGlobalModel().setProperty("/title", "GR by Staging Area");
+
 			utilities.navigateChild("grShipItems", this);
 		},
 		onHandleUnload: function(oEvent) {
-			var _delVal = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
-			this.getGlobalModel().setProperty("/currentDelNo", _delVal);
+
 			utilities.navigateChild("unloadDelivery", this);
 
 		}

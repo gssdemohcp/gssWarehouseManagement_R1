@@ -120,7 +120,7 @@ sap.ui.define([
 			this.getView().byId("itemInput").setValue(_inputValue);
 			this.getView().byId("itemInput").setEnabled(false);
 
-			this.callOdataService().getLoadInq(this, _inputValue);
+			this.callOdataService().getLoadInq(this, _inputValue,"","");
 
 		},
 		onHandleSave: function() {

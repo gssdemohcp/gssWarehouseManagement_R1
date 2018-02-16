@@ -55,11 +55,15 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
-			this.inpVal = _inputValue;
+			this.getGlobalModel().setProperty("/title", "GR by Delivery");
 			if (_inputValue) {
 				this.getView().byId("GRDForm").setVisible(true);
 				this.callOdataService().grKeyFields(this, _inputValue);
 			}
+		},
+		onHandleScanInput: function(oEvent) {
+			this.callOdataService().barcodeReader(this, "inputValue");
+			this.iGetInput();
 		},
 		onHandleUnload: function(oEvent) {
 			utilities.navigateChild("unloadDelivery", this);
@@ -69,9 +73,7 @@ sap.ui.define([
 			this.createElements().handleMoreButtons(oEvent, this);
 		},
 		onHandleItems: function(event) {
-			var _inputValue = this.getView().byId("inputValue").getValue();
-			this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
-			this.getGlobalModel().setProperty("/title", "GR by Delivery");
+
 			utilities.navigateChild("grDelItems", this);
 		},
 

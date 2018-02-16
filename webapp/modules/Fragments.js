@@ -25,6 +25,42 @@ sap.ui.define(["sap/ui/base/Object",
 			this._mRunningSwipes = {};
 			this._bOneWaitingSuccess = false;
 		},
+		indCheck: function(oView, indiTO, indiTOConf, indiPost) {
+			if (indiTO === "") {
+				oView.byId("GTO").setVisible(true); //To display G.TO button
+				oView.byId("TOEx").setVisible(false);
+				oView.byId("post").setVisible(false);
+			} else if (indiTO === "X") {
+				oView.byId("TOEx").setVisible(true); //To display G.TO button
+				oView.byId("GTO").setVisible(false); //To display G.TO button
+				oView.byId("post").setVisible(false);
+				if (indiTOConf === "X") {
+					oView.byId("TOEx").setVisible(false);
+					oView.byId("post").setVisible(true);
+					oView.byId("GTO").setVisible(false); //To display G.TO button
+					if (indiPost === "X") {
+						oView.byId("post").setVisible(false);
+						oView.byId("ship").setVisible(false);
+						oView.byId("TOEx").setVisible(false);
+						oView.byId("GTO").setVisible(false); //To display G.TO button
+
+					}
+				}
+			} else if (indiTOConf === "") {
+				oView.byId("post").setVisible(false);
+				oView.byId("TOEx").setVisible(true);
+				oView.byId("GTO").setVisible(false); //To display G.TO button
+
+			}
+		},
+
+		fragmentFalse: function(oView) {
+			oView.byId("ship").setVisible(false);
+			oView.byId("post").setVisible(false);
+			oView.byId("TOEx").setVisible(false);
+			oView.byId("GTO").setVisible(false); //To display G.TO button
+
+		},
 
 		loadFragment: function(oView, fragmentName) {
 			if (!this.fragment) {
