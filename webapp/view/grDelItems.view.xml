@@ -29,7 +29,7 @@
 						items="{itemList>/aItems}" mode="MultiSelect" selectionChange="onHandleSelection">
 						<headerToolbar>
 							<Toolbar>
-								<Title text="Material Info"/>
+								<Title text="{i18n>matInfo}"/>
 								<ToolbarSpacer/>
 							</Toolbar>
 						</headerToolbar>
