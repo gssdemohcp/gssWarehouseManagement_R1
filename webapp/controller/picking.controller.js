@@ -26,7 +26,6 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
 		},
 
 		inputDetails: function() {
@@ -41,14 +40,17 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.callOdataService().getMaterial(this,_inputValue);
-				//this.getPickingMaterial(_inputValue);
+				this.callOdataService().getMaterial(this, _inputValue);
 			}
+		},
+		onHandleScanInput: function() {
+			this.callOdataService().barcodeReader(this, "inputValue");
+			this.iGetInput();
 		},
 
 		getPickingMaterial: function(sInputValue) {
 			//Read picking material from backend
-			
+
 			var oWhenCallReadIsDone = this.gssCallFunction().LoadMaterial(this, sInputValue);
 
 			//code end -selvan

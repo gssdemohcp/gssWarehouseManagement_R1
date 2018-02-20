@@ -55,14 +55,28 @@ sap.ui.define([
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.byId("inputValue").getValue();
+			var whenOdataCall;
 			if (_inputValue) {
-				this.getView().byId("GRDForm").setVisible(true);
 				this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
-				this.getGlobalModel().setProperty("/title", "GR by Handling Unit");
-				this.callOdataService().grKeyFields(this, _inputValue);
-				var _delVal = this.byId("grDelField").getText();
-				this.getGlobalModel().setProperty("/currentDelNo", _delVal);
+				this.getGlobalModel().setProperty("/title", "GR By Handling Unit");
+				whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
+				whenOdataCall.done(function() {
+						this.getView().byId("GRDForm").setVisible(true);
+						var _delVal = this.byId("grDelField").getText();
+						this.getGlobalModel().setProperty("/currentDelNo", _delVal);
+						this.checkInd();
+					}.bind(this)
+
+				);
+
 			}
+		},
+		checkInd: function() {
+			var data = this.getModelData("itemList").aItems[0];
+			this.indiTO = data.ToInd;
+			this.indiTOConf = data.ToConfirmInd;
+			this.indiPost = data.PostInd;
+			this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost);
 		},
 		onHandleScanInput: function(oEvent) {
 			this.callOdataService().barcodeReader(this, "inputValue");
@@ -74,11 +88,55 @@ sap.ui.define([
 		},
 
 		onHandleItems: function(event) {
-			this.getGlobalModel().setProperty("/title", "GR by Handling Unit");
 			utilities.navigateChild("grDelItems", this);
 		},
 		onHandleUnload: function(oEvent) {
 			utilities.navigateChild("unloadDelivery", this);
+
+		},
+		onConfirm: function() {
+			if (this.indiTO === "") {
+				this.onHandleGTO();
+			} else {
+				this.onHandlePost();
+			}
+		},
+
+		onConfirmCancel: function() {
+			this.onCancel();
+		},
+
+		onGenerateTO: function() {
+			if (!this.fragmentLoaded) {
+				this.fragmentLoaded = this.setFragment();
+			}
+			this.getView().addDependent(this.fragmentLoaded);
+			this.fragmentLoaded.open();
+			sap.ui.getCore().byId("popup").setText("Are you sure you want to generate Transfer Order?");
+		},
+
+		onHandleGTO: function() {
+			this.fragmentLoaded.close();
+			var whenOdataCall = this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "T");
+			whenOdataCall.done(function() {
+				this.getView().byId("toInd").setText("Available");
+			}.bind(this));
+
+		},
+
+		onPostGR: function() {
+			if (!this.fragmentLoaded) {
+				this.fragmentLoaded = this.setFragment();
+			}
+			this.getView().addDependent(this.fragmentLoaded);
+			this.fragmentLoaded.open();
+			sap.ui.getCore().byId("popup").setText("Are you sure you want to post Goods Receipt?");
+
+		},
+
+		onHandlePost: function() {
+			this.fragmentLoaded.close();
+			this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "C");
 
 		},
 		grHuConfirm: function() {

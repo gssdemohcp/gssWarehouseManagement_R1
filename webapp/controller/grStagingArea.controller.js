@@ -48,20 +48,29 @@ sap.ui.define([
 		},
 		onSingleSelectSA: function(oEvent) {
 			var len = this.getView().byId("tableSA").getSelectedItems().length;
+			this.getView().byId("ship").setVisible(true);
 			if (len === 1) {
 				var vbeln = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
 				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
+				var obj = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject();
+				this.indiTO = obj.ToInd;
+				this.indiTOConf = obj.ToConfirmInd;
+				this.indiPost = obj.ToPostInd;
+				this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost);
 			} else if (len > 1) {
 				MessageToast.show("Please select one delivery");
-				this.getView().byId("ship").setVisible(false);
+				this.gssFragmentsFunction().fragmentFalse();
+			} else if (len === 0) {
+				MessageToast.show("Please select a delivery");
+				this.gssFragmentsFunction().fragmentFalse();
 			}
 		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getView().byId("footerbar").setVisible(true);
 				this.callOdataService().getLoadInq(this, _inputValue, "", "");
+				this.getView().byId("tableSA").setVisible(true);
 				this.getGlobalModel().setProperty("/title", "GR by Staging Area");
 			}
 		},
@@ -91,6 +100,52 @@ sap.ui.define([
 
 			utilities.navigateChild("unloadDelivery", this);
 
+		},
+		onConfirm: function() {
+			if (this.indiTO === "") {
+				this.onHandleGTO();
+			} else {
+				this.onHandlePost();
+			}
+		},
+
+		onConfirmCancel: function() {
+			this.onCancel();
+		},
+
+		onGenerateTO: function() {
+			if (!this.fragmentLoaded) {
+				this.fragmentLoaded = this.setFragment();
+			}
+			this.getView().addDependent(this.fragmentLoaded);
+			this.fragmentLoaded.open();
+			sap.ui.getCore().byId("popup").setText("Are you sure you want to generate Transfer Order?");
+		},
+
+		onHandleGTO: function() {
+			this.fragmentLoaded.close();
+			this.callOdataService().handleShipTO(this, "tableSA", "itemList", "T");
+
+		},
+
+		onPostGR: function() {
+			if (!this.fragmentLoaded) {
+				this.fragmentLoaded = this.setFragment();
+			}
+			this.getView().addDependent(this.fragmentLoaded);
+			this.fragmentLoaded.open();
+			sap.ui.getCore().byId("popup").setText("Are you sure you want to post Goods Receipt?");
+
+		},
+
+		onHandlePost: function() {
+			this.fragmentLoaded.close();
+			this.callOdataService().handleShipTO(this, "tableSA", "itemList", "C");
+
+		},
+
+		giStageAreaConfirm: function() {
+			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
 
 		/**

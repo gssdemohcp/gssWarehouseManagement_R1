@@ -2,7 +2,7 @@
 	controllerName="gss.newWarehouseManage_R1.controller.grStagingArea" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="GR by Staging Area">
+			<Page title="{i18n>grBySa}">
 				<content>
 					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
@@ -10,55 +10,55 @@
 					<Toolbar id="toolbarheader">
 						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
-						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<Table id="tableSA" class="sapUiTinyMargin" mode="MultiSelect" selectionChange="onSingleSelectSA" growing="true" growingScrollToLoad="true"
-						width="auto" rememberSelections="true" items="{itemList>/aItems}">
+						width="auto" rememberSelections="true" items="{itemList>/aItems}" visible="false">
 						<headerToolbar>
 							<Toolbar>
-								<Title text="Delivery Header Information"/>
+								<Title text="{i18n>delHeadInfo}"/>
 								<ToolbarSpacer/>
 							</Toolbar>
 						</headerToolbar>
 						<columns>
 							<Column>
 								<header>
-									<Label text="Delivery No" design="Bold"/>
+									<Label text="{i18n>delNo}" design="Bold"/>
 								</header>
 							</Column>
 							<Column>
 								<header>
-									<Label text="Name" design="Bold"/>
+									<Label text="{i18n>name}" design="Bold"/>
 								</header>
 							</Column>
 							<Column>
 								<header>
-									<Label text="Vendor" design="Bold"/>
-								</header>
-							</Column>
-							<Column>
-								<header>
-									<Label text="Total Weight" design="Bold"/>
+									<Label text="{i18n>vendor}" design="Bold"/>
 								</header>
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 								<header>
-									<Label text="Shipping Point" design="Bold"/>
+								<Label text="{i18n>totWeigh}" design="Bold"/>
 								</header>
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 								<header>
-									<Label text="Load/Unload Status" design="Bold"/>
+									<Label text="{i18n>shipPoint}" design="Bold"/>
 								</header>
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 								<header>
-									<Label text="HU Indicator" design="Bold"/>
+									<Label text="{i18n>loadStatus}" design="Bold"/>
 								</header>
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 								<header>
-									<Label text="TO Indicator" design="Bold"/>
+									<Label text="{i18n>huInd}" design="Bold"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
+								<header>
+									<Label text="{i18n>toInd}" design="Bold"/>
 								</header>
 							</Column>
 						</columns>
@@ -86,18 +86,17 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
-							/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
-					<Button id="LUnload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Unload"  />
-							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="More"/>
-							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items"/>
-							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO" enabled="false" tooltip="Generate TO"/>
-							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false"  tooltip="TO Execution"/>
-							<Button id="post" icon="sap-icon://paper-plane" press="onPostGR" visible="false"  tooltip="Post"/>
-
+							<Button id="Lload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="{i18n>unload}"/>
+							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="{i18n>more}"/>
+							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="{i18n>items}"/>
+							<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="{i18n>shipment}"/>
+							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO" visible="false" tooltip="{i18n>generateTO}"/>
+							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" tooltip="{i18n>toExec}"/>
+							<Button id="post" icon="sap-icon://paper-plane" press="onPostGI" visible="false" tooltip="{i18n>post}"/>
 						</contentRight>
 						<!--</contentMiddle>-->
 						<!--</Toolbar>-->

@@ -60,6 +60,14 @@ sap.ui.define([
 				this.getunloadDetails(_inputValue, huNo);
 			}
 		},
+		onHandleScanInput:function(){
+			this.callOdataService().barcodeReader(this, "inputValue");
+		    this.iGetInput();
+		},
+		onHandleScanHU:function(){
+			this.callOdataService().barcodeReader(this, "scanHUinDel");
+		    this.iGetInput();
+		},
 
 		setFragment: function() {
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");

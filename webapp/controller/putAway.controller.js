@@ -61,11 +61,14 @@ sap.ui.define([
 				this.callOdataService().getMaterial(this, _inputValue);
 			}
 		},
-
+		onHandleScanInput: function() {
+			this.callOdataService().barcodeReader(this, "inputValue");
+			this.iGetInput();
+		},
 
 		putAwayConfirm: function() {
 			var tableRowSelectedItems = this.callOdataService().selectedItems(this, "toTable");
-			this.callOdataService().confirmItems(this,tableRowSelectedItems);
+			this.callOdataService().confirmItems(this, tableRowSelectedItems);
 
 		},
 

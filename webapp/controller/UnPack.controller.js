@@ -67,6 +67,10 @@ sap.ui.define([
 			this.getView().byId("byHU").setEnabled(true);
 
 		},
+		onHandleScanInput: function() {
+			this.callOdataService().barcodeReader(this, "huInput");
+			this.getHUInput();
+		},
 		onHandleMat: function(oEvent) {
 
 			utilities.navigateChild("unpackMaterial", this);

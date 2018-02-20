@@ -35,7 +35,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 
-			this.setFragment();
+			/*this.setFragment();*/
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -66,7 +66,7 @@ sap.ui.define([
 				var obj = this.getView().byId("tableGIS").getSelectedItem().getBindingContext("delList").getObject();
 				this.indiTO = obj.ToInd;
 				this.indiTOConf = obj.ToConfirmInd;
-				this.indiPost = obj.ToPostInd;
+				this.indiPost = obj.PostInd;
 				this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost);
 			} else if (len > 1) {
 				MessageToast.show("Please select one delivery");
@@ -80,7 +80,7 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getView().byId("footerbar").setVisible(true);
+				this.getView().byId("tableGIS").setVisible(true);
 				this.callOdataService().getLoadInq(this, _inputValue, "", "");
 				
 			}
@@ -125,7 +125,7 @@ sap.ui.define([
 
 		onHandleGTO: function() {
 			this.fragmentLoaded.close();
-			this.callOdataService().handleCreate(this, "tableGIS","delList","T");
+			this.callOdataService().handleShipTO(this, "tableGIS","delList","T");
 		
 		},
 
@@ -141,7 +141,7 @@ sap.ui.define([
 
 		onHandlePost: function() {
 			this.fragmentLoaded.close();
-			this.callOdataService().handleCreate(this, "tableGIS","delList","C");
+			this.callOdataService().handleShipTO(this, "tableGIS","delList","C");
 		
 		},
 

@@ -54,14 +54,28 @@ sap.ui.define([
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.byId("inputValue").getValue();
+			var whenOdataCall;
 			if (_inputValue) {
-				this.getView().byId("GIDForm").setVisible(true);
 				this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
 				this.getGlobalModel().setProperty("/title", "GI by Handling Unit");
-				this.callOdataService().grKeyFields(this, _inputValue);
-				var _delVal = this.byId("giDelField").getText();
-				this.getGlobalModel().setProperty("/currentDelNo", _delVal);
+				whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
+				whenOdataCall.done(function() {
+						this.getView().byId("GIDForm").setVisible(true);
+						var _delVal = this.byId("giDelField").getText();
+						this.getGlobalModel().setProperty("/currentDelNo", _delVal);
+                        this.checkInd();
+					}.bind(this)
+
+				);
+
 			}
+		},
+		checkInd: function() {
+			var data = this.getModelData("delList").aItems[0];
+			this.indiTO = data.ToInd;
+			this.indiTOConf = data.ToConfirmInd;
+			this.indiPost = data.PostInd;
+			this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost);
 		},
 		onHandleScanInput: function(oEvent) {
 			this.callOdataService().barcodeReader(this, "inputValue");
@@ -80,6 +94,51 @@ sap.ui.define([
 		},
 		onHandleShip: function(event) {
 			utilities.navigateChild("giShip", this);
+		},
+		onConfirm: function() {
+			if (this.indiTO === "") {
+				this.onHandleGTO();
+			} else {
+				this.onHandlePost();
+			}
+		},
+
+		onConfirmCancel: function() {
+			this.onCancel();
+		},
+
+		onGenerateTO: function() {
+			if (!this.fragmentLoaded) {
+				this.fragmentLoaded = this.setFragment();
+			}
+			this.getView().addDependent(this.fragmentLoaded);
+			this.fragmentLoaded.open();
+			sap.ui.getCore().byId("popup").setText("Are you sure you want to generate Transfer Order?");
+		},
+
+		onHandleGTO: function() {
+			this.fragmentLoaded.close();
+			var whenOdataCall = this.callOdataService().handleDelTO(this, "tableGIS", "delList", "T");
+			whenOdataCall.done(function() {
+			this.getView().byId("GItoInd").setText("Available");
+			}.bind(this));
+
+		},
+
+		onPostGR: function() {
+			if (!this.fragmentLoaded) {
+				this.fragmentLoaded = this.setFragment();
+			}
+			this.getView().addDependent(this.fragmentLoaded);
+			this.fragmentLoaded.open();
+			sap.ui.getCore().byId("popup").setText("Are you sure you want to post Goods Issue?");
+
+		},
+
+		onHandlePost: function() {
+			this.fragmentLoaded.close();
+			this.callOdataService().handleDelTO(this, "tableGIS", "delList", "C");
+
 		},
 
 		giHuConfirm: function() {

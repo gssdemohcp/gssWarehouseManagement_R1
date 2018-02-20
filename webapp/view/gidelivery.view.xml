@@ -10,9 +10,9 @@
 					<Toolbar id="toolbarheader">
 						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
-						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
-					<f:SimpleForm id="GIDForm" editable="false" layout="ResponsiveGridLayout" title="Delivery Header Information" labelSpanXL="3" labelSpanL="3"
+					<f:SimpleForm id="GIDForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>delHeadInfo}" labelSpanXL="3" labelSpanL="3"
 						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
 						columnsL="1" columnsM="1" singleContainerFullSize="false" visible="false">
 						<f:content>
@@ -57,7 +57,7 @@
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
 							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
 							<Button id="Lload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="{i18n>load}"/>

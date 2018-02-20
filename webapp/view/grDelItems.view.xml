@@ -9,7 +9,7 @@
 						columnsL="1" columnsM="1" singleContainerFullSize="false">
 						<f:content>
 							<Toolbar>
-								<Input id="itemInput" valueHelpRequest="onHandlePoHelp" submit="getHUInput" placeholder="Enter/Scan Handling Unit" width="100%"
+								<Input id="itemInput" valueHelpRequest="onHandlePoHelp" submit="iGetInput" width="100%"
 									textAlign="Begin" maxLength="20"/>
 								<Button id="huScanBut" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onScanUnpack" ariaLabelledBy="actionButtonLabel"/>
 							</Toolbar>

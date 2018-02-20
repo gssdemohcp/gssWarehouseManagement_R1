@@ -46,6 +46,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
 					var inputvalue = barcodeData.text;
 					oView.byId(fieldId).setValue(inputvalue);
+
 				}
 			});
 
@@ -117,7 +118,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 		grKeyFields: function(oView, sInputValue, shipInd) {
-
+			var promise = jQuery.Deferred();
 			var oKeyFields = oView.getKeyFields();
 			var property = "";
 			var _inpVal = 0;
@@ -134,7 +135,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 
-			this._ODataModelInterface.keyFieldModelPopulate(oView);
+			var whenOdataCall = this._ODataModelInterface.keyFieldModelPopulate(oView);
+			whenOdataCall.done(function(oResult) {
+				promise.resolve(oResult);
+			}.bind(this));
+
+			return promise;
 
 		},
 		grPackKeyFields: function(oView, sInputValue, huVal) {
@@ -346,7 +352,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 		giShipUpdate: function(oView, startDate, endDate, startTime, endTime, tkNum) {
 			var oWhenOdataUpdateDone;
-			var oEntry = [];
+			var oEntry = {};
 			var oKeyFields = oView.getKeyFields();
 			oKeyFields.Vbeln = "";
 			oKeyFields.Lgnum = "";
@@ -359,10 +365,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, oEntry);
 			oWhenOdataUpdateDone.done(function(oRfModel) {
 				MessageToast.show(oView.getGlobalModel().getProperty("/message"));
+				oView.onNavBack();
 			});
 
 		},
-		handleCreate: function(oView, controlId, model, shipInd) {
+		handleShipTO: function(oView, controlId, model, shipInd) {
 			var vbeln = oView.byId(controlId).getSelectedItem().getBindingContext(model).getObject().Vbeln;
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			var objects = {
@@ -389,25 +396,32 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}.bind(this));
 
 		},
-		handlePost: function(oView, controlId, model) {
-			var oGlobalModel = oView.getGlobalModel();
-			var shipPostVbeln = oView.byId(controlId).getSelectedItem().getBindingContext(model).getObject().Vbeln;
+		handleDelTO: function(oView, controlId, model, shipInd) {
+			var promise = jQuery.Deferred();
+			var vbeln = oView.byId(controlId).getModel(model).getObject().Vbeln;
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			var shInd = "C";
-			var postObj = {
-				"Vbeln": shipPostVbeln,
+			var objects = {
+				"Vbeln": vbeln,
 				"Lgnum": lgnum,
-				"ShipInd": shInd
+				"ShipInd": shipInd
 			};
-			var oWhenCallCreateIsDone = this._ODataModelInterface.keyFieldModelCreate(this, postObj);
+			var oWhenCallCreateIsDone = this._ODataModelInterface.keyFieldModelCreate(oView, objects);
 			oWhenCallCreateIsDone.done(function(oResult) {
-				this.gssFragmentsFunction().fragmentFalse(this);
-				this.getView().byId(controlId).setVisible(false);
-
-				if (oGlobalModel.getProperty("/messageType") === "E") { // To check if message type is "E"
-
+				if (shipInd === "T") {
+					var GIDelData = oView.byId(controlId).getModel(model).getData().aItems;
+					GIDelData.ToInd = "X";
+					oView.byId(controlId).getModel(model).setData(GIDelData);
+					oView.byId("GTO").setVisible(false);
+					oView.byId("TOEx").setVisible(true);
+				} else {
+					oView.gssFragmentsFunction().fragmentFalse(oView);
+					oView.byId(controlId).setVisible(false);
 				}
+				promise.resolve(oResult);
 			}.bind(this));
+
+			return promise;
+
 		},
 
 		entityName: function(oView, sEntityProperty) {

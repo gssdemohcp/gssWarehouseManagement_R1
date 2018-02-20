@@ -10,10 +10,10 @@
 					<Toolbar id="toolbarheader">
 						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
-						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<Table id="tableGIS" class="sapUiTinyMargin" mode="MultiSelect" selectionChange="onSingleSelectGI" growing="true" growingScrollToLoad="true"
-						width="auto" items="{delList>/aItems}">
+						width="auto" items="{delList>/aItems}" visible="false">
 						<headerToolbar>
 							<Toolbar>
 								<Title text="{i18n>delHeadInfo}"/>
@@ -38,27 +38,27 @@
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 								<header>
-									<Label text="Total Weight" design="Bold"/>
+									<Label text="{i18n>totWeigh}" design="Bold"/>
 								</header>
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 								<header>
-									<Label text="Shipping Point" design="Bold"/>
+									<Label text="{i18n>shipPoint}" design="Bold"/>
 								</header>
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 								<header>
-									<Label text="Load/Unload Status" design="Bold"/>
+									<Label text="{i18n>loadStatus}" design="Bold"/>
 								</header>
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 								<header>
-									<Label text="HU Indicator" design="Bold"/>
+									<Label text="{i18n>huInd}" design="Bold"/>
 								</header>
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 								<header>
-									<Label text="TO Indicator" design="Bold"/>
+									<Label text="{i18n>toInd}" design="Bold"/>
 								</header>
 							</Column>
 						</columns>
@@ -85,7 +85,7 @@
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
 							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
 							<Button id="Lload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="{i18n>load}"/>
