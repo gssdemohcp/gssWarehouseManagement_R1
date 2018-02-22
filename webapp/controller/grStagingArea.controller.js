@@ -23,6 +23,9 @@ sap.ui.define([
 					this.inputDetails();
 					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					if ((this.getView().byId("inputValue").getValue())) {
+						this.iGetInput();
+					}
 				}.bind(this)
 			});
 
@@ -112,10 +115,13 @@ sap.ui.define([
 		onConfirmCancel: function() {
 			this.onCancel();
 		},
+		onCancel: function() {
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+		},
 
 		onGenerateTO: function() {
 			if (!this.fragmentLoaded) {
-				this.fragmentLoaded = this.setFragment();
+				this.setFragment();
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
@@ -127,10 +133,13 @@ sap.ui.define([
 			this.callOdataService().handleShipTO(this, "tableSA", "itemList", "T");
 
 		},
+		onHandleTOEx: function() {
+			utilities.navigateChild("putaway", this);
+		},
 
 		onPostGR: function() {
 			if (!this.fragmentLoaded) {
-				this.fragmentLoaded = this.setFragment();
+				this.setFragment();
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();

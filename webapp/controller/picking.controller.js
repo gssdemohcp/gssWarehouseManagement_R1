@@ -21,6 +21,11 @@ sap.ui.define([
 					this.seti18nModel(this);
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					if (this.getGlobalModel().getProperty("/parentScreen")) {
+						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
+						this.getView().byId("inputValue").setEnabled(false);
+						this.iGetInput();
+					}
 				}.bind(this)
 			});
 			this._router = this.getRouter();
@@ -35,6 +40,9 @@ sap.ui.define([
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 			// this.getView().byId("inputValue").setValueState(sap.ui.core.ValueState.Error);
+		},
+		onHandleSelection:function(){
+			this.selItems = this.callOdataService().selectedItems(this, "toTable");
 		},
 
 		iGetInput: function(oEvent) {
@@ -51,12 +59,18 @@ sap.ui.define([
 		getPickingMaterial: function(sInputValue) {
 			//Read picking material from backend
 
-			var oWhenCallReadIsDone = this.gssCallFunction().LoadMaterial(this, sInputValue);
+			var oWhenCallReadIsDone = this.callOdataService().LoadMaterial(this, sInputValue);
 
 			//code end -selvan
 		},
 		pickingConfirm: function() {
-			var selectedItems = this.gssCallFunction().confirmItems(this);
+			var selectedItems = this.callOdataService().confirmItems(this,this.selItems,"toTable");
+		},
+		onExit: function() {
+			if (this.fragmentLoaded) {
+				this.fragmentLoaded.destroy(true);
+			}
+
 		}
 
 		/**

@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<Dialog id="confirm" title="Alert" class="sapUiResponsiveMargin sapUiPopupWithPadding" icon="sap-icon://alert">
+	<Dialog id="confirm" title="Alert" class="sapUiResponsiveMargin sapUiPopupWithPadding" icon="sap-icon://alert" afterClose="onClose">
 		<content>
 			<Text id="popup"/>
 		</content>

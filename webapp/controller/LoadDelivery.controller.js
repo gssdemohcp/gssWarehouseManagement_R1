@@ -31,7 +31,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
-			this.setFragment();
+			
 		},
 
 		inputDetails: function() {
@@ -96,6 +96,7 @@ sap.ui.define([
 		},
 
 		loadRevert: function() {
+			this.setFragment();
 			this.fragmentLoaded.open();
 			sap.ui.getCore().byId("popup").setText("Are you sure you want to undo the process?");
 		},
@@ -111,7 +112,17 @@ sap.ui.define([
 
 		onCancel: function() {
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+		},
+		onExit: function() {
+			if (this.fragmentLoaded) {
+				this.fragmentLoaded.destroy(true);
+			}
+
+		},
+		onClose: function() {
+			this.fragmentLoaded = null;
 		}
+		
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

@@ -257,15 +257,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this._ODataModelInterface.filterModelPopulate(oView);
 		},
 
-		confirmItems: function(oView, oSelectItems) {
+		confirmItems: function(oView, oSelectItems, controlId) {
 			var oWhenOdataUpdateDone;
 			var activeModel = oView.getModelName();
+			var oKeyFields = oView.getKeyFields();
 
 			oSelectItems.forEach(function(mItem) {
 				var updateItem = mItem.getBindingContext(activeModel).getObject();
+				oKeyFields.Queue = updateItem.Queue;
+				oKeyFields.Lgnum = updateItem.Lgnum;
+				oKeyFields.Tanum = updateItem.Tanum;
+				oKeyFields.Tapos = updateItem.Tapos;
 				oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
 				oWhenOdataUpdateDone.done(function(oRfModel) {
-					var oNewModel = oView.byId(oView.getGlobalModel().getProperty("/controlId")).getModel(activeModel).getData().aItems;
+					var oNewModel = oView.byId(controlId).getModel(activeModel).getData().aItems;
 					var oStatText = {
 						stat: "",
 						text: "",
@@ -299,6 +304,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						aItems: oNewModel
 					});
 					oView.setModel(oJSONModel, activeModel);
+					var tabLen = oView.byId(controlId).getItems().length;
+					if (tabLen === 0) {
+						oView.onNavBack();
+					}
 				});
 			}.bind(this));
 
@@ -346,7 +355,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				updateItem.Vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
 				updateItem.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 				this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
-				MessageToast.show(oView.getGlobalModel().getProperty("/message"));
+
 			}.bind(this));
 			this.removeItems(oView, controlId);
 		},
@@ -364,12 +373,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oEntry.Tknum = tkNum;
 			oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, oEntry);
 			oWhenOdataUpdateDone.done(function(oRfModel) {
-				MessageToast.show(oView.getGlobalModel().getProperty("/message"));
+				/*MessageToast.show(oView.getGlobalModel().getProperty("/message"));*/
 				oView.onNavBack();
 			});
 
 		},
 		handleShipTO: function(oView, controlId, model, shipInd) {
+			var promise = jQuery.Deferred();
 			var vbeln = oView.byId(controlId).getSelectedItem().getBindingContext(model).getObject().Vbeln;
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			var objects = {
@@ -386,19 +396,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							shItems.ToInd = "X";
 						}
 					}.bind(this));
-					oView.byId(controlId).getModel(model).setData(shipTabModel);
+					/*oView.byId(controlId).getModel(model).setData(shipTabModel);*/
 					oView.byId("GTO").setVisible(false);
 					oView.byId("TOEx").setVisible(true);
 				} else {
 					oView.gssFragmentsFunction().fragmentFalse(oView);
-					oView.byId(controlId).setVisible(false);
+
 				}
+				promise.resolve(oResult);
 			}.bind(this));
+			return promise;
 
 		},
 		handleDelTO: function(oView, controlId, model, shipInd) {
 			var promise = jQuery.Deferred();
-			var vbeln = oView.byId(controlId).getModel(model).getObject().Vbeln;
+			var vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
 			var lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			var objects = {
 				"Vbeln": vbeln,
@@ -410,12 +422,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				if (shipInd === "T") {
 					var GIDelData = oView.byId(controlId).getModel(model).getData().aItems;
 					GIDelData.ToInd = "X";
-					oView.byId(controlId).getModel(model).setData(GIDelData);
+					/*oView.byId(controlId).getModel(model).setData(GIDelData);*/
 					oView.byId("GTO").setVisible(false);
 					oView.byId("TOEx").setVisible(true);
 				} else {
 					oView.gssFragmentsFunction().fragmentFalse(oView);
-					oView.byId(controlId).setVisible(false);
+
 				}
 				promise.resolve(oResult);
 			}.bind(this));

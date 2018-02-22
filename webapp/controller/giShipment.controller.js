@@ -27,6 +27,9 @@ sap.ui.define([
 					this.seti18nModel();
 					this.inputDetails();
 					this.getBackModelData();
+					if ((this.getView().byId("inputValue").getValue())) {
+						this.iGetInput();
+					}
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
@@ -82,7 +85,7 @@ sap.ui.define([
 			if (_inputValue) {
 				this.getView().byId("tableGIS").setVisible(true);
 				this.callOdataService().getLoadInq(this, _inputValue, "", "");
-				
+
 			}
 		},
 		onHandleScanInput: function(oEvent) {
@@ -105,7 +108,7 @@ sap.ui.define([
 		onConfirm: function() {
 			if (this.indiTO === "") {
 				this.onHandleGTO();
-			}else{
+			} else {
 				this.onHandlePost();
 			}
 		},
@@ -113,10 +116,13 @@ sap.ui.define([
 		onConfirmCancel: function() {
 			this.onCancel();
 		},
+		onCancel: function() {
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+		},
 
 		onGenerateTO: function() {
 			if (!this.fragmentLoaded) {
-				this.fragmentLoaded = this.setFragment();
+				this.setFragment();
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
@@ -125,13 +131,19 @@ sap.ui.define([
 
 		onHandleGTO: function() {
 			this.fragmentLoaded.close();
-			this.callOdataService().handleShipTO(this, "tableGIS","delList","T");
-		
+			var whenOdataCall = this.callOdataService().handleShipTO(this, "tableGIS", "delList", "T");
+			whenOdataCall.done(function() {
+				this.getView().byId("GItoInd").setText("Available");
+			}.bind(this));
+
+		},
+		onHandleTOEx: function() {
+			utilities.navigateChild("picking", this);
 		},
 
-		onPostGR: function() {
+		onPostGI: function() {
 			if (!this.fragmentLoaded) {
-				this.fragmentLoaded = this.setFragment();
+				this.setFragment();
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
@@ -141,12 +153,18 @@ sap.ui.define([
 
 		onHandlePost: function() {
 			this.fragmentLoaded.close();
-			this.callOdataService().handleShipTO(this, "tableGIS","delList","C");
-		
+			this.callOdataService().handleShipTO(this, "tableGIS", "delList", "C");
+
 		},
 
 		giShipmentConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);
+		},
+		onExit: function() {
+			if (this.fragmentLoaded) {
+				this.fragmentLoaded.destroy(true);
+			}
+
 		}
 
 	});

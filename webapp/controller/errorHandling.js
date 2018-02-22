@@ -4,8 +4,9 @@
 sap.ui.define([
 		"sap/ui/Device",
 		"sap/m/MessageBox",
-		"gss/newWarehouseManage_R1/model/utilities"
-	], function(Device, MessageBox, utilities) {
+		"gss/newWarehouseManage_R1/model/utilities",
+		"sap/m/MessageToast"
+	], function(Device, MessageBox, utilities,MessageToast) {
 	"use strict";
 
 	function fnShowMetadataError(oApplication, oParams, oErrorTexts, oDisplayState) {
@@ -104,7 +105,9 @@ sap.ui.define([
 				    sMessageType = oGlobalModel.getProperty("/messageType");
 				if (sMessageType === "E" || sMessageType === "W") {
 					fnShowServiceMessage(sMessage,oDisplayState);
-				} 
+				} else if(sMessageType === "S"){
+					MessageToast.show(oGlobalModel.getProperty("/message"));
+				}
 
 			
 		

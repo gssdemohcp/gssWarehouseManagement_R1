@@ -19,7 +19,7 @@
 							<HBox>
 								<VBox>
 									<Label class="sapUiTinyMarginTop" text="{i18n>loadStatus}"/>
-									<Label class="sapUiTinyMarginTop" id="GIdelFieldLabel" text="{i18n>delNo}" visible="false"/>
+									<Label class="sapUiTinyMarginTop" id="GIdelFieldLabel" text="{i18n>delNo}"/>
 									<Label class="sapUiTinyMarginTop" text="{i18n>vendor}"/>
 									<Label class="sapUiTinyMarginTop" text="{i18n>name}"/>
 									<Label class="sapUiTinyMarginTop" text="{i18n>shipPoint}"/>

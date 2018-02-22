@@ -27,10 +27,18 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 		indCheck: function(oView, indiTO, indiTOConf, indiPost) {
 			if (indiTO === "") {
+				oView.byId("Lload").setVisible(true);
+				oView.byId("more").setVisible(true);
+				oView.byId("items").setVisible(true);
+				oView.byId("ship").setVisible(true);
 				oView.byId("GTO").setVisible(true); //To display G.TO button
 				oView.byId("TOEx").setVisible(false);
 				oView.byId("post").setVisible(false);
 			} else if (indiTO === "X") {
+				oView.byId("Lload").setVisible(true);
+				oView.byId("more").setVisible(true);
+				oView.byId("items").setVisible(true);
+				oView.byId("ship").setVisible(true);
 				oView.byId("TOEx").setVisible(true); //To display G.TO button
 				oView.byId("GTO").setVisible(false); //To display G.TO button
 				oView.byId("post").setVisible(false);
@@ -42,11 +50,17 @@ sap.ui.define(["sap/ui/base/Object",
 						oView.byId("post").setVisible(false);
 						oView.byId("ship").setVisible(false);
 						oView.byId("TOEx").setVisible(false);
-						oView.byId("GTO").setVisible(false); //To display G.TO button
+						oView.byId("GTO").setVisible(false);
+						oView.byId("Lload").setVisible(false);
+						oView.byId("more").setVisible(false);
+						oView.byId("items").setVisible(false); //To display G.TO button
 
 					}
 				}
 			} else if (indiTOConf === "") {
+				oView.byId("Lload").setVisible(true);
+				oView.byId("more").setVisible(true);
+				oView.byId("items").setVisible(true);
 				oView.byId("post").setVisible(false);
 				oView.byId("TOEx").setVisible(true);
 				oView.byId("GTO").setVisible(false); //To display G.TO button
@@ -55,6 +69,9 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 
 		fragmentFalse: function(oView) {
+			oView.byId("Lload").setVisible(false);
+			oView.byId("more").setVisible(false);
+			oView.byId("items").setVisible(false);
 			oView.byId("ship").setVisible(false);
 			oView.byId("post").setVisible(false);
 			oView.byId("TOEx").setVisible(false);

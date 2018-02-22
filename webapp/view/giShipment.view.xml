@@ -13,7 +13,7 @@
 						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<Table id="tableGIS" class="sapUiTinyMargin" mode="MultiSelect" selectionChange="onSingleSelectGI" growing="true" growingScrollToLoad="true"
-						width="auto" items="{delList>/aItems}" visible="false">
+						width="auto" items="{delList>/aItems}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" visible=" false">
 						<headerToolbar>
 							<Toolbar>
 								<Title text="{i18n>delHeadInfo}"/>
@@ -72,7 +72,7 @@
 									<Text text="{parts:[{path:'delList>Vstel'}],formatter: '.formatter.shipPoint'}"/>
 									<Text id="ldStat" text="{parts:[{path:'delList>LoadStat'}],formatter: '.formatter.grIndicator'}"/>
 									<Text text="{parts:[{path:'delList>HuInd'}],formatter: '.formatter.huIndicator'}"/>
-									<Text text="{parts:[{path:'delList>ToInd'}],formatter: '.formatter.huIndicator'}"/>
+									<Text id ="GItoInd" text="{parts:[{path:'delList>ToInd'}],formatter: '.formatter.huIndicator'}"/>
 								</cells>
 							</ColumnListItem>
 						</items>

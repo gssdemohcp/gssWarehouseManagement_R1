@@ -22,6 +22,9 @@ sap.ui.define([
 					this.inputDetails();
 					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					if ((this.getView().byId("inputValue").getValue())) {
+						this.iGetInput();
+					}
 				}.bind(this)
 			});
 
@@ -97,10 +100,13 @@ sap.ui.define([
 		onConfirmCancel: function() {
 			this.onCancel();
 		},
+		onCancel: function() {
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+		},
 
 		onGenerateTO: function() {
 			if (!this.fragmentLoaded) {
-				this.fragmentLoaded = this.setFragment();
+				this.setFragment();
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
@@ -111,14 +117,17 @@ sap.ui.define([
 			this.fragmentLoaded.close();
 			var whenOdataCall = this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "T");
 			whenOdataCall.done(function() {
-			this.getView().byId("toInd").setText("Available");
+				this.getView().byId("toInd").setText("Available");
 			}.bind(this));
 
+		},
+		onHandleTOEx: function() {
+			utilities.navigateChild("putaway", this);
 		},
 
 		onPostGR: function() {
 			if (!this.fragmentLoaded) {
-				this.fragmentLoaded = this.setFragment();
+				this.setFragment();
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();

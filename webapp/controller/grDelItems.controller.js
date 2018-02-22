@@ -125,6 +125,12 @@ sap.ui.define([
 		},
 		onHandleSave: function() {
 			this.callOdataService().onSaveItems(this, this._selectedItem, "tableitems", "I");
+		},
+		onExit: function() {
+			if (this.fragmentLoaded) {
+				this.fragmentLoaded.destroy(true);
+			}
+
 		}
 
 		/**

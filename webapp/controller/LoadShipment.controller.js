@@ -27,7 +27,7 @@ sap.ui.define([
 			this.seti18nModel(this);
 			this.inputDetails();
 			this.getGlobalModel().setProperty("/currentView", this);
-			this.setFragment();
+			
 		},
 
 		inputDetails: function() {
@@ -83,6 +83,7 @@ sap.ui.define([
 		},
 
 		loadRevert: function() {
+			this.setFragment();
 			this.fragmentLoaded.open();
 			sap.ui.getCore().byId("popup").setText("Are you sure you want to undo the process?");
 		},

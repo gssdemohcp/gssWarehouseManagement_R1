@@ -34,7 +34,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 
-			this.setFragment();
+			/*this.setFragment();*/
 		},
 
 		seti18nModel: function() {
@@ -108,6 +108,7 @@ sap.ui.define([
 		},
 
 		unloadRevert: function() {
+			this.setFragment()
 			this.fragmentLoaded.open();
 			sap.ui.getCore().byId("popup").setText("Are you sure you want to undo the process?");
 		},
@@ -123,6 +124,12 @@ sap.ui.define([
 
 		onCancel: function() {
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+		},
+		onExit: function() {
+			if (this.fragmentLoaded) {
+				this.fragmentLoaded.destroy(true);
+			}
+
 		}
 
 		/**

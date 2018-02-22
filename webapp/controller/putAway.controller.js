@@ -27,13 +27,17 @@ sap.ui.define([
 					this.seti18nModel(this);
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					if (this.getGlobalModel().getProperty("/parentScreen")) {
+						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
+						this.getView().byId("inputValue").setEnabled(false);
+						this.iGetInput();
+					}
 				}.bind(this)
 			});
 
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
 			this.setFragment();
 		},
 
@@ -68,7 +72,7 @@ sap.ui.define([
 
 		putAwayConfirm: function() {
 			var tableRowSelectedItems = this.callOdataService().selectedItems(this, "toTable");
-			this.callOdataService().confirmItems(this, tableRowSelectedItems);
+			this.callOdataService().confirmItems(this, tableRowSelectedItems,"toTable");
 
 		},
 
@@ -226,7 +230,13 @@ sap.ui.define([
 		onNewBinCancel: function() {
 			this.gssFragmentsFunction().closeFragment(this.fragmentNewBinLoaded);
 		},
-		// *********** Srini code for new bin change ends ***********
+		onExit: function() {
+				if (this.fragmentLoaded) {
+					this.fragmentLoaded.destroy(true);
+				}
+
+			}
+			// *********** Srini code for new bin change ends ***********
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

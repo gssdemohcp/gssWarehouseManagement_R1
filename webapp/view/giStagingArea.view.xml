@@ -72,7 +72,7 @@
 									<Text text="{parts:[{path:'delList>Vstel'}],formatter: '.formatter.shipPoint'}"/>
 									<Text id="loadstatgi" text="{parts:[{path:'delList>LoadStat'}],formatter: '.formatter.giIndicator'}"/>
 									<Text text="{parts:[{path:'delList>HuInd'}],formatter: '.formatter.huIndicator'}"/>
-									<Text text="{parts:[{path:'delList>ToInd'}],formatter: '.formatter.huIndicator'}"/>
+									<Text id ="GItoInd" text="{parts:[{path:'delList>ToInd'}],formatter: '.formatter.huIndicator'}"/>
 								</cells>
 							</ColumnListItem>
 						</items>

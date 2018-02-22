@@ -21,6 +21,9 @@ sap.ui.define([
 					this.seti18nModel();
 					this.inputDetails();
 					this.getBackModelData();
+					if ((this.getView().byId("inputValue").getValue())) {
+						this.iGetInput();
+					}
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
@@ -63,7 +66,7 @@ sap.ui.define([
 						this.getView().byId("GIDForm").setVisible(true);
 						var _delVal = this.byId("giDelField").getText();
 						this.getGlobalModel().setProperty("/currentDelNo", _delVal);
-                        this.checkInd();
+						this.checkInd();
 					}.bind(this)
 
 				);
@@ -106,10 +109,13 @@ sap.ui.define([
 		onConfirmCancel: function() {
 			this.onCancel();
 		},
+		onCancel: function() {
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+		},
 
 		onGenerateTO: function() {
 			if (!this.fragmentLoaded) {
-				this.fragmentLoaded = this.setFragment();
+				this.setFragment();
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
@@ -120,14 +126,17 @@ sap.ui.define([
 			this.fragmentLoaded.close();
 			var whenOdataCall = this.callOdataService().handleDelTO(this, "tableGIS", "delList", "T");
 			whenOdataCall.done(function() {
-			this.getView().byId("GItoInd").setText("Available");
+				this.getView().byId("GItoInd").setText("Available");
 			}.bind(this));
 
 		},
+		onHandleTOEx: function() {
+			utilities.navigateChild("picking", this);
+		},
 
-		onPostGR: function() {
+		onPostGI: function() {
 			if (!this.fragmentLoaded) {
-				this.fragmentLoaded = this.setFragment();
+				this.setFragment();
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
@@ -143,6 +152,12 @@ sap.ui.define([
 
 		giHuConfirm: function() {
 			var selectedItems = this.gssCallFunction().confirmItems(this);
+		},
+		onExit: function() {
+			if (this.fragmentLoaded) {
+				this.fragmentLoaded.destroy(true);
+			}
+
 		}
 
 		/**

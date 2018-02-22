@@ -1,13 +1,13 @@
 sap.ui.define(["sap/ui/base/Object",
-	"sap/ui/Device",
 	"sap/ui/model/json/JSONModel",
 	"gss/newWarehouseManage_R1/model/utilities",
 	"gss/newWarehouseManage_R1/controller/errorHandling",
 	"gss/newWarehouseManage_R1/lib/ODATAService",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
+	"sap/ui/model/FilterOperator",
+	"sap/m/MessageToast"
 
-], function(Object, Device, JSONModel, utilities, errorHandling, ODATAService, Filter, FilterOperator) {
+], function(Object, JSONModel, utilities, errorHandling, ODATAService, Filter, FilterOperator, MessageToast) {
 	"use strict";
 
 	return Object.extend("gss.newWarehouseManage_R1.lib.ODataModelInterface", {
@@ -88,6 +88,7 @@ sap.ui.define(["sap/ui/base/Object",
 
 		},
 		keyFieldModelUpdate: function(oView, oUpdateItem) {
+			var oGlobalModel = oView.getModel("globalProperties");
 			var promise = jQuery.Deferred();
 			//GET VIEW ENTITY SET NAME FROM CONFIQURATION JSON MODEL
 			var sEntitySet = oView.getEntitySet();
@@ -99,7 +100,10 @@ sap.ui.define(["sap/ui/base/Object",
 			//Handle response from oData Call
 			oWhenCallUpdateIsDone.done(function(oResult, oFailed) {
 
-				this.errorHandlingDelegate(oView, this.buildMessage(oView), true);
+				var oRfData = this.buildMessage(oView);
+				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				errorHandling.register(oView.getApplication(), oView.getComponent());
 
 				promise.resolve(oResult);
 			}.bind(this));
@@ -115,9 +119,12 @@ sap.ui.define(["sap/ui/base/Object",
 				msg = "Material(s) unpacked successfully!";
 			} else if (currentScreen === "LM333" || currentScreen === "LM444" || currentScreen === "LM334" || currentScreen === "LM445") {
 				msg = "Item details saved successfully!";
-			}else if (currentScreen === "LM777") {
+			} else if (currentScreen === "LM777") {
 				msg = "Shipment details saved successfully!";
+			} else if (currentScreen === "LM09" || currentScreen === "LM06") {
+				msg = "Material(s) confirmed successfully!";
 			}
+
 			var oRfData = [];
 			oRfData.Msgtyp = "S";
 			oRfData.Msgtext = msg;
@@ -128,6 +135,7 @@ sap.ui.define(["sap/ui/base/Object",
 		},
 
 		keyFieldModelCreate: function(oView, oUpdateItem) {
+			var oGlobalModel = oView.getModel("globalProperties");
 			var promise = jQuery.Deferred();
 			//GET VIEW ENTITY SET NAME FROM CONFIQURATION JSON MODEL
 			var sEntitySet = oView.getEntitySet();
@@ -135,7 +143,7 @@ sap.ui.define(["sap/ui/base/Object",
 			/*var oKeyFields = oView.getKeyFields();*/
 			//Setup filter string
 			/*var sPath = this.setKeyField(oKeyFields);*/
-			var oWhenCallCreateIsDone = this._oODATAService.oCallCreateDeferred(sEntitySet , oUpdateItem, oView);
+			var oWhenCallCreateIsDone = this._oODATAService.oCallCreateDeferred(sEntitySet, oUpdateItem, oView);
 			//Handle response from oData Call
 			oWhenCallCreateIsDone.done(function(oResult, oFailed) {
 				var oRfData;
@@ -143,9 +151,11 @@ sap.ui.define(["sap/ui/base/Object",
 				oRfData = {
 					aItems: [oRfData]
 				};
-				this.errorHandlingDelegate(oView, oRfData, true);
+				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				errorHandling.register(oView.getApplication(), oView.getComponent());
 				promise.resolve(oResult);
-			}.bind(this ));
+			}.bind(this));
 			return promise;
 		},
 

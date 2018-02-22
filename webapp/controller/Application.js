@@ -146,7 +146,7 @@ sap.ui.define([
 				lastSubModelSetName: "",
 				pack: "",
 				shipInd: "",
-				indiTO:""
+				indiTO: ""
 			});
 			this._oGlobalModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oGlobalModel, "globalProperties");
@@ -180,6 +180,7 @@ sap.ui.define([
 
 				LM02: {
 					view: "putaway",
+					parentScreen: "",
 					keyFields: {
 						Lenum: "",
 						Queue: "",
@@ -203,6 +204,7 @@ sap.ui.define([
 				LM03: {
 					view: "putaway",
 					putaway: "LM03",
+					parentScreen: "",
 					keyFields: {
 						Lenum: "",
 						Queue: "",
@@ -223,6 +225,7 @@ sap.ui.define([
 				LM09: {
 					view: "putaway",
 					putaway: "LM09",
+					parentScreen: "",
 					keyFields: {
 						Lenum: "",
 						Queue: "",
@@ -244,6 +247,7 @@ sap.ui.define([
 				LM05: {
 					view: "picking",
 					picking: "LM05",
+					parentScreen: "",
 					keyFields: {
 						Lenum: "",
 						Queue: "",
@@ -264,6 +268,7 @@ sap.ui.define([
 				LM06: {
 					view: "picking",
 					picking: "LM06",
+					parentScreen: "",
 					keyFields: {
 						Lenum: "",
 						Queue: "",
@@ -285,6 +290,7 @@ sap.ui.define([
 				LM33: {
 					view: "unloadShipment",
 					unloadShipment: "LM33",
+					parentScreen: "",
 					keyFields: {
 						Vbeln: "",
 						Exidv: "",
@@ -309,6 +315,7 @@ sap.ui.define([
 				LM34: {
 					view: "unloadDelivery",
 					unloadDelivery: "LM34",
+					parentScreen: "",
 					keyFields: {
 						Vbeln: "",
 						Exidv: "",
@@ -334,6 +341,7 @@ sap.ui.define([
 				LM30: {
 					view: "loadShipment",
 					loadShipment: "LM30",
+					parentScreen: "",
 					keyFields: {
 						Vbeln: "",
 						Exidv: "",
@@ -357,6 +365,7 @@ sap.ui.define([
 				LM31: {
 					view: "loadDelivery",
 					loadDelivery: "LM31",
+					parentScreen: "",
 					keyFields: {
 						Vbeln: "",
 						Exidv: "",
@@ -381,6 +390,7 @@ sap.ui.define([
 				LM37: {
 					view: "loadInqShipment",
 					loadInqShipment: "LM37",
+					parentScreen: "",
 					keyFields: {
 						Vbeln: "",
 						Exidv: "",
@@ -402,6 +412,7 @@ sap.ui.define([
 				LM36: {
 					view: "loadInqDelivery",
 					loadInqDelivery: "LM36",
+					parentScreen: "",
 					keyFields: {
 						Vbeln: "",
 						Exidv: "",
@@ -423,6 +434,7 @@ sap.ui.define([
 				LM35: {
 					view: "loadInqHu",
 					loadInqHu: "LM35",
+					parentScreen: "",
 					filters: {
 						Exidv: "",
 						Lgnum: ""
@@ -454,11 +466,13 @@ sap.ui.define([
 						Lgbzo: ""
 					},
 					modelData: "",
+					parentScreen: "",
 					childScreens: {
 						unloadDelivery: "LM34",
 						putaway: "LM09",
 						UnPack: "LM222",
 						grDelItems: "LM333"
+						
 					},
 					filters: {},
 					placeHolderLabel: "Enter Delivery",
@@ -477,6 +491,7 @@ sap.ui.define([
 						Vbeln: ""
 					},
 					modelData: "",
+					parentScreen: "",
 					childScreens: {
 						unloadDelivery: "LM34",
 						putaway: "LM09",
@@ -503,6 +518,7 @@ sap.ui.define([
 						Vbeln: ""
 					},
 					modelData: "",
+					parentScreen: "",
 					childScreens: {
 						unloadDelivery: "LM34",
 						putaway: "LM09",
@@ -530,6 +546,7 @@ sap.ui.define([
 					},
 					filters: {},
 					modelData: "",
+					parentScreen: "",
 					childScreens: {
 						unloadDelivery: "LM34",
 						putaway: "LM09",
@@ -554,11 +571,13 @@ sap.ui.define([
 
 					},
 					modelData: "",
+					parentScreen: "",
 					childScreens: {
 						loadDelivery: "LM31",
 						UnPack: "LM223",
 						grDelItems: "LM334",
-						giShip:"LM777"
+						giShip: "LM777",
+						picking: "LM06"
 					},
 					filters: {},
 					placeHolderLabel: "Enter Delivery",
@@ -581,11 +600,13 @@ sap.ui.define([
 						Lgnum: ""
 					},
 					modelData: "",
+					parentScreen: "",
 					childScreens: {
 						loadDelivery: "LM31",
 						UnPack: "LM223",
 						grShipItems: "LM445",
-						giShip:"LM777"
+						giShip: "LM777",
+						picking: "LM06"
 					},
 					placeHolderLabel: "Enter Staging Area",
 					entitySet: "/GIProcessSet",
@@ -607,11 +628,13 @@ sap.ui.define([
 						Lgnum: ""
 					},
 					modelData: "",
+					parentScreen: "",
 					childScreens: {
 						loadDelivery: "LM31",
 						UnPack: "LM223",
 						grShipItems: "LM445",
-						giShip:"LM777"
+						giShip: "LM777",
+						picking:"LM06"
 					},
 					placeHolderLabel: "Enter Shipment",
 					entitySet: "/GIProcessSet",
@@ -630,11 +653,13 @@ sap.ui.define([
 					},
 					filters: {},
 					modelData: "",
+					parentScreen: "",
 					childScreens: {
 						loadDelivery: "LM31",
 						UnPack: "LM223",
 						grDelItems: "LM334",
-						giShip:"LM777"
+						giShip: "LM777",
+						picking:"LM06"
 					},
 					placeHolderLabel: "Enter Handling Unit",
 					entitySet: "/GIProcessSet",
@@ -646,6 +671,7 @@ sap.ui.define([
 					menuConfiguration: "LM999",
 					keyFields: {},
 					filters: {},
+					parentScreen: "",
 					entitySet: "/configurationsSet",
 					modelName: "mainJsonModel"
 				},
@@ -658,6 +684,7 @@ sap.ui.define([
 						Nltyp: "",
 						Lgnum: ""
 					},
+					parentScreen: "",
 					entitySet: "/WMProcessSet",
 					modelName: ""
 				},
@@ -878,7 +905,7 @@ sap.ui.define([
 						Exidv: "",
 						Tknum: "",
 						Lgbzo: "",
-						ShipInd:""
+						ShipInd: ""
 					},
 					parentScreen: "",
 					filters: {
