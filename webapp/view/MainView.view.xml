@@ -21,7 +21,7 @@
 				<Toolbar id="toolbarheader" visible="false">
 					<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="onHandleChange"
 						liveChange="onHandleBinding" width="100%" textAlign="Begin" visible="false"/>
-					<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"
+					<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"
 						visible="false"/>
 				</Toolbar>
 				<!--</subHeader>-->
@@ -103,7 +103,7 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back" visible="false"/>
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
 								visible="false"/>
 						</contentLeft>

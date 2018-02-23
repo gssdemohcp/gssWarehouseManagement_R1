@@ -20,9 +20,11 @@ sap.ui.define([
 					this.seti18nModel();
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
-					if (this.getGlobalModel().getProperty("/parentView")) {
+					if (this.getGlobalModel().getProperty("/parentScreen")) {
 						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
 						this.getView().byId("inputValue").setEnabled(false);
+						this.getView().byId("back").setEnabled(true);
+						this.iGetInput();
 					}
 				}.bind(this)
 			});
@@ -62,8 +64,9 @@ sap.ui.define([
 		},
 
 		setFragment: function() {
+			var viewId = this.getView().getId();
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 
@@ -101,7 +104,7 @@ sap.ui.define([
 		unloadRevert: function() {
 			this.setFragment();
 			this.fragmentLoaded.open();
-			sap.ui.getCore().byId("popup").setText("Are you sure you want to undo the process?");
+			this.byId("popup").setText("Are you sure you want to undo the process?");
 		},
 
 		onConfirm: function() {

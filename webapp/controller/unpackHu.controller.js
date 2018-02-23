@@ -31,8 +31,9 @@ sap.ui.define([
 			this.getView().setModel(i18nModel, "i18n");
 		},
 		setFragment: function() {
+			var viewId = this.getView().getId();
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "addHU");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId,callFragment, this);
 		},
 
 		oDataCall: function() {

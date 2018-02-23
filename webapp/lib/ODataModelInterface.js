@@ -121,7 +121,7 @@ sap.ui.define(["sap/ui/base/Object",
 				msg = "Item details saved successfully!";
 			} else if (currentScreen === "LM777") {
 				msg = "Shipment details saved successfully!";
-			} else if (currentScreen === "LM09" || currentScreen === "LM06") {
+			} else if (currentScreen === "LM09" || currentScreen === "LM06" || currentScreen === "LM03") {
 				msg = "Material(s) confirmed successfully!";
 			}
 

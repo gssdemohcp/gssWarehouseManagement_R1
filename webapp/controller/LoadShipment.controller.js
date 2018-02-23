@@ -46,8 +46,9 @@ sap.ui.define([
 		},
 
 		setFragment: function() {
+			var viewId = this.getView().getId();
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 

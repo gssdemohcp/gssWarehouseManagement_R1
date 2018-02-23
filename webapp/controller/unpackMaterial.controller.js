@@ -33,14 +33,15 @@ sap.ui.define([
 			this.getView().setModel(i18nModel, "i18n");
 		},
 		setFragment: function() {
+			var viewId = this.getView().getId();
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "addMaterial");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId,callFragment, this);
 		},
 
 		oDataCall: function() {
 			var _huVal = this.getGlobalModel().getProperty("/currentHuVal");
 			this._shipInd = this.getGlobalModel().getProperty("/shipInd");
-			this.callOdataService().getLoadInq(this, _huVal, this._shipInd);
+			this.callOdataService().getLoadInq(this, _huVal, this._shipInd,"");
 
 		},
 		onHandleAccept: function() {

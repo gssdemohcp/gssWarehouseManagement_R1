@@ -2,15 +2,15 @@
 	controllerName="gss.newWarehouseManage_R1.controller.unpackMaterial" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="Pack/UnPack">
+			<Page title="{i18n>packByMat}">
 				<content>
 					<Table id="unpackTable" class="sapUiTinyMarginTop dataStyle" growing="true" growingScrollToLoad="true" width="auto"
 						items="{HUMatModel>/aItems}" mode="MultiSelect" selectionChange="unpackItemSelect">
 						<headerToolbar>
 							<Toolbar>
-								<Title text="Material List"/>
+								<Title text="{i18n>matList}"/>
 								<ToolbarSpacer/>
-								<Button id="addItem" tooltip="Add Item" icon="sap-icon://add" press="onAddItem"/>
+								<Button id="addItem" tooltip="{i18n>addItem}" icon="sap-icon://add" press="onAddItem"/>
 								<Button id="saveButton" text="Save" type="Transparent" press="onSave" visible="false"/>
 								<Button id="cancelButton" text="Cancel" type="Transparent" press="onCancel" visible="false"/>
 							</Toolbar>
@@ -18,12 +18,12 @@
 						<columns>
 							<Column hAlign="Left">
 								<header>
-									<Label text="Material" design="Bold"/>
+									<Label text="{i18n>mat}" design="Bold"/>
 								</header>
 							</Column>
 							<Column hAlign="Left">
 								<header>
-									<Label text="Quantity/Unit" design="Bold"/>
+									<Label text="{i18n>quantUnit}" design="Bold"/>
 								</header>
 							</Column>
 						</columns>
@@ -47,8 +47,8 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
 							<Button id="accept" press="onHandleAccept" icon="sap-icon://accept"/>

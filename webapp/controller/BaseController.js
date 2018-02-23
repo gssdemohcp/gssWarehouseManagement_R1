@@ -128,6 +128,15 @@ sap.ui.define([
 			this.getGlobalModel().setProperty("/currentScreen", this.getGlobalModel().getProperty("/parentScreen"));
 			this.getGlobalModel().setProperty("/parentScreen", this.getParentScreen());
 			this.getApplication().navBack(History, "");
+			this.destroyModel();
+		},
+		destroyModel: function() {
+			if (this.fragmentLoaded) {
+				this.fragmentLoaded.destroy(true);
+			}
+			// var data = "";
+			// this.getView().getModel("itemList").setData(data);
+
 		},
 		setModelData: function(data) {
 			var viewProperties = this.getViewProperties();
@@ -137,6 +146,24 @@ sap.ui.define([
 			var viewProperties = this.getViewProperties(),
 				jsonModel = new sap.ui.model.json.JSONModel(viewProperties.modelData);
 			this.setModel(jsonModel, this.getModelName());
+		},
+		titleSet: function() {
+			var title = this.getGlobalModel().getProperty("/title");
+			this.byId("title").setTitle(title);
+
+		},
+
+		setPageTitle: function() {
+			var titleId = this.getPageTitle(),
+				title = this.geti18n(titleId);
+			this.byId("title").setProperty("title", title);
+			this.byId("title").setTitle(title);
+
+		},
+		geti18n: function(key) {
+			var oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+			return oResourceBundle.getText(key);
+
 		},
 
 		getGlobalProperty: function(property) {
@@ -186,12 +213,17 @@ sap.ui.define([
 			return properties.childScreens;
 		},
 		getParentScreen: function() {
-				var properties = this.getViewProperties();
-				return properties.parentScreen;
-			}
-			//*************************************************************************************************
-			//END
-			//***************************************************************************************************
+			var properties = this.getViewProperties();
+			return properties.parentScreen;
+		},
+		getPageTitle: function() {
+			var properties = this.getViewProperties();
+			return properties.pageTitle;
+		}
+
+		//*************************************************************************************************
+		//END
+		//***************************************************************************************************
 	});
 
 });

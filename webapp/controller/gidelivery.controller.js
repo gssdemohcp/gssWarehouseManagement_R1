@@ -51,8 +51,9 @@ sap.ui.define([
 		},
 
 		setFragment: function() {
+			var viewId = this.getView().getId();
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 
@@ -74,7 +75,7 @@ sap.ui.define([
 			this.indiTO = data.ToInd;
 			this.indiTOConf = data.ToConfirmInd;
 			this.indiPost = data.PostInd;
-			this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost);
+			this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost,"S");
 		},
 		onHandleScanInput: function() {
 			this.getView().byId("GIDForm").setVisible(true);
@@ -114,14 +115,14 @@ sap.ui.define([
 				this.setFragment();
 			}
 			this.fragmentLoaded.open();
-			sap.ui.getCore().byId("popup").setText("Are you sure you want to generate Transfer Order?");
+			this.byId("popup").setText(this.geti18n("genToPop"));
 		},
 
 		onHandleGTO: function() {
 			this.fragmentLoaded.close();
 			var whenOdataCall = this.callOdataService().handleDelTO(this, "GIDForm", "delList", "T");
 			whenOdataCall.done(function() {
-				this.getView().byId("GItoInd").setText("Available");
+				this.getView().byId("GItoInd").setText(this.geti18n("available"));
 			}.bind(this));
 
 		},
@@ -135,7 +136,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			sap.ui.getCore().byId("popup").setText("Are you sure you want to post Goods Issue?");
+			this.byId("popup").setText(this.geti18n("postGIPop"));
 
 		},
 

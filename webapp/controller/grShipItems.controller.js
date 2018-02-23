@@ -18,6 +18,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.titleSet();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 					this.iGetInput();
 				}.bind(this)
@@ -44,7 +45,7 @@ sap.ui.define([
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
 			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
-			this.getView().byId("page").setTitle(this.getGlobalModel().getProperty("/title"));
+			this.getView().byId("title").setTitle(this.getGlobalModel().getProperty("/title"));
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 

@@ -46,13 +46,15 @@ sap.ui.define([
 			var _screen = this.getCurrentScrn();
 			var _screenModel = this.getScreenModel(_screen);
 			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
+			this.getGlobalModel().setProperty("/title", "GR By Handling Unit");
 			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 
 		setFragment: function() {
+			var viewId = this.getView().getId();
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 
@@ -61,7 +63,6 @@ sap.ui.define([
 			var whenOdataCall;
 			if (_inputValue) {
 				this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
-				this.getGlobalModel().setProperty("/title", "GR By Handling Unit");
 				whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
 				whenOdataCall.done(function() {
 						this.getView().byId("GRDForm").setVisible(true);
@@ -79,7 +80,7 @@ sap.ui.define([
 			this.indiTO = data.ToInd;
 			this.indiTOConf = data.ToConfirmInd;
 			this.indiPost = data.PostInd;
-			this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost);
+			this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost,"");
 		},
 		onHandleScanInput: function(oEvent) {
 			this.callOdataService().barcodeReader(this, "inputValue");
@@ -118,7 +119,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			sap.ui.getCore().byId("popup").setText("Are you sure you want to generate Transfer Order?");
+			this.byId("popup").setText("Are you sure you want to generate Transfer Order?");
 		},
 
 		onHandleGTO: function() {
@@ -139,7 +140,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			sap.ui.getCore().byId("popup").setText("Are you sure you want to post Goods Receipt?");
+			this .byId("popup").setText("Are you sure you want to post Goods Receipt?");
 
 		},
 

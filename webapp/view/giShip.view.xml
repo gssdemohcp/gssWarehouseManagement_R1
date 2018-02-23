@@ -2,11 +2,11 @@
 	controllerName="gss.newWarehouseManage_R1.controller.giShip" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="Title">
+			<Page title="title">
 				<customHeader>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Title id="rfScreen" text="Shipment" level="H2" textAlign="Center"/>
+						<Title id="rfScreen" text="{i18n>shipTitle}" level="H2" textAlign="Center"/>
 						<ToolbarSpacer/>
 						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
 					</Toolbar>
@@ -17,7 +17,7 @@
 				<Toolbar id="toolbarheader">
 					<Input class="sapUiTinyMarginBegin" id="inputValue" valueHelpRequest="onHandlePoHelp" submit="iGetInput" liveChange="onHandleBinding"
 						width="100%" textAlign="Begin"/>
-					<Button id="scanButton" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+					<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 				</Toolbar>
 				<content>
 					<f:SimpleForm id="grShip" editable="false" layout="ResponsiveGridLayout" title="Shipment Information" labelSpanXL="3" labelSpanL="3"
@@ -26,11 +26,11 @@
 						<f:content>
 							<HBox>
 								<VBox>
-									<Label class="sapUiTinyMarginTop" text="Shipment"/>
-									<Label class="sapUiTinyMarginTop" text="External Identification No"/>
-									<Label class="sapUiTinyMarginTop" text="Container ID"/>
-									<Label class="sapUiTinyMarginTop" text="Shipment Type"/>
-									<Label class="sapUiTinyMarginTop" text="Shipment Route"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>shipLbl}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>exIdNo}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>contId}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>shipType}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>shipRoute}"/>
 								</VBox>
 								<VBox>
 									<Text id="shipment" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{shipList>/aItems/0/Tknum}"/>
@@ -45,28 +45,28 @@
 							</HBox>
 						</f:content>
 					</f:SimpleForm>
-					<f:SimpleForm id="grShipData" editable="false" layout="ResponsiveGridLayout" title="Actual Data" labelSpanXL="3" labelSpanL="3"
+					<f:SimpleForm id="grShipData" editable="false" layout="ResponsiveGridLayout" title="{i18n>actData}" labelSpanXL="3" labelSpanL="3"
 						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
 						columnsL="1" columnsM="1" singleContainerFullSize="false"></f:SimpleForm>
 					<HBox></HBox>
 					<VBox>
 						<HBox>
-							<Label class="sapUiSmallMargin" text="Current Load Start Date"/>
+							<Label class="sapUiSmallMargin" text="{i18n>currLdStrt}"/>
 							<DatePicker id="DP1" value="{path:'shipList>/aItems/0/Dalbg', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
 							<VBox></VBox>
 						</HBox>
 						<HBox>
-							<Label class="sapUiSmallMargin" text="Actual Load Start Time"/>
+							<Label class="sapUiSmallMargin" text="{i18n>actLdStTime}"/>
 							<TimePicker id="TP3" displayFormat="HH:mm:ss" placeholder=""/>
 							<VBox></VBox>
 						</HBox>
 						<HBox>
-							<Label class="sapUiSmallMargin" text="Actual Load End Date"/>
+							<Label class="sapUiSmallMargin" text="{i18n>actLdEnDt}"/>
 							<DatePicker id="DP2" value="{path:'shipList>/aItems/0/Dalen', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
 							<VBox></VBox>
 						</HBox>
 						<HBox>
-							<Label class="sapUiSmallMargin" text="Actual Load End Time"/>
+							<Label class="sapUiSmallMargin" text="{i18n>actLdEndTime}"/>
 							<TimePicker id="TP4" displayFormat="HH:mm:ss" placeholder=""/>
 							<VBox></VBox>
 						</HBox>
@@ -76,12 +76,12 @@
 					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
 					<Bar id="footerbar">
 						<contentLeft>
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+								<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
-							<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="Save"/>
-							<Button id="print" icon="sap-icon://print" press="onHandlePrint" tooltip="Print"/>
+							<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="{i18n>save}"/>
+							<Button id="print" icon="sap-icon://print" press="onHandlePrint" tooltip="{i18n>print}"/>
 						</contentRight>
 						<!--</contentMiddle>-->
 						<!--</Toolbar>-->

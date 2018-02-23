@@ -51,8 +51,9 @@ sap.ui.define([
 		},
 
 		setFragment: function() {
+			var viewId = this.getView().getId();
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 		onSingleSelectGISA: function(oEvent) {
@@ -65,21 +66,26 @@ sap.ui.define([
 				this.indiTO = obj.ToInd;
 				this.indiTOConf = obj.ToConfirmInd;
 				this.indiPost = obj.ToPostInd;
-				this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost);
+				this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost,"S");
 			} else if (len > 1) {
-				MessageToast.show("Please select one delivery");
-				this.gssFragmentsFunction().fragmentFalse();
+				MessageToast.show(this.geti18n("toastOneDel"));
+				this.gssFragmentsFunction().fragmentFalse(this,"S");
 			} else if (len === 0) {
-				MessageToast.show("Please select a delivery");
-				this.gssFragmentsFunction().fragmentFalse();
+				MessageToast.show(this.geti18n("toastOneDel"));
+				this.gssFragmentsFunction().fragmentFalse(this,"S");
 			}
 		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.getView().byId("tableGISA").setVisible(true);
-				this.callOdataService().getLoadInq(this, _inputValue, "", "");
+				   var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
+					whenOdataCall.done(function() {
+						this.getView().byId("tableGISA").setVisible(true);
+						this.getGlobalModel().setProperty("/title", this.geti18n("giBySa"));
+					}.bind(this)
+
+				);
 
 			}
 		},
@@ -121,7 +127,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			sap.ui.getCore().byId("popup").setText("Are you sure you want to generate Transfer Order?");
+			this.byId("popup").setText(this.geti18n("genToPop"));
 		},
 		onHandleTOEx: function() {
 			utilities.navigateChild("picking", this);
@@ -131,7 +137,7 @@ sap.ui.define([
 			this.fragmentLoaded.close();
 			var whenOdataCall = this.callOdataService().handleShipTO(this, "tableGISA", "delList", "T");
 			whenOdataCall.done(function() {
-				this.getView().byId("GItoInd").setText("Available");
+				this.getView().byId("GItoInd").setText(this.geti18n("available"));
 			}.bind(this));
 
 		},
@@ -142,7 +148,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			sap.ui.getCore().byId("popup").setText("Are you sure you want to post Goods Issue?");
+			this .byId("popup").setText(this.geti18n("postGIPop"));
 
 		},
 

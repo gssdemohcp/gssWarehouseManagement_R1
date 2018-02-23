@@ -85,7 +85,7 @@
 						<!--<contentMiddle>-->
 							<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>

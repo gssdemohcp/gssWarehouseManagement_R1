@@ -47,7 +47,7 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.callOdataService().getLoadInq(this, _inputValue);
+				this.callOdataService().getLoadInq(this, _inputValue,"","");
 			}
 		},
 

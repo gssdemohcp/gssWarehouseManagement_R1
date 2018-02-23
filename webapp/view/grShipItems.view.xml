@@ -2,7 +2,7 @@
 	controllerName="gss.newWarehouseManage_R1.controller.grShipItems" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page id="page">
+			<Page id="title">
 				<content>
 					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
@@ -10,16 +10,16 @@
 					<Toolbar id="toolbarheader">
 						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
-						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
-					<f:SimpleForm editable="false" layout="ResponsiveGridLayout" title="Delivery Info" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+					<f:SimpleForm editable="false" layout="ResponsiveGridLayout" title="{i18n>Delform1Title}" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
 						labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
 						singleContainerFullSize="false">
 						<f:content>
 							<HBox>
 								<VBox>
-									<Label class="sapUiTinyMarginTop" text="Delivery No"/>
-									<Label class="sapUiTinyMarginTop" text="Items Total"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>delNo}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>itemsTot}"/>
 								</VBox>
 								<VBox>
 									<Text id="delNo" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Vbeln}"/>
@@ -33,29 +33,29 @@
 							width="auto" items="{itemList>/aItems}">
 							<headerToolbar>
 								<Toolbar>
-									<Title text="Material Info"/>
+									<Title text="{i18n>matInfo}"/>
 									<ToolbarSpacer/>
 								</Toolbar>
 							</headerToolbar>
 							<columns>
 								<Column>
 									<header>
-										<Label text="Material" design="Bold"/>
+										<Label text="{i18n>mat}" design="Bold"/>
 									</header>
 								</Column>
 								<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline">
 									<header>
-										<Label text="Description" design="Bold"/>
+										<Label text="{i18n>desc}" design="Bold"/>
 									</header>
 								</Column>
 								<Column>
 									<header>
-										<Label text="Quantity/Unit" design="Bold"/>
+										<Label text="{i18n>quantUnit}" design="Bold"/>
 									</header>
 								</Column>
 								<Column id="MatBatch">
 									<header>
-										<Label text="Batch" design="Bold" visible="false"/>
+										<Label text="{i18n>batch}" design="Bold" visible="false"/>
 									</header>
 								</Column>
 							</columns>
@@ -80,8 +80,8 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
 							<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" tooltip="Difference"/>

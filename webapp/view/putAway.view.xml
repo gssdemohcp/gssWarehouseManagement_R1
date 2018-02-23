@@ -2,7 +2,7 @@
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="PutAway">
+			<Page id="title">
 				<content>
 					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
@@ -10,10 +10,11 @@
 					<Toolbar id="toolbarheader">
 						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
-						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<Table id="toTable" items="{materialList>/aItems}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" mode="MultiSelect"
-						showSeparators="All" selectionChange="onHandleSelection" class="sapUiTinyMargin" width="auto" growing="true" growingScrollToLoad="true">
+						showSeparators="All" selectionChange="onHandleSelection" class="sapUiTinyMargin" width="auto" growing="true" growingScrollToLoad="true"
+						visible="false">
 						<items>
 							<ColumnListItem counter="0" id="item1">
 								<cells>
@@ -32,46 +33,45 @@
 						<columns>
 							<Column id="column" hAlign="Left">
 								<header>
-									<Label design="Bold" id="label" text="Material"/>
+									<Label design="Bold" id="label" text="{i18n>mat}"/>
 								</header>
 							</Column>
 							<Column id="column0" hAlign="Left">
 								<header>
-									<Label id="label0" design="Bold" text="Description"/>
+									<Label id="label0" design="Bold" text="{i18n>desc}"/>
 								</header>
 							</Column>
 							<Column id="column1" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
 								<header>
-									<Label id="label1" text="Source Bin" design="Bold"/>
+									<Label id="label1" text="{i18n>srcBin}" design="Bold"/>
 								</header>
 							</Column>
 							<Column id="column2" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
 								<header>
-									<Label design="Bold" id="label2" text="Dest. Bin"/>
+									<Label design="Bold" id="label2" text="{i18n>destBin}"/>
 								</header>
 							</Column>
 							<Column id="column3" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" visible="false" hAlign="Left">
 								<header>
-									<Label id="label3" design="Bold" text="Storage Unit"/>
+									<Label id="label3" design="Bold" text="{i18n>storUnit}"/>
 								</header>
 							</Column>
 							<Column id="column4" hAlign="Right">
 								<header>
-									<Label id="label4" text="Quantity" design="Bold"/>
+									<Label id="label4" text="{i18n>quant}" design="Bold"/>
 								</header>
 							</Column>
 						</columns>
 					</Table>
 				</content>
-				<footer id="footer" 
+				<footer id="footer"
 					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter footerheight">
-					<Bar id="footerbar" >
+					<Bar id="footerbar">
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
-								visible="false"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
 							<!--<Button id="LUnload" class="sapThemeHighlight-asOutlineColor" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Load/Unload"-->
@@ -80,9 +80,9 @@
 							<!--<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items" visible="false" enabled="false"/>-->
 							<!--<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>-->
 							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
-							<Button id="accept" press="putAwayConfirm" icon="sap-icon://accept"/>
-							<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus"/>
-							<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf"/>
+							<Button id="accept" press="putAwayConfirm" icon="sap-icon://accept" tooltip="{i18n>accept}"/>
+							<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" tooltip="{i18n>diff}"/>
+							<Button id="newBin" press="onHandleNewBin" icon="sap-icon://shelf" tooltip="{i18n>newBin}"/>
 							<!--<Button id="undoDel" icon="sap-icon://undo" press="unLoad" ariaLabelledBy="actionButtonLabel" tooltip="Undo" visible="false" enabled="false"/>-->
 							<!--<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Ship" visible="false" enabled="false"/>-->
 							<!--<Button id="post" icon="sap-icon://paper-plane" press="onHandlePost" tooltip="GR Post" visible="false" enabled="false"/>-->

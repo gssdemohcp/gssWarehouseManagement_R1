@@ -48,13 +48,14 @@ sap.ui.define([
 		},
 		setFragment: function() {
 			//Fragement Code for New Bin
+			var viewId = this.getView().getId();
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "unpackMaterial");
-			this.fragmentMaterialLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.fragmentMaterialLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
 			this.getView().addDependent(this.fragmentMaterialLoaded);
 			/*	this.fragmentMaterialLoaded.open();*/
 
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "hu");
-			this.fragmentHuLoaded = sap.ui.xmlfragment(callFragment, this);
+			this.fragmentHuLoaded = sap.ui.xmlfragment(viewId,callFragment, this);
 			// this.getView().addDependent(this.fragmentHuLoaded);
 		},
 
@@ -62,9 +63,22 @@ sap.ui.define([
 			var _inputValue = this.getView().byId("huInput").getValue(),
 				_delVal = this.getGlobalModel().getProperty("/currentDelNo");
 			this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
-			this.callOdataService().grPackKeyFields(this, _delVal, _inputValue);
-			this.getView().byId("byMat").setEnabled(true);
-			this.getView().byId("byHU").setEnabled(true);
+			var whenOdataCall = this.callOdataService().grPackKeyFields(this, _delVal, _inputValue);
+			whenOdataCall.done(function() {
+				var data = this.getModelData("packItems").aItems[0];
+				if (data.MatInd === "X") {
+					this.getView().byId("byMat").setEnabled(false);
+					this.getView().byId("byHU").setEnabled(true);
+				} else if (data.MatInd === "Y") {
+					this.getView().byId("byMat").setEnabled(true);
+					this.getView().byId("byHU").setEnabled(true);
+
+				} else {
+					this.getView().byId("byMat").setEnabled(true);
+					this.getView().byId("byHU").setEnabled(false);
+				}
+
+			}.bind(this));
 
 		},
 		onHandleScanInput: function() {

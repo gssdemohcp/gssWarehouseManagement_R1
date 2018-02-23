@@ -197,6 +197,7 @@ sap.ui.define([
 					placeHolderLabel: "EnterSU",
 					entitySet: "/WMProcessSet",
 					modelName: "materialList",
+					pageTitle:"putBySu",
 					UI: {
 						footer: {}
 					}
@@ -219,6 +220,7 @@ sap.ui.define([
 						Lgnum: ""
 					},
 					placeHolderLabel: "EnterTO",
+					pageTitle:"putByTo",
 					entitySet: "/WMProcessSet",
 					modelName: "materialList"
 				},
@@ -240,6 +242,7 @@ sap.ui.define([
 						Lgnum: ""
 					},
 					placeHolderLabel: "EnterDel",
+					pageTitle:"putByDel",
 					entitySet: "/WMProcessSet",
 					modelName: "materialList"
 				},
@@ -262,6 +265,7 @@ sap.ui.define([
 						Lgnum: ""
 					},
 					placeHolderLabel: "EnterTO",
+					pageTitle:"pickByTo",
 					entitySet: "/WMProcessSet",
 					modelName: "materialList"
 				},
@@ -283,6 +287,7 @@ sap.ui.define([
 						Lgnum: ""
 					},
 					placeHolderLabel: "EnterDel",
+					pageTitle:"pickByDel",
 					entitySet: "/WMProcessSet",
 					modelName: "materialList"
 				},
@@ -822,12 +827,8 @@ sap.ui.define([
 					parentScreen: "",
 					filters: {
 						Exidv: "",
-						ShipInd: "",
-						Vbeln: "",
-						Lgnum: "",
-						Matnr: "",
-						Lfimg: "",
-						Vrkme: ""
+						ShipInd: ""
+					
 					},
 					entitySet: "/GRProcessSet",
 					modelName: "HUMatModel"

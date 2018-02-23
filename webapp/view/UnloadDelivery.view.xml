@@ -2,7 +2,7 @@
 	controllerName="gss.newWarehouseManage_R1.controller.UnloadDelivery" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="Title">
+			<Page title="{i18n>unlByDel}">
 				<customHeader>
 					<Toolbar>
 						<ToolbarSpacer/>
@@ -41,9 +41,9 @@
 						columnsL="1" columnsM="1" singleContainerFullSize="false">
 						<f:content>
 							<Toolbar>
-								<Input id="scanHUinDel" type="Text" valueHelpRequest="onHandlePoHelp" submit="iGetInput" placeholder="{i18n>placeholderTitle}"
-									width="100%" textAlign="Begin" maxLength="20"/>
-								<Button id="shu" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanHU" ariaLabelledBy="actionButtonLabel"/>
+								<Input id="scanHUinDel" type="Text" valueHelpRequest="onHandlePoHelp" submit="iGetInput" placeholder="{i18n>placeholderTitle}" width="100%"
+									textAlign="Begin" maxLength="20"/>
+								<Button id="shu" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanHU" ariaLabelledBy="actionButtonLabel"/>
 							</Toolbar>
 							<HBox>
 								<VBox>
@@ -68,9 +68,8 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
-							/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
 							<!--<Button id="LUnload" class="sapThemeHighlight-asOutlineColor" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Load/Unload"-->
@@ -79,7 +78,7 @@
 							<!--<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items" visible="false" enabled="false"/>-->
 							<!--<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>-->
 							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
-							<Button id="accept" class="accept" press="unload" icon="sap-icon://accept" />
+							<Button id="accept" class="accept" press="unload" icon="sap-icon://accept"/>
 							<!--<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus"/>-->
 							<!--<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf"/>-->
 							<Button id="undoDel" class="undoDel" press="unloadRevert" icon="sap-icon://undo"/>

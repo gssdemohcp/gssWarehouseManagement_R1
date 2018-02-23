@@ -2,26 +2,26 @@
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="Pack/UnPack">
+			<Page title="{i18n>packByHu}">
 				<content>
 					<Table id="unpackHUTable" class="sapUiTinyMarginTop dataStyle" growing="true" growingScrollToLoad="true" width="auto"
 						items="{HUModel>/aItems}" mode="MultiSelect" selectionChange="unpackItemSelect">
 						<headerToolbar>
 							<Toolbar>
-								<Title text="Lower Level HU List"/>
+								<Title text="{i18n>lowerHu}"/>
 								<ToolbarSpacer/>
-								<Button id="addItem" tooltip="Add Item" icon="sap-icon://add" press="onAddItem"/>
+								<Button id="addItem" tooltip="{i18n>addItem}" icon="sap-icon://add" press="onAddItem"/>
 							</Toolbar>
 						</headerToolbar>
 						<columns>
 							<Column hAlign="Left">
 								<header>
-									<Label text="Handling Unit" design="Bold"/>
+									<Label text="{i18n>hu}" design="Bold"/>
 								</header>
 							</Column>
 							<Column hAlign="Left">
 								<header>
-									<Label text="Description" design="Bold"/>
+									<Label text="{i18n>desc}" design="Bold"/>
 								</header>
 							</Column>
 						</columns>
@@ -41,8 +41,8 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
 							<Button id="accept" press="onHandleAccept" icon="sap-icon://accept"/>

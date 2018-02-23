@@ -26,10 +26,12 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel(this);
 					this.inputDetails();
+					this.setPageTitle();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 					if (this.getGlobalModel().getProperty("/parentScreen")) {
 						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
 						this.getView().byId("inputValue").setEnabled(false);
+						this.getView().byId("back").setVisible(true);
 						this.iGetInput();
 					}
 				}.bind(this)
@@ -43,12 +45,13 @@ sap.ui.define([
 
 		setFragment: function() {
 			//Fragement Code for New Bin
+			var viewId = this.getView().getId();
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin");
-			this.fragmentNewBinLoaded = sap.ui.xmlfragment(loadFragment, this);
+			this.fragmentNewBinLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
 			this.getView().addDependent(this.fragmentNewBinLoaded);
 			//	
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId,callFragment, this);
 		},
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
@@ -62,7 +65,12 @@ sap.ui.define([
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				//OLD CODE COMMENTED BY SELVAN this.getPutawayMaterial(_inputValue);
-				this.callOdataService().getMaterial(this, _inputValue);
+				var whenOdataCall = this.callOdataService().getMaterial(this, _inputValue);
+					whenOdataCall.done(function() {
+						this.getView().byId("toTable").setVisible(true);
+					}.bind(this)
+
+				);
 			}
 		},
 		onHandleScanInput: function() {

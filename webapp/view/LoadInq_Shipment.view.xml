@@ -10,7 +10,7 @@
 					<Toolbar id="toolbarheader">
 						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
-						<Button id="scanButton" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
 					<l:VerticalLayout>
 						<ObjectStatus id="shipmentText" class="sapUiTinyMarginBegin Text" text="{itemList>/aItems/0/ShipDesc} - {itemList>/aItems/0/ShipStat}"/>

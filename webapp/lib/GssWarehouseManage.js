@@ -100,6 +100,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 
 		getMaterial: function(oView, sInputValue) {
+			var promise = jQuery.Deferred();
 			var oFilterFields = oView.getFilterFields();
 			var property = "";
 			var _inpVal = 0;
@@ -114,7 +115,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oFilterFields.Queue = oView.getGlobalModel().getProperty("/currentQueue");
 			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 
-			this._ODataModelInterface.filterModelPopulate(oView);
+			var whenOdataCall = this._ODataModelInterface.filterModelPopulate(oView);
+			whenOdataCall.done(function(oResult) {
+				promise.resolve(oResult);
+			}.bind(this));
+
+			return promise;
 
 		},
 		grKeyFields: function(oView, sInputValue, shipInd) {
@@ -144,7 +150,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 		grPackKeyFields: function(oView, sInputValue, huVal) {
-
+			var promise = jQuery.Deferred();
 			var oKeyFields = oView.getKeyFields();
 			var property = "";
 			var _inpVal = 0;
@@ -164,11 +170,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			}
 
-			this._ODataModelInterface.keyFieldModelPopulate(oView);
+			var whenOdataCall = this._ODataModelInterface.keyFieldModelPopulate(oView);
+			whenOdataCall.done(function(oResult) {
+				promise.resolve(oResult);
+			}.bind(this));
+
+			return promise;
 
 		},
 
 		getLoadInq: function(oView, sInputValue, shipInd, Vbeln) {
+			var promise = jQuery.Deferred();
 			var oFilterFields = oView.getFilterFields();
 			var property = "";
 			var _inpVal = 0;
@@ -188,7 +200,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			if (Vbeln) {
 				oFilterFields.Vbeln = Vbeln;
 			}
-			this._ODataModelInterface.filterModelPopulate(oView);
+			var whenOdataCall = this._ODataModelInterface.filterModelPopulate(oView);
+			whenOdataCall.done(function(oResult) {
+				promise.resolve(oResult);
+			}.bind(this));
+
+			return promise;
 		},
 
 		materialSave: function(oView, mat, quant, unit) {
@@ -204,6 +221,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this._ODataModelInterface.filterModelPopulate(oView);
 			MessageToast.show(oView.getGlobalModel().getProperty("/message"));
 
+		},
+	    
+		getByMatHu:function(oView, sInputValue, shipInd, Vbeln){
+			var promise = jQuery.Deferred();
+			
+			
+			if (Vbeln) {
+				
+			}
+			
+			
 		},
 
 		LoadDetails: function(oView, sInputValue, huVal, procInd) {
@@ -400,7 +428,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oView.byId("GTO").setVisible(false);
 					oView.byId("TOEx").setVisible(true);
 				} else {
-					oView.gssFragmentsFunction().fragmentFalse(oView);
+					oView.gssFragmentsFunction().fragmentFalse(oView, "S");
 
 				}
 				promise.resolve(oResult);
@@ -426,7 +454,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oView.byId("GTO").setVisible(false);
 					oView.byId("TOEx").setVisible(true);
 				} else {
-					oView.gssFragmentsFunction().fragmentFalse(oView);
+					oView.gssFragmentsFunction().fragmentFalse(oView, "");
 
 				}
 				promise.resolve(oResult);

@@ -2,7 +2,7 @@
 	controllerName="gss.newWarehouseManage_R1.controller.UnloadShipment" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="Title">
+			<Page title="{i18n>unlByShip}">
 				<customHeader>
 					<Toolbar>
 						<ToolbarSpacer/>
@@ -69,7 +69,7 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back" visible="false"/>
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"
 								/>
 						</contentLeft>

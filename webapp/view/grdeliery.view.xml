@@ -2,7 +2,7 @@
 	controllerName="gss.newWarehouseManage_R1.controller.grdelivery" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.ui.layout.form">
 	<App>
 		<pages>
-			<Page title="{i18n>grByDel}">
+			<Page title="{i18n>grByDel}" id="title">
 				<content>
 					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
@@ -54,7 +54,7 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>

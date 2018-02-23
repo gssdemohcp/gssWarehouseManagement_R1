@@ -16,6 +16,7 @@ sap.ui.define([
 						this._router = this.getRouter();
 						this.seti18nModel();
 						this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+						this.titleSet();
 						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
 						this.getView().byId("inputValue").setEnabled(false);
 						this.oDataCall();
@@ -67,11 +68,11 @@ sap.ui.define([
 				endDateFormatted = "".concat(this.StartYear, this.StartMonth, this.StartDate);
 
 				if (startDate > endDate) {
-					MessageBox.error("Load End Date must be after Load Start Date");
+					MessageBox.error(this.geti18n("dateError"));
 				} else if (startDate < endDate) {
 					this.callOdataService().giShipUpdate(this, startDateFormatted, endDateFormatted, startTime, endTime, tkNum);
 				} else if (startDate === endDate && startTime > endTime) {
-					MessageBox.error("End time precedes start date");
+					MessageBox.error(this.geti18n("timeError"));
 				} else if (startDate === endDate && startTime < endTime) {
 					this.callOdataService().giShipUpdate(this, startDateFormatted, endDateFormatted, startTime, endTime, tkNum);
 				}

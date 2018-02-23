@@ -2,20 +2,20 @@
 	controllerName="gss.newWarehouseManage_R1.controller.grDelItems" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page id="page">
+			<Page id="title">
 				<content>
-					<f:SimpleForm id="DelItemForm" editable="false" layout="ResponsiveGridLayout" title="Delivery Info" labelSpanXL="3" labelSpanL="3"
+					<f:SimpleForm id="DelItemForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>Delform1Title}" labelSpanXL="3" labelSpanL="3"
 						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
 						columnsL="1" columnsM="1" singleContainerFullSize="false">
 						<f:content>
 							<Toolbar>
 								<Input id="itemInput" valueHelpRequest="onHandlePoHelp" submit="iGetInput" width="100%"
 									textAlign="Begin" maxLength="20"/>
-								<Button id="huScanBut" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onScanUnpack" ariaLabelledBy="actionButtonLabel"/>
+								<Button id="huScanBut" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onScanUnpack" ariaLabelledBy="actionButtonLabel"/>
 							</Toolbar>
 							<HBox>
 								<VBox>
-									<Label class="sapUiTinyMarginTop" text="Items Total"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>itemsTot}"/>
 									<!--<Label class="sapUiTinyMarginTop" text="Confirmed Item"/>-->
 								</VBox>
 								<VBox>
@@ -36,32 +36,32 @@
 						<columns>
 							<Column hAlign="Left">
 								<header>
-									<Label text="Delivery Item" design="Bold"/>
+									<Label text="{i18n>delItem}" design="Bold"/>
 								</header>
 							</Column>
 							<Column id="stock" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left" visible="false">
 								<header>
-									<Label text="Stock No" design="Bold"/>
+									<Label text="{i18n>stockNo}" design="Bold"/>
 								</header>
 							</Column>
 							<Column hAlign="Left">
 								<header>
-									<Label text="Material" design="Bold"/>
+									<Label text="{i18n>mat}" design="Bold"/>
 								</header>
 							</Column>
 							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
 								<header>
-									<Label text="Description" design="Bold"/>
+									<Label text="{i18n>desc}" design="Bold"/>
 								</header>
 							</Column>
 							<Column hAlign="Left">
 								<header>
-									<Label text="Quantity/Unit" design="Bold"/>
+									<Label text="{i18n>quantUnit}" design="Bold"/>
 								</header>
 							</Column>
 							<Column id="Batch" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Right" visible="false">
 								<header>
-									<Label text="Batch" design="Bold"/>
+									<Label text="{i18n>batch}" design="Bold"/>
 								</header>
 							</Column>
 						</columns>
@@ -88,12 +88,12 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
-							<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" tooltip="Difference"/>
-							<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="save"/>
+							<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" tooltip="{i18n>diff}"/>
+							<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="{i18n>save}"/>
 						</contentRight>
 					</Bar>
 				</footer>

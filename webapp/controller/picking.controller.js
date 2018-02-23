@@ -20,10 +20,12 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel(this);
 					this.inputDetails();
+					this.setPageTitle();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 					if (this.getGlobalModel().getProperty("/parentScreen")) {
 						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
 						this.getView().byId("inputValue").setEnabled(false);
+						this.getView().byId("back").setEnabled(true);
 						this.iGetInput();
 					}
 				}.bind(this)
@@ -48,7 +50,12 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.callOdataService().getMaterial(this, _inputValue);
+				var whenOdataCall = this.callOdataService().getMaterial(this, _inputValue);
+					whenOdataCall.done(function() {
+						this.getView().byId("toTable").setVisible(true);
+					}.bind(this)
+
+				);
 			}
 		},
 		onHandleScanInput: function() {

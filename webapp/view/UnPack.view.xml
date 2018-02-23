@@ -2,25 +2,25 @@
 	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.ui.layout.form">
 	<App>
 		<pages>
-			<Page title="Pack/UnPack">
+			<Page title="{i18n>packUnpack}">
 				<content>
 					<f:SimpleForm id="unpackForm" editable="false" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
 						adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
 						singleContainerFullSize="false">
 						<f:content>
 							<Toolbar>
-								<Input id="huInput" valueHelpRequest="onHandlePoHelp" submit="getHUInput" placeholder="Enter/Scan Handling Unit" width="20%"
+								<Input id="huInput" valueHelpRequest="onHandlePoHelp" submit="getHUInput" placeholder="{i18n>handlUnit}" width="20%"
 									textAlign="Begin" maxLength="20"/>
-								<Button id="huScanBut" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="onScanUnpack" ariaLabelledBy="actionButtonLabel"/>
+								<Button id="huScanBut" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onScanUnpack" ariaLabelledBy="actionButtonLabel"/>
 							</Toolbar>
 							<HBox>
 								<VBox>
-									<Label class="sapUiTinyMarginTop" text="Packaging Materials"/>
-									<Label class="sapUiTinyMarginTop" text="Description"/>
-									<Label class="sapUiTinyMarginTop" text="Plant"/>
-									<Label class="sapUiTinyMarginTop" text="Storage Location"/>
-									<Label class="sapUiTinyMarginTop" text="Warehouse No"/>
-									<Label class="sapUiTinyMarginTop" text="Storage Bin"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>packMat}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>desc}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>plant}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>storLoc}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>warehseNo}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>storBin}"/>
 								</VBox>
 								<VBox>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
@@ -42,12 +42,12 @@
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="Back"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="Status" type="Emphasized" press="handleMessagePopoverPress"/>
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
-							<Button id="byMat" icon="sap-icon://product" press="onHandleMat" enabled="false" tooltip="By Material"/>
-							<Button id="byHU" icon="sap-icon://suitcase" press="onHandleHU" enabled="false" tooltip="By HU"/>
+							<Button id="byMat" icon="sap-icon://product" press="onHandleMat" enabled="false" tooltip="{i18n>byMat}"/>
+							<Button id="byHU" icon="sap-icon://suitcase" press="onHandleHU" enabled="false" tooltip="{i18n>byHu}"/>
 						</contentRight>
 					</Bar>
 				</footer>
