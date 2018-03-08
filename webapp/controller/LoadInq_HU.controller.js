@@ -47,9 +47,13 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.callOdataService().getLoadInq(this, _inputValue,"","");
+				this.callOdataService().getLoadInq(this, _inputValue, "", "");
 			}
-		}
+		},
+		onHandleScanInput: function(oEvent) {
+			utilities.barcodeReader(this, "inputValue","");
+			this.iGetInput();
+		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 		 * (NOT before the first rendering! onInit() is used for that one!).

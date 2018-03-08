@@ -54,7 +54,7 @@ sap.ui.define([
 			var oView = this.getView();
 			oView.addDependent(this._oDialog);
 			this._oDialog.setEndButton(new sap.m.Button({
-				text: "Cancel",
+				text: this.geti18n("cancel"),
 				press: function() {
 					this._prevMenu();
 				}.bind(this)
@@ -80,7 +80,7 @@ sap.ui.define([
 			}
 			var pMmenu = aLink[plinkIndex].getTarget(); //Get the target of the previous link using index
 			var pText = aLink[plinkIndex].getText(); //Get the text of the previous link using index
-			if (pText === "Main menu") { //If the text is Main menu, insert the link
+			if (pText === this.geti18n("mainMenu")) { //If the text is Main menu, insert the link
 				this.getView().byId("breadCrumbs").insertLink(aLink[plinkIndex], plinkIndex);
 			}
 			//Remove the link from the breadcrumb, once the user click on the cancel button in the menu 

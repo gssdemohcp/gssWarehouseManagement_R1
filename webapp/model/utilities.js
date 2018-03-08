@@ -46,7 +46,6 @@ sap.ui.define([
 				childScreen = childScreens[target],
 				currentScreen = oView.getGlobalModel().getProperty("/currentScreen");
 			oView.getGlobalModel().setProperty("/parentScreen", currentScreen);
-
 			oView.getGlobalModel().setProperty("/currentScreen", childScreen);
 			oView.getRouter().navTo("" + target + "");
 
@@ -54,6 +53,42 @@ sap.ui.define([
 		setParentScreen: function(screen, oView) {
 			var viewProperties = oView.getViewProperties();
 			viewProperties.parentScreen = screen;
+
+		},
+		selectedItems: function(oView, controlId) {
+			return oView.byId(controlId).getSelectedItems();
+		},
+		removeItems: function(oView, controlId) {
+			oView.getView().byId(controlId).removeSelections(true);
+		},
+		barcodeReader: function(oView, fieldId, frag) {
+			cordova.plugins.barcodeScanner.scan(function(barcodeData) {
+				if (barcodeData.text !== null) {
+					if (sap.ui.Device.os.name === "Android") {
+						navigator.vibrate(500);
+					}
+					if (sap.ui.Device.os.name === "iOS") {
+
+					}
+					var inputvalue = barcodeData.text;
+					if (!frag) {
+						oView.byId(fieldId).setValue(inputvalue);
+					} else {
+						sap.ui.core.Fragment.byId(oView.getGlobalModel().getProperty("/viewId") + frag, fieldId).setValue(inputvalue);
+					}
+
+				}
+			});
+
+		},
+		checkUiIndicator: function(oView) {
+			var uiInd = oView.getGlobalModel().getProperty("/uiInd");
+			var controlModel = oView.getProcessModel(uiInd);
+			for (var i = 0; i <= Object.keys(controlModel).length; i++) {
+				for (var key in controlModel) {
+					oView.byId(key).setVisible(controlModel[key]);
+				}
+			}
 
 		}
 

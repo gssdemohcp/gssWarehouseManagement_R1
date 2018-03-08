@@ -2,9 +2,10 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
-	"gss/newWarehouseManage_R1/model/formatter"
+	"gss/newWarehouseManage_R1/model/formatter",
+	"gss/newWarehouseManage_R1/model/utilities"
 
-], function(Controller, BaseController, formatter) {
+], function(Controller, BaseController, formatter, utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.picking", {
@@ -25,8 +26,13 @@ sap.ui.define([
 					if (this.getGlobalModel().getProperty("/parentScreen")) {
 						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
 						this.getView().byId("inputValue").setEnabled(false);
-						this.getView().byId("back").setEnabled(true);
+						this.getView().byId("back").setVisible(true);
 						this.iGetInput();
+					}
+					else {
+						this.getView().byId("inputValue").setValue("");
+						this.getView().byId("inputValue").setEnabled(true);
+						this.getView().byId("back").setVisible(false);
 					}
 				}.bind(this)
 			});
@@ -43,15 +49,15 @@ sap.ui.define([
 			this.getView().byId("inputValue").setMaxLength(10);
 			// this.getView().byId("inputValue").setValueState(sap.ui.core.ValueState.Error);
 		},
-		onHandleSelection:function(){
-			this.selItems = this.callOdataService().selectedItems(this, "toTable");
+		onHandleSelection: function() {
+			this.selItems = utilities.selectedItems(this, "toTable");
 		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				var whenOdataCall = this.callOdataService().getMaterial(this, _inputValue);
-					whenOdataCall.done(function() {
+				whenOdataCall.done(function() {
 						this.getView().byId("toTable").setVisible(true);
 					}.bind(this)
 
@@ -59,7 +65,7 @@ sap.ui.define([
 			}
 		},
 		onHandleScanInput: function() {
-			this.callOdataService().barcodeReader(this, "inputValue");
+			utilities.barcodeReader(this, "inputValue","");
 			this.iGetInput();
 		},
 
@@ -71,7 +77,10 @@ sap.ui.define([
 			//code end -selvan
 		},
 		pickingConfirm: function() {
-			var selectedItems = this.callOdataService().confirmItems(this,this.selItems,"toTable");
+			var whenOdataCall = this.callOdataService().confirmItems(this, this.selItems, "toTable");
+			whenOdataCall.done(function() {
+				MessageToast.show(this.geti18n(this.getUpdateToast()));
+			}.bind(this));
 		},
 		onExit: function() {
 			if (this.fragmentLoaded) {

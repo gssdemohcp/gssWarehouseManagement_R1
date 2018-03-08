@@ -1,26 +1,26 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<Dialog id="addMaterial" title="Add Material" class="sapUiResponsiveMargin sapUiPopupWithPadding" 
+	<Dialog id="addMaterial" title="{i18n>addMatTit}" class="sapUiResponsiveMargin sapUiPopupWithPadding" 
 		icon="sap-icon://add" contentHeight="30%" contentWidth="20%">
 		<content>
 			<HBox>
 				<VBox>
-					<Input id="material" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="Enter Material" width="80%"/>
-					<Button id="addMatScan" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="packMatScan" ariaLabelledBy="actionButtonLabel"
+					<Input id="material" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="{i18n>enterMaterial}" width="80%"/>
+					<Button id="addMatScan" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="packMatScan" ariaLabelledBy="actionButtonLabel"
 					width="5%" visible="true"/>
-					<Input id="quantity" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="Enter Quantity" width="80%"/>
-					<Button id="addQuaScan" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="packQuaScan" ariaLabelledBy="actionButtonLabel"
+					<Input id="quantity" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="{i18n>enterQuant}" width="80%"/>
+					<Button id="addQuaScan" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="packQuaScan" ariaLabelledBy="actionButtonLabel"
 					width="5%" visible="true"/>
-					<Input id="unit" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="Enter Unit" width="80%"/>
-					<Button id="addUnitScan" tooltip="Bar Code scanner" icon="sap-icon://bar-code" press="packUnitScan" ariaLabelledBy="actionButtonLabel"
+					<Input id="unit" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="{i18n>enterUnit}" width="80%"/>
+					<Button id="addUnitScan" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="packUnitScan" ariaLabelledBy="actionButtonLabel"
 					width="5%" visible="true"/>
 				</VBox>
 			</HBox>
 		</content>
 		<beginButton>
-			<Button text = "Save" press="onMatSave"/>
+			<Button  text="{i18n>save}" press="onMatSave"/>
 		</beginButton>
 		<endButton>
-			<Button text = "Cancel" press="onMatCancel"/>
+			<Button text="{i18n>cancel}" press="onMatCancel"/>
 		</endButton>		
 	</Dialog>
 </core:FragmentDefinition>

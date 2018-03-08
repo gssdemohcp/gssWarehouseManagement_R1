@@ -82,10 +82,10 @@ sap.ui.define(["sap/ui/base/Object",
 				oDataModel = oView.getModel();
 
 			oDataModel.update(sEntityset, oItems, {
-				success: function(oData) {
+				success: function(oData,oResponse) {
 					promise.resolve(oData);
 				}.bind(this),
-				error: function(oData) {
+				error: function(oData,oResponse) {
 					promise.reject(oData);
 				}.bind(this)
 			});
@@ -99,6 +99,7 @@ sap.ui.define(["sap/ui/base/Object",
 			oDataModel.create(sEntityset, oItems, {
 				success: function(oData) {
 					promise.resolve(oData);
+					
 				}.bind(this),
 				error: function(oData) {
 					promise.reject(oData);

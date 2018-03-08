@@ -37,7 +37,8 @@ sap.ui.define(["sap/ui/base/Object",
 								// press functionality for the button
 								this.getGlobalModel().setProperty("/pack", "Packing");
 								this.getGlobalModel().setProperty("/shipInd", "P");
-								utilities.navigateChild("UnPack",oView); // Call to exit() method
+								oView.setUpdateToast("packTst");
+								utilities.navigateChild("UnPack", oView); // Call to exit() method
 							}.bind(oView) // bind the popup to the view
 					}),
 					new sap.m.Button({ // To display Logout button inside popup
@@ -46,7 +47,8 @@ sap.ui.define(["sap/ui/base/Object",
 						press: function() { // press functionality for the button
 								this.getGlobalModel().setProperty("/pack", "UnPacking");
 								this.getGlobalModel().setProperty("/shipInd", "U");
-								utilities.navigateChild("UnPack",oView); // Call to exit() method
+								oView.setUpdateToast("unpackTst");
+								utilities.navigateChild("UnPack", oView); // Call to exit() method
 							}.bind(oView) // bind the popup to the view
 					})
 					// new sap.m.Button({ // To display Logout button inside popup

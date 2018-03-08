@@ -34,18 +34,29 @@ sap.ui.define([
 		},
 		setFragment: function() {
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "addMaterial");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId,callFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "addMaterial", callFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
+		},
+		packMatScan: function() {
+			utilities.barcodeReader(this, "material","addMaterial");
+		},
+		packQuaScan: function() {
+			utilities.barcodeReader(this, "quantity","addMaterial");
+		},
+		packUnitScan: function() {
+			utilities.barcodeReader(this, "quantity","addMaterial");
 		},
 
 		oDataCall: function() {
 			var _huVal = this.getGlobalModel().getProperty("/currentHuVal");
 			this._shipInd = this.getGlobalModel().getProperty("/shipInd");
-			this.callOdataService().getLoadInq(this, _huVal, this._shipInd,"");
+			this.callOdataService().getLoadInq(this, _huVal, this._shipInd, "");
 
 		},
 		onHandleAccept: function() {
-			var tableRowSelectedItems = this.callOdataService().selectedItems(this, "unpackTable");
+			var tableRowSelectedItems = utilities.selectedItems(this, "unpackTable");
 			this.callOdataService().acceptItems(this, tableRowSelectedItems, "unpackTable", this._shipInd);
 
 		},
@@ -54,17 +65,18 @@ sap.ui.define([
 
 		},
 		onMatSave: function() {
-			var material = sap.ui.getCore().byId("material").getValue(),
-				quantity = sap.ui.getCore().byId("quantity").getValue(),
-				unit = sap.ui.getCore().byId("unit").getValue();
-			this.callOdataService().materialSave(this, material, quantity, unit);
+			var material = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "material").getValue(),
+				quantity = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "quantity").getValue(),
+				unit = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "unit").getValue();
+			 this.callOdataService().materialSave(this, material, quantity, unit,"unpackTable","HUMatModel");
+		
 			this.fragmentLoaded.close();
 
 		},
 		onMatCancel: function() {
-			sap.ui.getCore().byId("material").setValue("");
-			sap.ui.getCore().byId("quantity").setValue("");
-			sap.ui.getCore().byId("unit").setValue("");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "material").setValue("");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "quantity").setValue("");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "unit").setValue("");
 			this.fragmentLoaded.close();
 		}
 

@@ -26,8 +26,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
-			
+
 		},
 
 		inputDetails: function() {
@@ -36,6 +35,10 @@ sap.ui.define([
 			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
+		},
+		onHandleScanInput: function(oEvent) {
+			utilities.barcodeReader(this, "inputValue","");
+			this.iGetInput();
 		},
 
 		iGetInput: function(oEvent) {
@@ -47,16 +50,19 @@ sap.ui.define([
 
 		setFragment: function() {
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 
 		getLoadDetails: function(sInputValue) {
 			var shipNo = sInputValue; // To get input field value
+			var hu = this.getView().getModel("i18n").getResourceBundle().getText("EnterHU");
+			var ship = this.getView().getModel("i18n").getResourceBundle().getText("EnterShip");
 			var huNo = this.getView().byId("scanHUDel").getValue(); // To get input field value
 			var procInd = "X"; // Indicator for Load process
-			var filterFields = this.getFilterFields(); 
+			var filterFields = this.getFilterFields();
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
 				this.callOdataService().LoadDetails(this, shipNo, huNo, "");
@@ -65,12 +71,12 @@ sap.ui.define([
 				this.callOdataService().LoadDetails(this, shipNo, huNo, procInd);
 				// this.gssCallFunction().populateModelBuild(this); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
-				this.getView().byId("inputValue").setPlaceholder("Enter Shipment *"); // To set placeholder for input field
+				this.getView().byId("inputValue").setPlaceholder(ship); // To set placeholder for input field
 				this.getView().byId("inputValue").setMaxLength(10);
-				this.getView().byId("scanHUDel").setPlaceholder("Enter Handling Unit *"); // To set placeholder for input field&nbsp;
+				this.getView().byId("scanHUDel").setPlaceholder(hu); // To set placeholder for input field&nbsp;
 				this.getView().byId("scanHUDel").setMaxLength(20);
 			} else if (!shipNo && huNo) { // To check if one field is empty
-				this.getView().byId("inputValue").setPlaceholder("Enter Shipment *"); // To set placeholder for input field
+				this.getView().byId("inputValue").setPlaceholder(ship); // To set placeholder for input field
 				this.getView().byId("inputValue").setMaxLength(10);
 			}
 		},
@@ -86,7 +92,7 @@ sap.ui.define([
 		loadRevert: function() {
 			this.setFragment();
 			this.fragmentLoaded.open();
-			sap.ui.getCore().byId("popup").setText("Are you sure you want to undo the process?");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("undoProc"));
 		},
 
 		onConfirm: function() {

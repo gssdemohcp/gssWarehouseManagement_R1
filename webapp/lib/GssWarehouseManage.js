@@ -29,28 +29,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this._ODataModelInterface = new ODataModelInterface(this);
 
 		},
-		selectedItems: function(oView, controlId) {
-			return oView.byId(controlId).getSelectedItems();
-		},
-		removeItems: function(oView, controlId) {
-			oView.getView().byId(controlId).removeSelections(true);
-		},
-		barcodeReader: function(oView, fieldId) {
-			cordova.plugins.barcodeScanner.scan(function(barcodeData) {
-				if (barcodeData.text !== null) {
-					if (sap.ui.Device.os.name === "Android") {
-						navigator.vibrate(500);
-					}
-					if (sap.ui.Device.os.name === "iOS") {
-
-					}
-					var inputvalue = barcodeData.text;
-					oView.byId(fieldId).setValue(inputvalue);
-
-				}
-			});
-
-		},
 
 		checkNewBin: function(oView, sInputValue) {
 			var promise = jQuery.Deferred();
@@ -59,7 +37,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oFilterFields.Nltyp = oView.getGlobalModel().getProperty("/currentNltyp");
 			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 
-			var oWhenCallReadIsDone = this._ODataModelInterface.filterModelPopulate(oView);
+			var oWhenCallReadIsDone = this._ODataModelInterface.filterModelPopulate(oView, "");
 			//Handle response from oData Call
 			oWhenCallReadIsDone.done(function(oRfData) {
 				promise.resolve(oRfData);
@@ -115,7 +93,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oFilterFields.Queue = oView.getGlobalModel().getProperty("/currentQueue");
 			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 
-			var whenOdataCall = this._ODataModelInterface.filterModelPopulate(oView);
+			var whenOdataCall = this._ODataModelInterface.filterModelPopulate(oView, "");
 			whenOdataCall.done(function(oResult) {
 				promise.resolve(oResult);
 			}.bind(this));
@@ -200,7 +178,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			if (Vbeln) {
 				oFilterFields.Vbeln = Vbeln;
 			}
-			var whenOdataCall = this._ODataModelInterface.filterModelPopulate(oView);
+			var whenOdataCall = this._ODataModelInterface.filterModelPopulate(oView, "");
 			whenOdataCall.done(function(oResult) {
 				promise.resolve(oResult);
 			}.bind(this));
@@ -208,33 +186,56 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			return promise;
 		},
 
-		materialSave: function(oView, mat, quant, unit) {
-			var oFilterFields = oView.getFilterFields();
+		materialSave: function(oView, mat, quant, unit,controlId,model) {
+			var oWhenOdataUpdateDone;
+			/*var oViewModel = new JSONModel();*/
+			var promise = jQuery.Deferred();
+			var oFilterFields = {};
 			oFilterFields.Vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
 			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			oFilterFields.Matnr = mat;
 			oFilterFields.Lfimg = quant;
 			oFilterFields.Vrkme = unit;
-			oFilterFields.ShipInd = "";
-			oFilterFields.Exidv = "";
 
-			this._ODataModelInterface.filterModelPopulate(oView);
-			MessageToast.show(oView.getGlobalModel().getProperty("/message"));
+			oWhenOdataUpdateDone = this._ODataModelInterface.filterModelPopulate(oView, oFilterFields);
+			oWhenOdataUpdateDone.done(function(oResult) {
+					/*var viewData = this.getView().byId(controlId).getModel(model).getData();
+					for (var i = 0; i < oResult.results.length; i++) {
+						viewData.aItems.push(oResult.results[i]);
+					}
+					oViewModel.setData(viewData);
+					this.getView().byId(controlId).setModel(oViewModel, model);*/
+				promise.resolve(oResult);
+			}.bind(this));
+			return promise;
 
 		},
-	    
-		getByMatHu:function(oView, sInputValue, shipInd, Vbeln){
+		huSave: function(oView, hu,controlId,model) {
+			var oWhenOdataUpdateDone;
+			var oViewModel = new JSONModel();
 			var promise = jQuery.Deferred();
-			
-			
-			if (Vbeln) {
-				
-			}
-			
-			
+			var oFilterFields;
+			oFilterFields.Vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
+			oFilterFields.Exidv = oView.getGlobalModel().getProperty("/currentHuVal");
+			oFilterFields.Unvel = hu;
+
+			oWhenOdataUpdateDone = this._ODataModelInterface.filterModelPopulate(oView, oFilterFields);
+			oWhenOdataUpdateDone.done(function(oResult) {
+				var	viewData = this.getView().byId(controlId).getModel(model).getData();
+					for (var i = 0; i < oResult.length; i++) {
+						viewData.aItems.push(oResult.results[i]);
+					}
+					oViewModel.setData(viewData);
+					this.getView().byId(controlId).setModel(oViewModel, model);
+				promise.resolve(oResult);
+			}.bind(this));
+			return promise;
+
 		},
 
 		LoadDetails: function(oView, sInputValue, huVal, procInd) {
+			var oWhenOdataUpdateDone;
+			var promise = jQuery.Deferred();
 			//SET INPUT VALUE
 			var oFilterFields = oView.getFilterFields();
 			var property = "";
@@ -249,10 +250,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oFilterFields.Exidv = huVal;
 			oFilterFields.ProcInd = procInd;
 			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-			this._ODataModelInterface.filterModelPopulate(oView);
+			oWhenOdataUpdateDone = this._ODataModelInterface.filterModelPopulate(oView, "");
+			oWhenOdataUpdateDone.done(function(oResult) {
+				promise.resolve(oResult);
+			}.bind(this));
+			return promise;
 		},
 
 		LoadUnloadKeyFields: function(oView, modelData, HuStatus, loadInd) {
+			var oWhenOdataUpdateDone;
+			var promise = jQuery.Deferred();
 			var oKeyFields = oView.getKeyFields();
 			oKeyFields.Vbeln = modelData.aItems[0].Vbeln;
 			oKeyFields.Exidv = modelData.aItems[0].Exidv;
@@ -262,10 +269,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oKeyFields.HuStatus = HuStatus;
 			oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			oKeyFields.ProcInd = "";
-			this._ODataModelInterface.keyFieldModelPopulate(oView);
+			oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelPopulate(oView);
+			oWhenOdataUpdateDone.done(function(oResult) {
+				promise.resolve(oResult);
+			}.bind(this));
+			return promise;
 		},
 
 		UnloadDetails: function(oView, sInputValue, huVal, procInd, loadInd) {
+			var oWhenOdataUpdateDone;
+			var promise = jQuery.Deferred();
 			//SET INPUT VALUE
 			var oFilterFields = oView.getFilterFields();
 			var property = "";
@@ -282,11 +295,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oFilterFields.ProcInd = procInd;
 			oFilterFields.LoadInd = loadInd;
 
-			this._ODataModelInterface.filterModelPopulate(oView);
+			oWhenOdataUpdateDone = this._ODataModelInterface.filterModelPopulate(oView, "");
+			oWhenOdataUpdateDone.done(function(oResult) {
+				promise.resolve(oResult);
+			}.bind(this));
+			return promise;
 		},
 
 		confirmItems: function(oView, oSelectItems, controlId) {
 			var oWhenOdataUpdateDone;
+			var promise = jQuery.Deferred();
 			var activeModel = oView.getModelName();
 			var oKeyFields = oView.getKeyFields();
 
@@ -336,18 +354,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					if (tabLen === 0) {
 						oView.onNavBack();
 					}
+					promise.resolve(oRfModel);
 				});
 			}.bind(this));
+			return promise;
 
 		},
 		acceptItems: function(oView, oSelectItems, controlId, shipInd) {
 			var oWhenOdataUpdateDone;
+			var promise = jQuery.Deferred();
 			var activeModel = oView.getModelName();
 
 			oSelectItems.forEach(function(mItem) {
 				var updateItem = mItem.getBindingContext(activeModel).getObject();
 				updateItem.ShipInd = shipInd;
 				updateItem.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+				updateItem.Exidv = oView.getGlobalModel().getProperty("/currentHuVal");
 				oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
 				oWhenOdataUpdateDone.done(function(oRfModel) {
 					var oNewModel = oView.byId(controlId).getModel(activeModel).getData().aItems;
@@ -358,7 +380,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							break;
 						}
 					}
-					if (!shipInd === "P") {
+					if (shipInd === "U") {
 						oNewModel.splice(index, 1);
 					}
 					var oJSONModel = new JSONModel();
@@ -366,29 +388,38 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						aItems: oNewModel
 					});
 					oView.setModel(oJSONModel, activeModel);
-					MessageToast.show(oView.getGlobalModel().getProperty("/message"));
+					promise.resolve(oRfModel);
+					MessageToast.show(oView.geti18n(oView.getUpdateToast()));
+					utilities.removeItems(oView, controlId);
 
 				});
 			}.bind(this));
-
-			this.removeItems(oView, controlId);
+			return promise;
 
 		},
 		onSaveItems: function(oView, oSelectItems, controlId, shipInd) {
-
+			var oWhenOdataUpdateDone;
+			var promise = jQuery.Deferred();
 			var activeModel = oView.getModelName();
 			oSelectItems.forEach(function(mItems) {
 				var updateItem = mItems.getBindingContext(activeModel).getObject();
 				updateItem.ShipInd = shipInd;
 				updateItem.Vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
 				updateItem.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
-				this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
+				oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
+				oWhenOdataUpdateDone.done(function(oResult) {
+					promise.resolve(oResult);
+					utilities.removeItems(oView, controlId);
+
+				}.bind(this));
 
 			}.bind(this));
-			this.removeItems(oView, controlId);
+			return promise;
+
 		},
 		giShipUpdate: function(oView, startDate, endDate, startTime, endTime, tkNum) {
 			var oWhenOdataUpdateDone;
+			var promise = jQuery.Deferred();
 			var oEntry = {};
 			var oKeyFields = oView.getKeyFields();
 			oKeyFields.Vbeln = "";
@@ -400,10 +431,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oEntry.EndTime = endTime;
 			oEntry.Tknum = tkNum;
 			oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, oEntry);
-			oWhenOdataUpdateDone.done(function(oRfModel) {
-				/*MessageToast.show(oView.getGlobalModel().getProperty("/message"));*/
+			oWhenOdataUpdateDone.done(function(oResult) {
+				promise.resolve(oResult);
+				MessageToast.show(oView.geti18n(oView.getUpdateToast()));
 				oView.onNavBack();
-			});
+			}.bind(this));
+			return promise;
 
 		},
 		handleShipTO: function(oView, controlId, model, shipInd) {
@@ -462,12 +495,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			return promise;
 
-		},
-
-		entityName: function(oView, sEntityProperty) {
-			var oEntitySetModel = oView.getModel("entitySetProperties"),
-				bEntityName = oEntitySetModel.getProperty(sEntityProperty);
-			return bEntityName;
 		}
 	});
 });

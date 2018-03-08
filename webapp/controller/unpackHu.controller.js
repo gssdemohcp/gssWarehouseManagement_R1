@@ -32,8 +32,14 @@ sap.ui.define([
 		},
 		setFragment: function() {
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "addHU");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId,callFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "addHU", callFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
+		},
+		packHuScan:function(){
+			utilities.barcodeReader(this, "HU","addHU");
+			
 		},
 
 		oDataCall: function() {
@@ -44,7 +50,7 @@ sap.ui.define([
 
 		},
 		onHandleAccept: function() {
-			var tableRowSelectedItems = this.callOdataService().selectedItems(this, "unpackTable");
+			var tableRowSelectedItems = utilities.selectedItems(this, "unpackTable");
 			if (this.getGlobalModel().getProperty("/shipInd") === "P") {
 				var ind = "H";
 			} else {
@@ -56,6 +62,18 @@ sap.ui.define([
 		onAddItem: function() {
 			this.fragmentLoaded.open();
 
+		},
+		huSave: function() {
+			var hu = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addHU", "HU").getValue();
+			this.callOdataService().huSave(this, hu,"unpackTable","HUModel");
+			this.fragmentLoaded.close();
+
+		},
+		huCancel: function() {
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addHU", "material").setValue("");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addHU", "quantity").setValue("");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addHU", "unit").setValue("");
+			this.fragmentLoaded.close();
 		}
 
 		/**

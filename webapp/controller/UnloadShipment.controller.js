@@ -26,6 +26,11 @@ sap.ui.define([
 						this.getView().byId("back").setEnabled(true);
 						this.iGetInput();
 					}
+					else {
+						this.getView().byId("inputValue").setValue("");
+						this.getView().byId("inputValue").setEnabled(true);
+						this.getView().byId("back").setVisible(false);
+					}
 				}.bind(this)
 			});
 
@@ -65,6 +70,7 @@ sap.ui.define([
 
 		setFragment: function() {
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
@@ -73,6 +79,8 @@ sap.ui.define([
 		getunloadDetails: function(sInputValue) {
 			var shipNo = sInputValue; // To get input field value
 			var huNo = this.getView().byId("scanHUunDel").getValue(); // To get input field value
+			var hu = this.getView().getModel("i18n").getResourceBundle().getText("EnterHU");
+			var ship = this.getView().getModel("i18n").getResourceBundle().getText("EnterShip");
 			var procInd = "Y"; // Indicator to get data in Unload process
 			var LoadInd = "X"; // Indicator for Unload process
 			if (shipNo && huNo) { // To check if both fields has values
@@ -83,12 +91,12 @@ sap.ui.define([
 				this.callOdataService().UnloadDetails(this, shipNo, huNo, procInd, "");
 				// this.gssCallFunction().UnloadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
-				this.getView().byId("inputValue").setPlaceholder("Enter Shipment *"); // To set placeholder for input field
+				this.getView().byId("inputValue").setPlaceholder(ship); // To set placeholder for input field
 				this.getView().byId("inputValue").setMaxLength(10);
-				this.getView().byId("scanHUunDel").setPlaceholder("Enter Handling Unit *"); // To set placeholder for input field&nbsp;
+				this.getView().byId("scanHUunDel").setPlaceholder(hu); // To set placeholder for input field&nbsp;
 				this.getView().byId("scanHUunDel").setMaxLength(20);
 			} else if (!shipNo && huNo) { // To check if one field is empty
-				this.getView().byId("inputValue").setPlaceholder("Enter Shipment *"); // To set placeholder for input field
+				this.getView().byId("inputValue").setPlaceholder(ship); // To set placeholder for input field
 				this.getView().byId("inputValue").setMaxLength(10);
 			}
 		},
@@ -104,7 +112,7 @@ sap.ui.define([
 		unloadRevert: function() {
 			this.setFragment();
 			this.fragmentLoaded.open();
-			this.byId("popup").setText("Are you sure you want to undo the process?");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("undoProc"));
 		},
 
 		onConfirm: function() {

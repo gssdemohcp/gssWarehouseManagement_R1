@@ -73,13 +73,31 @@ sap.ui.define(["sap/ui/base/Object",
 
 			}
 		},
+		uiIndCheck: function(oView, indiTO, indiTOConf, indiPost,flag) {
+			if (indiTO === "") {
+				oView.getGlobalModel().setProperty("/uiInd", "init");
+			} else if (indiTO === "X") {
+				oView.getGlobalModel().setProperty("/uiInd", "gTo");
+				if (indiTOConf === "X") {
+					oView.getGlobalModel().setProperty("/uiInd", "toEx");
+					if (indiPost === "X") {
+						oView.getGlobalModel().setProperty("/uiInd", "post");
+					}
+				}
+			} else if (indiTOConf === "") {
+				oView.getGlobalModel().setProperty("/uiInd", "toEx");
+			}
+			
+			utilities.checkUiIndicator(oView);
 
-		fragmentFalse: function(oView,flag) {
+		},
+
+		fragmentFalse: function(oView, flag) {
 			oView.byId("Lload").setVisible(false);
 			oView.byId("more").setVisible(false);
 			oView.byId("items").setVisible(false);
-			if(flag){
-			oView.byId("ship").setVisible(false);
+			if (flag) {
+				oView.byId("ship").setVisible(false);
 			}
 			oView.byId("post").setVisible(false);
 			oView.byId("TOEx").setVisible(false);

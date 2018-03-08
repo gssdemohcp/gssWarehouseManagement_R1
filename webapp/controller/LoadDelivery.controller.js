@@ -2,8 +2,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
-	"sap/ui/model/resource/ResourceModel"
-], function(Controller, BaseController, ResourceModel) {
+	"sap/ui/model/resource/ResourceModel",
+	"gss/newWarehouseManage_R1/model/utilities"
+], function(Controller, BaseController, ResourceModel,utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.LoadDelivery", {
@@ -23,7 +24,13 @@ sap.ui.define([
 					if (this.getGlobalModel().getProperty("/parentScreen")) {
 						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
 						this.getView().byId("inputValue").setEnabled(false);
+						this.getView().byId("back").setVisible(true);
 						this.iGetInput();
+					}
+					else {
+						this.getView().byId("inputValue").setValue("");
+						this.getView().byId("inputValue").setEnabled(true);
+						this.getView().byId("back").setVisible(false);
 					}
 				}.bind(this)
 			});
@@ -50,18 +57,19 @@ sap.ui.define([
 			}
 		},
 		onHandleScanInput: function() {
-			this.callOdataService().barcodeReader(this, "inputValue");
+			utilities.barcodeReader(this, "inputValue","");
 			this.iGetInput();
 		},
 		onHandleScanHU: function() {
-			this.callOdataService().barcodeReader(this, "scanHUinDel");
+			utilities.barcodeReader(this, "scanHUinDel","");
 			this.iGetInput();
 		},
 
 		setFragment: function() {
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf",loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 
@@ -99,7 +107,7 @@ sap.ui.define([
 		loadRevert: function() {
 			this.setFragment();
 			this.fragmentLoaded.open();
-			this.byId("popup").setText("Are you sure you want to undo the process?");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("undoProc"));
 		},
 
 		onConfirm: function() {
@@ -119,9 +127,6 @@ sap.ui.define([
 				this.fragmentLoaded.destroy(true);
 			}
 
-		},
-		onClose: function() {
-			this.fragmentLoaded = null;
 		}
 		
 

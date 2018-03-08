@@ -33,12 +33,14 @@ sap.ui.define(["sap/ui/base/Object",
 			this._oRfModel = new JSONModel();
 		},
 
-		filterModelPopulate: function(oView) {
+		filterModelPopulate: function(oView, oFilterFields) {
 			var promise = jQuery.Deferred();
 			//GET VIEW ENTITY SET NAME FROM CONFIQURATION JSON MODEL
 			var sEntitySet = oView.getEntitySet();
 			//GET FILTER FIELDS FROM CONFIGURATION JSON MODEL
-			var oFilterFields = oView.getFilterFields();
+			if (!oFilterFields) {
+				oFilterFields = oView.getFilterFields();
+			}
 			//SETUP FILTER STRING
 			var aFilterValues = this.setFilter(oFilterFields);
 			//CALL ODATA SERVICE
@@ -88,7 +90,7 @@ sap.ui.define(["sap/ui/base/Object",
 
 		},
 		keyFieldModelUpdate: function(oView, oUpdateItem) {
-			var oGlobalModel = oView.getModel("globalProperties");
+
 			var promise = jQuery.Deferred();
 			//GET VIEW ENTITY SET NAME FROM CONFIQURATION JSON MODEL
 			var sEntitySet = oView.getEntitySet();
@@ -99,11 +101,13 @@ sap.ui.define(["sap/ui/base/Object",
 			var oWhenCallUpdateIsDone = this._oODATAService.oCallUpdateDeferred(sEntitySet + sPath, oUpdateItem, oView);
 			//Handle response from oData Call
 			oWhenCallUpdateIsDone.done(function(oResult, oFailed) {
-
-				var oRfData = this.buildMessage(oView);
-				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
-				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
-				errorHandling.register(oView.getApplication(), oView.getComponent());
+				var oRfData;
+				oRfData = oResult;
+				oRfData = {
+					aItems: [oRfData]
+				};
+				this.buildMessage(oView, oResult);
+				this.errorHandlingDelegate(oView, oRfData, false);
 
 				promise.resolve(oResult);
 			}.bind(this));
@@ -112,30 +116,7 @@ sap.ui.define(["sap/ui/base/Object",
 
 		},
 
-		buildMessage: function(oView) {
-			var currentScreen = oView.getGlobalModel().getProperty("/currentScreen");
-			var msg;
-			if (currentScreen === "LM555" || currentScreen === "LM666") {
-				msg = "Material(s) unpacked successfully!";
-			} else if (currentScreen === "LM333" || currentScreen === "LM444" || currentScreen === "LM334" || currentScreen === "LM445") {
-				msg = "Item details saved successfully!";
-			} else if (currentScreen === "LM777") {
-				msg = "Shipment details saved successfully!";
-			} else if (currentScreen === "LM09" || currentScreen === "LM06" || currentScreen === "LM03") {
-				msg = "Material(s) confirmed successfully!";
-			}
-
-			var oRfData = [];
-			oRfData.Msgtyp = "S";
-			oRfData.Msgtext = msg;
-			oRfData = {
-				aItems: [oRfData]
-			};
-			return oRfData;
-		},
-
 		keyFieldModelCreate: function(oView, oUpdateItem) {
-			var oGlobalModel = oView.getModel("globalProperties");
 			var promise = jQuery.Deferred();
 			//GET VIEW ENTITY SET NAME FROM CONFIQURATION JSON MODEL
 			var sEntitySet = oView.getEntitySet();
@@ -151,12 +132,21 @@ sap.ui.define(["sap/ui/base/Object",
 				oRfData = {
 					aItems: [oRfData]
 				};
-				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
-				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
-				errorHandling.register(oView.getApplication(), oView.getComponent());
+				this.errorHandlingDelegate(oView, oRfData, false);
 				promise.resolve(oResult);
 			}.bind(this));
 			return promise;
+		},
+		buildMessage: function(oView, oResult) {
+			var oGlobalModel = oView.getModel("globalProperties");
+			if (!oResult) {
+				oGlobalModel.setProperty("/messageType", "S");
+				var sMessage = oView.geti18n(oView.getUpdateToast());
+				oGlobalModel.setProperty("/message", sMessage);
+			} else {
+				oGlobalModel.setProperty("/messageType", "E");
+			}
+
 		},
 
 		errorHandlingDelegate: function(oView, oRfData, setModelFlag) {
@@ -174,15 +164,18 @@ sap.ui.define(["sap/ui/base/Object",
 
 				//Before call errorhandling delegates
 				//Set Response Message and message Type to trigger message box
-				oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
-				oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				if (oRfData.aItems[0]) {
+					oGlobalModel.setProperty("/message", oRfData.aItems[0].Msgtext);
+					oGlobalModel.setProperty("/messageType", oRfData.aItems[0].Msgtyp);
+				}
 
-			} else {
+			}
+			/*else {
 				//Set Response Message and message Type to trigger message box
 				oGlobalModel.setProperty("/message", "Invalid Input");
 				oGlobalModel.setProperty("/messageType", "E");
 
-			}
+			}*/
 			// delegate error handling
 			errorHandling.register(oView.getApplication(), oView.getComponent());
 		},

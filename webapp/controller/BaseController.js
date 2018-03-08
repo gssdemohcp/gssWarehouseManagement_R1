@@ -72,6 +72,15 @@ sap.ui.define([
 			return this.getOwnerComponent().getModel("MenuTransactionProperties");
 
 		},
+		getProcessModel: function(uiIndicator) {
+			var processModel = this.getProsessControlModel(),
+				controlModel = processModel.getProperty("/" + uiIndicator);
+			return controlModel;
+		},
+		getProsessControlModel: function() {
+			return this.getOwnerComponent().getModel("ProcessControlProperties");
+
+		},
 		getCurrentScrn: function() {
 			return this.getGlobalModel().getProperty("/currentScreen");
 		},
@@ -124,20 +133,26 @@ sap.ui.define([
 		},
 
 		onNavBack: function() {
-
+			this.destroyModel();
 			this.getGlobalModel().setProperty("/currentScreen", this.getGlobalModel().getProperty("/parentScreen"));
 			this.getGlobalModel().setProperty("/parentScreen", this.getParentScreen());
 			this.getApplication().navBack(History, "");
-			this.destroyModel();
-		},
-		destroyModel: function() {
-			if (this.fragmentLoaded) {
-				this.fragmentLoaded.destroy(true);
-			}
-			// var data = "";
-			// this.getView().getModel("itemList").setData(data);
 
 		},
+		destroyModel: function() {
+			this.getView().getModel(this.getModelName()).setData("");
+
+		},
+		checkInd: function(data) {
+			this.getGlobalModel().setProperty("/indiTO", data.ToInd);
+			this.gssFragmentsFunction().uiIndCheck(this, data.ToInd, data.ToConfirmInd, data.PostInd, "");
+		},
+		getControlId: function() {
+			var viewProperties = this.getViewProperties();
+			return viewProperties.uiControl;
+
+		},
+
 		setModelData: function(data) {
 			var viewProperties = this.getViewProperties();
 			viewProperties.modelData = data;
@@ -159,6 +174,10 @@ sap.ui.define([
 			this.byId("title").setProperty("title", title);
 			this.byId("title").setTitle(title);
 
+		},
+		setUpdateToast: function(toast) {
+			var properties = this.getViewProperties();
+			properties.toastMsg = toast;
 		},
 		geti18n: function(key) {
 			var oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
@@ -219,6 +238,10 @@ sap.ui.define([
 		getPageTitle: function() {
 			var properties = this.getViewProperties();
 			return properties.pageTitle;
+		},
+		getUpdateToast: function() {
+			var properties = this.getViewProperties();
+			return properties.toastMsg;
 		}
 
 		//*************************************************************************************************

@@ -17,7 +17,6 @@ sap.ui.define([
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 					utilities.setParentScreen(this.getGlobalModel().getProperty("/parentScreen"), this);
-					/*		this.getBackModelData();*/
 					this.getHUInput();
 
 				}.bind(this)
@@ -50,12 +49,12 @@ sap.ui.define([
 			//Fragement Code for New Bin
 			var viewId = this.getView().getId();
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "unpackMaterial");
-			this.fragmentMaterialLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
+			this.fragmentMaterialLoaded = sap.ui.xmlfragment(viewId + "unpackMat",loadFragment, this);
 			this.getView().addDependent(this.fragmentMaterialLoaded);
 			/*	this.fragmentMaterialLoaded.open();*/
 
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "hu");
-			this.fragmentHuLoaded = sap.ui.xmlfragment(viewId,callFragment, this);
+			this.fragmentHuLoaded = sap.ui.xmlfragment(viewId + "unpackHu",callFragment, this);
 			// this.getView().addDependent(this.fragmentHuLoaded);
 		},
 
@@ -82,7 +81,7 @@ sap.ui.define([
 
 		},
 		onHandleScanInput: function() {
-			this.callOdataService().barcodeReader(this, "huInput");
+			utilities.barcodeReader(this, "huInput","");
 			this.getHUInput();
 		},
 		onHandleMat: function(oEvent) {

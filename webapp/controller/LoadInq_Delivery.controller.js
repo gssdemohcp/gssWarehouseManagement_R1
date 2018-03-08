@@ -33,7 +33,6 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
-			this.getGlobalModel().setProperty("/currentView", this);
 		},
 
 		inputDetails: function() {
@@ -47,8 +46,12 @@ sap.ui.define([
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.callOdataService().getLoadInq(this, _inputValue,"","");
+				this.callOdataService().getLoadInq(this, _inputValue, "", "");
 			}
+		},
+		onHandleScanInput: function(oEvent) {
+			utilities.barcodeReader(this, "inputValue","");
+			this.iGetInput();
 		},
 
 		/**

@@ -2,7 +2,7 @@
 	controllerName="gss.newWarehouseManage_R1.controller.giShip" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="title">
+			<Page id="title">
 				<customHeader>
 					<Toolbar>
 						<ToolbarSpacer/>

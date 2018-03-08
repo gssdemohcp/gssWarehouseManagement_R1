@@ -23,9 +23,6 @@ sap.ui.define([
 					this.inputDetails();
 					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
-					if ((this.getView().byId("inputValue").getValue())) {
-						this.iGetInput();
-					}
 				}.bind(this)
 			});
 
@@ -46,15 +43,16 @@ sap.ui.define([
 			var _screen = this.getCurrentScrn();
 			var _screenModel = this.getScreenModel(_screen);
 			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
-			this.getGlobalModel().setProperty("/title", "GR By Handling Unit");
+			this.getGlobalModel().setProperty("/title", this.geti18n("grByHu"));
 			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 
 		setFragment: function() {
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 
@@ -64,26 +62,20 @@ sap.ui.define([
 			if (_inputValue) {
 				this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
 				whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
-				whenOdataCall.done(function() {
+				whenOdataCall.done(function(oResult) {
 						this.getView().byId("GRDForm").setVisible(true);
 						var _delVal = this.byId("grDelField").getText();
 						this.getGlobalModel().setProperty("/currentDelNo", _delVal);
-						this.checkInd();
+						this.checkInd(oResult.getData().aItems[0]);
 					}.bind(this)
 
 				);
 
 			}
 		},
-		checkInd: function() {
-			var data = this.getModelData("itemList").aItems[0];
-			this.indiTO = data.ToInd;
-			this.indiTOConf = data.ToConfirmInd;
-			this.indiPost = data.PostInd;
-			this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost,"");
-		},
+		
 		onHandleScanInput: function(oEvent) {
-			this.callOdataService().barcodeReader(this, "inputValue");
+			utilities.barcodeReader(this, "inputValue","");
 			this.iGetInput();
 		},
 
@@ -99,7 +91,7 @@ sap.ui.define([
 
 		},
 		onConfirm: function() {
-			if (this.indiTO === "") {
+			if (this.getGlobalModel().getProperty("/indiTO") === "") {
 				this.onHandleGTO();
 			} else {
 				this.onHandlePost();
@@ -119,14 +111,14 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			this.byId("popup").setText("Are you sure you want to generate Transfer Order?");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("genToPop"));
 		},
 
 		onHandleGTO: function() {
 			this.fragmentLoaded.close();
 			var whenOdataCall = this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "T");
 			whenOdataCall.done(function() {
-				this.getView().byId("toInd").setText("Available");
+				this.getView().byId("toInd").setText(this.geti18n("available"));
 			}.bind(this));
 
 		},
@@ -140,7 +132,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			this .byId("popup").setText("Are you sure you want to post Goods Receipt?");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("postGrPop"));
 
 		},
 
@@ -148,9 +140,6 @@ sap.ui.define([
 			this.fragmentLoaded.close();
 			this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "C");
 
-		},
-		grHuConfirm: function() {
-			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
 
 		/**

@@ -21,7 +21,7 @@
 									<Label class="sapUiTinyMarginTop" text="{i18n>loadStatus}"/>
 									<Label class="sapUiTinyMarginTop" text="{i18n>vendor}"/>
 									<Label class="sapUiTinyMarginTop" text="{i18n>name}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>receivePnt}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>recivePnt}"/>
 									<Label class="sapUiTinyMarginTop" text="{i18n>receiveDate}"/>
 									<Label class="sapUiTinyMarginTop" text="{i18n>totWeigh}"/>
 									<Label class="sapUiTinyMarginTop" text="{i18n>noOfPackage}"/>
@@ -61,7 +61,7 @@
 							<Button id="Lload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="{i18n>unload}"/>
 							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="{i18n>more}"/>
 							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="{i18n>items}"/>
-							<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="{i18n>shipment}"/>
+							<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="{i18n>shipment}" visible="false" enabled="false"/>
 							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO" visible="false" tooltip="{i18n>generateTO}"/>
 							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" tooltip="{i18n>toExec}"/>
 							<Button id="post" icon="sap-icon://paper-plane" press="onPostGI" visible="false" tooltip="{i18n>post}"/>

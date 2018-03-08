@@ -22,9 +22,6 @@ sap.ui.define([
 					this.inputDetails();
 					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
-					if ((this.getView().byId("inputValue").getValue())) {
-						this.iGetInput();
-					}
 				}.bind(this)
 			});
 
@@ -52,8 +49,9 @@ sap.ui.define([
 
 		setFragment: function() {
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 
@@ -62,20 +60,16 @@ sap.ui.define([
 			this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
 
 			if (_inputValue) {
+				this.getView().byId("GRDForm").setBusy(true);
 				var whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
-				whenOdataCall.done(function() {
+				whenOdataCall.done(function(oResult) {
+					this.getView().byId("GRDForm").setBusy(false);
 					this.getView().byId("GRDForm").setVisible(true);
-					this.checkInd();
+					this.checkInd(oResult.getData().aItems[0]);
 				}.bind(this));
 			}
 		},
-		checkInd: function() {
-			var data = this.getModelData("itemList").aItems[0];
-			this.indiTO = data.ToInd;
-			this.indiTOConf = data.ToConfirmInd;
-			this.indiPost = data.PostInd;
-			this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost, "");
-		},
+		
 		onHandleScanInput: function(oEvent) {
 			this.callOdataService().barcodeReader(this, "inputValue");
 			this.iGetInput();
@@ -92,7 +86,7 @@ sap.ui.define([
 			utilities.navigateChild("grDelItems", this);
 		},
 		onConfirm: function() {
-			if (this.indiTO === "") {
+			if (this.getGlobalModel().getProperty("/indiTO") === "") {
 				this.onHandleGTO();
 			} else {
 				this.onHandlePost();
@@ -112,14 +106,17 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-	        this.byId("popup").setText(this.geti18n("genToPop"));
+
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("genToPop"));
 		},
 
 		onHandleGTO: function() {
 			this.fragmentLoaded.close();
+			this.getView().byId("title").setBusy(true);
 			var whenOdataCall = this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "T");
 			whenOdataCall.done(function() {
 				this.getView().byId("toInd").setText(this.geti18n("available"));
+				this.getView().byId("title").setBusy(false);
 			}.bind(this));
 
 		},
@@ -133,7 +130,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			this.byId("popup").setText(this.geti18n("postGrPop"));
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("postGrPop"));
 
 		},
 
@@ -141,12 +138,7 @@ sap.ui.define([
 			this.fragmentLoaded.close();
 			this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "C");
 
-		},
-
-		grDeliveryConfirm: function() {
-			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
-	
 
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.

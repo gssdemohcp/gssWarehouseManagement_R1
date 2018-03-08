@@ -25,7 +25,7 @@ sap.ui.define(["sap/ui/base/Object",
 			this._bOneWaitingSuccess = false;
 		},
 
-		diffCalculation: function(actualVal, targVal, fragmentLoaded) {
+		diffCalculation: function(actualVal, targVal, fragmentLoaded,fragId) {
 			var diffVal = targVal - actualVal;
 			if (diffVal >= 0 && diffVal <= targVal) {
 				var oData = fragmentLoaded.getModel("handleDiff").getData();
@@ -33,13 +33,13 @@ sap.ui.define(["sap/ui/base/Object",
 				oData.destDifa = diffVal;
 				oData.destActa = actualVal;
 				fragmentLoaded.getModel("handleDiff").setData(oData);
-				sap.ui.getCore().byId("onHandleDiff").setEnabled(true);
+				sap.ui.core.Fragment.byId(fragId, "onHandleDiff").setEnabled(true);
 			} else {
-				sap.ui.getCore().byId("onHandleDiff").setEnabled(false);
+				sap.ui.core.Fragment.byId(fragId, "onHandleDiff").setEnabled(false);
 				// sap.ui.getCore().byId("actual").setValueState(sap.ui.core.ValueState.Error);
 			}
 		},
-		diffShipCalculation: function(actualVal, targVal, fragmentLoaded) {
+		diffShipCalculation: function(actualVal, targVal, fragmentLoaded,fragId) {
 			var diffVal = targVal - actualVal;
 			this.diffaVal = diffVal;
 			if (diffVal >= 0 && diffVal <= targVal) {
@@ -49,9 +49,9 @@ sap.ui.define(["sap/ui/base/Object",
 				oData.destActa = actualVal;
 				oData.destTarget = targVal;
 				fragmentLoaded.getModel("handleDiff").setData(oData);
-				sap.ui.getCore().byId("onHandleDiff").setEnabled(true);
+				sap.ui.core.Fragment.byId(fragId, "onHandleDiff").setEnabled(true);
 			} else {
-				sap.ui.getCore().byId("onHandleDiff").setEnabled(false);
+				sap.ui.core.Fragment.byId(fragId, "onHandleDiff").setEnabled(false);
 // 				sap.ui.getCore().byId("actual").setValueState(sap.ui.core.ValueState.Error);
 			}
 		},

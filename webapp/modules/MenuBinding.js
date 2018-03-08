@@ -29,7 +29,7 @@ sap.ui.define(["sap/ui/base/Object",
 						this.Queue = mItem.Queue;
 						this.Lgnum = mItem.Lgnum;
 						oView.byId("syuser").setText(this.sUser);
-						oView._oDialog.setTitle("Main Menu");
+						oView._oDialog.setTitle(oView.geti18n("mainMenu"));
 						//Create Breadcrumb link
 						oView.gssCallBreadcrumbs().BreadCrumbs(mItem, oView);
 					}

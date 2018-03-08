@@ -34,6 +34,11 @@ sap.ui.define([
 						this.getView().byId("back").setVisible(true);
 						this.iGetInput();
 					}
+					else {
+						this.getView().byId("inputValue").setValue("");
+						this.getView().byId("inputValue").setEnabled(true);
+						this.getView().byId("back").setVisible(false);
+					}
 				}.bind(this)
 			});
 
@@ -46,12 +51,14 @@ sap.ui.define([
 		setFragment: function() {
 			//Fragement Code for New Bin
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin");
-			this.fragmentNewBinLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
+			this.fragmentNewBinLoaded = sap.ui.xmlfragment(viewId + "newBin", loadFragment, this);
 			this.getView().addDependent(this.fragmentNewBinLoaded);
 			//	
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId,callFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "diff", callFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
@@ -66,7 +73,7 @@ sap.ui.define([
 			if (_inputValue) {
 				//OLD CODE COMMENTED BY SELVAN this.getPutawayMaterial(_inputValue);
 				var whenOdataCall = this.callOdataService().getMaterial(this, _inputValue);
-					whenOdataCall.done(function() {
+				whenOdataCall.done(function() {
 						this.getView().byId("toTable").setVisible(true);
 					}.bind(this)
 
@@ -74,20 +81,23 @@ sap.ui.define([
 			}
 		},
 		onHandleScanInput: function() {
-			this.callOdataService().barcodeReader(this, "inputValue");
+			utilities.barcodeReader(this, "inputValue","");
 			this.iGetInput();
 		},
 
 		putAwayConfirm: function() {
-			var tableRowSelectedItems = this.callOdataService().selectedItems(this, "toTable");
-			this.callOdataService().confirmItems(this, tableRowSelectedItems,"toTable");
+			var tableRowSelectedItems = utilities.selectedItems(this, "toTable");
+			var whenOdataCall = this.callOdataService().confirmItems(this, tableRowSelectedItems, "toTable");
+			whenOdataCall.done(function() {
+				MessageToast.show(this.geti18n(this.getUpdateToast()));
+			}.bind(this));
 
 		},
 
 		onHandleDifference: function() {
 			// for the putaway diff process
 			//OLD CODE var items = this.gssCallFunction().selectedItems(this, "toTable");
-			var items = this.callOdataService().selectedItems(this, "toTable");
+			var items = utilities.selectedItems(this, "toTable");
 
 			if (items.length === 1) {
 				//fragment code is Moved to OnInit 
@@ -102,9 +112,9 @@ sap.ui.define([
 				this.fragmentLoaded.setModel(oModel, "handleDiff");
 				this.fragmentLoaded.open();
 			} else if (items.length === 0) {
-				MessageToast.show("No Items Selected");
+				MessageToast.show(this.geti18n("toastItemSel"));
 			} else if (items.length > 1) {
-				MessageToast.show("Please select one material to check difference");
+				MessageToast.show(this.geti18n("toastSelMat"));
 			}
 		},
 
@@ -112,7 +122,7 @@ sap.ui.define([
 			var actualVal = oEvent.getParameter("newValue");
 			var objects = utilities.getObjects(this);
 			this.modelObjects = objects.getProperty();
-			this.gssDifferenceFunction().diffCalculation(actualVal, this.modelObjects.DestTarga, this.fragmentLoaded);
+			this.gssDifferenceFunction().diffCalculation(actualVal, this.modelObjects.DestTarga, this.fragmentLoaded,this.getGlobalModel().getProperty("/viewId") + "diff");
 		},
 		// ********** Method for displaying new bin & its functionalities - Srini code end ****************
 
@@ -176,17 +186,17 @@ sap.ui.define([
 				oModel.setData(newBinData);
 				this.fragmentNewBinLoaded.setModel(oModel, "Bin");
 			} else if (this.getView().byId("toTable").getSelectedItems().length === 0) {
-				MessageToast.show("No Items Selected");
+				MessageToast.show(this.geti18n("toastItemSel"));
 			} else if (this.getView().byId("toTable").getSelectedItems().length > 1) {
-				MessageToast.show("Please select one material to change Target bin");
+				MessageToast.show(this.geti18n("toastSelTar"));
 			} else {
-				MessageToast.show("Selection not possible");
+				MessageToast.show(this.geti18n("toastSelNp"));
 			}
 		},
 		// ********** Method for displaying new bin & its functionalities - Srini code end ****************
 
 		onHandleCheck: function() {
-			var binValue = sap.ui.getCore().byId("newBinValue").getValue(), //To get the New Bin Details //
+			var binValue = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinValue").getValue(), //To get the New Bin Details //
 				oGlobalModel = this.getModel("globalProperties");
 			oGlobalModel.setProperty("/currentNltyp", this.Nltyp);
 			var oWhenCallReadIsDone;
@@ -199,7 +209,7 @@ sap.ui.define([
 
 				oWhenCallReadIsDone.done(function() {
 					if (oGlobalModel.getProperty("/messageType") === "S") {
-						sap.ui.getCore().byId("newBinConfirm").setEnabled(true); //Response Message Text //
+						sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinConfirm").setEnabled(true); //Response Message Text //
 						var errorMessage = oGlobalModel.getProperty("/message"); //Message Test //
 						MessageBox.success( //MessageBox// 
 							errorMessage + ".");
@@ -209,13 +219,13 @@ sap.ui.define([
 
 				}.bind(this));
 			} else {
-				MessageBox.information("Bin value can not be blank!");
+				MessageBox.information(this.geti18n("toastBinEmp"));
 			}
 		},
 
 		// *********** Srini code for new bin change begins ***********
 		onNewBinConfirm: function() {
-			var newDbin = sap.ui.getCore().byId("newBinValue").getValue();
+			var newDbin = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinValue").getValue();
 			this.oNewBin = "";
 			if (this.oldBin === "") {
 				this.oldBin = this.modelObjects.Nlpla;

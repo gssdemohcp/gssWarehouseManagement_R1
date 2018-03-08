@@ -20,6 +20,9 @@ sap.ui.define([
 					this.inputDetails();
 					this.titleSet();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					if (this.getGlobalModel().getProperty("/parentScreen")) {
+						this.getView().byId("back").setVisible(true);
+					}
 					this.iGetInput();
 				}.bind(this)
 			});
@@ -30,8 +33,10 @@ sap.ui.define([
 			this.setFragment();
 		},
 		setFragment: function() {
+			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(callFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "diff", callFragment, this);
 		},
 
 		seti18nModel: function() {
@@ -53,7 +58,7 @@ sap.ui.define([
 		onHandleDifference: function() {
 			// for the putaway diff process
 			//OLD CODE var items = this.gssCallFunction().selectedItems(this, "toTable");
-			var items = this.callOdataService().selectedItems(this, "table");
+			var items = utilities.selectedItems(this, "table");
 
 			if (items.length === 1) {
 				//fragment code is Moved to OnInit 
@@ -68,26 +73,26 @@ sap.ui.define([
 				this.fragmentLoaded.setModel(oModel, "handleDiff");
 				this.fragmentLoaded.open();
 			} else if (items.length === 0) {
-				MessageToast.show("No Items Selected");
+				MessageToast.show(this.geti18n("toastItemSel"));
 			} else if (items.length > 1) {
-				MessageToast.show("Please select one material to check difference");
+				MessageToast.show(this.geti18n("toastSelMat"));
 			}
 		},
 
 		onHandleSelection: function() {
-			this._selectedItem = this.callOdataService().selectedItems(this, "table");
+			this._selectedItem = utilities.selectedItems(this, "table");
 		},
-
 
 		onHandleActual: function(oEvent) {
 			var actualVal = oEvent.getParameter("newValue");
 			var objects = utilities.getItems(this, "table", "itemList");
 			this.modelObjects = objects.getProperty();
-			this.gssDifferenceFunction().diffShipCalculation(actualVal, this.modelObjects.TargQty, this.fragmentLoaded);
+			this.gssDifferenceFunction().diffShipCalculation(actualVal, this.modelObjects.TargQty, this.fragmentLoaded, this.getGlobalModel().getProperty(
+				"/viewId") + "diff");
 		},
 		onDiffConfirm: function() {
 			var destTarget = this.fragmentLoaded.getModel("handleDiff").getData().destTarget;
-			var destActa = sap.ui.getCore().byId("actual").getValue();
+			var destActa = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "diff", "actual").getValue();
 			var differenceVal = destTarget - destActa;
 			var destDifa = differenceVal;
 			this.destDifa = "X";
@@ -115,15 +120,25 @@ sap.ui.define([
 			this.getView().byId("table").getModel("itemList").setData(aData);
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 		},
-		
+		onHandleScanInput: function(oEvent) {
+			utilities.barcodeReader(this, "inputValue","");
+			this.iGetInput();
+		},
+
 		iGetInput: function(oEvent) {
 
 			var _inputValue = this.getGlobalModel().getProperty("/currentDelNo");
 			this.getView().byId("inputValue").setValue(_inputValue);
 			this.getView().byId("inputValue").setEnabled(false);
 
-			this.callOdataService().getLoadInq(this, _inputValue,"","");
+			this.callOdataService().getLoadInq(this, _inputValue, "", "");
 
+		},
+		onHandleSave: function() {
+			var whenOdataCall = this.callOdataService().onSaveItems(this, this._selectedItem, "table", "I");
+			whenOdataCall.done(function() {
+				MessageToast.show(this.geti18n(this.getUpdateToast()));
+			}.bind(this));
 		}
 
 		/**

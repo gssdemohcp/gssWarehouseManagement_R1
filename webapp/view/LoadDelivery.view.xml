@@ -17,7 +17,7 @@
 				<Toolbar id="toolbarheader">
 					<Input class="sapUiTinyMarginBegin" id="inputValue" valueHelpRequest="onHandlePoHelp" submit="iGetInput" liveChange="onHandleBinding"
 						width="100%" textAlign="Begin"/>
-					<Button id="scanButton" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+					<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 				</Toolbar>
 				<content>
 					<f:SimpleForm id="delvForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>Delform1Title}" labelSpanXL="3" labelSpanL="3"

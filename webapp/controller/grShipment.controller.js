@@ -24,9 +24,6 @@ sap.ui.define([
 					this.inputDetails();
 					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
-					if ((this.getView().byId("inputValue").getValue())) {
-						this.iGetInput();
-					}
 				}.bind(this)
 			});
 
@@ -47,14 +44,15 @@ sap.ui.define([
 			var _screen = this.getCurrentScrn();
 			var _screenModel = this.getScreenModel(_screen);
 			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
-			this.getGlobalModel().setProperty("/title", "GR By Shipment");
+			this.getGlobalModel().setProperty("/title", this.geti18n("grByShip"));
 			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 		setFragment: function() {
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 		onSingleSelect: function(oEvent) {
@@ -63,16 +61,13 @@ sap.ui.define([
 				var vbeln = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
 				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
 				var obj = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject();
-				this.indiTO = obj.ToInd;
-				this.indiTOConf = obj.ToConfirmInd;
-				this.indiPost = obj.PostInd;
-				this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost,"");
+				this.checkInd(obj);
 			} else if (len > 1) {
-				MessageToast.show("Please select one delivery");
-				this.gssFragmentsFunction().fragmentFalse(this,"");
+				MessageToast.show(this.geti18n("toastOneDel"));
+				this.gssFragmentsFunction().fragmentFalse(this, "");
 			} else if (len === 0) {
-				MessageToast.show("Please select a delivery");
-				this.gssFragmentsFunction().fragmentFalse(this,"");
+				MessageToast.show(this.geti18n("toastOneDel"));
+				this.gssFragmentsFunction().fragmentFalse(this, "");
 			}
 		},
 
@@ -80,7 +75,7 @@ sap.ui.define([
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
-				whenOdataCall.done(function() {
+				whenOdataCall.done(function(oResult) {
 						this.getView().byId("table").setVisible(true);
 					}.bind(this)
 
@@ -89,7 +84,7 @@ sap.ui.define([
 			}
 		},
 		onHandleScanInput: function(oEvent) {
-			this.callOdataService().barcodeReader(this, "inputValue");
+			utilities.barcodeReader(this, "inputValue","");
 			this.iGetInput();
 		},
 		handleMore: function(oEvent) {
@@ -105,7 +100,7 @@ sap.ui.define([
 		},
 
 		onConfirm: function() {
-			if (this.indiTO === "") {
+			if (this.getGlobalModel().getProperty("/indiTO") === "") {
 				this.onHandleGTO();
 			} else {
 				this.onHandlePost();
@@ -125,7 +120,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			this.byId("popup").setText("Are you sure you want to generate Transfer Order?");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("genToPop"));
 		},
 
 		onHandleGTO: function() {
@@ -144,7 +139,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			this.byId("popup").setText("Are you sure you want to post Goods Receipt?");
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("postGIPop"));
 
 		},
 
@@ -152,9 +147,6 @@ sap.ui.define([
 			this.fragmentLoaded.close();
 			this.callOdataService().handleShipTO(this, "table", "itemList", "C");
 
-		},
-		grShipmentConfirm: function() {
-			var selectedItems = this.gssCallFunction().confirmItems(this);
 		}
 
 		/**

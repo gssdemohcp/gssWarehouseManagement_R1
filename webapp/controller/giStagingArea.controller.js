@@ -22,9 +22,6 @@ sap.ui.define([
 					this.seti18nModel();
 					this.inputDetails();
 					this.getBackModelData();
-					if ((this.getView().byId("inputValue").getValue())) {
-						this.iGetInput();
-					}
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
 			});
@@ -46,14 +43,16 @@ sap.ui.define([
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
 			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
+			this.getGlobalModel().setProperty("/title", this.geti18n("giBySa"));
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 
 		setFragment: function() {
 			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId,loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 		onSingleSelectGISA: function(oEvent) {
@@ -63,26 +62,24 @@ sap.ui.define([
 				var vbeln = this.getView().byId("tableGISA").getSelectedItem().getBindingContext("delList").getObject().Vbeln;
 				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
 				var obj = this.getView().byId("tableGISA").getSelectedItem().getBindingContext("delList").getObject();
-				this.indiTO = obj.ToInd;
-				this.indiTOConf = obj.ToConfirmInd;
-				this.indiPost = obj.ToPostInd;
-				this.gssFragmentsFunction().indCheck(this, this.indiTO, this.indiTOConf, this.indiPost,"S");
+				this.checkInd(obj);
 			} else if (len > 1) {
 				MessageToast.show(this.geti18n("toastOneDel"));
-				this.gssFragmentsFunction().fragmentFalse(this,"S");
+				this.gssFragmentsFunction().fragmentFalse(this, "S");
 			} else if (len === 0) {
 				MessageToast.show(this.geti18n("toastOneDel"));
-				this.gssFragmentsFunction().fragmentFalse(this,"S");
+				this.gssFragmentsFunction().fragmentFalse(this, "S");
 			}
 		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				   var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
-					whenOdataCall.done(function() {
-						this.getView().byId("tableGISA").setVisible(true);
-						this.getGlobalModel().setProperty("/title", this.geti18n("giBySa"));
+				this.getView().byId("tableGISA").setVisible(true);
+				this.getView().byId("tableGISA").setBusy(true);
+				var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
+				whenOdataCall.done(function() {
+						this.getView().byId("tableGISA").setBusy(false);
 					}.bind(this)
 
 				);
@@ -90,7 +87,7 @@ sap.ui.define([
 			}
 		},
 		onHandleScanInput: function(oEvent) {
-			this.callOdataService().barcodeReader(this, "inputValue");
+			utilities.barcodeReader(this, "inputValue","");
 			this.iGetInput();
 		},
 		onHandleUnload: function(oEvent) {
@@ -107,7 +104,7 @@ sap.ui.define([
 			utilities.navigateChild("giShip", this);
 		},
 		onConfirm: function() {
-			if (this.indiTO === "") {
+			if (this.getGlobalModel().getProperty("/indiTO") === "") {
 				this.onHandleGTO();
 			} else {
 				this.onHandlePost();
@@ -127,7 +124,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			this.byId("popup").setText(this.geti18n("genToPop"));
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("genToPop"));
 		},
 		onHandleTOEx: function() {
 			utilities.navigateChild("picking", this);
@@ -148,7 +145,7 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			this .byId("popup").setText(this.geti18n("postGIPop"));
+			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("postGIPop"));
 
 		},
 
@@ -156,10 +153,6 @@ sap.ui.define([
 			this.fragmentLoaded.close();
 			this.callOdataService().handleShipTO(this, "tableGISA", "delList", "C");
 
-		},
-
-		giStageAreaConfirm: function() {
-			var selectedItems = this.gssCallFunction().confirmItems(this);
 		},
 		onExit: function() {
 			if (this.fragmentLoaded) {
