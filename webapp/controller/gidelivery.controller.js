@@ -29,8 +29,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-
-			/*	this.setFragment();*/
+            this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -43,6 +42,7 @@ sap.ui.define([
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
 			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
+			this.getGlobalModel().setProperty("/viewCid", this.getView().getId());
 			this.getGlobalModel().setProperty("/title", this.geti18n("giDel"));
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
@@ -52,26 +52,35 @@ sap.ui.define([
 			var viewId = this.getView().getId();
 			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf",loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
+
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 
 		iGetInput: function() {
 			var _inputValue = this.getView().byId("inputValue").getValue();
-			this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
-
 			if (_inputValue) {
+				this.getView().byId("GIDForm").setBusy(true);
 				var whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
 				whenOdataCall.done(function(oResult) {
-					this.getView().byId("GIDForm").setVisible(true);
-					this.checkInd(oResult.getData().aItems[0]);
+					this.checkInd(oResult.getData().aItems[0], true);
+					this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
 				}.bind(this));
 			}
 		},
 		onHandleScanInput: function() {
-			this.getView().byId("GIDForm").setVisible(true);
-			utilities.barcodeReader(this, "inputValue","");
+			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
+		},
+		handleMessagePopoverPress: function(oEvent) {
+				if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 		onHandleUnload: function(oEvent) {
 			utilities.navigateChild("loadDelivery", this);
@@ -140,9 +149,8 @@ sap.ui.define([
 			if (this.fragmentLoaded) {
 				this.fragmentLoaded.destroy(true);
 			}
-			
+
 		}
-	
 
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.

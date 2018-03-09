@@ -20,7 +20,7 @@
 		"modelName": "materialList",
 		"pageTitle": "putBySu",
 		"toastMsg":"cnfrmTst",
-		"uiControl":"",
+		"uiControl":"toTable",
 		"UI": {
 			"footer": {}
 		}
@@ -45,7 +45,7 @@
 		"placeHolderLabel": "EnterTO",
 		"pageTitle": "putByTo",
 		"toastMsg":"cnfrmTst",
-		"uiControl":"",
+		"uiControl":"toTable",
 		"entitySet": "/WMProcessSet",
 		"modelName": "materialList"
 	},
@@ -69,7 +69,7 @@
 		"placeHolderLabel": "EnterDel",
 		"pageTitle": "putByDel",
 		"toastMsg":"cnfrmTst",
-		"uiControl":"",
+		"uiControl":"toTable",
 		"entitySet": "/WMProcessSet",
 		"modelName": "materialList"
 	},
@@ -94,6 +94,7 @@
 		"placeHolderLabel": "EnterTO",
 		"pageTitle": "pickByTo",
 		"toastMsg":"cnfrmTst",
+		"uiControl":"toTable",
 		"entitySet": "/WMProcessSet",
 		"modelName": "materialList"
 	},
@@ -117,6 +118,7 @@
 		"placeHolderLabel": "EnterDel",
 		"pageTitle": "pickByDel",
 		"toastMsg":"cnfrmTst",
+		"uiControl":"toTable",
 		"entitySet": "/WMProcessSet",
 		"modelName": "materialList"
 	},
@@ -143,6 +145,7 @@
 			"LoadInd": ""
 		},
 		"placeHolderLabel": "EnterShip",
+		"uiControl":"delvForm",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},
@@ -168,6 +171,7 @@
 			"LoadInd": ""
 		},
 		"placeHolderLabel": "EnterDel",
+		"uiControl":"delvForm",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},
@@ -193,6 +197,7 @@
 			"Lgnum": ""
 		},
 		"placeHolderLabel": "EnterShip",
+		"uiControl":"shipForm",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},
@@ -217,6 +222,7 @@
 			"Lgnum": ""
 		},
 		"placeHolderLabel": "EnterDel",
+		"uiControl":"delvForm",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},
@@ -240,6 +246,7 @@
 			"Lgnum": ""
 		},
 		"placeHolderLabel": "EnterShip",
+		"uiControl":"shipmentTable",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},
@@ -262,6 +269,7 @@
 			"Lgnum": ""
 		},
 		"placeHolderLabel": "EnterDel",
+		"uiControl":"huTable",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},
@@ -284,6 +292,7 @@
 			"ProcInd": ""
 		},
 		"placeHolderLabel": "EnterHU",
+		"uiControl":"huForm",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},

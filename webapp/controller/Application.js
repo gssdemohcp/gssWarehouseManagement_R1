@@ -149,7 +149,8 @@ sap.ui.define([
 				shipInd: "",
 				indiTO: "",
 				viewId:"",
-				uiInd:""
+				uiInd:"",
+				viewCid:""
 			});
 			this._oGlobalModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oGlobalModel, "globalProperties");
@@ -165,7 +166,8 @@ sap.ui.define([
 				difference: "gss.newWarehouseManage_R1.view.fragments.difference",
 				confirmation: "gss.newWarehouseManage_R1.view.fragments.confirmation",
 				addHu: "gss.newWarehouseManage_R1.view.fragments.addHU",
-				addMaterial: "gss.newWarehouseManage_R1.view.fragments.addMaterial"
+				addMaterial: "gss.newWarehouseManage_R1.view.fragments.addMaterial",
+				msgPopOver:"gss.newWarehouseManage_R1.view.fragments.MessagePopover"
 
 			});
 

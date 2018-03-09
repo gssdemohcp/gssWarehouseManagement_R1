@@ -25,54 +25,6 @@ sap.ui.define(["sap/ui/base/Object",
 			this._mRunningSwipes = {};
 			this._bOneWaitingSuccess = false;
 		},
-		indCheck: function(oView, indiTO, indiTOConf, indiPost, flag) {
-			if (indiTO === "") {
-				oView.byId("Lload").setVisible(true);
-				oView.byId("more").setVisible(true);
-				oView.byId("items").setVisible(true);
-				if (flag) {
-					oView.byId("ship").setVisible(true);
-				}
-				oView.byId("GTO").setVisible(true); //To display G.TO button
-				oView.byId("TOEx").setVisible(false);
-				oView.byId("post").setVisible(false);
-			} else if (indiTO === "X") {
-				oView.byId("Lload").setVisible(true);
-				oView.byId("more").setVisible(true);
-				oView.byId("items").setVisible(true);
-				if (flag) {
-					oView.byId("ship").setVisible(true);
-				}
-				oView.byId("TOEx").setVisible(true); //To display G.TO button
-				oView.byId("GTO").setVisible(false); //To display G.TO button
-				oView.byId("post").setVisible(false);
-				if (indiTOConf === "X") {
-					oView.byId("TOEx").setVisible(false);
-					oView.byId("post").setVisible(true);
-					oView.byId("GTO").setVisible(false); //To display G.TO button
-					if (indiPost === "X") {
-						oView.byId("post").setVisible(false);
-						if (flag) {
-							oView.byId("ship").setVisible(false);
-						}
-						oView.byId("TOEx").setVisible(false);
-						oView.byId("GTO").setVisible(false);
-						oView.byId("Lload").setVisible(false);
-						oView.byId("more").setVisible(false);
-						oView.byId("items").setVisible(false); //To display G.TO button
-
-					}
-				}
-			} else if (indiTOConf === "") {
-				oView.byId("Lload").setVisible(true);
-				oView.byId("more").setVisible(true);
-				oView.byId("items").setVisible(true);
-				oView.byId("post").setVisible(false);
-				oView.byId("TOEx").setVisible(true);
-				oView.byId("GTO").setVisible(false); //To display G.TO button
-
-			}
-		},
 		uiIndCheck: function(oView, indiTO, indiTOConf, indiPost,flag) {
 			if (indiTO === "") {
 				oView.getGlobalModel().setProperty("/uiInd", "init");
@@ -89,6 +41,10 @@ sap.ui.define(["sap/ui/base/Object",
 			}
 			
 			utilities.checkUiIndicator(oView);
+			if(flag === true){
+				utilities.checkVisible(oView);
+				
+			}
 
 		},
 

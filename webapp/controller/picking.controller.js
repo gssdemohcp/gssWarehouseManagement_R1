@@ -28,8 +28,7 @@ sap.ui.define([
 						this.getView().byId("inputValue").setEnabled(false);
 						this.getView().byId("back").setVisible(true);
 						this.iGetInput();
-					}
-					else {
+					} else {
 						this.getView().byId("inputValue").setValue("");
 						this.getView().byId("inputValue").setEnabled(true);
 						this.getView().byId("back").setVisible(false);
@@ -39,6 +38,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
+			this.setFragment();
 		},
 
 		inputDetails: function() {
@@ -48,6 +48,12 @@ sap.ui.define([
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 			// this.getView().byId("inputValue").setValueState(sap.ui.core.ValueState.Error);
+		},
+		setFragment: function() {
+			var viewId = this.getView().getId();
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 		onHandleSelection: function() {
 			this.selItems = utilities.selectedItems(this, "toTable");
@@ -65,21 +71,20 @@ sap.ui.define([
 			}
 		},
 		onHandleScanInput: function() {
-			utilities.barcodeReader(this, "inputValue","");
+			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
 		},
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
 
-		getPickingMaterial: function(sInputValue) {
-			//Read picking material from backend
-
-			var oWhenCallReadIsDone = this.callOdataService().LoadMaterial(this, sInputValue);
-
-			//code end -selvan
 		},
 		pickingConfirm: function() {
 			var whenOdataCall = this.callOdataService().confirmItems(this, this.selItems, "toTable");
 			whenOdataCall.done(function() {
-				MessageToast.show(this.geti18n(this.getUpdateToast()));
+
 			}.bind(this));
 		},
 		onExit: function() {

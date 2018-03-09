@@ -28,8 +28,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-
-			/*this.setFragment();*/
+            this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -42,6 +41,7 @@ sap.ui.define([
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
 			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
+			this.getGlobalModel().setProperty("/viewCid", this.getView().getId());
 			this.getGlobalModel().setProperty("/title", this.geti18n("giByHu"));
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
@@ -53,20 +53,23 @@ sap.ui.define([
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
+
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.byId("inputValue").getValue();
 			var whenOdataCall;
 			if (_inputValue) {
-				this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
-				this.getGlobalModel().setProperty("/title", this.geti18n("giByHu"));
+				this.getView().byId("GIDForm").setBusy(true);
 				whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
 				whenOdataCall.done(function(oResult) {
-						this.getView().byId("GIDForm").setVisible(true);
+						this.checkInd(oResult.getData().aItems[0], true);
 						var _delVal = this.byId("giDelField").getText();
 						this.getGlobalModel().setProperty("/currentDelNo", _delVal);
-						this.checkInd(oResult.getData().aItems[0]);
+						this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
 					}.bind(this)
 
 				);
@@ -74,8 +77,15 @@ sap.ui.define([
 			}
 		},
 		onHandleScanInput: function(oEvent) {
-			utilities.barcodeReader(this, "inputValue","");
+			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
+		},
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 		onHandleUnload: function(oEvent) {
 			utilities.navigateChild("loadDelivery", this);

@@ -156,7 +156,7 @@ sap.ui.define(["sap/ui/base/Object",
 
 				//SET MODEL TO CURRENT VIEW
 				var sModelName = oView.getModelName();
-				if (sModelName.length !== 0 && setModelFlag === true) {
+				if (sModelName.length !== 0 && setModelFlag === true ) {
 					this._oRfModel.setData(oRfData);
 					oView.setModelData(oRfData);
 					oView.setModel(this._oRfModel, oView.getModelName());

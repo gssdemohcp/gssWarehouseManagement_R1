@@ -31,7 +31,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 
-			/*this.setFragment();*/
+			this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -44,6 +44,7 @@ sap.ui.define([
 			var _screen = this.getCurrentScrn();
 			var _screenModel = this.getScreenModel(_screen);
 			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
+			this.getGlobalModel().setProperty("/viewCid", this.getView().getId());
 			this.getGlobalModel().setProperty("/title", this.geti18n("grByShip"));
 			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
@@ -54,6 +55,10 @@ sap.ui.define([
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
+			
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 		onSingleSelect: function(oEvent) {
 			var len = this.getView().byId("table").getSelectedItems().length;
@@ -61,13 +66,11 @@ sap.ui.define([
 				var vbeln = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
 				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
 				var obj = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject();
-				this.checkInd(obj);
+				this.checkInd(obj,false);
 			} else if (len > 1) {
 				MessageToast.show(this.geti18n("toastOneDel"));
-				this.gssFragmentsFunction().fragmentFalse(this, "");
 			} else if (len === 0) {
 				MessageToast.show(this.geti18n("toastOneDel"));
-				this.gssFragmentsFunction().fragmentFalse(this, "");
 			}
 		},
 
@@ -76,7 +79,8 @@ sap.ui.define([
 			if (_inputValue) {
 				var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
 				whenOdataCall.done(function(oResult) {
-						this.getView().byId("table").setVisible(true);
+					    this.checkInd(oResult.getData().aItems[0],"");
+						utilities.checkVisible(this);
 					}.bind(this)
 
 				);
@@ -86,6 +90,13 @@ sap.ui.define([
 		onHandleScanInput: function(oEvent) {
 			utilities.barcodeReader(this, "inputValue","");
 			this.iGetInput();
+		},
+		handleMessagePopoverPress: function(oEvent) {
+				if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 		handleMore: function(oEvent) {
 			this.createElements().handleMoreButtons(oEvent, this);

@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 
 	"sap/ui/model/resource/ResourceModel",
-	"sap/ui/core/routing/History"
-], function(Controller, ResourceModel, History) {
+	"sap/ui/core/routing/History",
+	"gss/newWarehouseManage_R1/model/utilities"
+], function(Controller, ResourceModel, History,utilities) {
 
 	"use strict";
 
@@ -143,9 +144,15 @@ sap.ui.define([
 			this.getView().getModel(this.getModelName()).setData("");
 
 		},
-		checkInd: function(data) {
-			this.getGlobalModel().setProperty("/indiTO", data.ToInd);
-			this.gssFragmentsFunction().uiIndCheck(this, data.ToInd, data.ToConfirmInd, data.PostInd, "");
+		checkInd: function(data, flag) {
+			if (flag) {
+				this.getGlobalModel().setProperty("/indiTO", data.ToInd);
+				this.gssFragmentsFunction().uiIndCheck(this, data.ToInd, data.ToConfirmInd, data.PostInd, flag);
+				utilities.bindMessagePop(this,data);                         
+			}else {
+				utilities.bindMessagePop(this,data); 
+			}
+
 		},
 		getControlId: function() {
 			var viewProperties = this.getViewProperties();

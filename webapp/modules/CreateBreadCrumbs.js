@@ -44,9 +44,8 @@ sap.ui.define(["sap/ui/base/Object",
 			this._pId = oSelect.getSource().getId(); //Get the selected link Id
 			oView.setModelData("");
 			this.SecondView.byId("inputValue").setValue("");
-			if (this._pText === "Goods Receipt" || this._pText === "Goods Issue") {
-				this.SecondView.byId(oView.getControlId()).setVisible(false);
-			}
+		    this.SecondView.byId(oView.getControlId()).setVisible(false);
+
 			this._modifyBreadCrumbLink(this._pTarget, this._pText, this._pId, oView); //Call the modifybreadcrumblink with the selected link
 		},
 		// Description: Modify breadcrumb link based on target, text and id

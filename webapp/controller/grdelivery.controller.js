@@ -29,7 +29,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 
-			/*this.setFragment();*/
+			this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -42,6 +42,7 @@ sap.ui.define([
 			var _screen = this.getCurrentScrn();
 			var _screenModel = this.getScreenModel(_screen);
 			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
+			this.getGlobalModel().setProperty("/viewCid", this.getView().getId());
 			this.getGlobalModel().setProperty("/title", this.geti18n("grByDel"));
 			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
@@ -53,26 +54,34 @@ sap.ui.define([
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
+			
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
-			this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
-
 			if (_inputValue) {
 				this.getView().byId("GRDForm").setBusy(true);
 				var whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
 				whenOdataCall.done(function(oResult) {
-					this.getView().byId("GRDForm").setBusy(false);
-					this.getView().byId("GRDForm").setVisible(true);
-					this.checkInd(oResult.getData().aItems[0]);
+					this.checkInd(oResult.getData().aItems[0], true);
+					this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
 				}.bind(this));
 			}
 		},
-		
+
 		onHandleScanInput: function(oEvent) {
 			this.callOdataService().barcodeReader(this, "inputValue");
 			this.iGetInput();
+		},
+		handleMessagePopoverPress: function(oEvent) {
+				if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 		onHandleUnload: function(oEvent) {
 			utilities.navigateChild("unloadDelivery", this);

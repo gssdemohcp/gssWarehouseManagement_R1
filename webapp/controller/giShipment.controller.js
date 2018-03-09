@@ -35,7 +35,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 
-			/*this.setFragment();*/
+			this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -48,13 +48,18 @@ sap.ui.define([
 			var viewId = this.getView().getId();
 			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf",loadFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
+
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
 			var ScreenModel = this.getScreenModel(Screen);
 			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
+			this.getGlobalModel().setProperty("/viewCid", this.getView().getId());
 			this.getGlobalModel().setProperty("/title", this.geti18n("giShip"));
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
@@ -62,28 +67,26 @@ sap.ui.define([
 
 		onSingleSelectGI: function(oEvent) {
 			var len = this.getView().byId("tableGIS").getSelectedItems().length;
-			this.getView().byId("ship").setVisible(true);
 			if (len === 1) {
 				var vbeln = this.getView().byId("tableGIS").getSelectedItem().getBindingContext("delList").getObject().Vbeln;
 				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
 				var obj = this.getView().byId("tableGIS").getSelectedItem().getBindingContext("delList").getObject();
-				this.checkInd(obj);
+				this.checkInd(obj, false);
 			} else if (len > 1) {
 				MessageToast.show(this.geti18n("toastOneDel"));
-				this.gssFragmentsFunction().fragmentFalse(this,"S" );
 			} else if (len === 0) {
 				MessageToast.show(this.geti18n("toastOneDel"));
-				this.gssFragmentsFunction().fragmentFalse(this,"S");
 			}
 		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
+				this.getView().byId("tableGIS").setBusy(true);
 				var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
-				whenOdataCall.done(function() {
-						this.getView().byId("tableGIS").setVisible(true);
-						this.getGlobalModel().setProperty("/title", this.geti18n("giByShip"));
+				whenOdataCall.done(function(oResult) {
+						utilities.checkVisible(this);
+						this.checkInd(oResult.getData().aItems[0], "");
 					}.bind(this)
 
 				);
@@ -91,8 +94,15 @@ sap.ui.define([
 			}
 		},
 		onHandleScanInput: function(oEvent) {
-			utilities.barcodeReader(this, "inputValue","");
+			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
+		},
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 		onHandleUnload: function(oEvent) {
 			utilities.navigateChild("loadDelivery", this);

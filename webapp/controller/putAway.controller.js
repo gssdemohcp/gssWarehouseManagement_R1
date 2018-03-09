@@ -33,8 +33,7 @@ sap.ui.define([
 						this.getView().byId("inputValue").setEnabled(false);
 						this.getView().byId("back").setVisible(true);
 						this.iGetInput();
-					}
-					else {
+					} else {
 						this.getView().byId("inputValue").setValue("");
 						this.getView().byId("inputValue").setEnabled(true);
 						this.getView().byId("back").setVisible(false);
@@ -59,6 +58,10 @@ sap.ui.define([
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "diff", callFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
+
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 		inputDetails: function() {
 			var Screen = this.getCurrentScrn();
@@ -81,15 +84,22 @@ sap.ui.define([
 			}
 		},
 		onHandleScanInput: function() {
-			utilities.barcodeReader(this, "inputValue","");
+			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
+		},
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 
 		putAwayConfirm: function() {
 			var tableRowSelectedItems = utilities.selectedItems(this, "toTable");
 			var whenOdataCall = this.callOdataService().confirmItems(this, tableRowSelectedItems, "toTable");
 			whenOdataCall.done(function() {
-				MessageToast.show(this.geti18n(this.getUpdateToast()));
+
 			}.bind(this));
 
 		},
@@ -122,7 +132,8 @@ sap.ui.define([
 			var actualVal = oEvent.getParameter("newValue");
 			var objects = utilities.getObjects(this);
 			this.modelObjects = objects.getProperty();
-			this.gssDifferenceFunction().diffCalculation(actualVal, this.modelObjects.DestTarga, this.fragmentLoaded,this.getGlobalModel().getProperty("/viewId") + "diff");
+			this.gssDifferenceFunction().diffCalculation(actualVal, this.modelObjects.DestTarga, this.fragmentLoaded, this.getGlobalModel().getProperty(
+				"/viewId") + "diff");
 		},
 		// ********** Method for displaying new bin & its functionalities - Srini code end ****************
 

@@ -186,7 +186,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			return promise;
 		},
 
-		materialSave: function(oView, mat, quant, unit,controlId,model) {
+		materialSave: function(oView, mat, quant, unit, controlId, model) {
 			var oWhenOdataUpdateDone;
 			/*var oViewModel = new JSONModel();*/
 			var promise = jQuery.Deferred();
@@ -199,18 +199,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			oWhenOdataUpdateDone = this._ODataModelInterface.filterModelPopulate(oView, oFilterFields);
 			oWhenOdataUpdateDone.done(function(oResult) {
-					/*var viewData = this.getView().byId(controlId).getModel(model).getData();
-					for (var i = 0; i < oResult.results.length; i++) {
-						viewData.aItems.push(oResult.results[i]);
-					}
-					oViewModel.setData(viewData);
-					this.getView().byId(controlId).setModel(oViewModel, model);*/
 				promise.resolve(oResult);
 			}.bind(this));
 			return promise;
 
 		},
-		huSave: function(oView, hu,controlId,model) {
+		huSave: function(oView, hu, controlId, model) {
 			var oWhenOdataUpdateDone;
 			var oViewModel = new JSONModel();
 			var promise = jQuery.Deferred();
@@ -221,12 +215,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			oWhenOdataUpdateDone = this._ODataModelInterface.filterModelPopulate(oView, oFilterFields);
 			oWhenOdataUpdateDone.done(function(oResult) {
-				var	viewData = this.getView().byId(controlId).getModel(model).getData();
-					for (var i = 0; i < oResult.length; i++) {
-						viewData.aItems.push(oResult.results[i]);
-					}
-					oViewModel.setData(viewData);
-					this.getView().byId(controlId).setModel(oViewModel, model);
+				var viewData = this.getView().byId(controlId).getModel(model).getData();
+				for (var i = 0; i < oResult.length; i++) {
+					viewData.aItems.push(oResult.results[i]);
+				}
+				oViewModel.setData(viewData);
+				this.getView().byId(controlId).setModel(oViewModel, model);
 				promise.resolve(oResult);
 			}.bind(this));
 			return promise;
@@ -328,15 +322,80 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					this.finalItem = updateItem.Tanum;
 					this.finalPos = updateItem.Tapos;
 					// MessageToast.show("Transfer Order confirmed successfully");
-					oStatText.stat = "S";
+					oStatText.stat = oView.getGlobalModel().getProperty("/messageType");
 					oStatText.mItems = updateItem;
 					this.aTotStat.push(oStatText);
 					//Check the filter message
 					this.currentItem = updateItem.Tanum;
 					this.currentPos = updateItem.Tapos;
-					if (this.finalPos === this.currentPos) {
-						// this.bindMessagePop();
-					}
+					var oStatMessage = {
+						Msgtext: '',
+						Msgtyp: ''
+					};
+					this.aTotStat.forEach(function(oStat) {
+						oStatMessage = {
+							Msgtext: '',
+							Msgtyp: ''
+						};
+						if (oStat.stat === "E") {
+							// var errText = {
+							oStatMessage.Msgtext = oStat.mItems.Matnr + " " + oRfModel.getData().aItems[0].statusText;
+							oStatMessage.Msgtyp = "Error";
+							// };
+							if (this.itemNo) {
+								var aItems = this.getView().byId(controlId).getemSelectedItems();
+								aItems.forEach(function(mItem) {
+									var selectedItem = mItem.getBindingContext(activeModel).getObject();
+									var response = "";
+									var responseText = "";
+									if (oRfModel.getData().aItems[0].responseText[0] === "{") {
+										response = JSON.parse(oRfModel.getData().aItems[0].responseText).error.message.value;
+										if (response[0] === "~") {
+											var aResponse = response.split("~");
+											MessageBox.error(
+												aResponse[2] + " " + aResponse[3]
+											);
+											delete this.itemNo;
+											delete this.matnr;
+											this.itemNo = aResponse[1];
+											this.matnr = aResponse[2];
+											responseText = aResponse[2] + " " + aResponse[3];
+											oStatText.text = responseText;
+										}
+									}
+									if (selectedItem.Tapos < this.itemNo) {
+										oStatMessage = {
+											Msgtext: '',
+											Msgtyp: ''
+										};
+										oStatMessage.Msgtext = "Material" + " " + selectedItem.Matnr + " " + "Confirmed Successfully";
+										oStatMessage.Msgtyp = "Success";
+									}
+								}.bind(this));
+								oStatMessage = {
+									Msgtext: '',
+									Msgtyp: ''
+								};
+								oStatMessage.Msgtext = "Material" + " " + oStat.text;
+								oStatMessage.Msgtyp = "Error";
+								utilities.bindMessagePop(oView, oStatMessage);
+
+							}
+						} else if (oStat.stat === "S") {
+							// var successText = {
+							if (oStat.text === "") {
+								oStat.text = "Confirmed successfully";
+							}
+							oStatMessage.Msgtext = "Material" + " " + oStat.mItems.Matnr + " " + oStat.text;
+							oStatMessage.Msgtyp = "Success";
+							if (this.finalPos === this.currentPos) {
+								utilities.bindMessagePop(oView, oStatMessage);
+							}
+
+						}
+
+					}.bind(this));
+
 					var index;
 					for (var i = 0; i < oNewModel.length; i++) {
 						if (oNewModel[i].Tanum === this.currentItem && oNewModel[i].Tapos === this.currentPos) {
@@ -352,7 +411,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oView.setModel(oJSONModel, activeModel);
 					var tabLen = oView.byId(controlId).getItems().length;
 					if (tabLen === 0) {
-						oView.onNavBack();
+						if (oView.getGlobalModel().getProperty("/parentScreen")) {
+							sap.ui.getCore().byId(oView.getGlobalModel().getProperty("/viewCid") + "--TOEx").setVisible(false);
+							sap.ui.getCore().byId(oView.getGlobalModel().getProperty("/viewCid") + "--post").setVisible(true);
+
+							oView.onNavBack();
+						}
 					}
 					promise.resolve(oRfModel);
 				});
@@ -372,6 +436,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				updateItem.Exidv = oView.getGlobalModel().getProperty("/currentHuVal");
 				oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
 				oWhenOdataUpdateDone.done(function(oRfModel) {
+					var oStatMessage = {
+						Msgtext: oView.getGlobalModel().getProperty("/message"),
+						Msgtyp: oView.getGlobalModel().getProperty("/messageType")
+					};
+					utilities.bindMessagePop(oView, oStatMessage);
 					var oNewModel = oView.byId(controlId).getModel(activeModel).getData().aItems;
 					var index;
 					for (var i = 0; i < oNewModel.length; i++) {
@@ -389,7 +458,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					});
 					oView.setModel(oJSONModel, activeModel);
 					promise.resolve(oRfModel);
-					MessageToast.show(oView.geti18n(oView.getUpdateToast()));
 					utilities.removeItems(oView, controlId);
 
 				});
@@ -433,7 +501,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, oEntry);
 			oWhenOdataUpdateDone.done(function(oResult) {
 				promise.resolve(oResult);
-				MessageToast.show(oView.geti18n(oView.getUpdateToast()));
 				oView.onNavBack();
 			}.bind(this));
 			return promise;
@@ -457,9 +524,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							shItems.ToInd = "X";
 						}
 					}.bind(this));
-					/*oView.byId(controlId).getModel(model).setData(shipTabModel);*/
-					oView.byId("GTO").setVisible(false);
-					oView.byId("TOEx").setVisible(true);
+					oView.checkInd(shipTabModel, false);
 				} else {
 					oView.gssFragmentsFunction().fragmentFalse(oView, "S");
 
@@ -483,9 +548,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				if (shipInd === "T") {
 					var GIDelData = oView.byId(controlId).getModel(model).getData().aItems;
 					GIDelData.ToInd = "X";
-					/*oView.byId(controlId).getModel(model).setData(GIDelData);*/
-					oView.byId("GTO").setVisible(false);
-					oView.byId("TOEx").setVisible(true);
+					oView.checkInd(GIDelData, false);
 				} else {
 					oView.gssFragmentsFunction().fragmentFalse(oView, "");
 

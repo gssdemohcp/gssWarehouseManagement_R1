@@ -30,7 +30,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 
-			/*	this.setFragment();*/
+				this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -43,24 +43,22 @@ sap.ui.define([
 			var _screen = this.getCurrentScrn();
 			var _screenModel = this.getScreenModel(_screen);
 			var _text = this.getView().getModel("i18n").getResourceBundle().getText(_screenModel.placeHolderLabel);
+			this.getGlobalModel().setProperty("/viewCid", this.getView().getId());
 			this.getGlobalModel().setProperty("/title", this.geti18n("grBySa"));
 			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
 		onSingleSelectSA: function(oEvent) {
 			var len = this.getView().byId("tableSA").getSelectedItems().length;
-			this.getView().byId("ship").setVisible(true);
 			if (len === 1) {
 				var vbeln = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
 				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
 				var obj = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject();
-				this.checkInd(obj);
+				this.checkInd(obj,false);
 			} else if (len > 1) {
 				MessageToast.show(this.geti18n("toastOneDel"));
-				this.gssFragmentsFunction().fragmentFalse(this, "");
 			} else if (len === 0) {
 				MessageToast.show(this.geti18n("toastOneDel"));
-				this.gssFragmentsFunction().fragmentFalse(this, "");
 			}
 		},
 
@@ -68,10 +66,10 @@ sap.ui.define([
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				this.getView().byId("tableSA").setBusy(true);
-				this.getView().byId("tableSA").setVisible(true);
 				var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
 				whenOdataCall.done(function() {
-						this.getView().byId("tableSA").setBusy(false);
+						utilities.checkVisible(this);
+						this.checkInd(oResult.getData().aItems[0],"");
 					}.bind(this)
 
 				);
@@ -80,6 +78,13 @@ sap.ui.define([
 		onHandleScanInput: function(oEvent) {
 			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
+		},
+		handleMessagePopoverPress: function(oEvent) {
+				if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 
 		handleMore: function(oEvent) {
@@ -91,6 +96,10 @@ sap.ui.define([
 			this.getGlobalModel().setProperty("/viewId", viewId);
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
+			
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
 		onHandleItems: function(event) {
