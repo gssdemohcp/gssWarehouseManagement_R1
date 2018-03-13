@@ -18,21 +18,22 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf gss.newWarehouseManage_R1.view.putAway
 		 */
+		// ================================================================================
+		// This method is called first and is executed first in the controller's lifecycle
+		// ================================================================================
 		onInit: function() {
-			//TO get the BreadCrumb Detail 
-			// Sabari 24/12/2017 
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
-					this._router = this.getRouter();
-					this.seti18nModel(this);
-					this.inputDetails();
-					this.setPageTitle();
-					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
-					if (this.getGlobalModel().getProperty("/parentScreen")) {
-						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
+					this._router = this.getRouter(); // calling the router initialization function
+					this.seti18nModel(this); // to set the resource bundle properties for the view
+					this.inputDetails(); // to get input details from the view
+					this.setPageTitle(); // to set page title for the view
+					this.gssCallBreadcrumbs().getMainBreadCrumb(this); // to call the breadcrumbs for the view
+					if (this.getGlobalModel().getProperty("/parentScreen")) { // to get parent screen properties from Global model
+						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo")); // to set input value to global model property
 						this.getView().byId("inputValue").setEnabled(false);
 						this.getView().byId("back").setVisible(true);
-						this.iGetInput();
+						this.iGetInput(); // odata function call to get backend response
 					} else {
 						this.getView().byId("inputValue").setValue("");
 						this.getView().byId("inputValue").setEnabled(true);
@@ -40,87 +41,100 @@ sap.ui.define([
 					}
 				}.bind(this)
 			});
-
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
 			this.setFragment();
 		},
 
+		// ==========================================
+		// method call to bind fragment to that view
+		// ==========================================
 		setFragment: function() {
-			//Fragement Code for New Bin
-			var viewId = this.getView().getId();
-			this.getGlobalModel().setProperty("/viewId", viewId);
-			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin");
-			this.fragmentNewBinLoaded = sap.ui.xmlfragment(viewId + "newBin", loadFragment, this);
-			this.getView().addDependent(this.fragmentNewBinLoaded);
-			//	
-			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "diff", callFragment, this);
-			this.getView().addDependent(this.fragmentLoaded);
+			var viewId = this.getView().getId(); // to get the id of the view
+			this.getGlobalModel().setProperty("/viewId", viewId); // to set the view id to the corresponding global model property
+			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "newBin"); // to load fragments
+			this.fragmentNewBinLoaded = sap.ui.xmlfragment(viewId + "newBin", loadFragment, this); // to set id to the fragment
+			this.getView().addDependent(this.fragmentNewBinLoaded); // to add the loaded fragment to the view
 
+			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference"); // to load fragments
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "diff", callFragment, this); // to set id to the fragment
+			this.getView().addDependent(this.fragmentLoaded); // to add the loaded fragment to the view
+			
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
+
+		// ================================================================
+		// method to get current screen model & resource bundle properties
+		// ================================================================
 		inputDetails: function() {
-			var Screen = this.getCurrentScrn();
-			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
-			this.getView().byId("inputValue").setPlaceholder(Text);
-			this.getView().byId("inputValue").setMaxLength(10);
+			var Screen = this.getCurrentScrn(); // function call to get current screen value
+			var ScreenModel = this.getScreenModel(Screen); // function call to get model set to current screen
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel); // to set resource bundle properties
+			this.getView().byId("inputValue").setPlaceholder(Text); // to set placeholder to input field
+			this.getView().byId("inputValue").setMaxLength(10); // to set length for input field
 		},
 
+		// =======================================================
+		// method to get input field value and perform odata call
+		// =======================================================
 		iGetInput: function(oEvent) {
-			var _inputValue = this.getView().byId("inputValue").getValue();
+			var _inputValue = this.getView().byId("inputValue").getValue(); // to get input field value 
 			if (_inputValue) {
-				//OLD CODE COMMENTED BY SELVAN this.getPutawayMaterial(_inputValue);
-				var whenOdataCall = this.callOdataService().getMaterial(this, _inputValue);
+				var whenOdataCall = this.callOdataService().getMaterial(this, _inputValue); // odata function call with input field to get response from backend
 				whenOdataCall.done(function() {
-						this.getView().byId("toTable").setVisible(true);
-					}.bind(this)
-
-				);
+					this.getView().byId("toTable").setVisible(true);
+				}.bind(this));
 			}
 		},
+
+		// ============================================
+		// method to pass barocde value to input field
+		// ============================================
 		onHandleScanInput: function() {
-			utilities.barcodeReader(this, "inputValue", "");
+			utilities.barcodeReader(this, "inputValue", ""); // function call to set barcode value to input field
 			this.iGetInput();
 		},
+		
+		// ====================================
+		// method to display response messages
+		// ====================================
 		handleMessagePopoverPress: function(oEvent) {
 			if (!this.msgFragmentLoaded) {
 				this.setFragment();
 			}
 			this.msgFragmentLoaded.openBy(oEvent.getSource());
-
 		},
 
+		// =================================================================
+		// method to confirm materials from table and display response text
+		// =================================================================
 		putAwayConfirm: function() {
-			var tableRowSelectedItems = utilities.selectedItems(this, "toTable");
-			var whenOdataCall = this.callOdataService().confirmItems(this, tableRowSelectedItems, "toTable");
+			var tableRowSelectedItems = utilities.selectedItems(this, "toTable"); // function call to get selected items from table
+			var whenOdataCall = this.callOdataService().confirmItems(this, tableRowSelectedItems, "toTable"); // function call to confirm the selected items
 			whenOdataCall.done(function() {
-
+			MessageToast.show(this.geti18n(this.getUpdateToast())); // to display success message from odata response
 			}.bind(this));
-
 		},
-
+		
+		// ===================================================================
+		// method to change difference quantities for selected items in table
+		// ===================================================================
 		onHandleDifference: function() {
-			// for the putaway diff process
-			//OLD CODE var items = this.gssCallFunction().selectedItems(this, "toTable");
-			var items = utilities.selectedItems(this, "toTable");
-
+			var items = utilities.selectedItems(this, "toTable"); // function call to get selected items from table
 			if (items.length === 1) {
-				//fragment code is Moved to OnInit 
-				var objects = utilities.getObjects(this),
-					oItem = objects.getProperty();
+				var objects = utilities.getObjects(this), // function call to get object details
+					oItem = objects.getProperty(); // function call to get properties of the objects
 				if (oItem.Tapos !== this._item) {
 					var newItemSelected = "X";
 					this._item = oItem.Tapos;
 				}
-				var oItemList = this.gssDifferenceFunction().setDiffModel(oItem, this.fragmentLoaded);
+				var oItemList = this.gssDifferenceFunction().setDiffModel(oItem, this.fragmentLoaded); // function to set data to difference fragment
 				var oModel = new JSONModel(oItemList);
-				this.fragmentLoaded.setModel(oModel, "handleDiff");
-				this.fragmentLoaded.open();
+				this.fragmentLoaded.setModel(oModel, "handleDiff"); // set model to loaded fragment
+				this.fragmentLoaded.open(); // to open initialised fragment
 			} else if (items.length === 0) {
 				MessageToast.show(this.geti18n("toastItemSel"));
 			} else if (items.length > 1) {
@@ -128,63 +142,73 @@ sap.ui.define([
 			}
 		},
 
+		// ======================================================
+		// method to calculate difference values in the fragment
+		// ======================================================
 		onHandleActual: function(oEvent) {
-			var actualVal = oEvent.getParameter("newValue");
-			var objects = utilities.getObjects(this);
-			this.modelObjects = objects.getProperty();
+			var actualVal = oEvent.getParameter("newValue"); // get parameter details of the selected row
+			var objects = utilities.getObjects(this); // function call to get object details 
+			this.modelObjects = objects.getProperty(); // function call to get properties of the objects
 			this.gssDifferenceFunction().diffCalculation(actualVal, this.modelObjects.DestTarga, this.fragmentLoaded, this.getGlobalModel().getProperty(
-				"/viewId") + "diff");
+				"/viewId") + "diff"); // function call to calculate data for difference fragment
 		},
-		// ********** Method for displaying new bin & its functionalities - Srini code end ****************
 
+		// ===================================================================
+		// method to confirm the differernce value and update values to table
+		// ===================================================================
 		onDiffConfirm: function() {
-			var destActa = this.fragmentLoaded.getModel("handleDiff").getData().destActa,
-				destDifa = this.fragmentLoaded.getModel("handleDiff").getData().destDifa,
-				destTarget = this.fragmentLoaded.getModel("handleDiff").getData().destTarget;
+			var destActa = this.fragmentLoaded.getModel("handleDiff").getData().destActa, // get particular field property from fragment model
+				destDifa = this.fragmentLoaded.getModel("handleDiff").getData().destDifa, // get particular field property from fragment model
+				destTarget = this.fragmentLoaded.getModel("handleDiff").getData().destTarget; // get particular field property from fragment model
 			this.destDifa = "X";
 			var sValInd = "DestTarga";
-			this._updateTable(destActa, destDifa, destTarget, sValInd);
+			this._updateTable(destActa, destDifa, destTarget, sValInd); //function call to display updated value to table
 		},
 
+		// ===============================================
+		// method to close the opened difference fragment
+		// ===============================================
 		onDiffCancel: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); // function call to close the loaded fragment
 		},
 
-		// *************** Srini cod eto update table begins **************
+		// ===============================================================
+		// method to update the calculated difference values to the table
+		// ===============================================================
 		_updateTable: function(destActa, destDifa, destTarget, sProperty, sValue) {
-			// for the putaway diff process
-			var aItems = this.getView().byId("toTable").getModel("materialList").getData().aItems;
-			aItems.forEach(function(oLineData) {
-				if (oLineData.Tapos === this.modelObjects.Tapos &&
-					oLineData.Tanum === this.modelObjects.Tanum) {
+			var aItems = this.getView().byId("toTable").getModel("materialList").getData().aItems; // to get line item details from model
+			aItems.forEach(function(oLineData) { // looping through line item
+				if (oLineData.Tapos === this.modelObjects.Tapos && // line item value comparison
+					oLineData.Tanum === this.modelObjects.Tanum) { // line item value comparison
 					if (sProperty === "DestTarga") {
-						var destActual = parseFloat(destActa);
-						var destActualStr = destActual.toFixed(3);
-						oLineData.DestActa = destActualStr.toString();
+						var destActual = parseFloat(destActa); //initialising value to variable
+						var destActualStr = destActual.toFixed(3); // value with round off to 3 decimal places
+						oLineData.DestActa = destActualStr.toString(); // convert value to string
 						oLineData.DestQuantity = destActa;
-						oLineData.DestDifa = destDifa.toString();
+						oLineData.DestDifa = destDifa.toString(); // convert value to string
 						oLineData.DestTarga = destTarget;
 					} else if (sProperty === "newBin") {
 						oLineData.Nlpla = sValue;
 					}
 				}
 			}.bind(this));
-			var aData = this.getView().byId("toTable").getModel("materialList").getData();
+			var aData = this.getView().byId("toTable").getModel("materialList").getData(); // to get data from model bound to table
 			aData.aItems = aItems;
-			this.getView().byId("toTable").getModel("materialList").setData(aData);
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+			this.getView().byId("toTable").getModel("materialList").setData(aData); // binding new data to the model & table control
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); // close the loaded fragment
 		},
-		// ********************** Srini code to update table ends ********************
 
-		// ********** Method for displaying new bin & its functionalities - Srini code begin ****************
+		// ========================================================
+		// method to provide new bin values for stocking materials
+		// ========================================================
 		onHandleNewBin: function() {
-			var objects = utilities.getObjects(this);
-			this.modelObjects = objects.getProperty();
-			var DestBinChg = this.modelObjects.DestBinChg;
+			var objects = utilities.getObjects(this); // function call to get objects 
+			this.modelObjects = objects.getProperty(); // function call to get property details from object
+			var DestBinChg = this.modelObjects.DestBinChg; // get specific field value from model objects
 			if (this.getView().byId("toTable").getSelectedItems().length === 1 && DestBinChg === "1") {
-				this.getModel("globalProperties").setProperty("/currentNltyp", this.modelObjects.Nltyp);
+				this.getModel("globalProperties").setProperty("/currentNltyp", this.modelObjects.Nltyp); // set property to global model properties
 				this.Nltyp = this.modelObjects.Nltyp;
-				this.getModel("globalProperties").setProperty("/currentLgnum", this.modelObjects.Lgnum);
+				this.getModel("globalProperties").setProperty("/currentLgnum", this.modelObjects.Lgnum); // set property to global model properties
 				var Lgnum = this.modelObjects.Lgnum;
 				//Fragment code is Move to onInit function
 				this.fragmentNewBinLoaded.open();
@@ -192,10 +216,9 @@ sap.ui.define([
 					matDesc: this.modelObjects.Maktx,
 					newBin: ""
 				};
-				// var oNewBinData = this.gssNewBinFunction().newBinModel(this.modelObjects);
 				var oModel = new JSONModel();
-				oModel.setData(newBinData);
-				this.fragmentNewBinLoaded.setModel(oModel, "Bin");
+				oModel.setData(newBinData); // set new data to model
+				this.fragmentNewBinLoaded.setModel(oModel, "Bin"); // set model to loaded fragment
 			} else if (this.getView().byId("toTable").getSelectedItems().length === 0) {
 				MessageToast.show(this.geti18n("toastItemSel"));
 			} else if (this.getView().byId("toTable").getSelectedItems().length > 1) {
@@ -204,20 +227,19 @@ sap.ui.define([
 				MessageToast.show(this.geti18n("toastSelNp"));
 			}
 		},
-		// ********** Method for displaying new bin & its functionalities - Srini code end ****************
 
+		// =================================================
+		// method to check whether given bin value is valid
+		// =================================================
 		onHandleCheck: function() {
 			var binValue = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinValue").getValue(), //To get the New Bin Details //
-				oGlobalModel = this.getModel("globalProperties");
-			oGlobalModel.setProperty("/currentNltyp", this.Nltyp);
+				oGlobalModel = this.getModel("globalProperties"); // function call to get global model properties
+			oGlobalModel.setProperty("/currentNltyp", this.Nltyp); 
 			var oWhenCallReadIsDone;
 			var sParentTcode = this.getGlobalModel().getProperty("/currentScreen");
 			if (binValue) {
 				this.getGlobalModel().setProperty("/currentScreen", "LM111");
-				//OLD CODE oWhenCallReadIsDone = this.gssCallFunction().newBinCheckPromise(this.getGlobalModel().getProperty("/currentView"), binValue);
-				//NEW ODATA CALL CODE
-				oWhenCallReadIsDone = this.callOdataService().checkNewBin(this, binValue);
-
+				oWhenCallReadIsDone = this.callOdataService().checkNewBin(this, binValue); // odata function call to check new bin value
 				oWhenCallReadIsDone.done(function() {
 					if (oGlobalModel.getProperty("/messageType") === "S") {
 						sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinConfirm").setEnabled(true); //Response Message Text //
@@ -225,18 +247,18 @@ sap.ui.define([
 						MessageBox.success( //MessageBox// 
 							errorMessage + ".");
 					}
-
 					this.getGlobalModel().setProperty("/currentScreen", sParentTcode);
-
 				}.bind(this));
 			} else {
 				MessageBox.information(this.geti18n("toastBinEmp"));
 			}
 		},
 
-		// *********** Srini code for new bin change begins ***********
+		// =========================================================
+		// method to confirm the new bin value and display in table
+		// =========================================================
 		onNewBinConfirm: function() {
-			var newDbin = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinValue").getValue();
+			var newDbin = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinValue").getValue(); // get field value from fragment
 			this.oNewBin = "";
 			if (this.oldBin === "") {
 				this.oldBin = this.modelObjects.Nlpla;
@@ -248,24 +270,33 @@ sap.ui.define([
 			var destActa = "",
 				destDifa = "",
 				destTarget = "";
-			this._updateTable(destActa, destDifa, destTarget, sValInd, newDbin);
-			this.gssFragmentsFunction().closeFragment(this.fragmentNewBinLoaded);
+			this._updateTable(destActa, destDifa, destTarget, sValInd, newDbin); // to pass parameters to update table data
+			this.gssFragmentsFunction().closeFragment(this.fragmentNewBinLoaded); // function call to close the loaded fragment
 		},
+		
+		// ===================================================
+		// method to get selected item details from the table
+		// ===================================================
 		onHandleSelection: function() {
 			this.getModel("globalProperties").setProperty("/controlId", "toTable");
-			var objects = utilities.getObjects(this);
+			var objects = utilities.getObjects(this); // function call to get object data from table
 		},
 
+		// ============================================
+		// method to clode the opened new bin fragment
+		// ============================================
 		onNewBinCancel: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentNewBinLoaded);
+			this.gssFragmentsFunction().closeFragment(this.fragmentNewBinLoaded); // function call to close fragment
 		},
-		onExit: function() {
-				if (this.fragmentLoaded) {
-					this.fragmentLoaded.destroy(true);
-				}
 
+		// ============================================================
+		// method to destroy all the fragments initialised in the view
+		// ============================================================
+		onExit: function() {
+			if (this.fragmentLoaded) {
+				this.fragmentLoaded.destroy(true); // function call to destroy the fragment loaded in the view
 			}
-			// *********** Srini code for new bin change ends ***********
+		}
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -279,7 +310,7 @@ sap.ui.define([
 		/**
 		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
 		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf gss.newWarehouseManage_R1.view.putAway
+		 * @memberOf gss.newWarehouseManage_R1.view.putAways
 		 */
 		//	onAfterRendering: function() {
 		//
