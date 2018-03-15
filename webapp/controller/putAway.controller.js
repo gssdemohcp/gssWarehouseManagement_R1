@@ -149,8 +149,7 @@ sap.ui.define([
 			var actualVal = oEvent.getParameter("newValue"); // get parameter details of the selected row
 			var objects = utilities.getObjects(this); // function call to get object details 
 			this.modelObjects = objects.getProperty(); // function call to get properties of the objects
-			this.gssDifferenceFunction().diffCalculation(actualVal, this.modelObjects.DestTarga, this.fragmentLoaded, this.getGlobalModel().getProperty(
-				"/viewId") + "diff"); // function call to calculate data for difference fragment
+			this.gssDifferenceFunction().diffCalculation(actualVal, this.modelObjects.DestTarga, this.fragmentLoaded, this.getView().getId() + "diff"); // function call to calculate data for difference fragment
 		},
 
 		// ===================================================================
@@ -232,7 +231,7 @@ sap.ui.define([
 		// method to check whether given bin value is valid
 		// =================================================
 		onHandleCheck: function() {
-			var binValue = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinValue").getValue(), //To get the New Bin Details //
+			var binValue = sap.ui.core.Fragment.byId(this.getView().getId() + "newBin", "newBinValue").getValue(), //To get the New Bin Details //
 				oGlobalModel = this.getModel("globalProperties"); // function call to get global model properties
 			oGlobalModel.setProperty("/currentNltyp", this.Nltyp); 
 			var oWhenCallReadIsDone;
@@ -242,7 +241,7 @@ sap.ui.define([
 				oWhenCallReadIsDone = this.callOdataService().checkNewBin(this, binValue); // odata function call to check new bin value
 				oWhenCallReadIsDone.done(function() {
 					if (oGlobalModel.getProperty("/messageType") === "S") {
-						sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinConfirm").setEnabled(true); //Response Message Text //
+						sap.ui.core.Fragment.byId(this.getView().getId() + "newBin", "newBinConfirm").setEnabled(true); //Response Message Text //
 						var errorMessage = oGlobalModel.getProperty("/message"); //Message Test //
 						MessageBox.success( //MessageBox// 
 							errorMessage + ".");
@@ -258,7 +257,7 @@ sap.ui.define([
 		// method to confirm the new bin value and display in table
 		// =========================================================
 		onNewBinConfirm: function() {
-			var newDbin = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "newBin", "newBinValue").getValue(); // get field value from fragment
+			var newDbin = sap.ui.core.Fragment.byId(this.getView().getId() + "newBin", "newBinValue").getValue(); // get field value from fragment
 			this.oNewBin = "";
 			if (this.oldBin === "") {
 				this.oldBin = this.modelObjects.Nlpla;

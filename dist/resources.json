@@ -1,0 +1,342 @@
+{
+    "resources": [
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "view/UnPack.view.xml"
+        },
+        {
+            "name": "view/LoadInq_Shipment.view.xml"
+        },
+        {
+            "name": "view/LoadDelivery.view.xml"
+        },
+        {
+            "name": "view/putAway.view.xml"
+        },
+        {
+            "name": "view/grStagingArea.view.xml"
+        },
+        {
+            "name": "view/GRGIDelItems.view.xml"
+        },
+        {
+            "name": "view/LoadShipment.view.xml"
+        },
+        {
+            "name": "view/unpackMaterial.view.xml"
+        },
+        {
+            "name": "view/UnloadDelivery.view.xml"
+        },
+        {
+            "name": "view/grShipItems.view.xml"
+        },
+        {
+            "name": "view/MainView.view.xml"
+        },
+        {
+            "name": "view/LoadInq_Delivery.view.xml"
+        },
+        {
+            "name": "view/giHu.view.xml"
+        },
+        {
+            "name": "view/picking.view.xml"
+        },
+        {
+            "name": "view/unpackHu.view.xml"
+        },
+        {
+            "name": "view/giShip.view.xml"
+        },
+        {
+            "name": "view/giStagingArea.view.xml"
+        },
+        {
+            "name": "view/grShipment.view.xml"
+        },
+        {
+            "name": "view/UnloadShipment.view.xml"
+        },
+        {
+            "name": "view/grHu.view.xml"
+        },
+        {
+            "name": "view/gidelivery.view.xml"
+        },
+        {
+            "name": "view/grdeliery.view.xml"
+        },
+        {
+            "name": "view/giShipment.view.xml"
+        },
+        {
+            "name": "view/grDelItems.view.xml"
+        },
+        {
+            "name": "view/fragments/GRDelivery.fragment.xml"
+        },
+        {
+            "name": "view/fragments/loadConfirmation.fragment.xml"
+        },
+        {
+            "name": "view/fragments/addHU.fragment.xml"
+        },
+        {
+            "name": "view/fragments/unpack_HU.fragment.xml"
+        },
+        {
+            "name": "view/fragments/loadInquiry_HU.fragment.xml"
+        },
+        {
+            "name": "view/fragments/loadInquiry_delivery.fragment.xml"
+        },
+        {
+            "name": "view/fragments/GRDelItems.fragment.xml"
+        },
+        {
+            "name": "view/fragments/difference.fragment.xml"
+        },
+        {
+            "name": "view/fragments/Unpack.fragment.xml"
+        },
+        {
+            "name": "view/fragments/newBin.fragment.xml"
+        },
+        {
+            "name": "view/fragments/putAway.fragment.xml"
+        },
+        {
+            "name": "view/fragments/GRShipment.fragment.xml"
+        },
+        {
+            "name": "view/fragments/loadInquiry_shipment.fragment.xml"
+        },
+        {
+            "name": "view/fragments/addMaterial.fragment.xml"
+        },
+        {
+            "name": "view/fragments/loadDelivery.fragment.xml"
+        },
+        {
+            "name": "view/fragments/grDelShip.fragment.xml"
+        },
+        {
+            "name": "view/fragments/rfMenu.fragment.xml"
+        },
+        {
+            "name": "view/fragments/unpackMaterial.fragment.xml"
+        },
+        {
+            "name": "view/fragments/inProcess.fragment.xml"
+        },
+        {
+            "name": "view/fragments/MessagePopover.fragment.xml"
+        },
+        {
+            "name": "view/fragments/confirmation.fragment.xml"
+        },
+        {
+            "name": "view/fragments/loadShipment.fragment.xml"
+        },
+        {
+            "name": "view/fragments/GRShipItems.fragment.xml"
+        },
+        {
+            "name": "view/LoadInq_HU.view.xml"
+        },
+        {
+            "name": "view/App.view.xml"
+        },
+        {
+            "name": "lib/GssWarehouseManage.js"
+        },
+        {
+            "name": "lib/WMConfiguration.json"
+        },
+        {
+            "name": "lib/ODATAService.js"
+        },
+        {
+            "name": "lib/ODataModelInterface.js"
+        },
+        {
+            "name": "lib/ProcessConfiguration.json"
+        },
+        {
+            "name": "localService/metadata.xml"
+        },
+        {
+            "name": "i18n/i18n_cs.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_pl.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_fr.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_es.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_nl.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_da.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_hi.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_de.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "i18n/i18n_it.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "css/style.css"
+        },
+        {
+            "name": "model/utilities.js"
+        },
+        {
+            "name": "model/models.js"
+        },
+        {
+            "name": "model/formatter.js"
+        },
+        {
+            "name": "controller/BaseController.js"
+        },
+        {
+            "name": "controller/LoadInq_HU.controller.js"
+        },
+        {
+            "name": "controller/gidelivery.controller.js"
+        },
+        {
+            "name": "controller/LoadShipment.controller.js"
+        },
+        {
+            "name": "controller/unpackHu.controller.js"
+        },
+        {
+            "name": "controller/GRGIDelItems.controller.js"
+        },
+        {
+            "name": "controller/grShipItems.controller.js"
+        },
+        {
+            "name": "controller/UnPack.controller.js"
+        },
+        {
+            "name": "controller/UnloadDelivery.controller.js"
+        },
+        {
+            "name": "controller/LoadDelivery.controller.js"
+        },
+        {
+            "name": "controller/grShipment.controller.js"
+        },
+        {
+            "name": "controller/grdelivery.controller.js"
+        },
+        {
+            "name": "controller/grDelItems.controller.js"
+        },
+        {
+            "name": "controller/ErrorHandler.js"
+        },
+        {
+            "name": "controller/picking.controller.js"
+        },
+        {
+            "name": "controller/giStagingArea.controller.js"
+        },
+        {
+            "name": "controller/MainView.controller.js"
+        },
+        {
+            "name": "controller/grStagingArea.controller.js"
+        },
+        {
+            "name": "controller/grHu.controller.js"
+        },
+        {
+            "name": "controller/giShip.controller.js"
+        },
+        {
+            "name": "controller/Application.js"
+        },
+        {
+            "name": "controller/giShipment.controller.js"
+        },
+        {
+            "name": "controller/unpackMaterial.controller.js"
+        },
+        {
+            "name": "controller/App.controller.js"
+        },
+        {
+            "name": "controller/giHu.controller.js"
+        },
+        {
+            "name": "controller/LoadInq_Shipment.controller.js"
+        },
+        {
+            "name": "controller/LoadInq_Delivery.controller.js"
+        },
+        {
+            "name": "controller/errorHandling.js"
+        },
+        {
+            "name": "controller/putAway.controller.js"
+        },
+        {
+            "name": "controller/UnloadShipment.controller.js"
+        },
+        {
+            "name": "manifest.json"
+        },
+        {
+            "name": "index.html"
+        },
+        {
+            "name": "modules/CreateElements.js"
+        },
+        {
+            "name": "modules/Fragments.js"
+        },
+        {
+            "name": "modules/Difference.js"
+        },
+        {
+            "name": "modules/MenuBinding.js"
+        },
+        {
+            "name": "modules/CreateBreadCrumbs.js"
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "neo-app.json"
+        }
+    ]
+}

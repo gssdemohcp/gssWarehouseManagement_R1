@@ -52,36 +52,36 @@
 					<VBox>
 						<HBox>
 							<Label class="sapUiSmallMargin" text="{i18n>currLdStrt}"/>
-							<DatePicker id="DP1" value="{path:'shipList>/aItems/0/Dalbg', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
+							<DatePicker  class="sapUiTinyMargin" id="DP1" value="{path:'shipList>/aItems/0/Dalbg', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
 							<VBox></VBox>
 						</HBox>
 						<HBox>
 							<Label class="sapUiSmallMargin" text="{i18n>actLdStTime}"/>
-							<TimePicker id="TP3" displayFormat="HH:mm:ss" placeholder=""/>
+							<TimePicker class="sapUiTinyMargin" id="TP3" displayFormat="HH:mm:ss" placeholder=""/>
 							<VBox></VBox>
 						</HBox>
 						<HBox>
 							<Label class="sapUiSmallMargin" text="{i18n>actLdEnDt}"/>
-							<DatePicker id="DP2" value="{path:'shipList>/aItems/0/Dalen', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
+							<DatePicker class="sapUiTinyMargin" id="DP2" value="{path:'shipList>/aItems/0/Dalen', type:'sap.ui.model.type.Date', formatOptions: {style: 'medium', UTC: true}}"/>
 							<VBox></VBox>
 						</HBox>
 						<HBox>
 							<Label class="sapUiSmallMargin" text="{i18n>actLdEndTime}"/>
-							<TimePicker id="TP4" displayFormat="HH:mm:ss" placeholder=""/>
+							<TimePicker class="sapUiTinyMargin" id="TP4" displayFormat="HH:mm:ss" placeholder=""/>
 							<VBox></VBox>
 						</HBox>
 					</VBox>
 				</content>
 				<footer id="footer"
 					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
-					<Bar id="footerbar">
+					<Bar id="footerbar" class="page_footer">
 						<contentLeft>
 								<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
-							<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="{i18n>save}"/>
-							<Button id="print" icon="sap-icon://print" press="onHandlePrint" tooltip="{i18n>print}"/>
+							<Button id="save"  class ="saveButton sapUiTinyMargin sapUiResponsiveContentPadding button_Size" icon="sap-icon://save" press="onHandleSave" tooltip="{i18n>save}"/>
+							<Button id="print" class ="printButton sapUiTinyMargin sapUiResponsiveContentPadding button_Size" icon="sap-icon://print" press="onHandlePrint" tooltip="{i18n>print}"/>
 						</contentRight>
 						<!--</contentMiddle>-->
 						<!--</Toolbar>-->

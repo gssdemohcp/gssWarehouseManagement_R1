@@ -66,7 +66,7 @@ sap.ui.define([
 				this.getView().byId("GRDForm").setBusy(true);
 				var whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
 				whenOdataCall.done(function(oResult) {
-					this.checkInd(oResult.getData().aItems[0], true);
+					this.checkInd(oResult.getData().aItems[0], "true");
 					this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
 				}.bind(this));
 			}
@@ -76,113 +76,114 @@ sap.ui.define([
 			this.callOdataService().barcodeReader(this, "inputValue");
 			this.iGetInput();
 		},
+		/* =========================================================== */
+		/*Handling message popover function*/
+		/* =========================================================== */
 		handleMessagePopoverPress: function(oEvent) {
 				if (!this.msgFragmentLoaded) {
 				this.setFragment();
 			}
-			this.msgFragmentLoaded.openBy(oEvent.getSource());
+			this.msgFragmentLoaded.openBy(oEvent.getSource());//opens fragment
 
 		},
+		/* =========================================================== */
+		/*Called when unload button pressed*/
+		/*navigates to unload page*/
+		/* =========================================================== */
 		onHandleUnload: function(oEvent) {
-			utilities.navigateChild("unloadDelivery", this);
+			utilities.navigateChild("unloadDelivery", this);// navigateChild: function in utilities for navigating to child views
 
 		},
+		/* =========================================================== */
+		/*Called when more button pressed*/
+		/* =========================================================== */
 		handleMore: function(oEvent) {
-			this.createElements().handleMoreButtons(oEvent, this);
+			this.createElements().handleMoreButtons(oEvent, this);//createElements: function in BaseController to access CreateElements.js
 		},
+		/* =========================================================== */
+		/*Called when items button pressed*/
+		/*navigates to Items page*/
+		/* =========================================================== */
 		onHandleItems: function(event) {
 
-			utilities.navigateChild("grDelItems", this);
+			utilities.navigateChild("grDelItems", this);// navigateChild: function in utilities for navigating to child views
 		},
+		/* =========================================================== */
+		/*Called when ok button pressed on the confirmation fragment*/
+		/*Generate TO and Post GR Functionality*/
+		/* =========================================================== */
 		onConfirm: function() {
 			if (this.getGlobalModel().getProperty("/indiTO") === "") {
-				this.onHandleGTO();
+				this.onHandleGTO();//Generates TO for the Delivery
 			} else {
-				this.onHandlePost();
+				this.onHandlePost();//Performs GR Post
 			}
 		},
-
+       /* =========================================================== */
+		/*Called when cancel button pressed on the confirmation fragment*/
+		/* =========================================================== */
 		onConfirmCancel: function() {
-			this.onCancel();
+			this.onCancel();//closes the confirmation fragment
 		},
+		/* =========================================================== */
+		/*To close the opened fragement*/
+		/* =========================================================== */
 		onCancel: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//gssFragmentsFunction:function in BaseController to access Fragments.js
 		},
-
+       /* =========================================================== */
+		/*To open the Confirmation fragement for Generate TO*/
+		/* =========================================================== */
 		onGenerateTO: function() {
 			if (!this.fragmentLoaded) {
-				this.setFragment();
+				this.setFragment();//To initialize and add fragment to the view
 			}
 			this.getView().addDependent(this.fragmentLoaded);
-			this.fragmentLoaded.open();
+			this.fragmentLoaded.open();//opens the fragment
 
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("genToPop"));
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop"));// To set text to confirmaton fragment
 		},
-
+        /* =========================================================== */
+		/*Function to Generate TO*/
+		/* =========================================================== */
 		onHandleGTO: function() {
-			this.fragmentLoaded.close();
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
 			this.getView().byId("title").setBusy(true);
-			var whenOdataCall = this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "T");
-			whenOdataCall.done(function() {
+			var whenOdataCall = this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "T");//function in BaseController to access GssWarehouseManage.js
+			whenOdataCall.done(function() {//Synchronous oData Call
 				this.getView().byId("toInd").setText(this.geti18n("available"));
 				this.getView().byId("title").setBusy(false);
 			}.bind(this));
 
 		},
+		/* =========================================================== */
+		/*Called when TOEx button pressed */
+		/*TO Execution Functionality*/
+		/*navigates to Putaway page*/
+		/* =========================================================== */
 		onHandleTOEx: function() {
-			utilities.navigateChild("putaway", this);
+			utilities.navigateChild("putaway", this);// navigateChild: function in utilities for navigating to child views
 		},
-
+        /* =========================================================== */
+		/*To open the Confirmation fragement for Post GR*/
+		/* =========================================================== */
 		onPostGR: function() {
 			if (!this.fragmentLoaded) {
-				this.setFragment();
+				this.setFragment();//To initialize and add fragment to the view
 			}
 			this.getView().addDependent(this.fragmentLoaded);
-			this.fragmentLoaded.open();
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("postGrPop"));
+			this.fragmentLoaded.open();//opens the fragment
+			sap.ui.core.Fragment.byId(this.getView().getId()+ "conf", "popup").setText(this.geti18n("postGrPop"));// To set text to confirmaton fragment
 
 		},
-
+        /* =========================================================== */
+		/*Function to Post GR*/
+		/* =========================================================== */
 		onHandlePost: function() {
-			this.fragmentLoaded.close();
-			this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "C");
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
+			this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "C");//function in BaseController to access GssWarehouseManage.js
 
 		}
-
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf gss.newWarehouseManage_R1.view.giStagingArea
-		 */
-		//	onInit: function() {
-		//
-		//	},
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf gss.newWarehouseManage_R1.view.giStagingArea
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf gss.newWarehouseManage_R1.view.giStagingArea
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf gss.newWarehouseManage_R1.view.giStagingArea
-		 */
-		//	onExit: function() {
-		//
-		//	}
 
 	});
 

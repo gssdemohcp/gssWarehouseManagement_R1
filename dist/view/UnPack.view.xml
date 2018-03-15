@@ -1,0 +1,57 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="gss.newWarehouseManage_R1.controller.UnPack"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.ui.layout.form">
+	<App>
+		<pages>
+			<Page title="{i18n>packUnpack}">
+				<content>
+					<f:SimpleForm id="unpackForm" editable="false" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+						adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+						singleContainerFullSize="false">
+						<f:content>
+							<Toolbar>
+								<Input id="huInput" valueHelpRequest="onHandlePoHelp" submit="getHUInput" placeholder="{i18n>handlUnit}" width="100%"
+									textAlign="Begin" maxLength="20"/>
+								<Button id="huScanBut" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onScanUnpack" ariaLabelledBy="actionButtonLabel"/>
+							</Toolbar>
+							<HBox>
+								<VBox>
+									<Label class="sapUiTinyMarginTop" text="{i18n>packMat}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>desc}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>plant}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>storLoc}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>warehseNo}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>storBin}"/>
+								</VBox>
+								<VBox>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+										text="{parts:[{path:'packItems>/aItems/0/Vhilm'}],formatter: '.formatter.unpack'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+										text="{parts:[{path:'packItems>/aItems/0/Maktx'}],formatter: '.formatter.unpack'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{packItems>/aItems/0/Werks}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{packItems>/aItems/0/Lgort}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{packItems>/aItems/0/Lgnum}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{packItems>/aItems/0/Lgtyp} {packItems>/aItems/0/Lgpla}"/>
+								</VBox>
+							</HBox>
+						</f:content>
+					</f:SimpleForm>
+				</content>
+				<footer id="footer"
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
+					<Bar id="footerbar">
+						<!--<contentMiddle>-->
+						<contentLeft>
+							<!--<Toolbar id="footerbar" visible="false">-->
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
+						</contentLeft>
+						<contentRight>
+							<Button id="byMat" class="byMatButton" icon="sap-icon://product" press="onHandleMat" enabled="false" tooltip="{i18n>byMat}"/>
+							<Button id="byHU" class="byHUButton" icon="sap-icon://suitcase" press="onHandleHU" enabled="false" tooltip="{i18n>byHu}"/>
+						</contentRight>
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

@@ -4,7 +4,7 @@ sap.ui.define([
 	"sap/ui/model/resource/ResourceModel",
 	"sap/ui/core/routing/History",
 	"gss/newWarehouseManage_R1/model/utilities"
-], function(Controller, ResourceModel, History,utilities) {
+], function(Controller, ResourceModel, History, utilities) {
 
 	"use strict";
 
@@ -58,10 +58,18 @@ sap.ui.define([
 		getGlobalModel: function() {
 			return this.getOwnerComponent().getModel("globalProperties");
 		},
+		/**
+		 * Convenience method to get the fragment model containing the fragments used in the app.
+		 * @returns {object} the fragment model
+		 */
 
 		getFragmentControllerModel: function() {
 			return this.getOwnerComponent().getModel("fragmentControllerProperties");
 		},
+		/**
+		 * Convenience method to get the screen model containing the necessary fields and filters for the view.
+		 * @returns {object} the screen Propery 
+		 */
 
 		getScreenModel: function(currentScreen) {
 			var menuModel = this.getMenuTransactionModel(),
@@ -69,24 +77,46 @@ sap.ui.define([
 				ScreenModel = menuModel.getProperty("/" + currentScreen);
 			return ScreenModel;
 		},
+		/**
+		 * Convenience method to get the WM configuration model containing the global state of the app.
+		 * @returns {object} the configuration Propery model
+		 */
 		getMenuTransactionModel: function() {
 			return this.getOwnerComponent().getModel("MenuTransactionProperties");
 
 		},
+		/**
+		 * Convenience method to get the process model containing .
+		 * @returns {object} the process Propery
+		 */
 		getProcessModel: function(uiIndicator) {
 			var processModel = this.getProsessControlModel(),
 				controlModel = processModel.getProperty("/" + uiIndicator);
 			return controlModel;
 		},
+		/**
+		 * Convenience method to get the WM Process Configuration model containing the global state of the app.
+		 * @returns {object} the Process configuration Propery model
+		 */
 		getProsessControlModel: function() {
 			return this.getOwnerComponent().getModel("ProcessControlProperties");
 
 		},
+		/**
+		 * Convenience method for getting Tcode
+		 * @returns {object} Tcode for the view
+		 */
 		getCurrentScrn: function() {
 			return this.getGlobalModel().getProperty("/currentScreen");
 		},
-		getModelData: function(model) {
-			return this.getView().getModel(model).getData();
+		/**
+		 * Convenience method for getting data binded to the view
+		 * * @public
+		 * @param {sap.ui.model.Model} oModel the model instance
+		 * @returns {object} data from the model
+		 */
+		getModelData: function(oModel) {
+			return this.getView().getModel(oModel).getData();
 		},
 		/**
 		 * Convenience method
@@ -96,22 +126,44 @@ sap.ui.define([
 		getApplication: function() {
 			return this.getGlobalModel().getProperty("/application");
 		},
+		/**
+		 * Convenience method
+		 * @returns {object} the CreateBreadCrumbs controller
+		 */
 		gssCallBreadcrumbs: function() {
 			return this.getGlobalModel().getProperty("/breadcrumbs");
 		},
+		/**
+		 * Convenience method
+		 * @returns {object} the fragments controller
+		 */
 		gssFragmentsFunction: function() {
 			return this.getGlobalModel().getProperty("/fragments");
 		},
+		/**
+		 * Convenience method
+		 * @returns {object} the difference controller
+		 */
 		gssDifferenceFunction: function() {
 			return this.getGlobalModel().getProperty("/difference");
 		},
+		/**
+		 * Convenience method
+		 * @returns {object} the menubinding controller
+		 */
 		gssCallMenu: function() {
 			return this.getGlobalModel().getProperty("/menu");
 		},
-
+		/**
+		 * Convenience method
+		 * @returns {object} the Component 
+		 */
 		getComponent: function() {
 			return this.getOwnerComponent();
 		},
+		/**
+		 * Convenience method to set i18n model to the view
+		 */
 
 		seti18nModel: function(oView) {
 			// set i18n model on view
@@ -132,42 +184,75 @@ sap.ui.define([
 				oViewModel.getProperty("/shareSendEmailMessage")
 			);
 		},
-
+		/**
+		 * Event handler when back button has been clicked
+		 
+		 * @public
+		 */
 		onNavBack: function() {
-			this.destroyModel();
-			this.getGlobalModel().setProperty("/currentScreen", this.getGlobalModel().getProperty("/parentScreen"));
-			this.getGlobalModel().setProperty("/parentScreen", this.getParentScreen());
-			this.getApplication().navBack(History, "");
+			this.destroyModel(); // destroys the model of the view
+			this.getGlobalModel().setProperty("/currentScreen", this.getGlobalModel().getProperty("/parentScreen")); //sets parentscreen as currentscreen
+			this.getGlobalModel().setProperty("/parentScreen", this.getParentScreen()); //gets parentscreen and sets it to globalmodel
+			this.getApplication().navBack(History, ""); //standard back function in application controller
 
 		},
+		/**
+		 * Convenience method to destroy model binded to the view
+		 */
 		destroyModel: function() {
 			this.getView().getModel(this.getModelName()).setData("");
 
 		},
+		/**
+		 * Convenience method to check indicators for the data
+		 * @param {object} data - oData instance
+		 * @param {boolean} flag  
+		 */
 		checkInd: function(data, flag) {
 			if (flag) {
 				this.getGlobalModel().setProperty("/indiTO", data.ToInd);
-				this.gssFragmentsFunction().uiIndCheck(this, data.ToInd, data.ToConfirmInd, data.PostInd, flag);
-				utilities.bindMessagePop(this,data);                         
-			}else {
-				utilities.bindMessagePop(this,data); 
+				this.gssFragmentsFunction().uiIndCheck(this, data.ToInd, data.ToConfirmInd, data.PostInd, flag); //uiIndCheck:to perform ui operations with data
+				utilities.bindMessagePop(this, data); //bindMessagePop:set message to messagepopover
+			} else {
+				utilities.bindMessagePop(this, data); //bindMessagePop:set message to messagepopover
 			}
 
 		},
+		/**
+		 * Convenience method to get controlId of the view
+		 */
 		getControlId: function() {
 			var viewProperties = this.getViewProperties();
 			return viewProperties.uiControl;
-
 		},
-
+		/**
+		 * Convenience method to set retrieved data to the global property
+		 * @param {object} data - oData instance
+		 */
 		setModelData: function(data) {
 			var viewProperties = this.getViewProperties();
 			viewProperties.modelData = data;
 		},
+		/**
+		 * Convenience method to set retrieved data to the view from global property
+		 * @public
+		 */
 		getBackModelData: function() {
 			var viewProperties = this.getViewProperties(),
 				jsonModel = new sap.ui.model.json.JSONModel(viewProperties.modelData);
 			this.setModel(jsonModel, this.getModelName());
+		},
+
+		loadCheck: function() {
+			var viewProperties = this.getViewProperties();
+			var data = viewProperties.modelData;
+			if (this.getGlobalModel().getProperty("/load") === "X") {
+                 data.aItems[0].LoadStat = "X";                      
+			} else if (this.getGlobalModel().getProperty("/load") === "Y"){
+				data.aItems[0].LoadStat = "";
+			}
+			this.setModelData(data);
+			this.getGlobalModel().setProperty("/load","");
 		},
 		titleSet: function() {
 			var title = this.getGlobalModel().getProperty("/title");

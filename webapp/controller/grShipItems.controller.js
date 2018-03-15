@@ -92,7 +92,7 @@ sap.ui.define([
 		},
 		onDiffConfirm: function() {
 			var destTarget = this.fragmentLoaded.getModel("handleDiff").getData().destTarget;
-			var destActa = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "diff", "actual").getValue();
+			var destActa = sap.ui.core.Fragment.byId(this.getView().getId() + "diff", "actual").getValue();
 			var differenceVal = destTarget - destActa;
 			var destDifa = differenceVal;
 			this.destDifa = "X";

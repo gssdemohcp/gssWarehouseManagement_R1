@@ -5,68 +5,68 @@
 			<Page title="{i18n>giDel}">
 				<content>
 					<Toolbar>
-						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
+						<Breadcrumbs class="sapUiTinyMarginBegin breadCrumb" id="breadCrumbs"/>
 					</Toolbar>
 					<Toolbar id="toolbarheader">
-						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+						<Input class="sapUiTinyMarginBegin formInput" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
 						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
-					<f:SimpleForm id="GIDForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>delHeadInfo}" labelSpanXL="3" labelSpanL="3"
+					<f:SimpleForm id="GIDForm" class="sapUiFormTitleH4" editable="false" layout="ResponsiveGridLayout" title="{i18n>delHeadInfo}" labelSpanXL="3" labelSpanL="3"
 						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
 						columnsL="1" columnsM="1" singleContainerFullSize="false" visible="false">
 						<f:content>
 							<HBox>
 								<VBox>
-									<Label class="sapUiTinyMarginTop" text="{i18n>loadStatus}"/>
-									<Label class="sapUiTinyMarginTop" id="GIdelFieldLabel" text="{i18n>delNo}" visible="false"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>vendor}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>name}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>shipPoint}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>shipDate}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>totWeigh}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>noOfPackage}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>huInd}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>toInd}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>loadStatus}"/>
+									<Label class="sapUiTinyMarginTop formFont" id="GIdelFieldLabel" text="{i18n>delNo}" visible="false"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>vendor}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>name}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>shipPoint}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>shipDate}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>totWeigh}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>noOfPackage}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>huInd}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>toInd}"/>
 								</VBox>
 								<VBox>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="GIloadIndicator"
-										text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="giDelField" text="{delList>/aItems/0/Vbeln}" visible="false"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Lifnr}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/LifnrName}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" id="GIloadIndicator"
+										text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.giIndicator'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" id="giDelField" text="{delList>/aItems/0/Vbeln}" visible="false"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" text="{delList>/aItems/0/Lifnr}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" text="{delList>/aItems/0/LifnrName}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont"
 										text="{parts:[{path:'delList>/aItems/0/Vstel'}],formatter: '.formatter.shipPoint'}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont"
 										text="{path: 'delList>/aItems/0/Lfdat',type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'}}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Btgew} {delList>/Gewei}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${delList>/aItems/0/Anzpk}) }"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" text="{delList>/aItems/0/Btgew} {delList>/Gewei}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" text="{= parseFloat(${delList>/aItems/0/Anzpk}) }"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont"
 										text="{parts:[{path:'delList>/aItems/0/HuInd'}],formatter: '.formatter.huIndicator'}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="GItoInd"
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" id="GItoInd"
 										text="{parts:[{path:'delList>/aItems/0/ToInd'}],formatter: '.formatter.huIndicator'}"/>
 								</VBox>
 							</HBox>
 						</f:content>
 					</f:SimpleForm>
 				</content>
-				<footer id="footer"
-					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
-					<Bar id="footerbar">
+				
+				<footer id="footer">
+					<Bar id="footerbar" class="page_footer">
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
-							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
-							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
+							<Button id="back" class="sapUiTinyMargin" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" class="sapUiTinyMargin" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
-							<Button id="Lload" icon="sap-icon://supplier" press="onHandleUnload" tooltip="{i18n>load}"/>
-							<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="{i18n>more}"/>
-							<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="{i18n>items}"/>
-							<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="{i18n>shipment}"/>
-							<Button id="GTO" icon="sap-icon://create" press="onGenerateTO" visible="false" tooltip="{i18n>generateTO}"/>
-							<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" tooltip="{i18n>toExec}"/>
-							<Button id="post" icon="sap-icon://paper-plane" press="onPostGI" visible="false" tooltip="{i18n>post}"/>
+							<Button id="Lload" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size LUnloadButton" icon="sap-icon://supplier" press="onHandleUnload" tooltip="{i18n>load}"/>
+							<Button id="more" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size moreButton" icon="sap-icon://detail-view" press="handleMore" tooltip="{i18n>more}"/>
+							<Button id="items" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size itemsButton" icon="sap-icon://activity-items" press="onHandleItems" tooltip="{i18n>items}"/>
+							<Button id="ship" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size shipButton" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="{i18n>shipment}"/>
+							<Button id="GTO" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size GTOButton" icon="sap-icon://create" press="onGenerateTO" visible="false" tooltip="{i18n>generateTO}"/>
+							<Button id="TOEx" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size TOExButton" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" tooltip="{i18n>toExec}"/>
+							<Button id="post" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size postButton" icon="sap-icon://paper-plane" press="onPostGI" visible="false" tooltip="{i18n>post}"/>
 						</contentRight>
 						<!--</contentMiddle>-->
 						<!--</Toolbar>-->

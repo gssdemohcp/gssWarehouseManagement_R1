@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="confirm" title="Alert" class="sapUiResponsiveMargin sapUiPopupWithPadding" icon="sap-icon://alert">
+		<content>
+			<Text text="Are you sure you want to undo the process?"/>
+		</content>
+		<beginButton>
+			<Button text = "Yes" press="onUndoConfirm"/>
+		</beginButton>
+		<endButton>
+			<Button text = "No" press="onUndoCancel"/>
+		</endButton>		
+	</Dialog>
+</core:FragmentDefinition>

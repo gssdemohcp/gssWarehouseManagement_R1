@@ -1,0 +1,103 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns="sap.m"
+	controllerName="gss.newWarehouseManage_R1.controller.grDelItems" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page id="title">
+				<content>
+					<f:SimpleForm id="DelItemForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>Delform1Title}" labelSpanXL="3" labelSpanL="3"
+						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+						columnsL="1" columnsM="1" singleContainerFullSize="false">
+						<f:content>
+							<Toolbar>
+								<Input id="itemInput" valueHelpRequest="onHandlePoHelp" submit="iGetInput" width="100%"
+									textAlign="Begin" maxLength="20"/>
+								<Button id="huScanBut" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onScanUnpack" ariaLabelledBy="actionButtonLabel"/>
+							</Toolbar>
+							<HBox>
+								<VBox>
+									<Label class="sapUiTinyMarginTop" text="{i18n>itemsTot}"/>
+									<!--<Label class="sapUiTinyMarginTop" text="Confirmed Item"/>-->
+								</VBox>
+								<VBox>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${itemList>/aItems/0/Anzpk})}"/>
+									<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/Prtnr}"/>-->
+								</VBox>
+							</HBox>
+						</f:content>
+					</f:SimpleForm>
+					<Table id="tableitems" class="sapUiTinyMarginTop dataStyle" growing="true" growingScrollToLoad="true" width="auto"
+						items="{itemList>/aItems}" mode="MultiSelect" selectionChange="onHandleSelection">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="{i18n>matInfo}"/>
+								<ToolbarSpacer/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column hAlign="Left">
+								<header>
+									<Label text="{i18n>delItem}" design="Bold"/>
+								</header>
+							</Column>
+							<Column id="stock" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left" visible="false">
+								<header>
+									<Label text="{i18n>stockNo}" design="Bold"/>
+								</header>
+							</Column>
+							<Column hAlign="Left">
+								<header>
+									<Label text="{i18n>mat}" design="Bold"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+								<header>
+									<Label text="{i18n>desc}" design="Bold"/>
+								</header>
+							</Column>
+							<Column hAlign="Left">
+								<header>
+									<Label text="{i18n>quantUnit}" design="Bold"/>
+								</header>
+							</Column>
+							<Column id="Batch" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Right" visible="false">
+								<header>
+									<Label text="{i18n>batch}" design="Bold"/>
+								</header>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{= parseFloat(${itemList>Posnr})}"/>
+									<Text text="{itemList>Sonum}"/>
+									<Text text="{itemList>Matnr}"/>
+									<Text text="{itemList>Arktx}"/>
+									<!--<Text text="{itemList>Lfimg} {itemList>Vrkme}"/>-->
+									<ObjectNumber
+										number="{ parts: [ {path: 'itemList>Lfimg'}], type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits : 3, maxFractionDigits: 3 } }"
+										unit="{itemList>Vrkme}" state="{ parts: [ {path: 'itemList>Lfimg'} ], formatter : '.formatter.changeColor' }"/>
+									<Text text="{itemList>Charg}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+				<footer id="footer"
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
+					<Bar id="footerbar">
+						<!--<contentMiddle>-->
+						<contentLeft>
+							<!--<Toolbar id="footerbar" visible="false">-->
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
+						</contentLeft>
+						<contentRight>
+							<Button id="difference" class ="differenceButton" press="onHandleDifference" icon="sap-icon://sys-minus" tooltip="{i18n>diff}"/>
+							<Button id="save" class ="saveButton" icon="sap-icon://save" press="onHandleSave" tooltip="{i18n>save}"/>
+						</contentRight>
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

@@ -1,0 +1,43 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	controllerName="gss.newWarehouseManage_R1.controller.LoadInq_Delivery" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="{i18n>LoadInqDeltitle}">
+				<content>
+					<Toolbar>
+						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
+					</Toolbar>
+					<Toolbar id="toolbarheader">
+						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
+						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+					</Toolbar>
+					<l:VerticalLayout>
+						<ObjectStatus id="delvStatus" class="sapUiTinyMarginBegin Text" text="{itemList>/aItems/0/DelStat}"/>
+						<ObjectStatus id="delvText" class="sapUiTinyMarginBegin Text" text="Loaded {itemList>/aItems/0/LoadedHu} / {itemList>/aItems/0/TotalHu} Handling Units"/>
+					</l:VerticalLayout>
+					<Table class="sapUiTinyMarginBegin" id="huTable" inset="false" items="{itemList>/aItems}" visible="true" growing="true"
+						growingScrollToLoad="true">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="{i18n>HandlingUnitTitle}" level="H2"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column width="auto"></Column>
+							<Column width="auto"></Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{parts:[{path:'itemList>Exidv'},{path:'itemList>Exida'}],formatter: '.formatter.status'}"/>
+									<Text text="{itemList>HuStatDesc}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

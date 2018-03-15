@@ -19,10 +19,21 @@ sap.ui.define([
 		onInit: function() {
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
-					this._router = this.getRouter(); // calling the router initialization function
-					this.seti18nModel(this); // to set the resource bundle properties for the view
-					this.inputDetails(); // to get input details from the view
-					this.gssCallBreadcrumbs().getMainBreadCrumb(this); // to call the breadcrumbs for the view
+					this._router = this.getRouter();
+					this.seti18nModel(this);
+					this.inputDetails();
+					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
+					if (this.getGlobalModel().getProperty("/parentScreen")) {
+						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentShip"));
+						this.getView().byId("inputValue").setEnabled(false);
+						this.getView().byId("scanHUDel").setValue("");
+						this.getView().byId("back").setVisible(true);
+						this.iGetInput();
+					} else {
+						this.getView().byId("scanHUDel").setValue("");
+						this.getView().byId("inputValue").setEnabled(true);
+						this.getView().byId("back").setVisible(false);
+					}
 				}.bind(this)
 			});
 			this._router = this.getRouter();
@@ -82,7 +93,11 @@ sap.ui.define([
 			var filterFields = this.getFilterFields();
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				this.callOdataService().LoadDetails(this, shipNo, huNo, "");
+				var whenOdataCall = this.callOdataService().LoadDetails(this, shipNo, huNo, "");
+				whenOdataCall.done(function(oResult) {
+					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+
+				}.bind(this));
 				// this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
 				this.callOdataService().LoadDetails(this, shipNo, huNo, procInd);
@@ -106,16 +121,20 @@ sap.ui.define([
 			var modelData = this.getModelData("itemList"),
 				LoadInd = "",
 				HuStatus = "HU03";
-			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, ""); // to pass the retrieved data as keyfields for odata call
+			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
+				whenOdataCall.done(function(oResult) {
+					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+
+				}.bind(this));
 		},
 
 		// =========================================
 		// function call to revert the load process
 		// =========================================
 		loadRevert: function() {
-			this.setFragment(); // function call to set fragment to the view
-			this.fragmentLoaded.open(); // to open the loaded fragment
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("undoProc")); // to set text for the loaded fragment
+			this.setFragment();
+			this.fragmentLoaded.open();
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("undoProc"));
 		},
 
 		// ===================================
@@ -127,7 +146,11 @@ sap.ui.define([
 			var modelData = this.getModelData("itemList"), // to get data from the model bound to the view
 				LoadInd = "",
 				HuStatus = "HU04";
-			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, ""); // to pass the retrieved data as keyfields for odata call
+			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
+			whenOdataCall.done(function(oResult) {
+					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+
+				}.bind(this));
 		},
 
 		// ============================================

@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<l:VerticalLayout>
+		<ObjectStatus id="shipmentText" class="sapUiTinyMarginBegin Text" text="{itemList>/shipDesc} - {itemList>/shipStat}"/>
+		<!--<ObjectStatus text="Loading end"/>-->
+	</l:VerticalLayout>
+	<Table class="sapUiTinyMarginBegin" id="shipmentTable" inset="false" items="{itemList>/aItems}" visible="true"  growing="true" growingScrollToLoad="true">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Delivery" level="H2"/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column width="auto"></Column>
+			<Column width="auto"></Column>
+			<Column width="auto"></Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{itemList>Tprfo}"/>
+					<Text text="{itemList>Vbeln}"/>
+					<Text text="{itemList>DelStat}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

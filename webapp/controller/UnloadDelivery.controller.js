@@ -4,7 +4,7 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"sap/ui/model/resource/ResourceModel",
 	"gss/newWarehouseManage_R1/model/utilities"
-], function(Controller, BaseController, ResourceModel,utilities) {
+], function(Controller, BaseController, ResourceModel, utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.UnloadDelivery", {
@@ -27,11 +27,13 @@ sap.ui.define([
 					if (this.getGlobalModel().getProperty("/parentScreen")) { // to get parent screen properties from Global model
 						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo")); // to set input value to global model property
 						this.getView().byId("inputValue").setEnabled(false);
+						this.getView().byId("scanHUinDel").setValue("");
 						this.getView().byId("back").setVisible(true);
 						this.iGetInput(); // odata function call to get backend response
 					} else {
 						this.getView().byId("inputValue").setValue("");
 						this.getView().byId("inputValue").setEnabled(true);
+						this.getView().byId("scanHUinDel").setValue("");
 						this.getView().byId("back").setVisible(false);
 					}
 				}.bind(this)
@@ -39,6 +41,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
+			this.setFragment();
 		},
 
 		// ================================================================
@@ -70,7 +73,6 @@ sap.ui.define([
 			utilities.barcodeReader(this, "inputValue",""); // function call to set barcode value to input field
 		    this.iGetInput();
 		},
-
 		// ============================================
 		// method to pass barocde value to input field
 		// ============================================
@@ -88,6 +90,16 @@ sap.ui.define([
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation"); // to load fragments
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf",loadFragment, this); // to set id to the fragment
 			this.getView().addDependent(this.fragmentLoaded); // to add the loaded fragment to the view
+
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.msgFragmentLoaded);
+		},
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
 		},
 
 		// =========================================================
@@ -100,7 +112,11 @@ sap.ui.define([
 			var LoadInd = "X"; // Indicator for Unload process
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUinDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				this.callOdataService().UnloadDetails(this, shipNo, huNo, "", LoadInd); // To pass the input values to the function&nbsp;
+				var whenOdataCall = this.callOdataService().UnloadDetails(this, shipNo, huNo, "", LoadInd);
+				whenOdataCall.done(function(oResult) {
+					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+
+				}.bind(this));// To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
 				this.callOdataService().UnloadDetails(this, shipNo, huNo, procInd, ""); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
@@ -125,7 +141,11 @@ sap.ui.define([
 			var modelData = this.getModelData("itemList"), // to get data from the model bound to the view
 				LoadInd = "X",
 				HuStatus = "HU04";
-			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd); // to pass the retrieved data as keyfields for odata call
+			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd);
+			whenOdataCall.done(function(oResult) {
+					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+
+				}.bind(this));
 		},
 
 		// ===========================================
@@ -134,7 +154,7 @@ sap.ui.define([
 		unloadRevert: function() {
 			this.setFragment(); // function call to set fragment to the view
 			this.fragmentLoaded.open(); // to open the loaded fragment
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("undoProc")); // to set text for the loaded fragment
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("undoProc")); // to set text for the loaded fragment
 		},
 
 		// ===================================
@@ -146,7 +166,11 @@ sap.ui.define([
 			var modelData = this.getModelData("itemList"), // to get data from the model bound to the view
 				LoadInd = "X",
 				HuStatus = "HU03";
-			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd); // to pass the retrieved data as keyfields for odata call
+			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd);
+			whenOdataCall.done(function(oResult) {
+					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+
+				}.bind(this));
 		},
 
 		// ============================================

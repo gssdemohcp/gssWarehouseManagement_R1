@@ -1,0 +1,58 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
+	<f:SimpleForm id="huForm" editable="false" layout="ResponsiveGridLayout" title="" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+		labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+		singleContainerFullSize="false">
+		<f:content>
+			<HBox>
+				<VBox>
+					<Label class="sapUiTinyMarginTop" text="Shipping Point"/>
+					<Label class="sapUiTinyMarginTop" text="Status"/>
+					<Label class="sapUiTinyMarginTop" text="Total Weight"/>
+					<Label class="sapUiTinyMarginTop" text="Total Volume"/>
+				</VBox>
+				<VBox>
+					<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="1990"/>-->
+					<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="Completed"/>-->
+					<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="43,333 KG"/>-->
+					<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="0,000"/>-->
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/Vstel}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/DelStat}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/TotHuWt} {itemList>/WtUnit}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/HuVolume}"/>
+				</VBox>
+			</HBox>
+		</f:content>
+	</f:SimpleForm>
+	<Table class="sapUiTinyMarginBegin" id="huInqTable" inset="false" items="{itemList>/aItems}" visible="false" growing="true" growingScrollToLoad="true">
+		<headerToolbar>
+			<Toolbar>
+				<Title text=""/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column width="auto">
+				<Text text="Associated HU"/>
+			</Column>
+			<Column width="auto">
+				<Text text="Load Status"/>
+			</Column>
+			<Column width="auto">
+				<Text text="Delivery Type"/>
+			</Column>
+			<Column width="auto">
+				<Text text="Warehouse"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{parts:[{path:'itemList>Exidv'},{path:'itemList>Exida'}],formatter: '.formatter.status'}"/>
+					<Text text="{itemList>HuStatDesc}"/>
+					<Text text="{parts:[{path:'itemList>DelType'}],formatter: '.formatter.delType'}"/>
+					<Text text="{itemList>Lgnum}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

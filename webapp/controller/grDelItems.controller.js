@@ -37,7 +37,8 @@ sap.ui.define([
 			var viewId = this.getView().getId();
 			this.getGlobalModel().setProperty("/viewId", viewId);
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
-			this.fragmentLoaded = sap.ui.xmlfragment(this.getGlobalModel().getProperty("/viewId") + "diff", callFragment, this);
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "diff", callFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 
 		seti18nModel: function() {
@@ -68,8 +69,10 @@ sap.ui.define([
 					var newItemSelected = "X";
 					this._item = oItem.Posnr;
 				}
-				var oItemList = this.gssDifferenceFunction().setDelItemsDiffModel(oItem, this.fragmentLoaded,this.getGlobalModel().getProperty("/viewId") + "diff");
+				var oItemList = this.gssDifferenceFunction().setDelItemsDiffModel(oItem, this.fragmentLoaded, this.getGlobalModel().getProperty(
+					"/viewId") + "diff");
 				var oModel = new JSONModel(oItemList);
+
 				this.fragmentLoaded.setModel(oModel, "handleDiff");
 				this.fragmentLoaded.open();
 			} else if (items.length === 0) {
@@ -86,11 +89,12 @@ sap.ui.define([
 			var actualVal = oEvent.getParameter("newValue");
 			var objects = utilities.getItems(this, "tableitems", "itemList");
 			this.modelObjects = objects.getProperty();
-			this.gssDifferenceFunction().diffShipCalculation(actualVal, this.modelObjects.TargQty, this.fragmentLoaded,this.getGlobalModel().getProperty("/viewId") + "diff");
+			this.gssDifferenceFunction().diffShipCalculation(actualVal, this.modelObjects.TargQty, this.fragmentLoaded, this.getGlobalModel().getProperty(
+				"/viewId") + "diff");
 		},
 		onDiffConfirm: function() {
 			var destTarget = this.fragmentLoaded.getModel("handleDiff").getData().destTarget;
-			var destActa = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "diff", "actual").getValue();
+			var destActa = sap.ui.core.Fragment.byId(this.getView().getId() + "diff", "actual").getValue();
 			var differenceVal = destTarget - destActa;
 			var destDifa = differenceVal;
 			this.destDifa = "X";
@@ -118,8 +122,8 @@ sap.ui.define([
 			this.getView().byId("tableitems").getModel("itemList").setData(aData);
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 		},
-		onScanUnpack:function(oEvent) {
-			utilities.barcodeReader(this, "itemInput","");
+		onScanUnpack: function(oEvent) {
+			utilities.barcodeReader(this, "itemInput", "");
 			this.iGetInput();
 		},
 

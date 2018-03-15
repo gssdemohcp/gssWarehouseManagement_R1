@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form" xmlns:semantic="sap.m.semantic">
+	<Table id="table" class="sapUiResponsiveMargin" mode="SingleSelect" selectionChange="onSingleSelect" growing="true" growingScrollToLoad="true" width="auto" items="{itemList>/aItems}">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Delivery"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column>
+				<Text text="Delivery No."/>
+			</Column>
+			<Column>
+				<Text text="Name"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem press="onPressTabNav" type="Navigation">
+				<cells>
+					<Text text="{itemList>Vbeln}"/>
+					<Text text="{itemList>LifnrName}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

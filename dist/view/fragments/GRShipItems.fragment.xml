@@ -1,0 +1,70 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
+	<f:SimpleForm editable="false" layout="ResponsiveGridLayout" title="" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+		adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+		singleContainerFullSize="false">
+		<f:content>
+			<HBox>
+				<VBox>
+					<Label class="sapUiTinyMarginTop" text="Vendor"/>
+					<Label class="sapUiTinyMarginTop" text="Load/Unload Status"/>
+					<Label class="sapUiTinyMarginTop" text="Ship Point"/>
+					<Label class="sapUiTinyMarginTop" text="Total weight"/>
+					<Label class="sapUiTinyMarginTop" text="No Packages"/>
+					<Label class="sapUiTinyMarginTop" text="HU Ind"/>
+					<Label class="sapUiTinyMarginTop" text="TO Ind"/>
+				</VBox>
+				<VBox>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/Lifnr}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+						text="{parts:[{path:'itemList>/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{parts:[{path:'itemList>/Vstel'}],formatter: '.formatter.grDelShip'}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/Btgew}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${itemList>/Anzpk})}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+						text="{parts:[{path:'itemList>/HuInd'}],formatter: '.formatter.huIndicator'}"/>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+						text="{parts:[{path:'itemList>/ToInd'}],formatter: '.formatter.huIndicator'}"/>
+				</VBox>
+			</HBox>
+		</f:content>
+	</f:SimpleForm>
+	<Table id="tableItem" class="sapUiResponsiveMargin" growing="true" growingScrollToLoad="true" width="auto">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Material Information"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column id="MatNumber">
+				<Text id="MatTitle" text="Material No."/>
+			</Column>
+			<Column id="MatName">
+				<Text id="MatDesc" text="Material Description"/>
+			</Column>
+			<Column id="MatQty">
+				<Text id="MatQU" text="Quantity/Unit"/>
+			</Column>
+			<Column id="MatBatch">
+				<Text id="Matbatch" text="Batch"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="MAT-1"/>
+					<Text text="TEST-PTW"/>
+					<Text text="1"/>
+				</cells>
+			</ColumnListItem>
+			<ColumnListItem>
+				<cells>
+					<Text text="MAT-2"/>
+					<Text text="TEST-SFA"/>
+					<Text text="2"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

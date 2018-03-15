@@ -1,0 +1,101 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="gss.newWarehouseManage_R1.controller.putAway"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page id="title">
+				<content>
+					<Toolbar>
+						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
+					</Toolbar>
+					<Toolbar id="toolbarheader">
+						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
+						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+					</Toolbar>
+					<Table id="toTable" items="{materialList>/aItems}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" mode="MultiSelect"
+						showSeparators="All" selectionChange="onHandleSelection" class="sapUiTinyMargin" width="auto" growing="true" growingScrollToLoad="true"
+						visible="false">
+						<items>
+							<ColumnListItem counter="0" id="item1">
+								<cells>
+									<Text maxLines="0" text="{materialList>Matnr}"/>
+									<Text maxLines="0" text="{materialList>Maktx}"/>
+									<Text maxLines="0" text="{materialList>Vltyp} {materialList>Vlber} {materialList>Vlpla}"/>
+									<ObjectNumber
+										number="{ parts: [{path: 'materialList>Nltyp'}, {path: 'materialList>Nlber'}, {path: 'materialList>Nlpla'}], type: 'sap.ui.model.type.CompositeTypeModule' }"/>
+									<Text text="{ parts: [{path: 'materialList>DestSu'}], formatter : '.formatter.removeColumn'}"/>
+									<ObjectNumber
+										number="{ parts: [ {path: 'materialList>DestQuantity'}], type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits : 3, maxFractionDigits: 3 } }"
+										unit="{materialList>AltUnit}" state="{ parts: [ {path: 'materialList>DestDifa'} ], formatter : '.formatter.changeColor' }"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+						<columns>
+							<Column id="column" hAlign="Left">
+								<header>
+									<Label design="Bold" id="label" text="{i18n>mat}"/>
+								</header>
+							</Column>
+							<Column id="column0" hAlign="Left">
+								<header>
+									<Label id="label0" design="Bold" text="{i18n>desc}"/>
+								</header>
+							</Column>
+							<Column id="column1" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+								<header>
+									<Label id="label1" text="{i18n>srcBin}" design="Bold"/>
+								</header>
+							</Column>
+							<Column id="column2" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+								<header>
+									<Label design="Bold" id="label2" text="{i18n>destBin}"/>
+								</header>
+							</Column>
+							<Column id="column3" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" visible="false" hAlign="Left">
+								<header>
+									<Label id="label3" design="Bold" text="{i18n>storUnit}"/>
+								</header>
+							</Column>
+							<Column id="column4" hAlign="Right">
+								<header>
+									<Label id="label4" text="{i18n>quant}" design="Bold"/>
+								</header>
+							</Column>
+						</columns>
+					</Table>
+				</content>
+				<footer id="footer"
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter footerheight">
+					<Bar id="footerbar">
+						<!--<contentMiddle>-->
+						<contentLeft>
+							<!--<Toolbar id="footerbar" visible="false">-->
+							<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
+						</contentLeft>
+						<contentRight>
+							<!--<Button id="LUnload" class="sapThemeHighlight-asOutlineColor" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Load/Unload"-->
+							<!--	visible="false" enabled="false"/>-->
+							<!--<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="More" visible="false" enabled="false"/>-->
+							<!--<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items" visible="false" enabled="false"/>-->
+							<!--<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>-->
+							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
+							<Button id="accept" class="accept" press="putAwayConfirm" icon="sap-icon://accept" tooltip="{i18n>accept}"/>
+							<Button id="difference" class="differenceButton" press="onHandleDifference" icon="sap-icon://sys-minus" tooltip="{i18n>diff}"/>
+							<Button id="newBin" class="newBinButton" press="onHandleNewBin" icon="sap-icon://shelf" tooltip="{i18n>newBin}"/>
+							<!--<Button id="undoDel" icon="sap-icon://undo" press="unLoad" ariaLabelledBy="actionButtonLabel" tooltip="Undo" visible="false" enabled="false"/>-->
+							<!--<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Ship" visible="false" enabled="false"/>-->
+							<!--<Button id="post" icon="sap-icon://paper-plane" press="onHandlePost" tooltip="GR Post" visible="false" enabled="false"/>-->
+							<!--<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="Save" visible="false"/>-->
+							<!--<Button id="print" icon="sap-icon://print" press="onHandlePrint" tooltip="Print" visible="false"/>-->
+							<!--<Button id="byMat" icon="sap-icon://product" press="onHandleMat" tooltip="By Material" visible="false"/>-->
+							<!--<Button id="byHU" icon="sap-icon://suitcase" press="onHandleHU" tooltip="By HU" visible="false"/>-->
+						</contentRight>
+						<!--</contentMiddle>-->
+						<!--</Toolbar>-->
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

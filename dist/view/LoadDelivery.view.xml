@@ -1,0 +1,99 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	controllerName="gss.newWarehouseManage_R1.controller.LoadDelivery" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="{i18n>loadByDel}">
+				<customHeader>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Title id="rfScreen" text="{i18n>pageTit}" level="H2" textAlign="Center"/>
+						<ToolbarSpacer/>
+						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
+					</Toolbar>
+				</customHeader>
+				<Toolbar>
+					<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
+				</Toolbar>
+				<Toolbar id="toolbarheader">
+					<Input class="sapUiTinyMarginBegin" id="inputValue" valueHelpRequest="onHandlePoHelp" submit="iGetInput" liveChange="onHandleBinding"
+						width="100%" textAlign="Begin"/>
+					<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
+				</Toolbar>
+				<content>
+					<f:SimpleForm id="delvForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>Delform1Title}" labelSpanXL="3" labelSpanL="3"
+						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+						columnsL="1" columnsM="1" singleContainerFullSize="false">
+						<f:content>
+							<HBox>
+								<VBox>
+									<Label class="sapUiTinyMarginTop" text="{i18n>stgingAreaTitle}"/>
+									<Label class="sapUiTinyMarginTop" text="{i18n>doorTitle}"/>
+								</VBox>
+								<VBox>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Lgbzo}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/Lgtor}"/>
+								</VBox>
+							</HBox>
+						</f:content>
+					</f:SimpleForm>
+					<f:SimpleForm id="delhuForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>form2Title}" labelSpanXL="3" labelSpanL="3"
+						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+						columnsL="1" columnsM="1" singleContainerFullSize="false">
+						<f:content>
+							<Toolbar>
+								<Input id="scanHUinDel" type="Text" valueHelpRequest="onHandlePoHelp" submit="iGetInput" placeholder="{i18n>placeholderTitle}"
+									width="100%" textAlign="Begin" maxLength="20"/>
+								<Button id="shu" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanHU" ariaLabelledBy="actionButtonLabel"/>
+							</Toolbar>
+							<HBox>
+								<VBox>
+									<Label id="loadedLab" class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>loadedHUTitle}"/>
+									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>totalHUTitle}"/>
+									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>loadedWTTitle}"/>
+									<Label class="sapUiTinyMarginTop sapUiTinyMarginEnd" text="{i18n>totalWTTitle}"/>
+								</VBox>
+								<VBox>
+									<Text id="loadedTxt" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/LoadedHu}"/>
+									<Text id="totalHU" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/TotalHu}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/LoadedHuWt} {itemList>/aItems/0/WtUnit}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{itemList>/aItems/0/TotHuWt} {itemList>/aItems/0/WtUnit}"/>
+								</VBox>
+							</HBox>
+						</f:content>
+					</f:SimpleForm>
+				</content>
+				<footer id="footer"
+					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
+					<Bar id="footerbar">
+						<!--<contentMiddle>-->
+						<contentLeft>
+							<!--<Toolbar id="footerbar" visible="false">-->
+								<Button id="back" icon="sap-icon://nav-back" press="onNavBack" tooltip="{i18n>back}" visible="false"/>
+							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
+						</contentLeft>
+						<contentRight>
+							<!--<Button id="LUnload" class="sapThemeHighlight-asOutlineColor" icon="sap-icon://supplier" press="onHandleUnload" tooltip="Load/Unload"-->
+							<!--	visible="false" enabled="false"/>-->
+							<!--<Button id="more" icon="sap-icon://detail-view" press="handleMore" tooltip="More" visible="false" enabled="false"/>-->
+							<!--<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items" visible="false" enabled="false"/>-->
+							<!--<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>-->
+							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
+							<Button id="accept" class="accept" press="load" icon="sap-icon://accept" tooltip="{i18n>accept}" />
+							<!--<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus"/>-->
+							<!--<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf"/>-->
+							<Button id="undoDel" class="undoDel" press="loadRevert" icon="sap-icon://undo" tooltip="{i18n>loadRev}"/>
+							<!--<Button id="ship" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="Ship" visible="false" enabled="false"/>-->
+							<!--<Button id="post" icon="sap-icon://paper-plane" press="onHandlePost" tooltip="GR Post" visible="false" enabled="false"/>-->
+							<!--<Button id="save" icon="sap-icon://save" press="onHandleSave" tooltip="Save" visible="false"/>-->
+							<!--<Button id="print" icon="sap-icon://print" press="onHandlePrint" tooltip="Print" visible="false"/>-->
+							<!--<Button id="byMat" icon="sap-icon://product" press="onHandleMat" tooltip="By Material" visible="false"/>-->
+							<!--<Button id="byHU" icon="sap-icon://suitcase" press="onHandleHU" tooltip="By HU" visible="false"/>-->
+						</contentRight>
+						<!--</contentMiddle>-->
+						<!--</Toolbar>-->
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

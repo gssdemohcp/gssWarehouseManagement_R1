@@ -38,6 +38,10 @@ sap.ui.define([
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "addMaterial");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "addMaterial", callFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
+			
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.msgFragmentLoaded);
 		},
 		packMatScan: function() {
 			utilities.barcodeReader(this, "material","addMaterial");
@@ -47,6 +51,13 @@ sap.ui.define([
 		},
 		packUnitScan: function() {
 			utilities.barcodeReader(this, "quantity","addMaterial");
+		},
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 
 		oDataCall: function() {
@@ -65,19 +76,19 @@ sap.ui.define([
 
 		},
 		onMatSave: function() {
-			var material = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "material").getValue(),
-				quantity = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "quantity").getValue(),
-				unit = sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "unit").getValue();
+			var material = sap.ui.core.Fragment.byId(this.getView().getId() + "addMaterial", "material").getValue(),
+				quantity = sap.ui.core.Fragment.byId(this.getView().getId() + "addMaterial", "quantity").getValue(),
+				unit = sap.ui.core.Fragment.byId(this.getView().getId() + "addMaterial", "unit").getValue();
 			 this.callOdataService().materialSave(this, material, quantity, unit,"unpackTable","HUMatModel");
 		
-			this.fragmentLoaded.close();
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 
 		},
 		onMatCancel: function() {
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "material").setValue("");
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "quantity").setValue("");
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "addMaterial", "unit").setValue("");
-			this.fragmentLoaded.close();
+			sap.ui.core.Fragment.byId(this.getView().getId() + "addMaterial", "material").setValue("");
+			sap.ui.core.Fragment.byId(this.getView().getId() + "addMaterial", "quantity").setValue("");
+			sap.ui.core.Fragment.byId(this.getView().getId() + "addMaterial", "unit").setValue("");
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 		}
 
 		/**

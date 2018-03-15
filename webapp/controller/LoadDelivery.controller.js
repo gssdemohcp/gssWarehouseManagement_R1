@@ -4,7 +4,7 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"sap/ui/model/resource/ResourceModel",
 	"gss/newWarehouseManage_R1/model/utilities"
-], function(Controller, BaseController, ResourceModel,utilities) {
+], function(Controller, BaseController, ResourceModel, utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.LoadDelivery", {
@@ -28,11 +28,11 @@ sap.ui.define([
 					if (this.getGlobalModel().getProperty("/parentScreen")) { // to get parent screen properties from Global model
 						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo")); // to set input value to global model property
 						this.getView().byId("inputValue").setEnabled(false);
+						this.getView().byId("scanHUinDel").setValue("");
 						this.getView().byId("back").setVisible(true);
-						this.iGetInput(); // odata function call to get backend response
-					}
-					else {
-						this.getView().byId("inputValue").setValue("");
+						this.iGetInput();
+					} else {
+						this.getView().byId("scanHUinDel").setValue("");
 						this.getView().byId("inputValue").setEnabled(true);
 						this.getView().byId("back").setVisible(false);
 					}
@@ -69,7 +69,7 @@ sap.ui.define([
 		// method to pass barocde value to input field
 		// ============================================
 		onHandleScanInput: function() {
-			utilities.barcodeReader(this, "inputValue",""); // function call to set barcode value to input field
+			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
 		},
 		
@@ -77,7 +77,7 @@ sap.ui.define([
 		// method to pass barocde value to input field
 		// ============================================
 		onHandleScanHU: function() {
-			utilities.barcodeReader(this, "scanHUinDel",""); // function call to set barcode value to input field
+			utilities.barcodeReader(this, "scanHUinDel", "");
 			this.iGetInput();
 		},
 		
@@ -85,11 +85,11 @@ sap.ui.define([
 		// method call to bind fragment to that view
 		// ==========================================
 		setFragment: function() {
-			var viewId = this.getView().getId();  // to get the id of the view
-			this.getGlobalModel().setProperty("/viewId", viewId); // to set the view id to the corresponding global model property
-			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation"); // to load fragments
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf",loadFragment, this); // to set id to the fragment
-			this.getView().addDependent(this.fragmentLoaded); // to add the loaded fragment to the view
+			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
+			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
 		},
 		
 		// =========================================================
@@ -101,7 +101,11 @@ sap.ui.define([
 			var procInd = "X"; // Indicator for Load process
 			if (shipNo && huNo) { // To check if both fields has values
 				this.getView().byId("scanHUinDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
-				this.callOdataService().LoadDetails(this, shipNo, huNo, ""); // To pass the input values to the function&nbsp;
+				var whenOdataCall = this.callOdataService().LoadDetails(this, shipNo, huNo, "");
+				whenOdataCall.done(function(oResult) {
+					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+
+				}.bind(this)); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
 				this.callOdataService().LoadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
@@ -126,7 +130,11 @@ sap.ui.define([
 			var modelData = this.getModelData("itemList"), // to get data from the model bound to the view
 				LoadInd = "",
 				HuStatus = "HU03";
-			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, ""); // to pass the retrieved data as keyfields for odata call
+			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
+			whenOdataCall.done(function(oResult) {
+				utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+
+			}.bind(this));
 		},
 		
 		
@@ -134,9 +142,9 @@ sap.ui.define([
 		// function call to revert the load process
 		// =========================================
 		loadRevert: function() {
-			this.setFragment(); // function call to set fragment to the view
-			this.fragmentLoaded.open(); // to open the loaded fragment
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("undoProc")); // to set text for the loaded fragment
+			this.setFragment();
+			this.fragmentLoaded.open();
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("undoProc"));
 		},
 		
 		// ===================================
@@ -148,7 +156,11 @@ sap.ui.define([
 			var modelData = this.getModelData("itemList"), // to get data from the model bound to the view
 				LoadInd = "",
 				HuStatus = "HU04";
-			this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, ""); // to pass the retrieved data as keyfields for odata call
+			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
+			whenOdataCall.done(function(oResult) {
+				utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+
+			}.bind(this));
 		},
 		
 		// ============================================
@@ -166,7 +178,6 @@ sap.ui.define([
 				this.fragmentLoaded.destroy(true); // to destroy the loaded fragments
 			}
 		}
-		
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

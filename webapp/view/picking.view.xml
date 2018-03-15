@@ -8,7 +8,7 @@
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
 					</Toolbar>
 					<Toolbar id="toolbarheader">
-						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+						<Input class="sapUiTinyMarginBegin formInput" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
 						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
@@ -79,7 +79,7 @@
 				</content>
 				<footer id="footer"
 					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
-					<Bar id="footerbar">
+					<Bar id="footerbar" class="page_footer">
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
@@ -93,7 +93,7 @@
 							<!--<Button id="items" icon="sap-icon://activity-items" press="onHandleItems" tooltip="Items" visible="false" enabled="false"/>-->
 							<!--<Button id="GTO" icon="sap-icon://create" press="onHandleGTO" tooltip="G.TO" visible="false" enabled="false"/>-->
 							<!--<Button id="TOEx" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" tooltip="TOEx" visible="false" enabled="false"/>-->
-							<Button id="accept" press="pickingConfirm"  tooltip="{i18n>accept}" icon="sap-icon://accept"  />
+							<Button id="accept" class="accept sapUiTinyMargin sapUiResponsiveContentPadding button_Size" press="pickingConfirm"  tooltip="{i18n>accept}" icon="sap-icon://accept"  />
 							<!--<Button id="difference" press="onHandleDifference" icon="sap-icon://sys-minus" visible="false" enabled="false"/>-->
 							<!--<Button id="newBin" press="onHandleNewBin" tooltip="New Bin" icon="sap-icon://shelf" visible="false" enabled="false"/>-->
 							<!--<Button id="undoDel" icon="sap-icon://undo" press="unLoad" ariaLabelledBy="actionButtonLabel" tooltip="Undo" visible="false" enabled="false"/>-->

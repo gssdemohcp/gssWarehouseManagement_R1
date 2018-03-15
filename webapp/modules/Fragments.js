@@ -41,7 +41,7 @@ sap.ui.define(["sap/ui/base/Object",
 			}
 			
 			utilities.checkUiIndicator(oView);
-			if(flag === true){
+			if(flag === "true"){
 				utilities.checkVisible(oView);
 				
 			}

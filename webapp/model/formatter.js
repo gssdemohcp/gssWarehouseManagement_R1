@@ -67,7 +67,16 @@ sap.ui.define([], function() {
 			if (a === "X") {
 				grDLU = "Unloaded";
 			} else if (a === "") {
-				grDLU = "To be unloaded";
+				grDLU = "To be Unloaded";
+			}
+			return grDLU;
+		},
+		giIndicator: function(a) {
+			var grDLU = "";
+			if (a === "X") {
+				grDLU = "Loaded";
+			} else if (a === "") {
+				grDLU = "To be Loaded";
 			}
 			return grDLU;
 		},

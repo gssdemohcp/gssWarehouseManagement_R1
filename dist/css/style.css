@@ -1,0 +1,246 @@
+/* Enter your custom styles here */
+
+.byMatButton {
+    background-color: #abe2ab !important;
+}
+
+.byHUButton {
+    background-color: #ff8888 !important;
+}
+
+.Text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+}
+
+.style {
+    font-size: 1.125rem;
+}
+
+#quantity {
+    color: red;
+}
+
+#List-header {
+    text-align: center !IMPORTANT;
+    font-weight: bold !IMPORTANT;
+}
+
+.sapMBarChild.sapMTitle.sapMTitleMaxWidth.sapMTitleNoWrap.sapMTitleStyleAuto.sapUiSelectable {
+    font-size: x-large !IMPORTANT;
+    font-weight: bold !IMPORTANT;
+    font-family: Arial, Helvetica, sans-serif !IMPORTANT;
+}
+
+.page_footer {
+    height:60px;
+}
+
+.button_Size .sapMBtnInner .sapMBtnIcon
+{
+	font-size: 250% !IMPORTANT;
+	width:50px;
+}
+
+.dataStyle {
+    font-weight: bold !IMPORTANT;
+}
+
+.accept {
+    background-color: #abe2ab !IMPORTANT;
+}
+
+.undoDel {
+    background-color: #ff8888 !IMPORTANT;
+}
+
+.acceptButton {
+    background-color: #abe2ab !IMPORTANT;
+}
+
+.differenceButton {
+    background-color: #ff8888 !IMPORTANT;
+}
+
+.newBinButton {
+    background-color: #e3e550 !IMPORTANT;
+}
+
+.undoDelButton {
+    background-color: #ff8888 !IMPORTANT;
+}
+
+.saveButton {
+    background-color: #abe2ab !IMPORTANT;
+}
+
+#__title5-inner {
+    font-size: 1.125rem !IMPORTANT;
+    display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title4-inner {
+    font-size: 1.125rem !IMPORTANT;
+    display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title3-inner {
+    font-size: 1.125rem !IMPORTANT;
+    display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title6-inner {
+    font-size: 1.125rem !IMPORTANT;
+    display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title7-inner {
+    font-size: 1.125rem !IMPORTANT;
+    display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title8-inner {
+    font-size: 1.125rem !IMPORTANT;
+    display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title9-inner {
+    font-size: 1.125rem !IMPORTANT;
+    display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title10-inner {
+    font-size: 1.125rem !IMPORTANT;
+    display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+#__title11-inner {
+    font-size: 1.125rem !IMPORTANT;
+    display: block !IMPORTANT;
+    width: 100% !IMPORTANT;
+    margin-top: 0px !IMPORTANT;
+    margin-right: 0px !IMPORTANT;
+    margin-bottom: 0px !IMPORTANT;
+    margin-left: 0px !IMPORTANT;
+    text-overflow: ellipsis !IMPORTANT;
+    font-weight: normal !IMPORTANT;
+    height: 3rem !IMPORTANT;
+    line-height: 3rem !IMPORTANT;
+}
+
+.sapContrast .sapContrastPlus .sapMBar .sapMBar-CTX .sapMContent-CTX .sapMFooter-CTX .sapMIBar .sapMIBar-CTX .sapMPageFooter {
+    background-color: #666666 !important;
+}
+
+.LUnloadButton {
+    background-color: coral !important;
+}
+
+.moreButton{
+    background-color: mediumorchid !important;
+}
+
+.itemsButton {
+    background-color: blue !important;
+}
+
+.shipButton {
+    background-color: #fcc677 !IMPORTANT;
+}
+
+.printButton {
+    background-color: bisque !important;
+}
+
+.GTOButton {
+    background-color: limegreen !important;
+}
+
+.TOExButton {
+    background-color: limegreen !important;
+}
+
+.postButton {
+    background-color: limegreen !important;
+}
+
+
+/*.sapMPageHeader {*/
+
+
+/*	color: #f8b742 !important;*/
+
+
+/*}*/

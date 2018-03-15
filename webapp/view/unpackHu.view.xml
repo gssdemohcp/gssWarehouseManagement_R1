@@ -37,7 +37,7 @@
 				</content>
 				<footer id="footer"
 					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
-					<Bar id="footerbar">
+					<Bar id="footerbar" class="page_footer">
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->
@@ -45,7 +45,7 @@
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
-							<Button id="accept" press="onHandleAccept" icon="sap-icon://accept"/>
+							<Button id="accept" class="accept sapUiTinyMargin sapUiResponsiveContentPadding button_Size" press="onHandleAccept" icon="sap-icon://accept"/>
 						</contentRight>
 					</Bar>
 				</footer>

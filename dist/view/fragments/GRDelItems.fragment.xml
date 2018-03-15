@@ -1,0 +1,75 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
+	<f:SimpleForm id="DelItemForm" editable="false" layout="ResponsiveGridLayout" title="Delivery Info" labelSpanXL="3" labelSpanL="3"
+		labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
+		columnsL="1" columnsM="1" singleContainerFullSize="false">
+		<f:content>
+			<HBox>
+				<VBox>
+					<Label class="sapUiTinyMarginTop" text="Items Total"/>
+					<!--<Label class="sapUiTinyMarginTop" text="Confirmed Item"/>-->
+				</VBox>
+				<VBox>
+					<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${delItemList>/delItems/0/Anzpk})}"/>
+					<!--<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delItemList>/Prtnr}"/>-->
+				</VBox>
+			</HBox>
+		</f:content>
+	</f:SimpleForm>
+	<Table id="tableitems" class="sapUiTinyMarginTop dataStyle" growing="true" growingScrollToLoad="true" width="auto"
+		items="{delItemList>/delItems}" mode="MultiSelect" selectionChange="onItemSelect">
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Material Info"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column hAlign="Left">
+				<header>
+					<Label text="Delivery Item" design="Bold"/>
+				</header>
+			</Column>
+			<Column id="stock" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+				<header>
+					<Label text="Stock No" design="Bold" />
+				</header>
+			</Column>
+			<Column hAlign="Left">
+				<header>
+					<Label text="Material" design="Bold"/>
+				</header>
+			</Column>
+			<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+				<header>
+					<Label text="Description" design="Bold" />
+				</header>
+			</Column>
+			<Column hAlign="Left">
+				<header>
+					<Label text="Quantity/Unit" design="Bold"/>
+				</header>
+			</Column>
+			<Column id="Batch" demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Right">
+				<header>
+					<Label text="Batch" design="Bold"/>
+				</header>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{= parseFloat(${delItemList>Posnr})}"/>
+					<Text text="{delItemList>Sonum}"/>
+					<Text text="{delItemList>Matnr}"/>
+					<Text text="{delItemList>Arktx}"/>
+					<!--<Text text="{delItemList>Lfimg} {delItemList>Vrkme}"/>-->
+					<ObjectNumber
+						number="{ parts: [ {path: 'delItemList>Lfimg'}], type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits : 3, maxFractionDigits: 3 } }"
+						unit="{delItemList>Vrkme}" state="{ parts: [ {path: 'delItemList>Lfimg'} ], formatter : '.formatter.changeColor' }"/>
+					<Text text="{delItemList>Charg}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

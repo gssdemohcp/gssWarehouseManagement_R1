@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="addHU" title="{i18n>addHuTit}" class="sapUiResponsiveMargin sapUiPopupWithPadding" 
+		icon="sap-icon://add" contentHeight="15%" contentWidth="15%">
+		<content>
+			<HBox>
+				<VBox>
+					<Input id="HU" class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" value="" placeholder="{i18n>EnterHU}" width="80%"/>
+					<Button id="addHuScan" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="packHuScan" ariaLabelledBy="actionButtonLabel"
+					width="5%" visible="true"/>
+				</VBox>
+			</HBox>
+		</content>
+		<beginButton>
+			<Button id="save"  text="{i18n>save}" press="huSave"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>cancel}" press="huCancel"/>
+		</endButton>		
+	</Dialog>
+</core:FragmentDefinition>

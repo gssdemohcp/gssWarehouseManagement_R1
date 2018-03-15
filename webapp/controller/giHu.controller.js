@@ -28,7 +28,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
-            this.setFragment();
+			this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -66,7 +66,7 @@ sap.ui.define([
 				this.getView().byId("GIDForm").setBusy(true);
 				whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
 				whenOdataCall.done(function(oResult) {
-						this.checkInd(oResult.getData().aItems[0], true);
+						this.checkInd(oResult.getData().aItems[0], "true");
 						var _delVal = this.byId("giDelField").getText();
 						this.getGlobalModel().setProperty("/currentDelNo", _delVal);
 						this.getGlobalModel().setProperty("/currentHuVal", _inputValue);
@@ -80,119 +80,118 @@ sap.ui.define([
 			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
 		},
+		/* =========================================================== */
+		/*Handling message popover function*/
+		/* =========================================================== */
 		handleMessagePopoverPress: function(oEvent) {
 			if (!this.msgFragmentLoaded) {
 				this.setFragment();
 			}
-			this.msgFragmentLoaded.openBy(oEvent.getSource());
+			this.msgFragmentLoaded.openBy(oEvent.getSource()); //opens fragment
 
 		},
+		/* =========================================================== */
+		/*Called when Load button pressed*/
+		/*navigates to Load page*/
+		/* =========================================================== */
 		onHandleUnload: function(oEvent) {
-			utilities.navigateChild("loadDelivery", this);
+			utilities.navigateChild("loadDelivery", this); // navigateChild: function in utilities for navigating to child views
 
 		},
+		/* =========================================================== */
+		/*Called when more button pressed*/
+		/* =========================================================== */
 		handleMore: function(oEvent) {
-			this.createElements().handleMoreButtons(oEvent, this);
+			this.createElements().handleMoreButtons(oEvent, this); //createElements: function in BaseController to access CreateElements.js 
 		},
+		/* =========================================================== */
+		/*Called when items button pressed*/
+		/*navigates to Items page*/
+		/* =========================================================== */
 		onHandleItems: function(event) {
 
-			utilities.navigateChild("grDelItems", this);
+			utilities.navigateChild("grDelItems", this); // navigateChild: function in utilities for navigating to child views
 		},
+		/* =========================================================== */
+		/*Called when items Ship pressed*/
+		/*navigates to Shipment page*/
+		/* =========================================================== */
 		onHandleShip: function(event) {
-			utilities.navigateChild("giShip", this);
+			utilities.navigateChild("giShip", this); // navigateChild: function in utilities for navigating to child views
 		},
+		/* =========================================================== */
+		/*Called when ok button pressed on the confirmation fragment*/
+		/*Generate TO and Post GI Functionality*/
+		/* =========================================================== */
 		onConfirm: function() {
 			if (this.getGlobalModel().getProperty("/indiTO") === "") {
-				this.onHandleGTO();
+				this.onHandleGTO(); //Generates TO for the Delivery
 			} else {
-				this.onHandlePost();
+				this.onHandlePost(); //Performs GI Post
 			}
 		},
-
+		/* =========================================================== */
+		/*Called when cancel button pressed on the confirmation fragment*/
+		/* =========================================================== */
 		onConfirmCancel: function() {
-			this.onCancel();
+			this.onCancel(); //closes the confirmation fragment
 		},
+		/* =========================================================== */
+		/*To close the opened fragement*/
+		/* =========================================================== */
 		onCancel: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); //gssFragmentsFunction:function in BaseController to access Fragments.js
 		},
-
+		/* =========================================================== */
+		/*To open the Confirmation fragement for Generate TO*/
+		/* =========================================================== */
 		onGenerateTO: function() {
 			if (!this.fragmentLoaded) {
-				this.setFragment();
+				this.setFragment(); //To initialize and add fragment to the view
 			}
 			this.getView().addDependent(this.fragmentLoaded);
-			this.fragmentLoaded.open();
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("genToPop"));
+			this.fragmentLoaded.open(); //opens the fragment
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop")); // To set text to confirmaton fragment
 		},
-
+		/* =========================================================== */
+		/*Function to Generate TO*/
+		/* =========================================================== */
 		onHandleGTO: function() {
-			this.fragmentLoaded.close();
-			var whenOdataCall = this.callOdataService().handleDelTO(this, "tableGIS", "delList", "T");
-			whenOdataCall.done(function() {
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); //closes the fragment
+			var whenOdataCall = this.callOdataService().handleDelTO(this, "tableGIS", "delList", "T"); //function in BaseController to access GssWarehouseManage.js
+			whenOdataCall.done(function() { //Synchronous oData Call
 				this.getView().byId("GItoInd").setText(this.geti18n("available"));
 			}.bind(this));
 
 		},
+		/* =========================================================== */
+		/*Called when TOEx button pressed */
+		/*TO Execution Functionality*/
+		/*navigates to Picking page*/
+		/* =========================================================== */
 		onHandleTOEx: function() {
-			utilities.navigateChild("picking", this);
+			utilities.navigateChild("picking", this); // navigateChild: function in utilities for navigating to child views
 		},
-
+		/* =========================================================== */
+		/*To open the Confirmation fragement for Post GI*/
+		/* =========================================================== */
 		onPostGI: function() {
 			if (!this.fragmentLoaded) {
-				this.setFragment();
+				this.setFragment();//To initialize and add fragment to the view
 			}
 			this.getView().addDependent(this.fragmentLoaded);
-			this.fragmentLoaded.open();
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("postGIPop"));
+			this.fragmentLoaded.open();//opens the fragment
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("postGIPop"));// To set text to confirmaton fragment
 
 		},
-
+        /* =========================================================== */
+		/*Function to Post GI*/
+		/* =========================================================== */
 		onHandlePost: function() {
-			this.fragmentLoaded.close();
-			this.callOdataService().handleDelTO(this, "tableGIS", "delList", "C");
-
-		},
-		onExit: function() {
-			if (this.fragmentLoaded) {
-				this.fragmentLoaded.destroy(true);
-			}
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
+			this.callOdataService().handleDelTO(this, "tableGIS", "delList", "C");//function in BaseController to access GssWarehouseManage.js
 
 		}
-
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf gss.newWarehouseManage_R1.view.giHu
-		 */
-		//	onInit: function() {
-		//
-		//	},
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf gss.newWarehouseManage_R1.view.giHu
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf gss.newWarehouseManage_R1.view.giHu
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf gss.newWarehouseManage_R1.view.giHu
-		 */
-		//	onExit: function() {
-		//
-		//	}
 
 	});
 
