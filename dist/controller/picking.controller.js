@@ -15,20 +15,24 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf gss.newWarehouseManage_R1.view.picking
 		 */
+		// ================================================================================
+		// This method is called first and is executed first in the controller's lifecycle
+		// ================================================================================
 		onInit: function() {
 			this.getView().addEventDelegate({
 				onBeforeShow: function(evt) {
-					this._router = this.getRouter();
-					this.seti18nModel(this);
-					this.inputDetails();
-					this.setPageTitle();
-					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
-					if (this.getGlobalModel().getProperty("/parentScreen")) {
-						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo"));
+					this._router = this.getRouter(); // calling the router initialization function
+					this.seti18nModel(this); // to set the resource bundle properties for the view
+					this.inputDetails(); // to get input details from the view
+					this.setPageTitle(); // to set page title for the view
+					this.gssCallBreadcrumbs().getMainBreadCrumb(this); // to call the breadcrumbs for the view
+					if (this.getGlobalModel().getProperty("/parentScreen")) { // to get parent screen properties from Global model
+						this.getView().byId("inputValue").setValue(this.getGlobalModel().getProperty("/currentDelNo")); // to set input value to global model property
 						this.getView().byId("inputValue").setEnabled(false);
 						this.getView().byId("back").setVisible(true);
-						this.iGetInput();
-					} else {
+						this.iGetInput(); // odata function call to get backend response
+					}
+					else {
 						this.getView().byId("inputValue").setValue("");
 						this.getView().byId("inputValue").setEnabled(true);
 						this.getView().byId("back").setVisible(false);
@@ -40,58 +44,90 @@ sap.ui.define([
 			this.inputDetails();
 			this.setFragment();
 		},
-
+		
+		// ================================================================
+		// method to get current screen model & resource bundle properties
+		// ================================================================
 		inputDetails: function() {
-			var Screen = this.getCurrentScrn();
-			var ScreenModel = this.getScreenModel(Screen);
-			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel);
-			this.getView().byId("inputValue").setPlaceholder(Text);
-			this.getView().byId("inputValue").setMaxLength(10);
-			// this.getView().byId("inputValue").setValueState(sap.ui.core.ValueState.Error);
+			var Screen = this.getCurrentScrn(); // function call to get current screen value
+			var ScreenModel = this.getScreenModel(Screen); // function call to get model set to current screen
+			var Text = this.getView().getModel("i18n").getResourceBundle().getText(ScreenModel.placeHolderLabel); // to set resource bundle properties
+			this.getView().byId("inputValue").setPlaceholder(Text); // to set placeholder to input field
+			this.getView().byId("inputValue").setMaxLength(10); // to set length for input field
 		},
+		
+		
 		setFragment: function() {
 			var viewId = this.getView().getId();
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
 		},
+		
+		// =================================================
+		// method to get selected row(s) details from table
+		// =================================================
 		onHandleSelection: function() {
-			this.selItems = utilities.selectedItems(this, "toTable");
+			this.selItems = utilities.selectedItems(this, "toTable"); // function call to get selected rows from table
 		},
 
+		// =======================================================
+		// method to get input field value and perform odata call
+		// =======================================================
 		iGetInput: function(oEvent) {
-			var _inputValue = this.getView().byId("inputValue").getValue();
+			var _inputValue = this.getView().byId("inputValue").getValue(); // to get input field value 
 			if (_inputValue) {
-				var whenOdataCall = this.callOdataService().getMaterial(this, _inputValue);
+				var whenOdataCall = this.callOdataService().getMaterial(this, _inputValue); // odata function call with input field to get response from backend
 				whenOdataCall.done(function() {
-						this.getView().byId("toTable").setVisible(true);
+						this.getView().byId("toTable").setVisible(true); 
 					}.bind(this)
-
 				);
 			}
 		},
+		
+		// ============================================
+		// method to pass barocde value to input field
+		// ============================================
 		onHandleScanInput: function() {
-			utilities.barcodeReader(this, "inputValue", "");
+			utilities.barcodeReader(this, "inputValue",""); // function call to set barcode value to input field
 			this.iGetInput();
 		},
+
+		// ====================================
+		// method to display response messages
+		// ====================================
 		handleMessagePopoverPress: function(oEvent) {
 			if (!this.msgFragmentLoaded) {
 				this.setFragment();
 			}
 			this.msgFragmentLoaded.openBy(oEvent.getSource());
-
 		},
+		
+		// =======================================================
+		// method to get details from odata response from backend
+		// =======================================================
+		getPickingMaterial: function(sInputValue) {
+			//Read picking material from backend
+			var oWhenCallReadIsDone = this.callOdataService().LoadMaterial(this, sInputValue);
+		},
+		
+		// =================================================================
+		// method to confirm materials from table and display response text
+		// =================================================================
 		pickingConfirm: function() {
-			var whenOdataCall = this.callOdataService().confirmItems(this, this.selItems, "toTable");
+			var whenOdataCall = this.callOdataService().confirmItems(this, this.selItems, "toTable"); // odata function call to confirm selected items from table
 			whenOdataCall.done(function() {
-
+				MessageToast.show(this.geti18n(this.getUpdateToast())); // Message toast code to display success message from odata response
 			}.bind(this));
 		},
+		
+		// ===================================================
+		// method to destroy the loaded fragment for the view 
+		// ===================================================
 		onExit: function() {
 			if (this.fragmentLoaded) {
-				this.fragmentLoaded.destroy(true);
+				this.fragmentLoaded.destroy(true); // to destroy the fragments loaded for the view
 			}
-
 		}
 
 		/**

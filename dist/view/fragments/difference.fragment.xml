@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
-	<Dialog id="difference" title="{i18n>diffQuant}" class="sapUiResponsiveMargin" icon="sap-icon://sys-minus">
+	<Dialog id="difference" title="{i18n>diffQuant}" class="sapUiResponsiveMargin"  icon="sap-icon://sys-minus" afterClose="closeFrag">
 		<content>
 			<Panel headerText="{handleDiff>/dBin}" expanded="true" class="sapUiResponsiveMargin">
 				<content>

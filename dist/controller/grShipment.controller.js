@@ -81,6 +81,7 @@ sap.ui.define([
 				whenOdataCall.done(function(oResult) {
 					    this.checkInd(oResult.getData().aItems[0],"");
 						utilities.checkVisible(this);
+						this.getGlobalModel().setProperty("/currentShip", _inputValue);
 					}.bind(this)
 
 				);
@@ -135,7 +136,7 @@ sap.ui.define([
 		},
 
 		onHandleGTO: function() {
-			this.fragmentLoaded.close();
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			this.callOdataService().handleShipTO(this, "table", "itemList", "T");
 
 		},
@@ -155,7 +156,7 @@ sap.ui.define([
 		},
 
 		onHandlePost: function() {
-			this.fragmentLoaded.close();
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			this.callOdataService().handleShipTO(this, "table", "itemList", "C");
 
 		}

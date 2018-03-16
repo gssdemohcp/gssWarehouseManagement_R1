@@ -36,10 +36,21 @@ sap.ui.define([
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "addHU");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "addHU", callFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
+			
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.msgFragmentLoaded);
 		},
 		packHuScan:function(){
 			utilities.barcodeReader(this, "HU","addHU");
 			
+		},
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 
 		oDataCall: function() {
@@ -66,14 +77,14 @@ sap.ui.define([
 		huSave: function() {
 			var hu = sap.ui.core.Fragment.byId(this.getView().getId() + "addHU", "HU").getValue();
 			this.callOdataService().huSave(this, hu,"unpackTable","HUModel");
-			this.fragmentLoaded.close();
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 
 		},
 		huCancel: function() {
 			sap.ui.core.Fragment.byId(this.getView().getId() + "addHU", "material").setValue("");
 			sap.ui.core.Fragment.byId(this.getView().getId() + "addHU", "quantity").setValue("");
 			sap.ui.core.Fragment.byId(this.getView().getId() + "addHU", "unit").setValue("");
-			this.fragmentLoaded.close();
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 		}
 
 		/**

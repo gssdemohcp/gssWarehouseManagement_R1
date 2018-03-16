@@ -145,7 +145,7 @@
 			"LoadInd": ""
 		},
 		"placeHolderLabel": "EnterShip",
-		"uiControl":"delvForm",
+		"uiControl":"difference",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},
@@ -171,7 +171,7 @@
 			"LoadInd": ""
 		},
 		"placeHolderLabel": "EnterDel",
-		"uiControl":"delvForm",
+		"uiControl":"difference",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},
@@ -197,7 +197,7 @@
 			"Lgnum": ""
 		},
 		"placeHolderLabel": "EnterShip",
-		"uiControl":"shipForm",
+		"uiControl":"difference",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},
@@ -222,7 +222,7 @@
 			"Lgnum": ""
 		},
 		"placeHolderLabel": "EnterDel",
-		"uiControl":"delvForm",
+		"uiControl":"difference",
 		"entitySet": "/LoadProcessSet",
 		"modelName": "itemList"
 	},

@@ -182,14 +182,15 @@ sap.ui.define([
 			//*******************************************************************************************
 			// Warehouse configuration model
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			this._oMenuTransactionModelNew = new JSONModel("./lib/WMConfiguration.json");
+			this._oMenuTransactionModelNew = new JSONModel(jQuery.sap.getModulePath("gss.newWarehouseManage_R1","/lib/WMConfiguration.json"));
+			
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
 			
 			//*******************************************************************************************
 			// Process configuration model
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-			this._oProcessControlModel = new JSONModel("./lib/ProcessConfiguration.json");
+            
+			this._oProcessControlModel = new JSONModel(jQuery.sap.getModulePath("gss.newWarehouseManage_R1","/lib/ProcessConfiguration.json"));
 			this._oComponent.setModel(this._oProcessControlModel, "ProcessControlProperties");
 
 			// delegate error handling

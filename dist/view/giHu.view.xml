@@ -31,7 +31,7 @@
 								</VBox>
 								<VBox>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="GIloadIndicator"
-										text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
+										text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.giIndicator'}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="giDelField" text="{delList>/aItems/0/Vbeln}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Lifnr}"/>
 									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/LifnrName}"/>
@@ -50,7 +50,7 @@
 				</content>
 					<footer id="footer"
 					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
-					<Bar id="footerbar" >
+					<Bar id="footerbar" class="page_footer" >
 						<!--<contentMiddle>-->
 						<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->

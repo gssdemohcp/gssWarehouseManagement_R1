@@ -21,6 +21,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.loadCheck();
 					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
@@ -148,13 +149,13 @@ sap.ui.define([
 				this.setFragment(); //To initialize and add fragment to the view
 			}
 			this.fragmentLoaded.open(); //opens the fragment
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("genToPop")); // To set text to confirmaton fragment
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop")); // To set text to confirmaton fragment
 		},
 		/* =========================================================== */
 		/*Function to Generate TO*/
 		/* =========================================================== */
 		onHandleGTO: function() {
-			this.fragmentLoaded.close(); //closes the fragment
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); //closes the fragment
 			var whenOdataCall = this.callOdataService().handleDelTO(this, "GIDForm", "delList", "T"); //function in BaseController to access GssWarehouseManage.js
 			whenOdataCall.done(function() { //Synchronous oData Call
 				this.getView().byId("GItoInd").setText(this.geti18n("available"));
@@ -178,14 +179,14 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();//opens the fragment
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("postGIPop")); // To set text to confirmaton fragment
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("postGIPop")); // To set text to confirmaton fragment
 
 		},
         /* =========================================================== */
 		/*Function to Post GI*/
 		/* =========================================================== */
 		onHandlePost: function() {
-			this.fragmentLoaded.close();//closes the fragment
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
 			this.callOdataService().handleDelTO(this, "tableGIS", "delList", "C");//function in BaseController to access GssWarehouseManage.js
 
 		}

@@ -81,7 +81,7 @@
 				</content>
 					<footer id="footer"
 					class="sapContrast sapContrastPlus sapMBar sapMBar-CTX sapMContent-CTX sapMFooter-CTX sapMIBar sapMIBar-CTX sapMPageFooter">
-					<Bar id="footerbar">
+					<Bar id="footerbar" class="page_footer">
 						<!--<contentMiddle>-->
 							<contentLeft>
 							<!--<Toolbar id="footerbar" visible="false">-->

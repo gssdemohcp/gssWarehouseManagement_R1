@@ -146,13 +146,13 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();//opens the fragment
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("genToPop"));// To set text to confirmaton fragment
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop"));// To set text to confirmaton fragment
 		},
         /* =========================================================== */
 		/*Function to Generate TO*/
 		/* =========================================================== */
 		onHandleGTO: function() {
-			this.fragmentLoaded.close();//closes the fragment
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
 			var whenOdataCall = this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "T");//function in BaseController to access GssWarehouseManage.js
 			whenOdataCall.done(function() {//Synchronous oData Call
 				this.getView().byId("toInd").setText(this.geti18n("available"));
@@ -176,14 +176,14 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();//opens the fragment
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("postGrPop"));// To set text to confirmaton fragment
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("postGrPop"));// To set text to confirmaton fragment
 
 		},
         /* =========================================================== */
 		/*Function to Post GR*/
 		/* =========================================================== */
 		onHandlePost: function() {
-			this.fragmentLoaded.close();//closes the fragment
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
 			this.callOdataService().handleDelTO(this, "GRDForm", "itemList", "C");//function in BaseController to access GssWarehouseManage.js
 
 		}

@@ -140,6 +140,7 @@ sap.ui.define([
 				currentNltyp: "",
 				currentDelNo: "",
 				currentHuVal: "",
+				currentShip:"",
 				lastModelSetName: "",
 				MenuData: "",
 				MainView: "",
@@ -148,15 +149,16 @@ sap.ui.define([
 				pack: "",
 				shipInd: "",
 				indiTO: "",
-				viewId:"",
-				uiInd:"",
-				viewCid:""
+				viewId: "",
+				uiInd: "",
+				viewCid: "",
+				load:""
 			});
 			this._oGlobalModel.setDefaultBindingMode(BindingMode.TwoWay);
 			this._oComponent.setModel(this._oGlobalModel, "globalProperties");
 
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			// By Sabari to Add the Fragment Controller Model 
+			//  to Add the Fragment Controller Model 
 			//*******************************************************************************************
 			// set the Fragment Properties Model
 			this._oFragmentControllerModel = new JSONModel({
@@ -167,7 +169,7 @@ sap.ui.define([
 				confirmation: "gss.newWarehouseManage_R1.view.fragments.confirmation",
 				addHu: "gss.newWarehouseManage_R1.view.fragments.addHU",
 				addMaterial: "gss.newWarehouseManage_R1.view.fragments.addMaterial",
-				msgPopOver:"gss.newWarehouseManage_R1.view.fragments.MessagePopover"
+				msgPopOver: "gss.newWarehouseManage_R1.view.fragments.MessagePopover"
 
 			});
 
@@ -178,13 +180,17 @@ sap.ui.define([
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 			//*******************************************************************************************
-			// Start Menu item and view navvigation properties 
+			// Warehouse configuration model
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-			this._oMenuTransactionModelNew =  new JSONModel("./lib/WMConfiguration.json");
+			this._oMenuTransactionModelNew = new JSONModel(jQuery.sap.getModulePath("gss.newWarehouseManage_R1","/lib/WMConfiguration.json"));
+			
 			this._oComponent.setModel(this._oMenuTransactionModelNew, "MenuTransactionProperties");
 			
-			this._oProcessControlModel =  new JSONModel("./lib/ProcessConfiguration.json");
+			//*******************************************************************************************
+			// Process configuration model
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            
+			this._oProcessControlModel = new JSONModel(jQuery.sap.getModulePath("gss.newWarehouseManage_R1","/lib/ProcessConfiguration.json"));
 			this._oComponent.setModel(this._oProcessControlModel, "ProcessControlProperties");
 
 			// delegate error handling

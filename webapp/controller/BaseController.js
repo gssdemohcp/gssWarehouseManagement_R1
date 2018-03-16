@@ -267,6 +267,21 @@ sap.ui.define([
 			this.byId("title").setTitle(title);
 
 		},
+		handleUserNamePress: function(event) {
+			var popover = new sap.m.Popover({ // To build popup&nbsp;
+				showHeader: false,
+				placement: sap.m.PlacementType.Bottom,
+				content: [
+					new sap.m.Text({ // To display text field in the popover
+						text: this.geti18n("queue")  + "- " + this.getGlobalModel().getProperty("/currentQueue"), // To display assigned queue to that user
+						type: sap.m.ButtonType.Transparent // Text type
+					})
+					
+				]
+			}).addStyleClass('sapMOTAPopover sapTntToolHeaderPopover'); // CSS style for the popup
+
+			popover.openBy(event.getSource()); // To open popup event
+		},
 		setUpdateToast: function(toast) {
 			var properties = this.getViewProperties();
 			properties.toastMsg = toast;

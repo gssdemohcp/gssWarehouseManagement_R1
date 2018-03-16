@@ -90,6 +90,7 @@ sap.ui.define([
 				whenOdataCall.done(function(oResult) {
 						utilities.checkVisible(this);
 						this.checkInd(oResult.getData().aItems[0], "");
+						this.getGlobalModel().setProperty("/currentShip", _inputValue);
 					}.bind(this)
 
 				);
@@ -175,7 +176,7 @@ sap.ui.define([
 		/*Function to Generate TO*/
 		/* =========================================================== */
 		onHandleGTO: function() {
-			this.fragmentLoaded.close();//closes the fragment
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
 			var whenOdataCall = this.callOdataService().handleShipTO(this, "tableGIS", "delList", "T"); //function in BaseController to access GssWarehouseManage.js
 			whenOdataCall.done(function() {//Synchronous oData Call
 				this.getView().byId("GItoInd").setText(this.geti18n("available"));
@@ -206,7 +207,7 @@ sap.ui.define([
 		/*Function to Post GI*/
 		/* =========================================================== */
 		onHandlePost: function() {
-			this.fragmentLoaded.close();//closes the fragment
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
 			this.callOdataService().handleShipTO(this, "tableGIS", "delList", "C");//function in BaseController to access GssWarehouseManage.js
 
 		},

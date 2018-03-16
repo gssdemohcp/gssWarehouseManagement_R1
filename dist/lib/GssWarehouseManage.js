@@ -522,9 +522,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					shipTabModel.forEach(function(shItems) {
 						if (vbeln === shItems.Vbeln) {
 							shItems.ToInd = "X";
+							var data = oView.getModelData(oView.getModelName());
+							data.aItems[0].ToInd = "X";
+							oView.getModel(oView.getModelName()).setData(data);
 						}
 					}.bind(this));
 					oView.checkInd(shipTabModel, "false");
+					
 				} else {
 					oView.gssFragmentsFunction().fragmentFalse(oView, "S");
 
@@ -548,7 +552,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				if (shipInd === "T") {
 					var GIDelData = oView.byId(controlId).getModel(model).getData().aItems;
 					GIDelData.ToInd = "X";
+					var data = oView.getModelData(oView.getModelName());
+					data.aItems[0].ToInd = "X";
 					oView.checkInd(GIDelData, "false");
+					oView.getModel(oView.getModelName()).setData(data);
 				} else {
 					oView.gssFragmentsFunction().fragmentFalse(oView, "S");
 

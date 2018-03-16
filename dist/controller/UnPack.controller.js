@@ -56,6 +56,10 @@ sap.ui.define([
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "hu");
 			this.fragmentHuLoaded = sap.ui.xmlfragment(viewId + "unpackHu",callFragment, this);
 			// this.getView().addDependent(this.fragmentHuLoaded);
+			
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.msgFragmentLoaded);
 		},
 
 		getHUInput: function(oEvent) {
@@ -83,6 +87,13 @@ sap.ui.define([
 		onHandleScanInput: function() {
 			utilities.barcodeReader(this, "huInput","");
 			this.getHUInput();
+		},
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
 		},
 		onHandleMat: function(oEvent) {
 

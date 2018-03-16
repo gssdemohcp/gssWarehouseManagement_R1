@@ -132,11 +132,11 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("genToPop"));
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop"));
 		},
 
 		onHandleGTO: function() {
-			this.fragmentLoaded.close();
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			this.callOdataService().handleShipTO(this, "tableSA", "itemList", "T");
 
 		},
@@ -150,12 +150,12 @@ sap.ui.define([
 			}
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();
-			sap.ui.core.Fragment.byId(this.getGlobalModel().getProperty("/viewId") + "conf", "popup").setText(this.geti18n("postGIPop"));
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("postGIPop"));
 
 		},
 
 		onHandlePost: function() {
-			this.fragmentLoaded.close();
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			this.callOdataService().handleShipTO(this, "tableSA", "itemList", "C");
 
 		}

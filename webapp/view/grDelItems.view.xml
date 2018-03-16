@@ -2,7 +2,15 @@
 	controllerName="gss.newWarehouseManage_R1.controller.grDelItems" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page id="title">
+			<Page >
+				<customHeader>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Title id="title" text="{i18n>items}" level="H2" textAlign="Center"/>
+						<ToolbarSpacer/>
+						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
+					</Toolbar>
+				</customHeader>
 				<content>
 					<f:SimpleForm id="DelItemForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>Delform1Title}" labelSpanXL="3" labelSpanL="3"
 						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"

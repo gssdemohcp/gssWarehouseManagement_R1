@@ -114,6 +114,16 @@ sap.ui.define([
 
 
 			
+		},
+		loadIndUpdate:function(data,oView){
+			if(oView.getGlobalModel().getProperty("/parentScreen")){
+				if (data.LoadedHu === data.TotalHu){
+					 oView.getGlobalModel().setProperty("/load", "X");	
+					} else{
+						oView.getGlobalModel().setProperty("/load", "Y");
+					}        
+			}
+			
 		}
 	
 

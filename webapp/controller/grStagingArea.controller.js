@@ -63,7 +63,7 @@ sap.ui.define([
 		},
 
 		iGetInput: function(oEvent) {
-			var _inputValue = this.getView().byId("inputValue").getValue();
+			var _inputValue = this.getView().byId("inputValue").getValue().toUpperCase();
 			if (_inputValue) {
 				this.getView().byId("tableSA").setBusy(true);
 				var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");

@@ -17,6 +17,30 @@
     font-size: 1.125rem;
 }
 
+.formFont {
+    font-size: 1rem !important;
+}
+
+.breadCrumb .sapMFlexItem {
+    font-size: 1rem !important;
+}
+
+.formInput .sapMInputBaseInner {
+    font-size: 1rem !important;
+    font-weight: normal !important;
+}
+
+.sapUiFormTitleH4 {
+    font-size: 1.1rem !important;
+    font-weight: bold !IMPORTANT;
+}
+.sapMListTbl .sapMText, .sapMListTbl .sapMLabel{
+	font-size: 1rem !important;
+}
+.sapMObjectNumberEmph>.sapMObjectNumberText{
+     font-size: 1rem !important;	
+}
+
 #quantity {
     color: red;
 }
@@ -33,13 +57,12 @@
 }
 
 .page_footer {
-    height:60px;
+    height: 60px;
 }
 
-.button_Size .sapMBtnInner .sapMBtnIcon
-{
-	font-size: 250% !IMPORTANT;
-	width:50px;
+.button_Size .sapMBtnInner .sapMBtnIcon {
+    font-size: 250% !IMPORTANT;
+    width: 50px;
 }
 
 .dataStyle {
@@ -208,7 +231,7 @@
     background-color: coral !important;
 }
 
-.moreButton{
+.moreButton {
     background-color: mediumorchid !important;
 }
 

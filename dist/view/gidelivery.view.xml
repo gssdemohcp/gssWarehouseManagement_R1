@@ -5,45 +5,45 @@
 			<Page title="{i18n>giDel}">
 				<content>
 					<Toolbar>
-						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
+						<Breadcrumbs class="sapUiTinyMarginBegin breadCrumb" id="breadCrumbs"/>
 					</Toolbar>
 					<Toolbar id="toolbarheader">
-						<Input class="sapUiTinyMarginBegin" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
+						<Input class="sapUiTinyMarginBegin formInput" id="inputValue" value="{matList>/TO}" valueHelpRequest="onHandlePoHelp" submit="iGetInput"
 							liveChange="onHandleBinding" width="100%" textAlign="Begin"/>
 						<Button id="scanButton" tooltip="{i18n>barCode}" icon="sap-icon://bar-code" press="onHandleScanInput" ariaLabelledBy="actionButtonLabel"/>
 					</Toolbar>
-					<f:SimpleForm id="GIDForm" editable="false" layout="ResponsiveGridLayout" title="{i18n>delHeadInfo}" labelSpanXL="3" labelSpanL="3"
+					<f:SimpleForm id="GIDForm" class="sapUiFormTitleH4" editable="false" layout="ResponsiveGridLayout" title="{i18n>delHeadInfo}" labelSpanXL="3" labelSpanL="3"
 						labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1"
 						columnsL="1" columnsM="1" singleContainerFullSize="false" visible="false">
 						<f:content>
 							<HBox>
 								<VBox>
-									<Label class="sapUiTinyMarginTop" text="{i18n>loadStatus}"/>
-									<Label class="sapUiTinyMarginTop" id="GIdelFieldLabel" text="{i18n>delNo}" visible="false"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>vendor}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>name}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>shipPoint}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>shipDate}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>totWeigh}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>noOfPackage}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>huInd}"/>
-									<Label class="sapUiTinyMarginTop" text="{i18n>toInd}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>loadStatus}"/>
+									<Label class="sapUiTinyMarginTop formFont" id="GIdelFieldLabel" text="{i18n>delNo}" visible="false"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>vendor}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>name}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>shipPoint}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>shipDate}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>totWeigh}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>noOfPackage}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>huInd}"/>
+									<Label class="sapUiTinyMarginTop formFont" text="{i18n>toInd}"/>
 								</VBox>
 								<VBox>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="GIloadIndicator"
-										text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.grIndicator'}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="giDelField" text="{delList>/aItems/0/Vbeln}" visible="false"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Lifnr}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/LifnrName}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" id="GIloadIndicator"
+										text="{parts:[{path:'delList>/aItems/0/LoadStat'}],formatter: '.formatter.giIndicator'}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" id="giDelField" text="{delList>/aItems/0/Vbeln}" visible="false"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" text="{delList>/aItems/0/Lifnr}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" text="{delList>/aItems/0/LifnrName}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont"
 										text="{parts:[{path:'delList>/aItems/0/Vstel'}],formatter: '.formatter.shipPoint'}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont"
 										text="{path: 'delList>/aItems/0/Lfdat',type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'}}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{delList>/aItems/0/Btgew} {delList>/Gewei}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" text="{= parseFloat(${delList>/aItems/0/Anzpk}) }"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle"
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" text="{delList>/aItems/0/Btgew} {delList>/Gewei}"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" text="{= parseFloat(${delList>/aItems/0/Anzpk}) }"/>
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont"
 										text="{parts:[{path:'delList>/aItems/0/HuInd'}],formatter: '.formatter.huIndicator'}"/>
-									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle" id="GItoInd"
+									<Text class="sapUiTinyMarginTop sapUiTinyMarginBegin dataStyle formFont" id="GItoInd"
 										text="{parts:[{path:'delList>/aItems/0/ToInd'}],formatter: '.formatter.huIndicator'}"/>
 								</VBox>
 							</HBox>
