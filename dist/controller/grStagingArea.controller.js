@@ -30,7 +30,7 @@ sap.ui.define([
 			this.seti18nModel();
 			this.inputDetails();
 
-				this.setFragment();
+			this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -48,13 +48,17 @@ sap.ui.define([
 			this.getView().byId("inputValue").setPlaceholder(_text);
 			this.getView().byId("inputValue").setMaxLength(10);
 		},
+		/* =========================================================== */
+		/*Called when an Item is selected in a table*/
+		/*Checks the Indicators for the selected item */
+		/* =========================================================== */
 		onSingleSelectSA: function(oEvent) {
 			var len = this.getView().byId("tableSA").getSelectedItems().length;
 			if (len === 1) {
 				var vbeln = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject().Vbeln;
 				this.getGlobalModel().setProperty("/currentDelNo", vbeln);
 				var obj = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject();
-				this.checkInd(obj,"false");
+				this.checkInd(obj, "false");
 			} else if (len > 1) {
 				MessageToast.show(this.geti18n("toastOneDel"));
 			} else if (len === 0) {
@@ -63,13 +67,13 @@ sap.ui.define([
 		},
 
 		iGetInput: function(oEvent) {
-			var _inputValue = this.getView().byId("inputValue").getValue();
+			var _inputValue = this.getView().byId("inputValue").getValue().toUpperCase();
 			if (_inputValue) {
 				this.getView().byId("tableSA").setBusy(true);
 				var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
 				whenOdataCall.done(function() {
 						utilities.checkVisible(this);
-						this.checkInd(oResult.getData().aItems[0],"");
+						this.checkInd(oResult.getData().aItems[0], "");
 					}.bind(this)
 
 				);
@@ -79,14 +83,19 @@ sap.ui.define([
 			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
 		},
+		/* =========================================================== */
+		/*Handling message popover function*/
+		/* =========================================================== */
 		handleMessagePopoverPress: function(oEvent) {
-				if (!this.msgFragmentLoaded) {
+			if (!this.msgFragmentLoaded) {
 				this.setFragment();
 			}
 			this.msgFragmentLoaded.openBy(oEvent.getSource());
 
 		},
-
+		/* =========================================================== */
+		/*Called when more button pressed*/
+		/* =========================================================== */
 		handleMore: function(oEvent) {
 			this.createElements().handleMoreButtons(oEvent, this);
 		},
@@ -97,20 +106,28 @@ sap.ui.define([
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
-			
+
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
-			this.getView().addDependent(this.fragmentLoaded);
+			this.getView().addDependent(this.msgFragmentLoaded);
 		},
+		/* =========================================================== */
+		/*Called when Items button pressed*/
+		/* =========================================================== */
 		onHandleItems: function(event) {
-
 			utilities.navigateChild("grShipItems", this);
 		},
+		/* =========================================================== */
+		/*Called when UnLoad button pressed*/
+		/*navigates to UnLoad page*/
+		/* =========================================================== */
 		onHandleUnload: function(oEvent) {
-
 			utilities.navigateChild("unloadDelivery", this);
-
 		},
+		/* =========================================================== */
+		/*Called when ok button pressed on the confirmation fragment*/
+		/*Generate TO and Post GI Functionality*/
+		/* =========================================================== */
 		onConfirm: function() {
 			if (this.getGlobalModel().getProperty("/indiTO") === "") {
 				this.onHandleGTO();
@@ -118,14 +135,21 @@ sap.ui.define([
 				this.onHandlePost();
 			}
 		},
-
+		/* =========================================================== */
+		/*Called when cancel button pressed on the confirmation fragment*/
+		/* =========================================================== */
 		onConfirmCancel: function() {
 			this.onCancel();
 		},
+		/* =========================================================== */
+		/*To close the opened fragement*/
+		/* =========================================================== */
 		onCancel: function() {
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 		},
-
+		/* =========================================================== */
+		/*To open the Confirmation fragement for Generate TO*/
+		/* =========================================================== */
 		onGenerateTO: function() {
 			if (!this.fragmentLoaded) {
 				this.setFragment();
@@ -134,16 +158,24 @@ sap.ui.define([
 			this.fragmentLoaded.open();
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop"));
 		},
-
+		/* =========================================================== */
+		/*Function to Generate TO*/
+		/* =========================================================== */
 		onHandleGTO: function() {
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			this.callOdataService().handleShipTO(this, "tableSA", "itemList", "T");
-
 		},
+		/* =========================================================== */
+		/*Called when TOEx button pressed */
+		/*TO Execution Functionality*/
+		/*navigates to Putaway page*/
+		/* =========================================================== */
 		onHandleTOEx: function() {
 			utilities.navigateChild("putaway", this);
 		},
-
+		/* =========================================================== */
+		/*To open the Confirmation fragement for Post GR*/
+		/* =========================================================== */
 		onPostGR: function() {
 			if (!this.fragmentLoaded) {
 				this.setFragment();
@@ -153,7 +185,9 @@ sap.ui.define([
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("postGIPop"));
 
 		},
-
+		/* =========================================================== */
+		/*Function to Post GR*/
+		/* =========================================================== */
 		onHandlePost: function() {
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 			this.callOdataService().handleShipTO(this, "tableSA", "itemList", "C");

@@ -3,6 +3,14 @@
 	<App>
 		<pages>
 			<Page id="title">
+				<customHeader>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Title id="rfScreen" level="H2" textAlign="Center"/>
+						<ToolbarSpacer/>
+						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
+					</Toolbar>
+				</customHeader>
 				<content>
 					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>

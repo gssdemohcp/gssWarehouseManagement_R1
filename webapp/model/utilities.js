@@ -1,7 +1,7 @@
 sap.ui.define([
 	"sap/ui/Device",
 	"sap/ui/model/json/JSONModel"
-], function(Device,JSONModel) {
+], function(Device, JSONModel) {
 	"use strict";
 
 	// class providing static utility methods.
@@ -92,40 +92,35 @@ sap.ui.define([
 			}
 
 		},
-		checkVisible:function(oView){
-			var controlId = oView.getControlId();            
-				if(oView.getGlobalModel().getProperty("/messageType") === "S"){
-					oView.byId(controlId).setVisible(true);
-					oView.byId(controlId).setBusy(false);
-					}else {
-						oView.byId(controlId).setVisible(false);
-						oView.byId(controlId).setBusy(false);
-					}
+		checkVisible: function(oView) {
+			var controlId = oView.getControlId();
+			if (oView.getGlobalModel().getProperty("/messageType") === "S") {
+				oView.byId(controlId).setVisible(true);
+				oView.byId(controlId).setBusy(false);
+			} else {
+				oView.byId(controlId).setVisible(false);
+				oView.byId(controlId).setBusy(false);
+			}
 		},
-		bindMessagePop:function(oView,data){
-	         var messageModel = new JSONModel();
-	         var oData = {
+		bindMessagePop: function(oView, data) {
+			var messageModel = new JSONModel();
+			var oData = {
 				aItems: []
 			};
-	         oData.aItems.push(data);
-	         messageModel.setData(oData);
-	          oView.msgFragmentLoaded.setModel(messageModel, "errorList");
-			
-
-
-			
+			oData.aItems.push(data);
+			messageModel.setData(oData);
+			oView.msgFragmentLoaded.setModel(messageModel, "errorList");
 		},
-		loadIndUpdate:function(data,oView){
-			if(oView.getGlobalModel().getProperty("/parentScreen")){
-				if (data.LoadedHu === data.TotalHu){
-					 oView.getGlobalModel().setProperty("/load", "X");	
-					} else{
-						oView.getGlobalModel().setProperty("/load", "Y");
-					}        
+		loadIndUpdate: function(data, oView) {
+			if (oView.getGlobalModel().getProperty("/parentScreen")) {
+				if (data.LoadedHu === data.TotalHu) {
+					oView.getGlobalModel().setProperty("/load", "X");
+				} else {
+					oView.getGlobalModel().setProperty("/load", "Y");
+				}
 			}
-			
+
 		}
-	
 
 	};
 });

@@ -49,14 +49,13 @@ sap.ui.define([
 			//Fragement Code for New Bin
 			var viewId = this.getView().getId();
 			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "unpackMaterial");
-			this.fragmentMaterialLoaded = sap.ui.xmlfragment(viewId + "unpackMat",loadFragment, this);
+			this.fragmentMaterialLoaded = sap.ui.xmlfragment(viewId + "unpackMat", loadFragment, this);
 			this.getView().addDependent(this.fragmentMaterialLoaded);
-			/*	this.fragmentMaterialLoaded.open();*/
 
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "hu");
-			this.fragmentHuLoaded = sap.ui.xmlfragment(viewId + "unpackHu",callFragment, this);
-			// this.getView().addDependent(this.fragmentHuLoaded);
-			
+			this.fragmentHuLoaded = sap.ui.xmlfragment(viewId + "unpackHu", callFragment, this);
+			this.getView().addDependent(this.fragmentHuLoaded);
+
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.msgFragmentLoaded);
@@ -84,67 +83,36 @@ sap.ui.define([
 			}.bind(this));
 
 		},
+		// ============================================
+		// method to pass barocde value to input field
+		// ============================================
 		onHandleScanInput: function() {
-			utilities.barcodeReader(this, "huInput","");
+			utilities.barcodeReader(this, "huInput", "");
 			this.getHUInput();
 		},
+		/* =========================================================== */
+		/*Handling message popover function*/
+		/* =========================================================== */
 		handleMessagePopoverPress: function(oEvent) {
 			if (!this.msgFragmentLoaded) {
 				this.setFragment();
 			}
 			this.msgFragmentLoaded.openBy(oEvent.getSource());
-
 		},
+		// ============================================
+		// method called when byMat button is pressed
+		//navigates to unpackmaterial page
+		// ============================================
 		onHandleMat: function(oEvent) {
-
 			utilities.navigateChild("unpackMaterial", this);
-
 		},
+		// ============================================
+		// method called when byHu button is pressed
+		//navigates to unpackhu page
+		// ============================================
 		onHandleHU: function(oEvent) {
-				utilities.navigateChild("unpackHu", this);
-			}
-			/*	callPack: function() {
-					var _delVal = this.getGlobalModel().getProperty("/currentDelNo");
-					var _huVal = this.getGlobalModel().getProperty("/currentHuVal");
-					this.callOdataService().grPackKeyFields(this, _delVal, _huVal);
-
-				}*/
-
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf gss.newWarehouseManage_R1.view.UnPack
-		 */
-		//	onInit: function() {
-		//
-		//	},
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf gss.newWarehouseManage_R1.view.UnPack
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf gss.newWarehouseManage_R1.view.UnPack
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf gss.newWarehouseManage_R1.view.UnPack
-		 */
-		//	onExit: function() {
-		//
-		//	}
-
+			utilities.navigateChild("unpackHu", this);
+		}
 	});
 
 });

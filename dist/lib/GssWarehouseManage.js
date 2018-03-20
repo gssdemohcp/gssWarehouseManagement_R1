@@ -378,7 +378,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 								};
 								oStatMessage.Msgtext = "Material" + " " + oStat.text;
 								oStatMessage.Msgtyp = "Error";
-								utilities.bindMessagePop(oView, oStatMessage);
+							//	utilities.bindMessagePop(oView, oStatMessage);
 
 							}
 						} else if (oStat.stat === "S") {
@@ -389,7 +389,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							oStatMessage.Msgtext = "Material" + " " + oStat.mItems.Matnr + " " + oStat.text;
 							oStatMessage.Msgtyp = "Success";
 							if (this.finalPos === this.currentPos) {
-								utilities.bindMessagePop(oView, oStatMessage);
+							//	utilities.bindMessagePop(oView, oStatMessage);
 							}
 
 						}
@@ -440,7 +440,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						Msgtext: oView.getGlobalModel().getProperty("/message"),
 						Msgtyp: oView.getGlobalModel().getProperty("/messageType")
 					};
-					utilities.bindMessagePop(oView, oStatMessage);
+					//utilities.bindMessagePop(oView, oStatMessage);
 					var oNewModel = oView.byId(controlId).getModel(activeModel).getData().aItems;
 					var index;
 					for (var i = 0; i < oNewModel.length; i++) {

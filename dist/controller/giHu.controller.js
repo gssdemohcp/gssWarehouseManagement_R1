@@ -56,7 +56,7 @@ sap.ui.define([
 
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
-			this.getView().addDependent(this.fragmentLoaded);
+			this.getView().addDependent(this.msgFragmentLoaded);
 		},
 
 		iGetInput: function(oEvent) {

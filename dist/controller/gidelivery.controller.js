@@ -3,8 +3,11 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter",
 	"sap/ui/model/resource/ResourceModel",
-	"gss/newWarehouseManage_R1/model/utilities"
-], function(Controller, BaseController, formatter, ResourceModel, utilities) {
+	"gss/newWarehouseManage_R1/model/utilities",
+		'sap/m/MessagePopover',
+	'sap/m/MessageItem',
+	'sap/ui/model/json/JSONModel'
+], function(Controller, BaseController, formatter, ResourceModel, utilities,MessagePopover,MessageItem,JSONModel) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.gidelivery", {
@@ -59,7 +62,8 @@ sap.ui.define([
 
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
-			this.getView().addDependent(this.fragmentLoaded);
+			this.getView().addDependent(this.msgFragmentLoaded);
+
 		},
 
 		iGetInput: function() {
@@ -67,9 +71,10 @@ sap.ui.define([
 			if (_inputValue) {
 				this.getView().byId("GIDForm").setBusy(true);
 				var whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
+				this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
 				whenOdataCall.done(function(oResult) {
 					this.checkInd(oResult.getData().aItems[0], "true");
-					this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
+
 				}.bind(this));
 			}
 		},
@@ -82,10 +87,24 @@ sap.ui.define([
 		/*Handling message popover function*/
 		/* =========================================================== */
 		handleMessagePopoverPress: function(oEvent) {
-			if (!this.msgFragmentLoaded) {
-				this.setFragment();
-			}
-			this.msgFragmentLoaded.openBy(oEvent.getSource());//opens fragment
+				if (!this.msgFragmentLoaded) {
+					this.setFragment();
+				}
+				this.msgFragmentLoaded.openBy(oEvent.getSource()); //opens fragment
+			/*var oMessageTemplate = new MessageItem({
+				type: '{MsgTyp}',
+				title: '{Msgtext}'
+			});
+			var oMessagePopover = new MessagePopover({
+				items: {
+					path: '/aItems',
+					template: oMessageTemplate
+				}
+			});
+			var oModel = new JSONModel();
+			oModel.setData(this.getModelData(this.getModelName()));
+			oMessagePopover.setModel(oModel);
+			oMessagePopover.toggle(oEvent.getSource());*/
 
 		},
 
@@ -168,29 +187,28 @@ sap.ui.define([
 		/*navigates to Picking page*/
 		/* =========================================================== */
 		onHandleTOEx: function() {
-			utilities.navigateChild("picking", this);// navigateChild: function in utilities for navigating to child views
+			utilities.navigateChild("picking", this); // navigateChild: function in utilities for navigating to child views
 		},
-        /* =========================================================== */
+		/* =========================================================== */
 		/*To open the Confirmation fragement for Post GI*/
 		/* =========================================================== */
 		onPostGI: function() {
 			if (!this.fragmentLoaded) {
-				this.setFragment();//To initialize and add fragment to the view
+				this.setFragment(); //To initialize and add fragment to the view
 			}
 			this.getView().addDependent(this.fragmentLoaded);
-			this.fragmentLoaded.open();//opens the fragment
+			this.fragmentLoaded.open(); //opens the fragment
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("postGIPop")); // To set text to confirmaton fragment
 
 		},
-        /* =========================================================== */
+		/* =========================================================== */
 		/*Function to Post GI*/
 		/* =========================================================== */
 		onHandlePost: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
-			this.callOdataService().handleDelTO(this, "tableGIS", "delList", "C");//function in BaseController to access GssWarehouseManage.js
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); //closes the fragment
+			this.callOdataService().handleDelTO(this, "tableGIS", "delList", "C"); //function in BaseController to access GssWarehouseManage.js
 
 		}
-	
 
 	});
 

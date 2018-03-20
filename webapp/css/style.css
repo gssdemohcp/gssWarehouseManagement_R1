@@ -34,11 +34,14 @@
     font-size: 1.1rem !important;
     font-weight: bold !IMPORTANT;
 }
-.sapMListTbl .sapMText, .sapMListTbl .sapMLabel{
-	font-size: 1rem !important;
+
+.sapMListTbl .sapMText,
+.sapMListTbl .sapMLabel {
+    font-size: 1rem !important;
 }
-.sapMObjectNumberEmph>.sapMObjectNumberText{
-     font-size: 1rem !important;	
+
+.sapMObjectNumberEmph>.sapMObjectNumberText {
+    font-size: 1rem !important;
 }
 
 #quantity {
@@ -57,11 +60,11 @@
 }
 
 .page_footer {
-    height: 60px;
+    height: 4rem !IMPORTANT;
 }
 
 .button_Size .sapMBtnInner .sapMBtnIcon {
-    font-size: 250% !IMPORTANT;
+    font-size: 1.95rem !IMPORTANT;
     width: 50px;
 }
 
@@ -229,18 +232,36 @@
 
 .LUnloadButton {
     background-color: coral !important;
+    
+    width: 60px;
 }
+
+
+
+/*.sapMBtnInner .sapMBtnIcon {
+    font-size: 1.80rem !IMPORTANT;
+}*/
+
+/*.sapUiSizeCompact .sapMBtn {*/
+/*    height: 4rem;*/
+/*}*/
 
 .moreButton {
     background-color: mediumorchid !important;
+    
+    width: 60px;
 }
 
 .itemsButton {
     background-color: blue !important;
+    
+    width: 60px;
 }
 
 .shipButton {
     background-color: #fcc677 !IMPORTANT;
+
+    width: 60px;
 }
 
 .printButton {
@@ -249,14 +270,20 @@
 
 .GTOButton {
     background-color: limegreen !important;
+
+    width: 60px;
 }
 
 .TOExButton {
     background-color: limegreen !important;
+  
+    width: 60px;
 }
 
 .postButton {
     background-color: limegreen !important;
+  
+    width: 60px;
 }
 
 

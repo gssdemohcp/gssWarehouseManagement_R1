@@ -56,12 +56,16 @@ sap.ui.define([
 			this.getView().byId("itemInput").setMaxLength(10);
 
 		},
+		/* =========================================================== */
+		/*Handling Difference function
+		  Event handling function when diff button is pressed  */
+		/* =========================================================== */
 		onHandleDifference: function() {
 			// for the putaway diff process
 			//OLD CODE var items = this.gssCallFunction().selectedItems(this, "toTable");
 			var items = utilities.selectedItems(this, "tableitems");
 
-			if (items.length === 1) {
+			if (items.length === 1) { //check items length
 				//fragment code is Moved to OnInit 
 				var objects = utilities.getItems(this, "tableitems", "itemList"),
 					oItem = objects.getProperty();
@@ -71,20 +75,28 @@ sap.ui.define([
 				}
 				var oItemList = this.gssDifferenceFunction().setDelItemsDiffModel(oItem, this.fragmentLoaded, this.getGlobalModel().getProperty(
 					"/viewId") + "diff");
-				var oModel = new JSONModel(oItemList);
+				var oModel = new JSONModel(oItemList); // Json Model creation and setting data
 
-				this.fragmentLoaded.setModel(oModel, "handleDiff");
-				this.fragmentLoaded.open();
+				this.fragmentLoaded.setModel(oModel, "handleDiff"); //setting model to fragment
+				this.fragmentLoaded.open(); //open fragment
 			} else if (items.length === 0) {
-				MessageToast.show(this.geti18n("toastItemSel"));
+				MessageToast.show(this.geti18n("toastItemSel")); //warning toast
 			} else if (items.length > 1) {
-				MessageToast.show(this.geti18n("toastSelMat"));
+				MessageToast.show(this.geti18n("toastSelMat")); //warning toast
 			}
 		},
+		/* =========================================================== */
+		/*Handling Selection on table function
+		 * @param {object} [this]  oView
+		 * @param {string} [""] control ID*/
+		/* =========================================================== */
 		onHandleSelection: function() {
-			this._selectedItem = utilities.selectedItems(this, "tableitems");
+			this._selectedItem = utilities.selectedItems(this, "tableitems"); //To get selected items
 		},
-
+		/* =========================================================== */
+		/*Handling Difference function
+		  liveChange handling function Actual value given  */
+		/* =========================================================== */
 		onHandleActual: function(oEvent) {
 			var actualVal = oEvent.getParameter("newValue");
 			var objects = utilities.getItems(this, "tableitems", "itemList");
@@ -92,19 +104,29 @@ sap.ui.define([
 			this.gssDifferenceFunction().diffShipCalculation(actualVal, this.modelObjects.TargQty, this.fragmentLoaded, this.getGlobalModel().getProperty(
 				"/viewId") + "diff");
 		},
+		/* =========================================================== */
+		/*Handling Difference function
+		  Event handling function when ok is pressed  */
+		/* =========================================================== */
 		onDiffConfirm: function() {
-			var destTarget = this.fragmentLoaded.getModel("handleDiff").getData().destTarget;
-			var destActa = sap.ui.core.Fragment.byId(this.getView().getId() + "diff", "actual").getValue();
+			var destTarget = this.fragmentLoaded.getModel("handleDiff").getData().destTarget; //get Target Quantity from model
+			var destActa = sap.ui.core.Fragment.byId(this.getView().getId() + "diff", "actual").getValue(); //get Actual Quantity entered from fragment
 			var differenceVal = destTarget - destActa;
 			var destDifa = differenceVal;
 			this.destDifa = "X";
 			var sValInd = "Lfimg";
-			this._updateTable(destActa, destDifa, destTarget, sValInd);
+			this._updateTable(destActa, destDifa, destTarget, sValInd); //update the table
 		},
-
+		/* =========================================================== */
+		/*Handling Difference function
+		  Event handling function when cancel is pressed  */
+		/* =========================================================== */
 		onDiffCancel: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); //closes fragment 
 		},
+		/* =========================================================== */
+		/*Handling updation of differenced quantity
+		/* =========================================================== */
 		_updateTable: function(destActa, destDifa, destTarget, sProperty, sValue) {
 			// for the GR diff process
 			var aItems = this.getView().byId("tableitems").getModel("itemList").getData().aItems;
@@ -119,70 +141,33 @@ sap.ui.define([
 			}.bind(this));
 			var aData = this.getView().byId("tableitems").getModel("itemList").getData();
 			aData.aItems = aItems;
-			this.getView().byId("tableitems").getModel("itemList").setData(aData);
+			this.getView().byId("tableitems").getModel("itemList").setData(aData); //set updated data to view
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 		},
+		/* =========================================================== */
+		/*Handling barcode scan
+		/* =========================================================== */
 		onScanUnpack: function(oEvent) {
 			utilities.barcodeReader(this, "itemInput", "");
 			this.iGetInput();
 		},
 
 		iGetInput: function(oEvent) {
-
 			var _inputValue = this.getGlobalModel().getProperty("/currentDelNo");
 			this.getView().byId("itemInput").setValue(_inputValue);
 			this.getView().byId("itemInput").setEnabled(false);
-
 			this.callOdataService().getLoadInq(this, _inputValue, "", "");
-
 		},
+		/* =========================================================== */
+		/*Handling save of updated items
+		*Event handling function when save is pressed
+		/* =========================================================== */
 		onHandleSave: function() {
 			var whenOdataCall = this.callOdataService().onSaveItems(this, this._selectedItem, "tableitems", "I");
 			whenOdataCall.done(function() {
 				MessageToast.show(this.geti18n(this.getUpdateToast()));
 			}.bind(this));
-		},
-		onExit: function() {
-			if (this.fragmentLoaded) {
-				this.fragmentLoaded.destroy(true);
-			}
-
 		}
-
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf gss.newWarehouseManage_R1.view.grDelItems
-		 */
-		//	onInit: function() {
-		//
-		//	},
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf gss.newWarehouseManage_R1.view.grDelItems
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf gss.newWarehouseManage_R1.view.grDelItems
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf gss.newWarehouseManage_R1.view.grDelItems
-		 */
-		//	onExit: function() {
-		//
-		//	}
 
 	});
 

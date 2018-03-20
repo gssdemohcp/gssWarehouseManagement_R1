@@ -3,6 +3,14 @@
 	<App>
 		<pages>
 			<Page title="{i18n>packByHu}">
+				<customHeader>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Title id="rfScreen" text="{i18n>packByHu}" level="H2" textAlign="Center"/>
+						<ToolbarSpacer/>
+						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
+					</Toolbar>
+				</customHeader>
 				<content>
 					<Table id="unpackHUTable" class="sapUiTinyMarginTop dataStyle" growing="true" growingScrollToLoad="true" width="auto"
 						items="{HUModel>/aItems}" mode="MultiSelect" selectionChange="unpackItemSelect">

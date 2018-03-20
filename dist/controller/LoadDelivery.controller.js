@@ -14,7 +14,7 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf gss.newWarehouseManage_R1.view.LoadDelivery
 		 */
-		 
+
 		// ================================================================================
 		// This method is called first and is executed first in the controller's lifecycle
 		// ================================================================================
@@ -41,8 +41,23 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel(this);
 			this.inputDetails();
+			this.setFragment();
 		},
-		
+		// ==========================================
+		// method call to bind fragment to that view
+		// ==========================================
+		setFragment: function() {
+			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
+			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
+			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
+			this.getView().addDependent(this.fragmentLoaded);
+
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.msgFragmentLoaded);
+		},
+
 		// ================================================================
 		// method to get current screen model & resource bundle properties
 		// ================================================================
@@ -53,7 +68,7 @@ sap.ui.define([
 			this.getView().byId("inputValue").setPlaceholder(Text); // to set placeholder to input field
 			this.getView().byId("inputValue").setMaxLength(10); // to set length for input field
 		},
-		
+
 		// =======================================================
 		// method to get input field value and perform odata call
 		// =======================================================
@@ -64,7 +79,11 @@ sap.ui.define([
 				this.getLoadDetails(_inputValue, huNo);
 			}
 		},
-		
+		handleMessagePopoverPress: function(oEvent) {
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+
+		},
+
 		// ============================================
 		// method to pass barocde value to input field
 		// ============================================
@@ -72,7 +91,7 @@ sap.ui.define([
 			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
 		},
-		
+
 		// ============================================
 		// method to pass barocde value to input field
 		// ============================================
@@ -80,17 +99,7 @@ sap.ui.define([
 			utilities.barcodeReader(this, "scanHUinDel", "");
 			this.iGetInput();
 		},
-		
-		// ==========================================
-		// method call to bind fragment to that view
-		// ==========================================
-		setFragment: function() {
-			var viewId = this.getView().getId();
-			this.getGlobalModel().setProperty("/viewId", viewId);
-			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "confirmation");
-			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "conf", loadFragment, this);
-			this.getView().addDependent(this.fragmentLoaded);
-		},
+
 		
 		// =========================================================
 		// method to get input field details and send to odata call
@@ -121,7 +130,7 @@ sap.ui.define([
 				this.getView().byId("inputValue").setMaxLength(10);
 			}
 		},
-		
+
 		// ================================
 		// function call to load materials
 		// ================================
@@ -136,8 +145,7 @@ sap.ui.define([
 
 			}.bind(this));
 		},
-		
-		
+
 		// =========================================
 		// function call to revert the load process
 		// =========================================
@@ -146,7 +154,7 @@ sap.ui.define([
 			this.fragmentLoaded.open();
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("undoProc"));
 		},
-		
+
 		// ===================================
 		// function call to confirm materials 
 		// ===================================
@@ -162,14 +170,14 @@ sap.ui.define([
 
 			}.bind(this));
 		},
-		
+
 		// ============================================
 		// method to close fragment opened in the view
 		// ============================================
 		onCancel: function() {
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); // to close the loaded fragment
 		},
-		
+
 		// ===================================================
 		// method to destroy the fragments loaded in the view
 		// ===================================================
@@ -178,32 +186,6 @@ sap.ui.define([
 				this.fragmentLoaded.destroy(true); // to destroy the loaded fragments
 			}
 		}
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf gss.newWarehouseManage_R1.view.LoadDelivery
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf gss.newWarehouseManage_R1.view.LoadDelivery
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf gss.newWarehouseManage_R1.view.LoadDelivery
-		 */
-		//	onExit: function() {
-		//
-		//	}
 
 	});
 

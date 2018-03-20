@@ -41,10 +41,16 @@ sap.ui.define([
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.msgFragmentLoaded);
 		},
+		// ============================================
+		// method to pass barocde value to input field
+		// ============================================
 		packHuScan:function(){
 			utilities.barcodeReader(this, "HU","addHU");
 			
 		},
+		/* =========================================================== */
+		/*Handling message popover function*/
+		/* =========================================================== */
 		handleMessagePopoverPress: function(oEvent) {
 			if (!this.msgFragmentLoaded) {
 				this.setFragment();
@@ -52,11 +58,13 @@ sap.ui.define([
 			this.msgFragmentLoaded.openBy(oEvent.getSource());
 
 		},
-
+        // ==================================================
+		// method to get packed/unpacked HUs for the delivery
+		// ================================================== 
 		oDataCall: function() {
-			var _huVal = this.getGlobalModel().getProperty("/currentHuVal"),
-				_shipInd = this.getGlobalModel().getProperty("/shipInd"),
-				_delVal = this.getGlobalModel().getProperty("/currentDelVal");
+			var _huVal = this.getGlobalModel().getProperty("/currentHuVal"),//get HU for the delivery
+				_shipInd = this.getGlobalModel().getProperty("/shipInd"),//get ship indicator
+				_delVal = this.getGlobalModel().getProperty("/currentDelVal");//get Delivery no
 			this.callOdataService().getLoadInq(this, _huVal, _shipInd, _delVal);
 
 		},
@@ -86,42 +94,6 @@ sap.ui.define([
 			sap.ui.core.Fragment.byId(this.getView().getId() + "addHU", "unit").setValue("");
 			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);
 		}
-
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf gss.newWarehouseManage_R1.view.unpackHu
-		 */
-		//	onInit: function() {
-		//
-		//	},
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf gss.newWarehouseManage_R1.view.unpackHu
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf gss.newWarehouseManage_R1.view.unpackHu
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf gss.newWarehouseManage_R1.view.unpackHu
-		 */
-		//	onExit: function() {
-		//
-		//	}
-
 	});
 
 });

@@ -3,6 +3,14 @@
 	<App>
 		<pages>
 			<Page title="{i18n>giShip}">
+				<customHeader>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Title id="rfScreen" text="{i18n>giShip}" level="H2" textAlign="Center"/>
+						<ToolbarSpacer/>
+						<Button id="syuser" icon="sap-icon://account" type="Transparent" press="handleUserNamePress"/>
+					</Toolbar>
+				</customHeader>
 				<content>
 					<Toolbar>
 						<Breadcrumbs class="sapUiTinyMarginBegin" id="breadCrumbs"/>
@@ -88,13 +96,13 @@
 							<Button id="message-popup" icon="sap-icon://message-popup" tooltip="{i18n>stat}" type="Emphasized" press="handleMessagePopoverPress"/>
 						</contentLeft>
 						<contentRight>
-							<Button id="Lload" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size LUnloadButton" icon="sap-icon://supplier" press="onHandleUnload" tooltip="{i18n>load}"/>
-							<Button id="more" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size moreButton" icon="sap-icon://detail-view" press="handleMore" tooltip="{i18n>more}"/>
-							<Button id="items" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size itemsButton" icon="sap-icon://activity-items" press="onHandleItems" tooltip="{i18n>items}"/>
-							<Button id="ship" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size shipButton" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="{i18n>shipment}"/>
-							<Button id="GTO" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size GTOButton" icon="sap-icon://create" press="onGenerateTO" visible="false" tooltip="{i18n>generateTO}"/>
-							<Button id="TOEx" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size TOExButton" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" tooltip="{i18n>toExec}"/>
-							<Button id="post" class="sapUiTinyMargin sapUiResponsiveContentPadding button_Size postButton" icon="sap-icon://paper-plane" press="onPostGI" visible="false" tooltip="{i18n>post}"/>
+							<Button id="Lload" class="sapUiTinyMargin LUnloadButton" icon="sap-icon://supplier" press="onHandleUnload" tooltip="{i18n>load}"/>
+							<Button id="more" class="sapUiTinyMargin moreButton" icon="sap-icon://detail-view" press="handleMore" tooltip="{i18n>more}"/>
+							<Button id="items" class="sapUiTinyMargin itemsButton" icon="sap-icon://activity-items" press="onHandleItems" tooltip="{i18n>items}"/>
+							<Button id="ship" class="sapUiTinyMargin shipButton" icon="sap-icon://shipping-status" press="onHandleShip" tooltip="{i18n>shipment}"/>
+							<Button id="GTO" class="sapUiTinyMargin GTOButton" icon="sap-icon://create" press="onGenerateTO" visible="false" tooltip="{i18n>generateTO}"/>
+							<Button id="TOEx" class="sapUiTinyMargin TOExButton" icon="sap-icon://bbyd-active-sales" press="onHandleTOEx" visible="false" tooltip="{i18n>toExec}"/>
+							<Button id="post" class="sapUiTinyMargin postButton" icon="sap-icon://paper-plane" press="onPostGI" visible="false" tooltip="{i18n>post}"/>
 						</contentRight>
 						<!--</contentMiddle>-->
 						<!--</Toolbar>-->

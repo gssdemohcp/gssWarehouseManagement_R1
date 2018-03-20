@@ -57,18 +57,18 @@ sap.ui.define([
 			
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
-			this.getView().addDependent(this.fragmentLoaded);
+			this.getView().addDependent(this.msgFragmentLoaded);
 		},
 
 		iGetInput: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				this.getView().byId("GRDForm").setBusy(true);
+				this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
 				var whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue);
 				whenOdataCall.done(function(oResult) {
 					this.checkInd(oResult.getData().aItems[0], "true");
-					this.getGlobalModel().setProperty("/currentDelNo", _inputValue);
-				}.bind(this));
+					}.bind(this));
 			}
 		},
 

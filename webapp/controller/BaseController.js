@@ -118,6 +118,24 @@ sap.ui.define([
 		getModelData: function(oModel) {
 			return this.getView().getModel(oModel).getData();
 		},
+		//*************************************************************************************************
+		//THESE METHODS ARE USED TO ACCESS LIBRARY,MODULES AND MODELS
+		//***************************************************************************************************
+		/**
+		 * Convenience method
+		 * @returns {object} the GssWarehouseManage controller
+		 */
+		callOdataService: function() {
+			return this.getGlobalModel().getProperty("/gsswm");
+		},
+		/**
+		 * Convenience method
+		 * @returns {object} the CreateElements controller
+		 */
+		createElements: function() {
+			return this.getGlobalModel().getProperty("/gsscb");
+
+		},
 		/**
 		 * Convenience method
 		 * @returns {object} the application controller
@@ -212,6 +230,7 @@ sap.ui.define([
 			if (flag) {
 				this.getGlobalModel().setProperty("/indiTO", data.ToInd);
 				this.gssFragmentsFunction().uiIndCheck(this, data.ToInd, data.ToConfirmInd, data.PostInd, flag); //uiIndCheck:to perform ui operations with data
+				
 				utilities.bindMessagePop(this, data); //bindMessagePop:set message to messagepopover
 			} else {
 				utilities.bindMessagePop(this, data); //bindMessagePop:set message to messagepopover
@@ -242,60 +261,93 @@ sap.ui.define([
 				jsonModel = new sap.ui.model.json.JSONModel(viewProperties.modelData);
 			this.setModel(jsonModel, this.getModelName());
 		},
-
+		/**
+		 * Convenience method to update load status to the data to the view from global property
+		 * @public
+		 */
 		loadCheck: function() {
 			var viewProperties = this.getViewProperties();
 			var data = viewProperties.modelData;
 			if (this.getGlobalModel().getProperty("/load") === "X") {
-                 data.aItems[0].LoadStat = "X";                      
-			} else if (this.getGlobalModel().getProperty("/load") === "Y"){
+				data.aItems[0].LoadStat = "X";
+			} else if (this.getGlobalModel().getProperty("/load") === "Y") {
 				data.aItems[0].LoadStat = "";
 			}
-			this.setModelData(data);
-			this.getGlobalModel().setProperty("/load","");
+			this.setModelData(data); //updated data set to global property of the view 
+			this.getGlobalModel().setProperty("/load", ""); //empty the global property for the next loadcheck process
 		},
+		/**
+		 * Convenience method to update title the view from global property
+		 * @public
+		 */
 		titleSet: function() {
 			var title = this.getGlobalModel().getProperty("/title");
 			this.byId("title").setTitle(title);
 
 		},
-
+		/**
+		 * Convenience method to  title the view from global property
+		 * @public
+		 */
 		setPageTitle: function() {
-			var titleId = this.getPageTitle(),
+			var titleId = this.getPageTitle(), //to get pagetitle from globalproperty
 				title = this.geti18n(titleId);
 			this.byId("title").setProperty("title", title);
 			this.byId("title").setTitle(title);
 
 		},
+		/**
+		 * Convenience method to show the current Queue  
+		 * @public
+		 */
 		handleUserNamePress: function(event) {
 			var popover = new sap.m.Popover({ // To build popup&nbsp;
 				showHeader: false,
 				placement: sap.m.PlacementType.Bottom,
 				content: [
 					new sap.m.Text({ // To display text field in the popover
-						text: this.geti18n("queue")  + "- " + this.getGlobalModel().getProperty("/currentQueue"), // To display assigned queue to that user
+						text: this.geti18n("queue") + "- " + this.getGlobalModel().getProperty("/currentQueue"), // To display assigned queue to that user
 						type: sap.m.ButtonType.Transparent // Text type
 					})
-					
+
 				]
 			}).addStyleClass('sapMOTAPopover sapTntToolHeaderPopover'); // CSS style for the popup
 
 			popover.openBy(event.getSource()); // To open popup event
 		},
+		/**
+		 * Convenience method to update the toast message in the global property of the view 
+		 * @public
+		 */
 		setUpdateToast: function(toast) {
 			var properties = this.getViewProperties();
 			properties.toastMsg = toast;
 		},
+		/**
+		 * Convenience method to access i18n translated text
+		 * @public
+		 * * @param {string} key - i18n key
+		 */
 		geti18n: function(key) {
 			var oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
 			return oResourceBundle.getText(key);
 
 		},
-
+		/**
+		 * Convenience method to get global property
+		 * @public
+		 * * @param {string} property
+		 */
 		getGlobalProperty: function(property) {
 			return this.getGlobalModel().getProperty("/" + property + "");
 
 		},
+		/**
+		 * Convenience method to set global property
+		 * @public
+		 * * @param {string} property
+		 * * @param {string} sValue
+		 */
 		setGlobalProperty: function(property, sValue) {
 			return this.getGlobalModel().setProperty("/" + property + "", sValue);
 
@@ -303,57 +355,79 @@ sap.ui.define([
 		//**********************************************************************************************
 		//THESE METHODS ARE USED IN ODATASERVICE LIBRARY
 		//**********************************************************************************************
-		callOdataService: function() {
-			return this.getGlobalModel().getProperty("/gsswm");
-		},
-		createElements: function() {
-			return this.getGlobalModel().getProperty("/gsscb");
-
-		},
+		/**
+		 * Convenience method to get View property
+		 * @public
+		 * */
 		getViewProperties: function() {
 			var sCurrentScrnName = this.getCurrentScrn();
 			return this.getScreenModel(sCurrentScrnName);
 		},
-
+		/**
+		 * Convenience method to get entity set property
+		 * @public
+		 * */
 		getEntitySet: function() {
 			var viewProperties = this.getViewProperties();
 			return viewProperties.entitySet;
 		},
-
+		/**
+		 * Convenience method to get modelname property
+		 * @public
+		 * */
 		getModelName: function() {
 			var viewProperties = this.getViewProperties();
 			return viewProperties.modelName;
 		},
-
+		/**
+		 * Convenience method to get Filterfields property
+		 * @public
+		 * */
 		getFilterFields: function() {
 			var viewProperties = this.getViewProperties();
 			return viewProperties.filters;
 		},
-
+		/**
+		 * Convenience method to get keyFields property
+		 * @public
+		 * */
 		getKeyFields: function() {
 			var properties = this.getViewProperties();
 			return properties.keyFields;
 		},
+		/**
+		 * Convenience method to get ChildScreen property of the view
+		 * @public
+		 * */
 		getChildScreens: function() {
 			var properties = this.getViewProperties();
 			return properties.childScreens;
 		},
+		/**
+		 * Convenience method to get Parent screen property of the view
+		 * @public
+		 * */
 		getParentScreen: function() {
 			var properties = this.getViewProperties();
 			return properties.parentScreen;
 		},
+		/**
+		 * Convenience method to get Page Title property of the view
+		 * @public
+		 * */
 		getPageTitle: function() {
 			var properties = this.getViewProperties();
 			return properties.pageTitle;
 		},
+		/**
+		 * Convenience method to get Update toast property of the view
+		 * @public
+		 * */
 		getUpdateToast: function() {
 			var properties = this.getViewProperties();
 			return properties.toastMsg;
 		}
 
-		//*************************************************************************************************
-		//END
-		//***************************************************************************************************
 	});
 
 });
