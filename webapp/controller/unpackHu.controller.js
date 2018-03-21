@@ -65,7 +65,11 @@ sap.ui.define([
 			var _huVal = this.getGlobalModel().getProperty("/currentHuVal"),//get HU for the delivery
 				_shipInd = this.getGlobalModel().getProperty("/shipInd"),//get ship indicator
 				_delVal = this.getGlobalModel().getProperty("/currentDelVal");//get Delivery no
-			this.callOdataService().getLoadInq(this, _huVal, _shipInd, _delVal);
+			var whenOdataCall = this.callOdataService().getLoadInq(this, _huVal, _shipInd, _delVal);
+				whenOdataCall.done(function() {
+				utilities.bindMessagePop(this, "");
+			}.bind(this));
+
 
 		},
 		onHandleAccept: function() {

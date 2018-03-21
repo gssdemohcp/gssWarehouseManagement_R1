@@ -38,6 +38,10 @@ sap.ui.define([
 			var callFragment = this.gssFragmentsFunction().loadFragment(this, "difference");
 			this.fragmentLoaded = sap.ui.xmlfragment(viewId + "diff", callFragment, this);
 			this.getView().addDependent(this.fragmentLoaded);
+			
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.msgFragmentLoaded);
 		},
 
 		seti18nModel: function() {
@@ -55,6 +59,15 @@ sap.ui.define([
 			this.getView().byId("inputValue").setPlaceholder(Text);
 			this.getView().byId("inputValue").setMaxLength(10);
 
+		},
+		/* =========================================================== */
+		/*Handling message popover function*/
+		/* =========================================================== */
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
 		},
 		/* =========================================================== */
 		/*Handling Difference function
@@ -153,7 +166,10 @@ sap.ui.define([
 			var _inputValue = this.getGlobalModel().getProperty("/currentDelNo");
 			this.getView().byId("inputValue").setValue(_inputValue);
 			this.getView().byId("inputValue").setEnabled(false);
-			this.callOdataService().getLoadInq(this, _inputValue, "", "");
+			var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
+			 whenOdataCall.done(function() {
+				utilities.bindMessagePop(this, "");
+			}.bind(this));
 		},
 		/* =========================================================== */
 		/*Handling save of updated items

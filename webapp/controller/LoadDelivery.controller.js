@@ -77,6 +77,7 @@ sap.ui.define([
 			var huNo = this.getView().byId("scanHUinDel").getValue(); // To get input field value
 			if (_inputValue) {
 				this.getLoadDetails(_inputValue, huNo);
+				utilities.bindMessagePop(this, "");
 			}
 		},
 		handleMessagePopoverPress: function(oEvent) {
@@ -100,7 +101,6 @@ sap.ui.define([
 			this.iGetInput();
 		},
 
-		
 		// =========================================================
 		// method to get input field details and send to odata call
 		// =========================================================
@@ -112,11 +112,16 @@ sap.ui.define([
 				this.getView().byId("scanHUinDel").setValueState(sap.ui.core.ValueState.None); // To set value state for input field
 				var whenOdataCall = this.callOdataService().LoadDetails(this, shipNo, huNo, "");
 				whenOdataCall.done(function(oResult) {
+					utilities.bindMessagePop(this, "");
 					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
 
 				}.bind(this)); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				this.callOdataService().LoadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
+				var whenOdataCall = this.callOdataService().LoadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
+				whenOdataCall.done(function(oResult) {
+					utilities.bindMessagePop(this, "");
+
+				}.bind(this));
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				var hdr = this.getView().getModel("i18n").getResourceBundle().getText("EnterDel");
 				this.getView().byId("inputValue").setPlaceholder(hdr); // To set placeholder for input field
@@ -141,6 +146,7 @@ sap.ui.define([
 				HuStatus = "HU03";
 			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
 			whenOdataCall.done(function(oResult) {
+				utilities.bindMessagePop(this, "");
 				utilities.loadIndUpdate(oResult.getData().aItems[0], this);
 
 			}.bind(this));
@@ -150,7 +156,6 @@ sap.ui.define([
 		// function call to revert the load process
 		// =========================================
 		loadRevert: function() {
-			this.setFragment();
 			this.fragmentLoaded.open();
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("undoProc"));
 		},
@@ -166,6 +171,7 @@ sap.ui.define([
 				HuStatus = "HU04";
 			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
 			whenOdataCall.done(function(oResult) {
+				utilities.bindMessagePop(this, "");
 				utilities.loadIndUpdate(oResult.getData().aItems[0], this);
 
 			}.bind(this));

@@ -115,10 +115,16 @@ sap.ui.define([
 				var whenOdataCall = this.callOdataService().UnloadDetails(this, shipNo, huNo, "", LoadInd);
 				whenOdataCall.done(function(oResult) {
 					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+					utilities.bindMessagePop(this, "");
 
 				}.bind(this));// To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				this.callOdataService().UnloadDetails(this, shipNo, huNo, procInd, ""); // To pass input values with indicator when a field is empty
+				var whenOdataCall = this.callOdataService().UnloadDetails(this, shipNo, huNo, procInd, ""); // To pass input values with indicator when a field is empty
+				whenOdataCall.done(function(oResult) {
+
+					utilities.bindMessagePop(this, "");
+
+				}.bind(this));
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				var hdr = this.getView().getModel("i18n").getResourceBundle().getText("EnterDel");
 				this.getView().byId("inputValue").setPlaceholder(hdr); // To set placeholder for input field
@@ -144,7 +150,7 @@ sap.ui.define([
 			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd);
 			whenOdataCall.done(function(oResult) {
 					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
-
+                    utilities.bindMessagePop(this, "");
 				}.bind(this));
 		},
 
@@ -152,7 +158,6 @@ sap.ui.define([
 		// function call to revert the unload process
 		// ===========================================
 		unloadRevert: function() {
-			this.setFragment(); // function call to set fragment to the view
 			this.fragmentLoaded.open(); // to open the loaded fragment
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("undoProc")); // to set text for the loaded fragment
 		},
@@ -169,7 +174,7 @@ sap.ui.define([
 			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd);
 			whenOdataCall.done(function(oResult) {
 					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
-
+                     utilities.bindMessagePop(this, "");
 				}.bind(this));
 		},
 

@@ -7,7 +7,8 @@
   "build": {
     "targetFolder": "dist",
     "sourceFolder": "webapp",
-    "buildRequired": true
+    "buildRequired": true,
+    "lastBuildDateTime": "Tue, 20 Mar 2018 16:15:06 GMT"
   },
   "generation": [
     {
@@ -39,7 +40,7 @@
   },
   "translation": {
     "translationDomain": "",
-    "supportedLanguages": "en,fr,de",
+    "supportedLanguages": "en,fr,nl,cs,hi,it",
     "defaultLanguage": "en",
     "defaultI18NPropertyFile": "i18n.properties",
     "resourceModelName": "i18n"
@@ -393,5 +394,10 @@
     "loadJSONFiles": false,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""
+  },
+  "hcpdeploy": {
+    "account": "p1942825384trial",
+    "name": "gsswarehousemanagementr1",
+    "lastVersionWeTriedToDeploy": "1.0.8"
   }
 }

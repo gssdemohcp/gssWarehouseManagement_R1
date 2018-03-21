@@ -103,6 +103,12 @@ sap.ui.define([
 			}
 		},
 		bindMessagePop: function(oView, data) {
+			var data =  {
+				Msgtext: '',
+				Msgtyp: ''
+			};
+			data.Msgtext = oView.getGlobalModel().getProperty("/message");
+			data.MsgTyp = oView.getGlobalModel().getProperty("/messageType");
 			var messageModel = new JSONModel();
 			var oData = {
 				aItems: []

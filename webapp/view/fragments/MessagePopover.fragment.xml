@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<MessagePopover initiallyExpanded="true" items="{errorList>/aItems}" placement="Vertical" xmlns="sap.m">
 		<items>
-			<MessagePopoverItem title="{errorList>Msgtext}" type="{errorList>MsgTyp}"/>
+			<MessagePopoverItem title="{errorList>Msgtext}" />
 		</items>
 	</MessagePopover>
 </core:FragmentDefinition>
