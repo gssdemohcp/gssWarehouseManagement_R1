@@ -121,9 +121,7 @@ sap.ui.define([
 			} else if (shipNo && !huNo) { // To check if one field is empty
 				var whenOdataCall = this.callOdataService().UnloadDetails(this, shipNo, huNo, procInd, ""); // To pass input values with indicator when a field is empty
 				whenOdataCall.done(function(oResult) {
-
 					utilities.bindMessagePop(this, "");
-
 				}.bind(this));
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				var hdr = this.getView().getModel("i18n").getResourceBundle().getText("EnterDel");

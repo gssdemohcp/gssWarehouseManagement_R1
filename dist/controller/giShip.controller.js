@@ -28,7 +28,7 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 
-			/*this.setFragment();*/
+			this.setFragment();
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -37,14 +37,33 @@ sap.ui.define([
 			});
 			this.getView().setModel(i18nModel, "i18n");
 		},
+		setFragment: function() {
+			var viewId = this.getView().getId();
+			this.getGlobalModel().setProperty("/viewId", viewId);
+			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
+			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
+			this.getView().addDependent(this.msgFragmentLoaded);
+		},
+		/* =========================================================== */
+		/*Handling message popover function*/
+		/* =========================================================== */
+		handleMessagePopoverPress: function(oEvent) {
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource());
+		},
 		onHandleScanInput: function(oEvent) {
-			utilities.barcodeReader(this, "inputValue","");
+			utilities.barcodeReader(this, "inputValue", "");
 			this.iGetInput();
 		},
 		oDataCall: function(oEvent) {
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
-				this.callOdataService().grKeyFields(this, _inputValue, "X");
+				var whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue, "X");
+				 whenOdataCall.done(function() {
+				utilities.bindMessagePop(this, "");
+			}.bind(this));
 			}
 		},
 		onHandleSave: function(oEvent) {

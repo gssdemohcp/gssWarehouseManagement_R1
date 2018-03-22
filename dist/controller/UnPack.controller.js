@@ -17,6 +17,7 @@ sap.ui.define([
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 					utilities.setParentScreen(this.getGlobalModel().getProperty("/parentScreen"), this);
+
 					this.getHUInput();
 
 				}.bind(this)
@@ -25,8 +26,8 @@ sap.ui.define([
 			this._router = this.getRouter();
 			this.seti18nModel();
 			this.inputDetails();
+			this.setFragment();
 
-			/*this.setFragment();*/
 		},
 		seti18nModel: function() {
 			// set i18n model on view
@@ -46,16 +47,8 @@ sap.ui.define([
 
 		},
 		setFragment: function() {
-			//Fragement Code for New Bin
+			//Fragement Code for MessagePopover
 			var viewId = this.getView().getId();
-			var loadFragment = this.gssFragmentsFunction().loadFragment(this, "unpackMaterial");
-			this.fragmentMaterialLoaded = sap.ui.xmlfragment(viewId + "unpackMat", loadFragment, this);
-			this.getView().addDependent(this.fragmentMaterialLoaded);
-
-			var callFragment = this.gssFragmentsFunction().loadFragment(this, "hu");
-			this.fragmentHuLoaded = sap.ui.xmlfragment(viewId + "unpackHu", callFragment, this);
-			this.getView().addDependent(this.fragmentHuLoaded);
-
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.msgFragmentLoaded);
@@ -68,6 +61,7 @@ sap.ui.define([
 			var whenOdataCall = this.callOdataService().grPackKeyFields(this, _delVal, _inputValue);
 			whenOdataCall.done(function() {
 				var data = this.getModelData("packItems").aItems[0];
+				utilities.bindMessagePop(this, "");
 				if (data.MatInd === "X") {
 					this.getView().byId("byMat").setEnabled(false);
 					this.getView().byId("byHU").setEnabled(true);

@@ -378,7 +378,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 								};
 								oStatMessage.Msgtext = "Material" + " " + oStat.text;
 								oStatMessage.Msgtyp = "Error";
-							//	utilities.bindMessagePop(oView, oStatMessage);
+								oView.getGlobalModel().setProperty("/message",oStatMessage.Msgtext);
+								oView.getGlobalModel().setProperty("/messageType",oStatMessage.Msgtyp);
+								utilities.bindMessagePop(oView, oStatMessage);
 
 							}
 						} else if (oStat.stat === "S") {
@@ -389,7 +391,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							oStatMessage.Msgtext = "Material" + " " + oStat.mItems.Matnr + " " + oStat.text;
 							oStatMessage.Msgtyp = "Success";
 							if (this.finalPos === this.currentPos) {
-							//	utilities.bindMessagePop(oView, oStatMessage);
+								oView.getGlobalModel().setProperty("/message",oStatMessage.Msgtext);
+								oView.getGlobalModel().setProperty("/messageType",oStatMessage.Msgtyp);
+								utilities.bindMessagePop(oView, oStatMessage);
 							}
 
 						}
@@ -440,7 +444,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						Msgtext: oView.getGlobalModel().getProperty("/message"),
 						Msgtyp: oView.getGlobalModel().getProperty("/messageType")
 					};
-					//utilities.bindMessagePop(oView, oStatMessage);
+					utilities.bindMessagePop(oView, oStatMessage);
 					var oNewModel = oView.byId(controlId).getModel(activeModel).getData().aItems;
 					var index;
 					for (var i = 0; i < oNewModel.length; i++) {
@@ -477,7 +481,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelUpdate(oView, updateItem);
 				oWhenOdataUpdateDone.done(function(oResult) {
 					promise.resolve(oResult);
+					utilities.bindMessagePop(oView, "");
 					utilities.removeItems(oView, controlId);
+					
 
 				}.bind(this));
 
@@ -531,6 +537,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					
 				} else {
 					oView.gssFragmentsFunction().fragmentFalse(oView, "S");
+					utilities.bindMessagePop(oView, "");
 
 				}
 				promise.resolve(oResult);
@@ -554,10 +561,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					GIDelData.ToInd = "X";
 					var data = oView.getModelData(oView.getModelName());
 					data.aItems[0].ToInd = "X";
-					oView.checkInd(GIDelData, "false");
 					oView.getModel(oView.getModelName()).setData(data);
+					oView.checkInd(GIDelData, "false");
 				} else {
 					oView.gssFragmentsFunction().fragmentFalse(oView, "S");
+					utilities.bindMessagePop(oView, "");
 
 				}
 				promise.resolve(oResult);

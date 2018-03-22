@@ -96,11 +96,16 @@ sap.ui.define([
 				var whenOdataCall = this.callOdataService().LoadDetails(this, shipNo, huNo, "");
 				whenOdataCall.done(function(oResult) {
 					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
+					utilities.bindMessagePop(this, "");
 
 				}.bind(this));
 				// this.gssCallFunction().populateModelBuild(this); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				this.callOdataService().LoadDetails(this, shipNo, huNo, procInd);
+				var whenOdataCall = this.callOdataService().LoadDetails(this, shipNo, huNo, procInd);
+				whenOdataCall.done(function(oResult) {
+					utilities.bindMessagePop(this, "");
+
+				}.bind(this));
 				// this.gssCallFunction().populateModelBuild(this); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				this.getView().byId("inputValue").setPlaceholder(ship); // To set placeholder for input field
@@ -124,7 +129,7 @@ sap.ui.define([
 			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
 				whenOdataCall.done(function(oResult) {
 					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
-
+                    utilities.bindMessagePop(this, "");
 				}.bind(this));
 		},
 
@@ -132,7 +137,6 @@ sap.ui.define([
 		// function call to revert the load process
 		// =========================================
 		loadRevert: function() {
-			this.setFragment();
 			this.fragmentLoaded.open();
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("undoProc"));
 		},
@@ -149,7 +153,7 @@ sap.ui.define([
 			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, "");
 			whenOdataCall.done(function(oResult) {
 					utilities.loadIndUpdate(oResult.getData().aItems[0], this);
-
+                    utilities.bindMessagePop(this, "");
 				}.bind(this));
 		},
 

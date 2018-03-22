@@ -121,7 +121,10 @@ sap.ui.define([
 				}.bind(this));
 				// this.gssCallFunction().UnloadDetails(this, shipNo, huNo, procInd, LoadInd); // To pass the input values to the function&nbsp;
 			} else if (shipNo && !huNo) { // To check if one field is empty
-				this.callOdataService().UnloadDetails(this, shipNo, huNo, procInd, "");
+				var whenOdataCall = this.callOdataService().UnloadDetails(this, shipNo, huNo, procInd, "");
+				whenOdataCall.done(function(oResult) {
+					utilities.bindMessagePop(this, "");
+				}.bind(this));
 				// this.gssCallFunction().UnloadDetails(this, shipNo, huNo, procInd); // To pass input values with indicator when a field is empty
 			} else if (!shipNo && !huNo) { // To check if both fields are empty
 				this.getView().byId("inputValue").setPlaceholder(ship); // To set placeholder for input field
@@ -141,22 +144,21 @@ sap.ui.define([
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList"), // to get data from the model bound to the view
 				LoadInd = "X",
-				HuStatus = "HU04"; 
+				HuStatus = "HU04";
 			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd);
 			whenOdataCall.done(function(oResult) {
 				utilities.loadIndUpdate(oResult.getData().aItems[0], this);
-
+				utilities.bindMessagePop(this, "");
 			}.bind(this));
 		},
 
 		// ===========================================
 		// function call to revert the unload process
 		// ===========================================
-		unloadRevert: function() { 
-			this.setFragment(); // function call to set fragment to the view
+		unloadRevert: function() {
 			this.fragmentLoaded.open(); // to open the loaded fragment
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("undoProc")); // to set text for the loaded fragment
-			
+
 		},
 
 		// ===================================
@@ -167,11 +169,11 @@ sap.ui.define([
 			var inputVal = this.getView().byId("inputValue").getValue(); // To get value from the input field
 			var modelData = this.getModelData("itemList"), // to get data from the model bound to the view
 				LoadInd = "X",
-				HuStatus = "HU03"; 
+				HuStatus = "HU03";
 			var whenOdataCall = this.callOdataService().LoadUnloadKeyFields(this, modelData, HuStatus, LoadInd);
 			whenOdataCall.done(function(oResult) {
 				utilities.loadIndUpdate(oResult.getData().aItems[0], this);
-
+				utilities.bindMessagePop(this, "");
 			}.bind(this));
 		},
 

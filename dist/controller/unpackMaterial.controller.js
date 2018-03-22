@@ -63,7 +63,10 @@ sap.ui.define([
 		oDataCall: function() {
 			var _huVal = this.getGlobalModel().getProperty("/currentHuVal");
 			this._shipInd = this.getGlobalModel().getProperty("/shipInd");
-			this.callOdataService().getLoadInq(this, _huVal, this._shipInd, "");
+			var whenOdataCall = this.callOdataService().getLoadInq(this, _huVal, this._shipInd, "");
+				whenOdataCall.done(function() {
+				utilities.bindMessagePop(this, "");
+			}.bind(this));
 
 		},
 		onHandleAccept: function() {

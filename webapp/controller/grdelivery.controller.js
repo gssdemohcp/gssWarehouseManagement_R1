@@ -20,6 +20,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.loadCheck();
 					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)
@@ -138,7 +139,6 @@ sap.ui.define([
 			if (!this.fragmentLoaded) {
 				this.setFragment();//To initialize and add fragment to the view
 			}
-			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open();//opens the fragment
 
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop"));// To set text to confirmaton fragment

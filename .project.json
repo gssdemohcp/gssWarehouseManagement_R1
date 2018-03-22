@@ -8,7 +8,7 @@
     "targetFolder": "dist",
     "sourceFolder": "webapp",
     "buildRequired": true,
-    "lastBuildDateTime": "Tue, 20 Mar 2018 16:15:06 GMT"
+    "lastBuildDateTime": "Wed, 21 Mar 2018 17:09:12 GMT"
   },
   "generation": [
     {
@@ -399,5 +399,9 @@
     "account": "p1942825384trial",
     "name": "gsswarehousemanagementr1",
     "lastVersionWeTriedToDeploy": "1.0.8"
+  },
+  "deploy": {
+    "destination": "SDH",
+    "name": "ZESYDEPO"
   }
 }

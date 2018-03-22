@@ -218,7 +218,9 @@ sap.ui.define([
 		 * Convenience method to destroy model binded to the view
 		 */
 		destroyModel: function() {
+			if(this.getView().getModel(this.getModelName())){
 			this.getView().getModel(this.getModelName()).setData("");
+			}
 
 		},
 		/**
