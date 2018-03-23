@@ -21,6 +21,7 @@ sap.ui.define([
 					this._router = this.getRouter();
 					this.seti18nModel();
 					this.inputDetails();
+					this.loadCheck();
 					this.getBackModelData();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 				}.bind(this)

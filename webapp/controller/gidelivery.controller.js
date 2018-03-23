@@ -91,21 +91,6 @@ sap.ui.define([
 					this.setFragment();
 				}
 				this.msgFragmentLoaded.openBy(oEvent.getSource()); //opens fragment
-			/*var oMessageTemplate = new MessageItem({
-				type: '{MsgTyp}',
-				title: '{Msgtext}'
-			});
-			var oMessagePopover = new MessagePopover({
-				items: {
-					path: '/aItems',
-					template: oMessageTemplate
-				}
-			});
-			var oModel = new JSONModel();
-			oModel.setData(this.getModelData(this.getModelName()));
-			oMessagePopover.setModel(oModel);
-			oMessagePopover.toggle(oEvent.getSource());*/
-
 		},
 
 		/* =========================================================== */

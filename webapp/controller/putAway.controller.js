@@ -279,10 +279,10 @@ sap.ui.define([
 		// ===================================================
 		// method to get selected item details from the table
 		// ===================================================
-		onHandleSelection: function() {
+		/*onHandleSelection: function() {
 			this.getModel("globalProperties").setProperty("/controlId", "toTable");
 			var objects = utilities.getObjects(this); // function call to get object data from table
-		},
+		},*/
 
 		// ============================================
 		// method to clode the opened new bin fragment

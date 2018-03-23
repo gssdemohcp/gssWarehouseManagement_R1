@@ -31,8 +31,7 @@ sap.ui.define([
 						this.getView().byId("inputValue").setEnabled(false);
 						this.getView().byId("back").setVisible(true);
 						this.iGetInput(); // odata function call to get backend response
-					}
-					else {
+					} else {
 						this.getView().byId("inputValue").setValue("");
 						this.getView().byId("inputValue").setEnabled(true);
 						this.getView().byId("back").setVisible(false);
@@ -44,7 +43,7 @@ sap.ui.define([
 			this.inputDetails();
 			this.setFragment();
 		},
-		
+
 		// ================================================================
 		// method to get current screen model & resource bundle properties
 		// ================================================================
@@ -55,15 +54,14 @@ sap.ui.define([
 			this.getView().byId("inputValue").setPlaceholder(Text); // to set placeholder to input field
 			this.getView().byId("inputValue").setMaxLength(10); // to set length for input field
 		},
-		
-		
+
 		setFragment: function() {
 			var viewId = this.getView().getId();
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.msgFragmentLoaded);
 		},
-		
+
 		// =================================================
 		// method to get selected row(s) details from table
 		// =================================================
@@ -79,17 +77,17 @@ sap.ui.define([
 			if (_inputValue) {
 				var whenOdataCall = this.callOdataService().getMaterial(this, _inputValue); // odata function call with input field to get response from backend
 				whenOdataCall.done(function() {
-						this.getView().byId("toTable").setVisible(true); 
-					}.bind(this)
-				);
+					utilities.bindMessagePop(this, "");
+					this.getView().byId("toTable").setVisible(true);
+				}.bind(this));
 			}
 		},
-		
+
 		// ============================================
 		// method to pass barocde value to input field
 		// ============================================
 		onHandleScanInput: function() {
-			utilities.barcodeReader(this, "inputValue",""); // function call to set barcode value to input field
+			utilities.barcodeReader(this, "inputValue", ""); // function call to set barcode value to input field
 			this.iGetInput();
 		},
 
@@ -102,25 +100,29 @@ sap.ui.define([
 			}
 			this.msgFragmentLoaded.openBy(oEvent.getSource());
 		},
-		
+
 		// =======================================================
 		// method to get details from odata response from backend
 		// =======================================================
 		getPickingMaterial: function(sInputValue) {
 			//Read picking material from backend
 			var oWhenCallReadIsDone = this.callOdataService().LoadMaterial(this, sInputValue);
+			oWhenCallReadIsDone.done(function() {
+				utilities.bindMessagePop(this, "");
+			}.bind(this));
 		},
-		
+
 		// =================================================================
 		// method to confirm materials from table and display response text
 		// =================================================================
 		pickingConfirm: function() {
 			var whenOdataCall = this.callOdataService().confirmItems(this, this.selItems, "toTable"); // odata function call to confirm selected items from table
 			whenOdataCall.done(function() {
+				utilities.bindMessagePop(this, "");
 				MessageToast.show(this.geti18n(this.getUpdateToast())); // Message toast code to display success message from odata response
 			}.bind(this));
 		},
-		
+
 		// ===================================================
 		// method to destroy the loaded fragment for the view 
 		// ===================================================

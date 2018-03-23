@@ -103,7 +103,7 @@ sap.ui.define([
 			}
 		},
 		bindMessagePop: function(oView, data) {
-			var data =  {
+			var data = {
 				Msgtext: '',
 				Msgtyp: ''
 			};
@@ -119,7 +119,7 @@ sap.ui.define([
 		},
 		loadIndUpdate: function(data, oView) {
 			if (oView.getGlobalModel().getProperty("/parentScreen")) {
-				if (data.LoadedHu === data.TotalHu) {
+				if (data.LoadedHu === data.TotalHu || data.UnloadedHu === data.TotalHu) {
 					oView.getGlobalModel().setProperty("/load", "X");
 				} else {
 					oView.getGlobalModel().setProperty("/load", "Y");
