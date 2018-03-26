@@ -60,6 +60,10 @@ sap.ui.define([
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.msgFragmentLoaded);
+
+			var loadSplitPopFragment = this.gssFragmentsFunction().loadFragment(this, "splitPop");
+			this.splitFragmentLoaded = sap.ui.xmlfragment(viewId + "split", loadSplitPopFragment, this);
+			this.getView().addDependent(this.splitFragmentLoaded);
 		},
 		/* =========================================================== */
 		/*Called when an Item is selected in a table*/
@@ -149,24 +153,38 @@ sap.ui.define([
 		/*Called when cancel button pressed on the confirmation fragment*/
 		/* =========================================================== */
 		onConfirmCancel: function() {
-			this.onCancel();//closes the confirmation fragment
+			this.onCancel(); //closes the confirmation fragment
 		},
 		/* =========================================================== */
 		/*To close the opened fragement*/
 		/* =========================================================== */
 		onCancel: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//gssFragmentsFunction:function in BaseController to access Fragments.js
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); //gssFragmentsFunction:function in BaseController to access Fragments.js
 		},
-        /* =========================================================== */
+		/* =========================================================== */
 		/*To open the Confirmation fragement for Generate TO*/
 		/* =========================================================== */
 		onGenerateTO: function() {
 			if (!this.fragmentLoaded) {
-				this.setFragment();//To initialize and add fragment to the view
+				this.setFragment(); //To initialize and add fragment to the view
 			}
 			this.getView().addDependent(this.fragmentLoaded);
-			this.fragmentLoaded.open();//opens the fragment
+			this.fragmentLoaded.open(); //opens the fragment
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop"));
+		},
+		onHandleSplit: function() {
+			this.splitFragmentLoaded.open();
+		},
+
+		onSaveSplit: function() {
+			var splitHu = sap.ui.core.Fragment.byId(this.getView().getId() + "split", "splitHU").getValue();
+			var whenOdataCall = this.callOdataService().handleSplit(this, splitHu); //function in BaseController to access GssWarehouseManage.js
+			whenOdataCall.done(function() { //Synchronous oData Call
+
+			}.bind(this));
+		},
+		onCancelSplit: function() {
+			this.gssFragmentsFunction().closeFragment(this.splitFragmentLoaded); //gssFragmentsFunction:function in BaseController to access Fragments.js
 		},
 		/* =========================================================== */
 		/*Called when TOEx button pressed */
@@ -174,15 +192,15 @@ sap.ui.define([
 		/*navigates to Picking page*/
 		/* =========================================================== */
 		onHandleTOEx: function() {
-			utilities.navigateChild("picking", this);// navigateChild: function in utilities for navigating to child views
+			utilities.navigateChild("picking", this); // navigateChild: function in utilities for navigating to child views
 		},
-        /* =========================================================== */
+		/* =========================================================== */
 		/*Function to Generate TO*/
 		/* =========================================================== */
 		onHandleGTO: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
-			var whenOdataCall = this.callOdataService().handleShipTO(this, "tableGISA", "delList", "T");//function in BaseController to access GssWarehouseManage.js
-			whenOdataCall.done(function() {//Synchronous oData Call
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); //closes the fragment
+			var whenOdataCall = this.callOdataService().handleShipTO(this, "tableGISA", "delList", "T"); //function in BaseController to access GssWarehouseManage.js
+			whenOdataCall.done(function() { //Synchronous oData Call
 				this.getView().byId("GItoInd").setText(this.geti18n("available"));
 			}.bind(this));
 
@@ -193,19 +211,19 @@ sap.ui.define([
 
 		onPostGI: function() {
 			if (!this.fragmentLoaded) {
-				this.setFragment();//To initialize and add fragment to the view
+				this.setFragment(); //To initialize and add fragment to the view
 			}
 			this.getView().addDependent(this.fragmentLoaded);
-			this.fragmentLoaded.open();//opens the fragment
-			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("postGIPop"));// To set text to confirmaton fragment
+			this.fragmentLoaded.open(); //opens the fragment
+			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("postGIPop")); // To set text to confirmaton fragment
 
 		},
-        /* =========================================================== */
+		/* =========================================================== */
 		/*Function to Post GI*/
 		/* =========================================================== */
 		onHandlePost: function() {
-			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded);//closes the fragment
-			this.callOdataService().handleShipTO(this, "tableGISA", "delList", "C");//function in BaseController to access GssWarehouseManage.js
+			this.gssFragmentsFunction().closeFragment(this.fragmentLoaded); //closes the fragment
+			this.callOdataService().handleShipTO(this, "tableGISA", "delList", "C"); //function in BaseController to access GssWarehouseManage.js
 
 		}
 

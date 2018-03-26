@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="split" title="{i18n>splitDiaog}" class="sapUiResponsiveMargin sapUiPopupWithPadding" icon="sap-icon://alert" afterClose="onClose">
+		<content>
+			<Input id="splitHU" placeholder = "{i18n>EnterHU}"/>
+		</content>
+		<beginButton>
+			<Button text = "{i18n>save}" press="onSaveSplit"/>
+		</beginButton>
+		<endButton>
+			<Button text = "{i18n>cancel}" press="onCancelSplit"/>
+		</endButton>		
+	</Dialog>
+</core:FragmentDefinition>

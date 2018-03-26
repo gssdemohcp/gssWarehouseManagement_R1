@@ -234,6 +234,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			return promise;
 
 		},
+		handleSplit: function(oView, huVal) {
+			var promise = jQuery.Deferred();
+			var oKeyFields = oView.getKeyFields();
+			oKeyFields.Exidv = huVal;
+			oKeyFields.Vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
+			oKeyFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
+			var oWhenOdataUpdateDone = this._ODataModelInterface.keyFieldModelPopulate(oView);
+			oWhenOdataUpdateDone.done(function(oResult) {
+				promise.resolve(oResult);
+			}.bind(this));
+			return promise;
+
+		},
 
 		LoadDetails: function(oView, sInputValue, huVal, procInd) {
 			var oWhenOdataUpdateDone;
