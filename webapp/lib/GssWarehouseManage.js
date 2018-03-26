@@ -393,7 +393,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 											Msgtext: '',
 											Msgtyp: ''
 										};
-										oStatMessage.Msgtext = "Material" + " " + selectedItem.Matnr + " " + "Confirmed Successfully";
+										oStatMessage.Msgtext = oView.geti18n("mat") + " " + selectedItem.Matnr + " " + oView.geti18n("confirm");
 										oStatMessage.Msgtyp = "Success";
 									}
 								}.bind(this));
@@ -401,7 +401,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 									Msgtext: '',
 									Msgtyp: ''
 								};
-								oStatMessage.Msgtext = "Material" + " " + oStat.text;
+								oStatMessage.Msgtext = oView.geti18n("mat") + " " + oStat.text;
 								oStatMessage.Msgtyp = "Error";
 								oView.getGlobalModel().setProperty("/message", oStatMessage.Msgtext);
 								oView.getGlobalModel().setProperty("/messageType", oStatMessage.Msgtyp);
@@ -411,9 +411,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						} else if (oStat.stat === "S") {
 							// var successText = {
 							if (oStat.text === "") {
-								oStat.text = "Confirmed successfully";
+								oStat.text = oView.geti18n("confirm");
 							}
-							oStatMessage.Msgtext = "Material" + " " + oStat.mItems.Matnr + " " + oStat.text;
+							oStatMessage.Msgtext = oView.geti18n("mat") + " " + oStat.mItems.Matnr + " " + oStat.text;
 							oStatMessage.Msgtyp = "Success";
 							if (this.finalPos === this.currentPos) {
 								oView.getGlobalModel().setProperty("/message", oStatMessage.Msgtext);

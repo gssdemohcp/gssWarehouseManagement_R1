@@ -190,22 +190,26 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oWhenOdataUpdateDone;
 			var oViewModel = new JSONModel();
 			var promise = jQuery.Deferred();
+			var viewData;
 			var oFilterFields = {};
 			oFilterFields.Vbeln = oView.getGlobalModel().getProperty("/currentDelNo");
 			oFilterFields.Lgnum = oView.getGlobalModel().getProperty("/currentLgnum");
 			oFilterFields.Matnr = mat;
 			oFilterFields.Lfimg = quant;
 			oFilterFields.Vrkme = unit;
-
+			if (oView.byId(controlId).getModel(model)) {
+				viewData = oView.byId(controlId).getModel(model).getData();
+			}
 			oWhenOdataUpdateDone = this._ODataModelInterface.filterModelPopulate(oView, oFilterFields);
 			oWhenOdataUpdateDone.done(function(oResult) {
 				var data = oResult.getData();
-				var viewData = oView.byId(controlId).getModel(model).getData();
-				for (var i = 0; i < data.aItems.length; i++) {
-					viewData.aItems.push(data.aItems[i]);
+				if (viewData) {
+					for (var i = 0; i < viewData.aItems.length; i++) {
+						data.aItems.push(viewData.aItems[i]);
+					}
 				}
-				oViewModel.setData(viewData);
-				this.getView().byId(controlId).setModel(oViewModel, model);
+				oViewModel.setData(data);
+				oView.byId(controlId).setModel(oViewModel, model);
 				promise.resolve(oResult);
 			}.bind(this));
 			return promise;
