@@ -61,9 +61,24 @@ sap.ui.define([
 			var _inputValue = this.getView().byId("inputValue").getValue();
 			if (_inputValue) {
 				var whenOdataCall = this.callOdataService().grKeyFields(this, _inputValue, "X");
-				 whenOdataCall.done(function() {
-				utilities.bindMessagePop(this, "");
-			}.bind(this));
+				whenOdataCall.done(function(oResult) {
+					utilities.bindMessagePop(this, "");
+					var data = oResult.getData().aItems[0];
+					if (data.ShipInd === "") {
+						var currentTime = sap.ui.core.format.DateFormat.getTimeInstance({
+							pattern: "KK:mm:ss"
+						});
+						var ctimeConversion = new Date(0).getTimezoneOffset() * 60 * 1000;
+						var ctimeStr = currentTime.format(new Date(data.Ualbg.ms + ctimeConversion));
+						this.getView().byId("TP3").setValue(ctimeStr);
+						var actualTime = sap.ui.core.format.DateFormat.getTimeInstance({
+							pattern: "KK:mm:ss"
+						});
+						var atimeConversion = new Date(0).getTimezoneOffset() * 60 * 1000;
+						var atimeStr = actualTime.format(new Date(data.Ualen.ms + atimeConversion));
+						this.getView().byId("TP4").setValue(atimeStr);
+					}
+				}.bind(this));
 			}
 		},
 		onHandleSave: function(oEvent) {
@@ -79,17 +94,17 @@ sap.ui.define([
 			var startDateFormatted = dateFormat.format(new Date(startDate)),
 				endDateFormatted = dateFormat.format(new Date(endDate));
 
-			this.FormatDate = new Date(startDate);
-			this.StartYear = this.FormatDate.getFullYear();
-			this.StartMonth = this.FormatDate.getMonth() + 1;
-			this.StartDate = this.FormatDate.getDate();
-			startDateFormatted = "".concat(this.StartYear, this.StartMonth, this.StartDate);
+			// this.FormatDate = new Date(startDate);
+			// this.StartYear = this.FormatDate.getFullYear();
+			// this.StartMonth = this.FormatDate.getMonth() + 1;
+			// this.StartDate = this.FormatDate.getDate();
+			// startDateFormatted = "".concat(this.StartYear, this.StartMonth, this.StartDate);
 
-			this.FormatDate = new Date(endDate);
-			this.StartYear = this.FormatDate.getFullYear();
-			this.StartMonth = this.FormatDate.getMonth() + 1;
-			this.StartDate = this.FormatDate.getDate();
-			endDateFormatted = "".concat(this.StartYear, this.StartMonth, this.StartDate);
+			// this.FormatDate = new Date(endDate);
+			// this.StartYear = this.FormatDate.getFullYear();
+			// this.StartMonth = this.FormatDate.getMonth() + 1;
+			// this.StartDate = this.FormatDate.getDate();
+			// endDateFormatted = "".concat(this.StartYear, this.StartMonth, this.StartDate);
 
 			if (startDate > endDate) {
 				MessageBox.error(this.geti18n("dateError"));

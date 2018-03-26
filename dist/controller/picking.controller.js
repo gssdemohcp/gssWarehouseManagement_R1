@@ -61,14 +61,7 @@ sap.ui.define([
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.msgFragmentLoaded);
 		},
-
-		// =================================================
-		// method to get selected row(s) details from table
-		// =================================================
-		onHandleSelection: function() {
-			this.selItems = utilities.selectedItems(this, "toTable"); // function call to get selected rows from table
-		},
-
+		
 		// =======================================================
 		// method to get input field value and perform odata call
 		// =======================================================
@@ -101,22 +94,12 @@ sap.ui.define([
 			this.msgFragmentLoaded.openBy(oEvent.getSource());
 		},
 
-		// =======================================================
-		// method to get details from odata response from backend
-		// =======================================================
-		getPickingMaterial: function(sInputValue) {
-			//Read picking material from backend
-			var oWhenCallReadIsDone = this.callOdataService().LoadMaterial(this, sInputValue);
-			oWhenCallReadIsDone.done(function() {
-				utilities.bindMessagePop(this, "");
-			}.bind(this));
-		},
-
 		// =================================================================
 		// method to confirm materials from table and display response text
 		// =================================================================
 		pickingConfirm: function() {
-			var whenOdataCall = this.callOdataService().confirmItems(this, this.selItems, "toTable"); // odata function call to confirm selected items from table
+			var selItems = utilities.selectedItems(this, "toTable");
+			var whenOdataCall = this.callOdataService().confirmItems(this, selItems, "toTable"); // odata function call to confirm selected items from table
 			whenOdataCall.done(function() {
 				utilities.bindMessagePop(this, "");
 				MessageToast.show(this.geti18n(this.getUpdateToast())); // Message toast code to display success message from odata response

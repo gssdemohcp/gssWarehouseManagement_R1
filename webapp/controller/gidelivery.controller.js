@@ -4,10 +4,10 @@ sap.ui.define([
 	"gss/newWarehouseManage_R1/model/formatter",
 	"sap/ui/model/resource/ResourceModel",
 	"gss/newWarehouseManage_R1/model/utilities",
-		'sap/m/MessagePopover',
+	'sap/m/MessagePopover',
 	'sap/m/MessageItem',
 	'sap/ui/model/json/JSONModel'
-], function(Controller, BaseController, formatter, ResourceModel, utilities,MessagePopover,MessageItem,JSONModel) {
+], function(Controller, BaseController, formatter, ResourceModel, utilities, MessagePopover, MessageItem, JSONModel) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.gidelivery", {
@@ -64,6 +64,10 @@ sap.ui.define([
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.msgFragmentLoaded);
 
+			var loadSplitPopFragment = this.gssFragmentsFunction().loadFragment(this, "splitPop");
+			this.splitFragmentLoaded = sap.ui.xmlfragment(viewId + "split", loadSplitPopFragment, this);
+			this.getView().addDependent(this.splitFragmentLoaded);
+
 		},
 
 		iGetInput: function() {
@@ -87,10 +91,10 @@ sap.ui.define([
 		/*Handling message popover function*/
 		/* =========================================================== */
 		handleMessagePopoverPress: function(oEvent) {
-				if (!this.msgFragmentLoaded) {
-					this.setFragment();
-				}
-				this.msgFragmentLoaded.openBy(oEvent.getSource()); //opens fragment
+			if (!this.msgFragmentLoaded) {
+				this.setFragment();
+			}
+			this.msgFragmentLoaded.openBy(oEvent.getSource()); //opens fragment
 		},
 
 		/* =========================================================== */
@@ -154,6 +158,23 @@ sap.ui.define([
 			}
 			this.fragmentLoaded.open(); //opens the fragment
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop")); // To set text to confirmaton fragment
+		},
+		onHandleSplit: function() {
+			this.splitFragmentLoaded.open();
+		},
+
+		onSaveSplit: function() {
+			var splitHu = sap.ui.core.Fragment.byId(this.getView().getId() + "split", "splitHU").getValue();
+			this.gssFragmentsFunction().closeFragment(this.splitFragmentLoaded);
+			var whenOdataCall = this.callOdataService().handleSplit(this, splitHu); //function in BaseController to access GssWarehouseManage.js
+			whenOdataCall.done(function() { //Synchronous oData Call
+
+			}.bind(this));
+
+		},
+		onCancelSplit: function() {
+			this.gssFragmentsFunction().closeFragment(this.splitFragmentLoaded); //gssFragmentsFunction:function in BaseController to access Fragments.js
+
 		},
 		/* =========================================================== */
 		/*Function to Generate TO*/

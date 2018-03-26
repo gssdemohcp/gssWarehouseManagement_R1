@@ -169,7 +169,8 @@ sap.ui.define([
 				confirmation: "gss.newWarehouseManage_R1.view.fragments.confirmation",
 				addHu: "gss.newWarehouseManage_R1.view.fragments.addHU",
 				addMaterial: "gss.newWarehouseManage_R1.view.fragments.addMaterial",
-				msgPopOver: "gss.newWarehouseManage_R1.view.fragments.MessagePopover"
+				msgPopOver: "gss.newWarehouseManage_R1.view.fragments.MessagePopover",
+				splitPop:"gss.newWarehouseManage_R1.view.fragments.split"
 
 			});
 

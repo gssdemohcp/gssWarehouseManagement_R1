@@ -58,6 +58,10 @@ sap.ui.define([
 			var loadMsgPopFragment = this.gssFragmentsFunction().loadFragment(this, "msgPopOver");
 			this.msgFragmentLoaded = sap.ui.xmlfragment(viewId + "msgPop", loadMsgPopFragment, this);
 			this.getView().addDependent(this.msgFragmentLoaded);
+			
+			var loadSplitPopFragment = this.gssFragmentsFunction().loadFragment(this, "splitPop");
+			this.splitFragmentLoaded = sap.ui.xmlfragment(viewId + "split", loadSplitPopFragment, this);
+			this.getView().addDependent(this.splitFragmentLoaded);
 		},
 
 		iGetInput: function(oEvent) {
@@ -153,6 +157,23 @@ sap.ui.define([
 			this.getView().addDependent(this.fragmentLoaded);
 			this.fragmentLoaded.open(); //opens the fragment
 			sap.ui.core.Fragment.byId(this.getView().getId() + "conf", "popup").setText(this.geti18n("genToPop")); // To set text to confirmaton fragment
+		},
+		onHandleSplit:function(){
+			this.splitFragmentLoaded.open();
+		},
+		
+		onSaveSplit:function(){
+		var splitHu =	sap.ui.core.Fragment.byId(this.getView().getId() + "split", "splitHU").getValue();
+		var whenOdataCall = this.callOdataService().handleSplit(this,splitHu); //function in BaseController to access GssWarehouseManage.js
+			whenOdataCall.done(function() { //Synchronous oData Call
+				
+			}.bind(this));
+		
+			
+		},
+		onCancelSplit:function(){
+			this.gssFragmentsFunction().closeFragment(this.splitFragmentLoaded); //gssFragmentsFunction:function in BaseController to access Fragments.js
+			
 		},
 		/* =========================================================== */
 		/*Function to Generate TO*/

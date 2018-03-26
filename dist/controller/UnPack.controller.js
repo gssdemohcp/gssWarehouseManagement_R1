@@ -17,9 +17,7 @@ sap.ui.define([
 					this.inputDetails();
 					this.gssCallBreadcrumbs().getMainBreadCrumb(this);
 					utilities.setParentScreen(this.getGlobalModel().getProperty("/parentScreen"), this);
-
 					this.getHUInput();
-
 				}.bind(this)
 			});
 

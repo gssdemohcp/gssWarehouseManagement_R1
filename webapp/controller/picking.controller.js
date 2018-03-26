@@ -3,9 +3,10 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
 	"gss/newWarehouseManage_R1/model/formatter",
+	"sap/m/MessageToast",
 	"gss/newWarehouseManage_R1/model/utilities"
 
-], function(Controller, BaseController, formatter, utilities) {
+], function(Controller, BaseController, formatter,MessageToast, utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.picking", {

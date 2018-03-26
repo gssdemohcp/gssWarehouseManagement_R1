@@ -31,36 +31,41 @@ sap.ui.define(["sap/ui/base/Object",
 				placement: sap.m.PlacementType.Top,
 				content: [
 					new sap.m.Button({ // To display Logout button inside popup
-						text: "Pack", // Text to be dispalyed for the button
+						text: oView.geti18n("pack"), // Text to be dispalyed for the button
 						type: sap.m.ButtonType.Transparent, // Button type
 						press: function() {
 								// press functionality for the button
-								this.getGlobalModel().setProperty("/pack", "Packing");
-								this.getGlobalModel().setProperty("/shipInd", "P");
+								oView.getGlobalModel().setProperty("/pack", "Packing");
+								oView.getGlobalModel().setProperty("/shipInd", "P");
 								oView.setUpdateToast("packTst");
 								utilities.navigateChild("UnPack", oView); // Call to exit() method
 							}.bind(oView) // bind the popup to the view
 					}),
 					new sap.m.Button({ // To display Logout button inside popup
-						text: "Unpack", // Text to be dispalyed for the button
+						text: oView.geti18n("unpack"), // Text to be dispalyed for the button
 						type: sap.m.ButtonType.Transparent, // Button type
 						press: function() { // press functionality for the button
-								this.getGlobalModel().setProperty("/pack", "UnPacking");
-								this.getGlobalModel().setProperty("/shipInd", "U");
+								oView.getGlobalModel().setProperty("/pack", "UnPacking");
+								oView.getGlobalModel().setProperty("/shipInd", "U");
 								oView.setUpdateToast("unpackTst");
 								utilities.navigateChild("UnPack", oView); // Call to exit() method
 							}.bind(oView) // bind the popup to the view
 					})
-					// new sap.m.Button({ // To display Logout button inside popup
-					// 	text: "Split", // Text to be dispalyed for the button
-					// 	type: sap.m.ButtonType.Transparent, // Button type
-					// 	press: function() { // press functionality for the button
-					// 			this.onHandleSplit(); // Call to exit() method
-					// 		}.bind(this) // bind the popup to the view
-					// })
+					
 				]
 			}).addStyleClass('sapMOTAPopover sapTntToolHeaderPopover'); // CSS style for the popup
 			popover.openBy(event.getSource()); // To open popup event
+			var split =	new sap.m.Button({ // To display Split button inside popup
+						text: oView.geti18n("split"), // Text to be dispalyed for the button
+						type: sap.m.ButtonType.Transparent, // Button type
+						press: function() { // press functionality for the button
+								oView.onHandleSplit(); // Call to exit() method
+							}.bind(this) // bind the popup to the view
+					});
+			if(oView.getGlobalModel().getProperty("/currentQueue") === "OUTBOUND"){
+				     popover.addContent(split); 
+					}
+			
 		}
 
 	});
