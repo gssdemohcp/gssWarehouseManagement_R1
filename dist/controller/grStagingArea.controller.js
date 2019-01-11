@@ -74,7 +74,7 @@ sap.ui.define([
 				var whenOdataCall = this.callOdataService().getLoadInq(this, _inputValue, "", "");
 				whenOdataCall.done(function() {
 						utilities.checkVisible(this);
-						this.checkInd(oResult.getData().aItems[0], "");
+						//this.checkInd(oResult.getData().aItems[0], "");
 					}.bind(this)
 
 				);
