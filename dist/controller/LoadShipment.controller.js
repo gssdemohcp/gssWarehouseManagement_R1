@@ -2,8 +2,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"gss/newWarehouseManage_R1/controller/BaseController",
-	"sap/ui/model/resource/ResourceModel"
-], function(Controller, BaseController, ResourceModel) {
+	"sap/ui/model/resource/ResourceModel",
+	"gss/newWarehouseManage_R1/model/utilities"
+], function(Controller, BaseController, ResourceModel, utilities) {
 	"use strict";
 
 	return BaseController.extend("gss.newWarehouseManage_R1.controller.LoadShipment", {

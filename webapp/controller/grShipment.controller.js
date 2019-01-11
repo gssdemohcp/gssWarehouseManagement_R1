@@ -73,9 +73,9 @@ sap.ui.define([
 				var obj = this.getView().byId("table").getSelectedItem().getBindingContext("itemList").getObject();
 				this.checkInd(obj, "false"); //function in BaseController to check Indicators
 			} else if (len > 1) { //checks if more than one item is selected
-				MessageToast.show(this.geti18n("toastOneDel"));
+				sap.m.MessageToast.show(this.geti18n("toastOneDel"));
 			} else if (len === 0) { //checks if no item is selected
-				MessageToast.show(this.geti18n("toastOneDel"));
+				sap.m.MessageToast.show(this.geti18n("toastOneDel"));
 			}
 		},
 

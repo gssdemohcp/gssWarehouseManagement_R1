@@ -61,9 +61,9 @@ sap.ui.define([
 				var obj = this.getView().byId("tableSA").getSelectedItem().getBindingContext("itemList").getObject();
 				this.checkInd(obj, "false");
 			} else if (len > 1) {
-				MessageToast.show(this.geti18n("toastOneDel"));
+				sap.m.MessageToast.show(this.geti18n("toastOneDel"));
 			} else if (len === 0) {
-				MessageToast.show(this.geti18n("toastOneDel"));
+				sap.m.MessageToast.show(this.geti18n("toastOneDel"));
 			}
 		},
 
